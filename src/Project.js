@@ -496,7 +496,7 @@ class Project extends Component {
   render() {
     //console.log(this.state.projectTokenDetails && this.state.projectTokenDetails);
     //console.log("queue:"+this.state.loadQueue);
-    //console.log(JSON.stringify(this.state.scriptJSON));
+    console.log(JSON.stringify(this.state.scriptJSON));
 
 
     let active = this.state.page;
@@ -815,7 +815,7 @@ const paginationBasic = (
                 <Form.Label>Current JSON: {this.state.projectScriptDetails && this.state.projectScriptDetails[0]}</Form.Label>
                 <br />
                 <Form.Label>Script Type:</Form.Label>
-                <Form.Control onChange={e => this.handleJSON(e, "type")} value={this.state.scriptJSON.type && this.state.scriptJSON.type} as="select" >
+                <Form.Control onChange={e => this.handleJSON(e, "type")} value={(this.state.scriptJSON.type && this.state.scriptJSON.type) || ''} as="select" >
                 <option>--- Select Script Type ---</option>
                   <option>p5js</option>
                   <option>processing</option>
@@ -826,16 +826,19 @@ const paginationBasic = (
                   <option>custom</option>
                 </Form.Control>
                 <Form.Label>Version:</Form.Label>
-                <Form.Control onChange={e => this.handleJSON(e, "version")} value={this.state.scriptJSON.version} type="text" placeholder="Specify version number of script, if applicable." >
+                <Form.Control onChange={e => this.handleJSON(e, "version")} value={this.state.scriptJSON.version || ''} type="text" placeholder="Specify version number of script, if applicable." >
                 </Form.Control>
                 <Form.Label>Aspect Ratio (width/height):</Form.Label>
-                <Form.Control onChange={e => this.handleJSON(e, "aspectRatio")} type="text" value={this.state.scriptJSON.aspectRatio} placeholder="Specify aspect ratio (width divided by height). If left blank will default to 1 which is a square." >
+                <Form.Control onChange={e => this.handleJSON(e, "aspectRatio")} type="text" value={this.state.scriptJSON.aspectRatio || ''} placeholder="Specify aspect ratio (width divided by height). If left blank will default to 1 which is a square." >
                 </Form.Control>
                 <Form.Label>Instructions:</Form.Label>
-                <Form.Control onChange={e => this.handleJSON(e, "instructions")} value={this.state.scriptJSON.instructions} as="textarea" rows={3} type="text" placeholder="Use this space to give user interactivity instructions if appropriate. Separate each instruction with a '|' (pipe)" >
+                <Form.Control onChange={e => this.handleJSON(e, "instructions")} value={this.state.scriptJSON.instructions || ''} as="textarea" rows={3} type="text" placeholder="Use this space to give user interactivity instructions if appropriate. Separate each instruction with a '|' (pipe)" >
                 </Form.Control>
                 <Form.Label>Animation Length in Seconds:</Form.Label>
-                <Form.Control onChange={e => this.handleJSON(e, "animationLength")} value={this.state.scriptJSON.animationLength} type="text" placeholder="Set length of animation for non-static outputs. Leave blank if static." >
+                <Form.Control onChange={e => this.handleJSON(e, "animationLengthInSeconds")} value={this.state.scriptJSON.animationLengthInSeconds || ''} type="number" placeholder="Set length of animation for non-static outputs. Leave blank if static." >
+                </Form.Control>
+                <Form.Label>Interactive?</Form.Label>
+                <Form.Control onChange={e => this.handleJSON(e, "interactive")} value={this.state.scriptJSON.interactive || ''} type="text" placeholder="If your project can be interacted with set to true, otherwise leave blank." >
                 </Form.Control>
                 <Form.Text className="text-muted">
                   The above values <b>cannot</b> be changed once project is locked.
