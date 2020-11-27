@@ -131,7 +131,7 @@ class ViewToken extends Component {
 
           <br />
           <TwitterShareButton
-            url={'https://rinkeby.artblocks.io/token/'+this.state.token}
+            url={'https://testnet.artblocks.io/token/'+this.state.token}
             options={{ text:this.state.projectDescription[0]+" #"+(Number(this.state.token)-Number(this.state.projectId)*1000000)+" by "+this.state.projectDescription[1], via: 'artblocks_io' }}
             hashtags={['genArt']}
           />

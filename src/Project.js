@@ -408,7 +408,8 @@ class Project extends Component {
       this.setState({interaction:false});
     });
   } else if (type === "toggleActive"){
-    await this.state.artBlocks.methods.toggleProjectStatus(this.props.project).send({
+    alert(this.props.project);
+    await this.state.artBlocks.methods.toggleProjectIsActive(this.props.project).send({
       from:this.props.account
     })
     .once('receipt', (receipt) => {
@@ -497,6 +498,7 @@ class Project extends Component {
     //console.log(this.state.projectTokenDetails && this.state.projectTokenDetails);
     //console.log("queue:"+this.state.loadQueue);
     console.log(JSON.stringify(this.state.scriptJSON));
+    console.log(this.props.project);
 
 
     let active = this.state.page;
@@ -591,7 +593,7 @@ const paginationBasic = (
         }
 
         {this.props.connected && this.state.projectScriptDetails &&
-          <Button className='btn-primary btn-block' disabled={this.state.purchase?true:this.state.projectScriptDetails[5]?true:false} onClick={this.purchase}>{this.state.purchase?<div><Spinner
+          <Button className='btn-primary btn-block' disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} onClick={this.purchase}>{this.state.purchase?<div><Spinner
             as="span"
             animation="border"
             size="sm"

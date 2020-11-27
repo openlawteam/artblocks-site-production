@@ -107,8 +107,9 @@ class App extends Component {
       if (this.props.project){
         this.setState({currentProject:this.props.project});
       } else {
-        this.setState({currentProject:Math.floor(Math.random()*activeProjects.length)});
+        this.setState({currentProject:activeProjects[Math.floor(Math.random()*activeProjects.length)]});
       }
+      console.log("active: "+activeProjects);
       this.setState({artBlocks, web3, allProjects, totalInvocations, artistAddresses, activeProjects});
     //}
   }
@@ -118,7 +119,7 @@ async componentDidUpdate(oldProps){
       if (this.props.project){
         this.setState({currentProject:this.props.project});
       } else {
-        this.setState({currentProject:Math.floor(Math.random()*this.state.activeProjects.length)});
+        this.setState({currentProject:this.state.activeProjects[Math.floor(Math.random()*this.state.activeProjects.length)]});
       }
       this.setState({show:this.props.show});
     }
@@ -161,7 +162,7 @@ async componentDidUpdate(oldProps){
 
   handleNextProject(){
 
-    let newProject = Math.floor(Math.random()*this.state.activeProjects.length);
+    let newProject = this.state.activeProjects[Math.floor(Math.random()*this.state.activeProjects.length)];
     let oldProject = this.state.currentProject;
     if (newProject!==oldProject){
     this.setState({currentProject:newProject});
@@ -187,11 +188,11 @@ async componentDidUpdate(oldProps){
 
   render() {
 
-    //let baseURL = "https://rinkebyapi.artblocks.io";
+    let baseURL = "https://testnetapi.artblocks.io";
 
 
 
-    let baseURL = "http://localhost:8080"
+    //let baseURL = "http://localhost:8080"
 
     //console.log("currentProject"+this.state.currentProject);
     //console.log(this.state.network && this.state.network);

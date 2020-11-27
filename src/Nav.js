@@ -9,11 +9,14 @@ class Navigation extends Component {
   async componentDidMount() {
     const artBlocks = this.props.artBlocks;
     const activeProjects = this.props.activeProjects;
+    //console.log(activeProjects);
     let activeProjectsDetails = [];
-      for (let i=0;i<activeProjects.length;i++){
+      //for (let i=0;i<activeProjects.length;i++){
+      for (let project in activeProjects){
+        //console.log(project, activeProjects[project]);
         let nameArtist = [];
-        const projectDetails = await artBlocks.methods.projectDetails(i).call();
-        nameArtist.push(i);
+        const projectDetails = await artBlocks.methods.projectDetails(activeProjects[project]).call();
+        nameArtist.push(activeProjects[project]);
         nameArtist.push(projectDetails[0]);
         nameArtist.push(projectDetails[1]);
         activeProjectsDetails.push(nameArtist);
@@ -42,10 +45,12 @@ class Navigation extends Component {
   }
 
   render() {
+    //console.log('active: '+this.props.activeProjects);
     //console.log("whitlisted?:" + this.props.isWhitelisted);
     //console.log(this.props.projectsOfArtist);
     //console.log(this.props.web3);
     //console.log(this.state.network);
+    console.log(this.props.projectsOfArtist);
     let baseURL = this.props.baseURL;
 /*
     function tokenGenerator(token){
@@ -82,7 +87,7 @@ class Navigation extends Component {
                 this.state.activeProjectsDetails.map((projectInfo,index)=>{
                   return(
 
-                    <NavDropdown.Item key={index} as={Link} onClick={()=>{this.props.handleToggleView("off")}} to={"/project/"+index}>{projectInfo[1]} by {projectInfo[2]}</NavDropdown.Item>
+                    <NavDropdown.Item key={index} as={Link} onClick={()=>{this.props.handleToggleView("off")}} to={"/project/"+projectInfo[0]}>{projectInfo[1]} by {projectInfo[2]}</NavDropdown.Item>
 
                   )
                 })

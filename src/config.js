@@ -1,4 +1,4 @@
-export const ARTBLOCKS_CONTRACT_ADDRESS = '0x6917fFeAD6e58D3FE912f0d542e8dc88A9E3a5df'
+export const ARTBLOCKS_CONTRACT_ADDRESS = '0x7b404C05733344eA9a618b95B21Ad27090B53456'
 
 export const ARTBLOCKS_CONTRACT_ABI = [
   {
@@ -942,6 +942,21 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         "type": "uint256"
       }
     ],
+    "name": "toggleProjectIsActive",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      }
+    ],
     "name": "toggleProjectIsDynamic",
     "outputs": [],
     "payable": false,
@@ -973,21 +988,6 @@ export const ARTBLOCKS_CONTRACT_ABI = [
       }
     ],
     "name": "toggleProjectIsPaused",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      }
-    ],
-    "name": "toggleProjectStatus",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

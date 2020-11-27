@@ -18,7 +18,8 @@ class Learn extends Component {
       <Image src={this.props.baseURL+"/image/2"} width="300px"/>
       </div>
       <h5>ELI5</h5>
-      <h6>Art Blocks enables you to purchase unique generative content, such as works of art, on demand. You pick a style that you like, pay for the work, and a randomly generated version of the content will be created by the project creator's algorithm and appear in your Ethereum account! The resulting artwork might be a static image or an interactive experience. Each is different and there are endless possibiltiies for the types of content that can be created on the platform.</h6>
+      <h6>Art Blocks is a <i>first of its kind</i> storfront for genuinely programmable on demand generarive content that is stored immutably on the Ethereum Blockchain. You pick a style that you like, pay for the work, and a randomly generated version of the content is created by an algorithm and sent to your Ethereum account. The resulting piece might be a static image, 3D model, or an interactive experience.
+      Each output is different and there are endless possibiltiies for the types of content that can be created on the platform.</h6>
       <br/>
       <hr/>
       <h5>How to Mint</h5>
@@ -86,7 +87,7 @@ class Learn extends Component {
       enable established platforms to monetize representation of a creator on their platform or create an automatic method for a collaboration of creators to split the proceeds of a sale.</p>
       <br />
       <h5>Curation</h5>
-      <p>While the processes for generating and viewing unique generative content on the Art Blocks platform are decentralized, the organiztion and operation of the Art Blocks platofrm itself is not decentralized. Artists/creators are selected to deploy projects at the sole discretion of the Art Blocks
+      <p>While the processes for generating and viewing unique generative content on the Art Blocks platform are decentralized, the organiztion and operation of the Art Blocks platform itself is not decentralized. Artists/creators are selected to deploy projects at the sole discretion of the Art Blocks
       team. We reserve the right to curate the content on the platform without explanation. That said, no content which could be considered even remotely offensive to anyone will be considered.</p>
       <p>The onboarding process for a new project is extensive. Each project will be required to deploy on testnet and be tested thoroughly before migrating and deploying on mainnet. All new projects will be deployed by the Art Blocks team with subsequent modifications managed by the creator. Once the project is ready
       to go live the Art Blocks team will lock it and set it to "active" to enable purchases. </p>
