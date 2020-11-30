@@ -58,7 +58,7 @@ class Highlight extends Component {
       </Tooltip>
     );
 
-    console.log(this.props.web3);
+    //console.log(this.props.web3);
 
 
 

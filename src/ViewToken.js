@@ -2,6 +2,7 @@ import React, { Component} from 'react'
 import {Card, Button, CardDeck, Row, Col, ButtonGroup, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import {TwitterShareButton} from 'react-twitter-embed';
 import {Link} from 'react-router-dom';
+import Features from './Features';
 import './ProjectGallery.css';
 
 
@@ -33,6 +34,25 @@ class ViewToken extends Component {
   }
 
   render() {
+    let hyperRainbow=false;
+
+if (this.state.tokenHashes && this.state.projectId && this.state.projectId==="0"){
+  let tokenData=this.state.tokenHashes;
+  let numHashes = tokenData.length;
+  let hashPairs = [];
+  for (let i = 0; i < numHashes; i++) {
+      for (let j = 0; j < 32; j++) {
+          hashPairs.push(tokenData[i].slice(2 + (j * 2), 4 + (j * 2)));
+      }
+  }
+  let decPairs = hashPairs.map(x => {
+      return parseInt(x, 16);
+  });
+  if (decPairs[28]<3){
+    hyperRainbow=true;
+  }
+}
+console.log(hyperRainbow);
 
     const viewImageToolTip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
@@ -77,10 +97,9 @@ class ViewToken extends Component {
 
     return (
 
+
+
       <div className="container mt-5">
-
-
-
 
       <Row>
       <Col xs={12} md={6} className="my-auto">
@@ -93,19 +112,27 @@ class ViewToken extends Component {
           <h3>{this.state.projectDescription[0]} #{Number(this.state.token)-Number(this.state.projectId)*1000000}</h3>
           <h3>by {this.state.projectDescription[1]}</h3>
           {this.state.projectDescription[3] &&
-            <a href={"https://"+this.state.projectDescription[3]}>{this.state.projectDescription[3]}</a>
+            <a href={this.state.projectDescription[3]} target="_blank" rel="noopener noreferrer">{this.state.projectDescription[3]}</a>
           }
-          <br/>
+
           <br/>
           {this.state.projectDescription[2] &&
             <p>{this.state.projectDescription[2]}</p>
           }
-          <br />
-          <br />
+
+        
           {this.state.ownerOfToken &&
             <p>Owned by <Link to={"/user/"+this.state.ownerOfToken}>{this.state.ownerOfToken.slice(0,10)}</Link></p>
           }
-          <br />
+
+          {this.state.projectId && this.state.tokenHashes &&
+          <Features
+          projectId={this.state.projectId}
+          tokenHashes={this.state.tokenHashes}
+          />
+        }
+
+
           {/*
           <p style={{"fontSize":"12px"}}>{this.state.tokenHashes && this.state.tokenHashes.length===1?"Token hash:":"Token hashes:"} {this.state.tokenHashes && this.state.tokenHashes}</p>
           */}
@@ -131,7 +158,7 @@ class ViewToken extends Component {
 
           <br />
           <TwitterShareButton
-            url={'https://testnet.artblocks.io/token/'+this.state.token}
+            url={'https://www.artblocks.io/token/'+this.state.token}
             options={{ text:this.state.projectDescription[0]+" #"+(Number(this.state.token)-Number(this.state.projectId)*1000000)+" by "+this.state.projectDescription[1], via: 'artblocks_io' }}
             hashtags={['genArt']}
           />
@@ -146,7 +173,7 @@ class ViewToken extends Component {
         <Col xs={12} md={6}>
         <CardDeck className="col d-flex justify-content-center">
 
-          <Card className='mt-4' style={{ width: '18rem' }} >
+          <Card border={hyperRainbow?"warning":""} className='mt-4' style={{ width: '18rem' }} >
 
             <Card.Body>
             {this.state.token &&
@@ -185,7 +212,6 @@ class ViewToken extends Component {
             </Card>
         </CardDeck>
         </Col>
-
         </Row>
         <hr/>
       </div>

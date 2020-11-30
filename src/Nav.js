@@ -50,7 +50,7 @@ class Navigation extends Component {
     //console.log(this.props.projectsOfArtist);
     //console.log(this.props.web3);
     //console.log(this.state.network);
-    console.log(this.props.projectsOfArtist);
+    //console.log(this.props.projectsOfArtist);
     let baseURL = this.props.baseURL;
 /*
     function tokenGenerator(token){
@@ -74,7 +74,7 @@ class Navigation extends Component {
 
       <Navbar className="navBar" fixed="top" bg="light" expand="lg">
 
-      <Navbar.Brand as={Link} onClick={()=>{this.props.handleToggleView("off")}} to="/">Art Blocks [Rinkeby]</Navbar.Brand>
+      <Navbar.Brand as={Link} onClick={()=>{this.props.handleToggleView("off")}} to="/">Art Blocks</Navbar.Brand>
 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

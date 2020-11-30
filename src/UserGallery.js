@@ -1,5 +1,5 @@
 import React, { Component} from 'react'
-import {Card, Button, CardDeck, Col, Row, ButtonGroup} from 'react-bootstrap';
+import {Card, Button, CardDeck, Col, Row, ButtonGroup, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 
@@ -82,8 +82,9 @@ class UserGallery extends Component {
 
     return (
       <div className="mt-4">
-      <h5>User <a href={"https://rinkeby.etherscan.io/address/"+this.props.lookupAcct} target="_blank" rel="noopener noreferrer">{this.props.lookupAcct.slice(0,10)}'s</a> Collection</h5>
+      <h5>User <a href={"https://www.etherscan.io/address/"+this.props.lookupAcct} target="_blank" rel="noopener noreferrer">{this.props.lookupAcct.slice(0,10)}'s</a> Collection <a href={"https://opensea.io/accounts/"+this.props.lookupAcct} target="_blank" rel="noopener noreferrer"><Image width="50" src="/os_logo.png"/></a></h5>
       <p>Total works purchased or minted: {this.state.tokensOfAccount && this.state.tokensOfAccount.length}</p>
+
       <br/>
       {this.state.projects &&
 

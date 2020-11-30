@@ -1,5 +1,5 @@
 import React, { Component} from 'react'
-import {Card, Button, CardDeck, Spinner,Col, Row, Form, Tabs, Tab, ButtonGroup, Pagination} from 'react-bootstrap';
+import {Card, Button, CardDeck, Spinner,Col, Row, Form, Tabs, Tab, ButtonGroup, Pagination, Container, InputGroup, FormControl} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 //import {TwitterShareButton} from 'react-twitter-embed';
 
@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 class Project extends Component {
   constructor(props) {
     super(props)
-    this.state = {loadQueue:this.props.project*1000000, account:'',tokenURIInfo:'', purchase:false, ineraction:false, project:this.props.project, artistInterface:false, formValue:'', idValue:'', page:1, scriptJSON:{}};
+    this.state = {loadQueue:this.props.project*1000000, account:'',tokenURIInfo:'', purchase:false, ineraction:false, project:this.props.project, artistInterface:false, formValue:'', idValue:'', page:1, scriptJSON:{}, purchaseTo:false, purchaseToAddress:''};
     this.handleNextImage = this.handleNextImage.bind(this);
     this.handleToggleArtistInterface = this.handleToggleArtistInterface.bind(this);
     this.purchase = this.purchase.bind(this);
@@ -16,6 +16,8 @@ class Project extends Component {
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleJSON = this.handleJSON.bind(this);
+    this.handlePurchaseTo = this.handlePurchaseTo.bind(this);
+    this.handlePurchaseToAddressChange = this.handlePurchaseToAddressChange.bind(this);
 
   }
 
@@ -71,9 +73,18 @@ class Project extends Component {
     this.setState({ formValue:event.target.value });
   }
 
+  handlePurchaseToAddressChange(event) {
+    this.setState({ purchaseToAddress:event.target.value });
+  }
+
 
   handleIdChange(event) {
     this.setState({ idValue:event.target.value });
+  }
+
+  handlePurchaseTo(){
+    let purchaseToState=this.state.purchaseTo;
+    this.setState({purchaseTo:!purchaseToState});
   }
 
   handleJSON(event,field){
@@ -466,6 +477,31 @@ class Project extends Component {
   async purchase() {
 
     this.setState({purchase:true});
+
+    if (this.state.purchaseTo){
+      if (this.props.web3.utils.isAddress(this.state.purchaseToAddress)){
+        alert("You are purchasing a token for another user directly. The NFT will be deposited directly into the Ethereum account that you set. Please reject the transaction if this is not your intention.");
+        await this.state.artBlocks.methods.purchaseTo(this.state.purchaseToAddress, this.props.project).send({
+          from:this.props.account,
+          value:this.state.projectTokenDetails[1]
+        })
+        .once('receipt', (receipt) => {
+          const mintedToken = receipt.events.Mint.returnValues[1];
+          console.log("mintedtoken:"+mintedToken);
+          //this.updateTokens();
+          this.props.handleToggleView("newToken",mintedToken);
+        })
+        .catch(err => {
+          //alert(err);
+          this.updateValues();
+          this.setState({purchase:false});
+        });
+      } else {
+        alert("This is not a valid Ethereum address.");
+        this.setState({purchase:false});
+      }
+    }
+
     await this.state.artBlocks.methods.purchase(this.props.project).send({
       from:this.props.account,
       value:this.state.projectTokenDetails[1]
@@ -484,7 +520,7 @@ class Project extends Component {
   }
 
   handleNextImage(){
-    console.log('clicked');
+    //console.log('clicked');
     let currentCard = this.state.loadQueue;
     let nextCard = currentCard+1;
     this.setState({loadQueue:nextCard});
@@ -496,9 +532,9 @@ class Project extends Component {
 
   render() {
     //console.log(this.state.projectTokenDetails && this.state.projectTokenDetails);
-    //console.log("queue:"+this.state.loadQueue);
-    console.log(JSON.stringify(this.state.scriptJSON));
-    console.log(this.props.project);
+    //console.log("addr:"+this.state.purchaseToAddress);
+    //console.log(JSON.stringify(this.state.scriptJSON));
+    //console.log(this.props.project);
 
 
     let active = this.state.page;
@@ -507,7 +543,7 @@ class Project extends Component {
       let projectTokens=this.state.projectTokens;
       for (let number = 1; number <= Math.ceil(projectTokens.length/20); number++) {
         items.push(
-          <Pagination.Item key={number} onClick={(number!==active)?()=>{this.handlePageChange(number)}:""} active={number === active}>
+          <Pagination.Item style={{"minWidth": "3em"}} key={number} onClick={(number!==active)?()=>{this.handlePageChange(number)}:undefined} active={number === active}>
           {number}
           </Pagination.Item>,
         );
@@ -516,11 +552,13 @@ class Project extends Component {
 
 
 const paginationBasic = (
-  <div >
-    <Pagination>{items}</Pagination>
+  <Container className="mx-1">
+  <div className="text-xs-center">
+  <br/>
+    <Pagination className="flex-wrap text-left">{items}</Pagination>
     <br />
-
   </div>
+  </Container>
 );
 
     //console.log(this.props.project);
@@ -593,6 +631,7 @@ const paginationBasic = (
         }
 
         {this.props.connected && this.state.projectScriptDetails &&
+          <div>
           <Button className='btn-primary btn-block' disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} onClick={this.purchase}>{this.state.purchase?<div><Spinner
             as="span"
             animation="border"
@@ -601,9 +640,28 @@ const paginationBasic = (
             aria-hidden="true"
             />
             <span className="sr-only">Pending...</span> Pending...</div>:this.state.projectScriptDetails[5]?"Purchases Paused":"Purchase"}</Button>
+            {this.state.purchaseTo &&
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+              <InputGroup.Text id="basic-addon3">
+                Address:
+              </InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl onChange={this.handlePurchaseToAddressChange} id="text" aria-describedby="basic-addon3" />
+            </InputGroup>
           }
+            <div className="text-center">
+            <Button variant="link" onClick={this.handlePurchaseTo}>Purchase To Another User</Button>
+            </div>
+
+          </div>
+          }
+
+
           </div>
         }
+
+
         <br />
         {this.state.projectTokenDetails &&
           <div>
@@ -661,10 +719,10 @@ const paginationBasic = (
             }})
           }
         </CardDeck>
-        <Row className="justify-content-md-center">
+        <Row >
         {paginationBasic}
         </Row>
-        <br/>
+
         <div className="text-center">
         <Button className='btn-light btn-sm' onClick={() => this.props.handleToggleView("gallery",this.state.project)}>Back To Project List</Button>
         </div>
@@ -675,7 +733,7 @@ const paginationBasic = (
         <Col>
 
         <h3>Artist Dashboard</h3>
-        <h5>Artist Address: {this.state.projectTokenDetails[0]}</h5>
+        <h5>Artist Address: {this.state.projectTokenDetails && this.state.projectTokenDetails[0]}</h5>
         <p>Below you can control your project's representation on the blockchain. <b>Only adjust settings that you are comfortable with. </b></p>
         <p>Please be mindful of <i>which</i> fields that are modifable after a project is locked. Some are and some are not. Once a project is locked it is frozen permanently/immutably so choose wisely.</p>
 
@@ -1007,7 +1065,7 @@ const paginationBasic = (
                 <Form.Label><b>Update Project BaseURI</b></Form.Label>
                 <br/>
                 <Form.Label>Current setting: {this.state.projectURIInfo[0]}</Form.Label>
-                <Form.Control onChange={this.handleValueChange} type="url" placeholder="Enter your website here. Can be Instagram or Twitter link too." />
+                <Form.Control onChange={this.handleValueChange} type="url" placeholder="Enter base URI here. The URI serves the token JSON which points to the token image and other metadata." />
                 <Form.Text className="text-muted">
                   This can be modified after a project is locked. Modifying this will change where the metadata for each project is retreived.
                 </Form.Text>

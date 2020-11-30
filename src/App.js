@@ -1,4 +1,4 @@
-//https://oneclickdapp.com/beast-powder/
+//https://oneclickdapp.com/child-cello/
 
 import React, { Component } from 'react'
 import { ARTBLOCKS_CONTRACT_ABI, ARTBLOCKS_CONTRACT_ADDRESS } from './config'
@@ -82,7 +82,7 @@ class App extends Component {
 
   async componentDidMount() {
 
-      const web3 = new Web3(new Web3.providers.HttpProvider(`https://rinkeby.infura.io/v3/${API_KEY}`));
+      const web3 = new Web3(new Web3.providers.HttpProvider(`https://mainnet.infura.io/v3/${API_KEY}`));
       const artBlocks = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI, ARTBLOCKS_CONTRACT_ADDRESS);
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
       const allProjects = [];
@@ -144,14 +144,14 @@ async componentDidUpdate(oldProps){
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
       const network = await web3.eth.net.getNetworkType();
       const artBlocks = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI, ARTBLOCKS_CONTRACT_ADDRESS);
-      if (network === "rinkeby"){
+      if (network === "main"){
         window.ethereum.request({method:'eth_requestAccounts'}).then(result=>{
           console.log(result);
           this.setState({connected:true, web3, network, artBlocks});
           this.loadAccountData();
         });
       }  else {
-        alert("please switch to Rinkeby and try to connect again");
+        alert("please switch to mainnet and try to connect again");
       }
     } else {
       alert("MetaMask not detected. Please install extension and try again.");
@@ -188,7 +188,7 @@ async componentDidUpdate(oldProps){
 
   render() {
 
-    let baseURL = "https://testnetapi.artblocks.io";
+    let baseURL = "https://api.artblocks.io";
 
 
 

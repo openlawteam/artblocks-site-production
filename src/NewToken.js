@@ -89,7 +89,7 @@ class NewToken extends Component {
           <h3>You just minted {this.state.projectDescription[0]} #{Number(this.props.token)-Number(this.state.projectId && this.state.projectId)*1000000}</h3>
           <h3>by {this.state.projectDescription[1]}</h3>
           {this.state.projectDescription[3] &&
-            <a href={"https://"+this.state.projectDescription[3]}>{this.state.projectDescription[3]}</a>
+            <a href={this.state.projectDescription[3]} target="_blank" rel="noopener noreferrer">{this.state.projectDescription[3]}</a>
           }
           <br/>
           <br/>
@@ -123,7 +123,7 @@ class NewToken extends Component {
 
           <br />
           <TwitterShareButton
-            url={'https://testnet.artblocks.io/token/'+this.state.token}
+            url={'https://www.artblocks.io/token/'+this.state.token}
             options={{ text:"I just minted "+this.state.projectDescription[0]+" #"+(Number(this.props.token)-Number(this.state.projectId && this.state.projectId)*1000000)+" by "+this.state.projectDescription[1]+"!", via: 'artblocks_io' }}
             tag={'genArt'}
           />
