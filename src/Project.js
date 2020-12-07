@@ -65,6 +65,21 @@ class Project extends Component {
     this.setState({projectDescription, projectTokenDetails, projectScriptDetails, projectURIInfo, projectRoyaltyInfo, projectTokens, project:this.props.project});
   }
 
+  getOSLink(){
+    //console.log(this.props.project);
+
+    if (this.props.project && this.props.project==="1"){
+      console.log("osp1");
+      return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Genesis%20by%20DCA%22%5D%7D%5D%7D";
+    } else if (this.props.project && this.props.project==="2"){
+      console.log("osp2");
+      return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Construction%20Token%20by%20Jeff%20Davis%22%5D%7D%5D%7D";
+    } else {
+      return "";
+    }
+
+  }
+
   handleToggleArtistInterface(){
     this.setState({artistInterface:!this.state.artistInterface});
   }
@@ -76,7 +91,6 @@ class Project extends Component {
   handlePurchaseToAddressChange(event) {
     this.setState({ purchaseToAddress:event.target.value });
   }
-
 
   handleIdChange(event) {
     this.setState({ idValue:event.target.value });
@@ -531,10 +545,12 @@ class Project extends Component {
   }
 
   render() {
+    //console.log(this.props.project);
     //console.log(this.state.projectTokenDetails && this.state.projectTokenDetails);
     //console.log("addr:"+this.state.purchaseToAddress);
     //console.log(JSON.stringify(this.state.scriptJSON));
     //console.log(this.props.project);
+
 
 
     let active = this.state.page;
@@ -672,8 +688,8 @@ const paginationBasic = (
         </div>
         }
 
-        {this.state.projectTokens && this.state.projectTokenDetails && this.state.projectTokens.length===Number(this.state.projectTokenDetails[3]) &&
-          <p><b>This project is sold out.</b></p>
+        {this.state.projectTokens && this.props.project && this.state.projectTokenDetails && this.state.projectTokens.length===Number(this.state.projectTokenDetails[3]) &&
+          <p><b>The max number of iterations/editions for this project have been minted. Please visit the project on <a href={this.getOSLink()} rel="noopener noreferrer" target="_blank">OpenSea</a> to see what is available on the secondary market!</b></p>
         }
 
 

@@ -5,6 +5,12 @@
     "state": 1,
     "path": "/Users/erick/apps/artblocks/site/.env"
   },
+  ".gitignore": {
+    "mt": "Sun Nov 29 2020 22:46:06 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks/site/.gitignore"
+  },
   "README.md": {
     "mt": "Thu Nov 26 2020 23:18:23 GMT-0600 (Central Standard Time)",
     "exists": true,
@@ -102,7 +108,7 @@
     "path": "/Users/erick/apps/artblocks/site/src/ControlPanel.js"
   },
   "src/Features.js": {
-    "mt": "Sun Nov 29 2020 21:56:05 GMT-0600 (Central Standard Time)",
+    "mt": "Fri Dec 04 2020 07:40:37 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks/site/src/Features.js"
@@ -144,7 +150,7 @@
     "path": "/Users/erick/apps/artblocks/site/src/NewToken.js"
   },
   "src/Project.js": {
-    "mt": "Sun Nov 29 2020 21:43:20 GMT-0600 (Central Standard Time)",
+    "mt": "Mon Nov 30 2020 22:12:17 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks/site/src/Project.js"
