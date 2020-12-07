@@ -46,7 +46,7 @@ class Features extends Component {
       if (decPairs[23]<15){
         if (features.includes("Fuzzy")){
 
-        } else {
+        } else if (!features.includes("Slinky")){
         features.push("Bold");
       }
       }
@@ -63,8 +63,13 @@ class Features extends Component {
       }
       features.push("Starting Color: "+decPairs[29]);
       if (decPairs[28] < 3){
+        features.push("End Color: "+(decPairs[29]+((Math.floor(decPairs[26].map( 0, 255, 12, 20))*steps))/0.5)%255);
         features.push("Color Spread: 0.5");
       } else {
+        features.push("End Color: "+Math.floor((decPairs[29]+((Math.floor(decPairs[26].map( 0, 255, 12, 20))*steps))/Math.floor(decPairs[28].map(0,255,5,50)))%255));
+        //if ([253, 254, 255].includes(Math.floor(((Math.floor(decPairs[26].map( 0, 255, 12, 20))*steps))/Math.floor(decPairs[28].map(0,255,5,50))))){
+          //features.push("Full Spectrum");
+        //}
         features.push("Color Spread: "+Math.floor(decPairs[28].map(0,255,5,50)));
       }
 
