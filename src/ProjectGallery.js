@@ -12,7 +12,7 @@ class ProjectGallery extends Component {
   }
 
   async componentDidMount() {
-    const artBlocks = this.props.artBlocks;
+    const artBlocks = this.props.project<3?this.props.artBlocks:this.props.artBlocks2;
     const projectTokens = await artBlocks.methods.projectShowAllTokens(this.props.project).call();
     const projectDescription = await artBlocks.methods.projectDetails(this.props.project).call();
     const projectTokenDetails = await artBlocks.methods.projectTokenInfo(this.props.project).call();

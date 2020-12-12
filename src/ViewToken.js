@@ -16,7 +16,7 @@ class ViewToken extends Component {
 
   async componentDidMount() {
     console.log(this.props);
-    const artBlocks = this.props.artBlocks;
+    const artBlocks = this.props.token<3000000?this.props.artBlocks:this.props.artBlocks2;
     const projectId = await artBlocks.methods.tokenIdToProjectId(this.props.token).call();
     const projectTokens = await artBlocks.methods.projectShowAllTokens(projectId).call();
     const projectDescription = await artBlocks.methods.projectDetails(projectId).call();
@@ -24,7 +24,7 @@ class ViewToken extends Component {
     const projectScriptDetails = await artBlocks.methods.projectScriptInfo(projectId).call();
     const projectURIInfo = await artBlocks.methods.projectURIInfo(projectId).call();
     const ownerOfToken = await artBlocks.methods.ownerOf(this.props.token).call();
-    const tokenHashes = await artBlocks.methods.showTokenHashes(this.props.token).call();
+    const tokenHashes = this.props.token<3000000?await artBlocks.methods.showTokenHashes(this.props.token).call():await artBlocks.methods.tokenIdToHash(this.props.token).call();
     this.setState({artBlocks, projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, projectURIInfo, projectId, ownerOfToken, tokenHashes});
   }
 
@@ -120,7 +120,7 @@ console.log(hyperRainbow);
             <p>{this.state.projectDescription[2]}</p>
           }
 
-        
+
           {this.state.ownerOfToken &&
             <p>Owned by <Link to={"/user/"+this.state.ownerOfToken}>{this.state.ownerOfToken.slice(0,10)}</Link></p>
           }
@@ -158,8 +158,8 @@ console.log(hyperRainbow);
 
           <br />
           <TwitterShareButton
-            url={'https://www.artblocks.io/token/'+this.state.token}
-            options={{ text:this.state.projectDescription[0]+" #"+(Number(this.state.token)-Number(this.state.projectId)*1000000)+" by "+this.state.projectDescription[1], via: 'artblocks_io' }}
+            url={'https://rinkeby.artblocks.io/token/'+this.state.token}
+            options={{ text:"Testnet "+this.state.projectDescription[0]+" #"+(Number(this.state.token)-Number(this.state.projectId)*1000000)+" by "+this.state.projectDescription[1], via: 'artblocks_io' }}
             hashtags={['genArt']}
           />
           </div>

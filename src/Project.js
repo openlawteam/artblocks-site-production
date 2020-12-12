@@ -1,13 +1,14 @@
 import React, { Component} from 'react'
 import {Card, Button, CardDeck, Spinner,Col, Row, Form, Tabs, Tab, ButtonGroup, Pagination, Container, InputGroup, FormControl} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import {ERC20_ABI} from './config';
 //import {TwitterShareButton} from 'react-twitter-embed';
 
 
 class Project extends Component {
   constructor(props) {
     super(props)
-    this.state = {loadQueue:this.props.project*1000000, account:'',tokenURIInfo:'', purchase:false, ineraction:false, project:this.props.project, artistInterface:false, formValue:'', idValue:'', page:1, scriptJSON:{}, purchaseTo:false, purchaseToAddress:''};
+    this.state = {loadQueue:this.props.project*1000000, account:'',tokenURIInfo:'', purchase:false, ineraction:false, project:this.props.project, artistInterface:false, formValue:'', idValue:'', page:1, scriptJSON:{}, purchaseTo:false, purchaseToAddress:'', currency:'', currencyAddress:'', erc20:'', approved:true, erc20Balance:''};
     this.handleNextImage = this.handleNextImage.bind(this);
     this.handleToggleArtistInterface = this.handleToggleArtistInterface.bind(this);
     this.purchase = this.purchase.bind(this);
@@ -18,56 +19,190 @@ class Project extends Component {
     this.handleJSON = this.handleJSON.bind(this);
     this.handlePurchaseTo = this.handlePurchaseTo.bind(this);
     this.handlePurchaseToAddressChange = this.handlePurchaseToAddressChange.bind(this);
+    this.approve = this.approve.bind(this);
 
   }
 
   async componentDidMount() {
 
-    //const web3 = this.props.web3;
-    const artBlocks = this.props.artBlocks;
-    const network = this.props.network;
+
+    const artBlocks = this.props.project<3?this.props.artBlocks:this.props.artBlocks2;
     const projectTokens = await artBlocks.methods.projectShowAllTokens(this.props.project).call();
     const projectDescription = await artBlocks.methods.projectDetails(this.props.project).call();
     const projectTokenDetails = await artBlocks.methods.projectTokenInfo(this.props.project).call();
     const projectScriptDetails = await artBlocks.methods.projectScriptInfo(this.props.project).call();
     const projectURIInfo = await artBlocks.methods.projectURIInfo(this.props.project).call();
     const projectRoyaltyInfo = await artBlocks.methods.getRoyaltyData(this.props.project).call();
+    if (this.props.project>=3){
+      let currency = await artBlocks.methods.projectIdToCurrencySymbol(this.props.project).call();
+      let currencyAddress = await artBlocks.methods.projectIdToCurrencyAddress(this.props.project).call();
+      if (currency !== "ETH"){
+        let erc20 = new this.props.web3.eth.Contract(ERC20_ABI, currencyAddress);
+        if (this.props.connected){
+          let erc20Balance = await erc20.methods.balanceOf(this.props.account).call();
+          this.setState({erc20Balance});
+        }
+        this.setState({erc20});
+      }
+      this.setState({currency, currencyAddress});
+      if (this.props.connected && this.state.currency !== "ETH"){
+        setTimeout(x=>{
+          this.checkAllowance();
+        },500);
+      }
+    } else {
+      this.setState({currency:"ETH"});
+    }
     let scriptJSON = projectScriptDetails[0] && JSON.parse(projectScriptDetails[0]);
-    this.setState({artBlocks, projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, scriptJSON, projectURIInfo, projectRoyaltyInfo, network});
+    console.log("still setting state");
+    this.setState({artBlocks, projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, scriptJSON, projectURIInfo, projectRoyaltyInfo/*, network*/});
   }
+
+
+  async checkAllowance(){
+      let allowance = await this.state.erc20.methods.allowance(this.props.account, this.props.minterAddress).call();
+      console.log(allowance);
+
+      if (allowance >= this.state.projectTokenDetails[1]){
+        this.setState({approved:true});
+        console.log("setting approved to true");
+      } else {
+        this.setState({approved:false});
+        console.log("setting approved to false");
+      }
+  }
+
+  async checkBalance(){
+    let balanceRaw = await this.state.erc20.methods.balanceOf(this.props.account).call();
+    let balance = this.props.web3.utils.fromWei(balanceRaw,'ether')
+    console.log(balance);
+    this.setState({erc20Balance:balance});
+  }
+
 
   async componentDidUpdate(oldProps){
     if (oldProps.project !== this.props.project){
       console.log('change');
-      let artBlocks = this.props.artBlocks;
+
+
+      const artBlocks = this.props.project<3?this.props.artBlocks:this.props.artBlocks2;
       const projectTokens = await artBlocks.methods.projectShowAllTokens(this.props.project).call();
       const projectDescription = await artBlocks.methods.projectDetails(this.props.project).call();
       const projectTokenDetails = await artBlocks.methods.projectTokenInfo(this.props.project).call();
       const projectScriptDetails = await artBlocks.methods.projectScriptInfo(this.props.project).call();
       const projectURIInfo = await artBlocks.methods.projectURIInfo(this.props.project).call();
       const projectRoyaltyInfo = await artBlocks.methods.getRoyaltyData(this.props.project).call();
-      let scriptJSON = JSON.parse(projectScriptDetails[0]);
-      this.setState({page:1,loadQueue:this.props.project*1000000+((this.props.page-1)*20),projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, scriptJSON, projectURIInfo, projectRoyaltyInfo, project:this.props.project});
+      if (this.props.project>=3){
+        let currency = await artBlocks.methods.projectIdToCurrencySymbol(this.props.project).call();
+        let currencyAddress = await artBlocks.methods.projectIdToCurrencyAddress(this.props.project).call();
+        if (currency !== "ETH"){
+          let erc20 = new this.props.web3.eth.Contract(ERC20_ABI, currencyAddress);
+          if (this.props.connected){
+            if (this.props.connected){
+              setTimeout(x=>{
+              this.checkBalance();
+              },500);
+            }
+          }
+          this.setState({erc20});
+        }
+        this.setState({currency, currencyAddress});
+        if (this.state.currency !== "ETH"){
+          setTimeout(x=>{
+            this.checkAllowance();
+          },500);
+        }
+      } else {
+        this.setState({currency:"ETH"});
+      }
+
+
+      let scriptJSON = projectScriptDetails[0] && JSON.parse(projectScriptDetails[0]);
+      this.setState({page:1,loadQueue:this.props.project*1000000+((this.props.page-1)*20),projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, scriptJSON, projectURIInfo, projectRoyaltyInfo, project:this.props.project, approved:true});
+
     } else if (oldProps.artBlocks !== this.props.artBlocks){
-      let artBlocks = this.props.artBlocks;
+      console.log("change artBlocks?");
+      const artBlocks = this.props.project<3?this.props.artBlocks:this.props.artBlocks2;
+      if (this.props.project>=3){
+        let currency = await artBlocks.methods.projectIdToCurrencySymbol(this.props.project).call();
+        let currencyAddress = await artBlocks.methods.projectIdToCurrencyAddress(this.props.project).call();
+        if (currency !== "ETH"){
+          let erc20 = new this.props.web3.eth.Contract(ERC20_ABI, currencyAddress);
+          if (this.props.connected){
+            setTimeout(x=>{
+            this.checkBalance();
+            },500);
+          }
+          this.setState({erc20});
+        }
+        this.setState({currency, currencyAddress});
+        if (this.state.currency !== "ETH"){
+          setTimeout(x=>{
+            this.checkAllowance();
+          },500);
+        }
+      } else {
+        this.setState({currency:"ETH"});
+      }
+      this.setState({artBlocks});
+    }
+
+
+    if (oldProps.connected !== this.props.connected){
+      console.log("change connected");
+      const artBlocks = this.props.project<3?this.props.artBlocks:this.props.artBlocks2;
+      if (this.props.project>=3){
+        let currency = await this.state.artBlocks.methods.projectIdToCurrencySymbol(this.props.project).call();
+        let currencyAddress = await this.state.artBlocks.methods.projectIdToCurrencyAddress(this.props.project).call();
+        if (currency !== "ETH"){
+          let erc20 = new this.props.web3.eth.Contract(ERC20_ABI, currencyAddress);
+          if (this.props.connected){
+            if (this.props.connected){
+              setTimeout(x=>{
+              this.checkBalance();
+              },500);
+            }
+          }
+          this.setState({erc20});
+        }
+        this.setState({currency, currencyAddress});
+      } else {
+        this.setState({currency:"ETH"});
+      }
+
+      if (this.props.project>=3){
+        if (this.state.currency !== "ETH"){
+          setTimeout(x=>{
+            this.checkAllowance();
+          },500);
+        }
+      }
       this.setState({artBlocks});
     }
   }
 
   async updateValues(){
-    let artBlocks = this.props.artBlocks;
+    const artBlocks = this.props.project<3?this.props.artBlocks:this.props.artBlocks2;
     const projectTokens = await artBlocks.methods.projectShowAllTokens(this.props.project).call();
     const projectDescription = await artBlocks.methods.projectDetails(this.props.project).call();
     const projectTokenDetails = await artBlocks.methods.projectTokenInfo(this.props.project).call();
     const projectScriptDetails = await artBlocks.methods.projectScriptInfo(this.props.project).call();
     const projectURIInfo = await artBlocks.methods.projectURIInfo(this.props.project).call();
     const projectRoyaltyInfo = await artBlocks.methods.getRoyaltyData(this.props.project).call();
-    this.setState({projectDescription, projectTokenDetails, projectScriptDetails, projectURIInfo, projectRoyaltyInfo, projectTokens, project:this.props.project});
+    if (this.props.project>=3 && this.state.currency !=="ETH"){
+      if (this.props.connected){
+        let erc20Balance = await this.state.erc20.methods.balanceOf(this.props.account).call();
+        this.setState({erc20Balance});
+      }
+      console.log("updated values");
+      this.checkAllowance();
+    } else {
+      this.setState({currency:"ETH"});
+    }
+    this.setState({projectDescription, projectTokenDetails, projectScriptDetails, projectURIInfo, projectRoyaltyInfo, projectTokens, project:this.props.project, approved:true});
   }
 
   getOSLink(){
-    //console.log(this.props.project);
-
     if (this.props.project && this.props.project==="1"){
       console.log("osp1");
       return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Genesis%20by%20DCA%22%5D%7D%5D%7D";
@@ -256,7 +391,7 @@ class Project extends Component {
     });
   } else if (type === "hashesPerToken"){
     //alert(this.props.project, this.state.idValue, this.state.formValue);
-    await this.state.artBlocks.methods.updateProjectHashesGenerated(this.props.project, this.state.formValue).send({
+    await this.state.artBlocks.methods.toggleProjectUseHashString(this.props.project).send({
       from:this.props.account
     })
     .once('receipt', (receipt) => {
@@ -374,9 +509,24 @@ class Project extends Component {
       //alert(err);
       this.setState({interaction:false});
     });
-  }
+  } else if (type === "updateProjectCurrencyInfo"){
+    //alert(this.props.project, this.state.idValue, this.state.formValue);
+    let address=this.state.formValue===""?"0x0000000000000000000000000000000000000000":this.state.formValue;
+    console.log("formValue:" +address);
+    await this.state.artBlocks.methods.updateProjectCurrencyInfo(this.props.project, this.state.idValue, address).send({
+      from:this.props.account
+    })
+    .once('receipt', (receipt) => {
+      console.log(receipt);
+      this.updateValues();
+      //this.setState({loadQueue:this.props.project*1000000});
 
-  else if (type === "overrideTokenDynamicImageWithIpfsLink"){
+    })
+    .catch(err => {
+      //alert(err);
+      this.setState({interaction:false});
+    });
+  } else if (type === "overrideTokenDynamicImageWithIpfsLink"){
     //alert(this.props.project, this.state.idValue, this.state.formValue);
     await this.state.artBlocks.methods.overrideTokenDynamicImageWithIpfsLink(this.state.idValue, this.state.formValue).send({
       from:this.props.account
@@ -486,7 +636,25 @@ class Project extends Component {
   }
 }
 
+  async approve(){
+    this.setState({purchase:true});
+    await this.state.erc20.methods.approve(this.props.minterAddress, this.state.projectTokenDetails[1]).send({
+      from:this.props.account
+    })
+    .once('receipt', (receipt) => {
+      console.log(receipt);
+      this.setState({approved:true});
+      this.updateValues();
+      this.setState({purchase:false});
+    })
+    .catch(err => {
+      //alert(err);
+      this.updateValues();
+      this.setState({purchase:false});
 
+    });
+
+  }
 
   async purchase() {
 
@@ -495,43 +663,80 @@ class Project extends Component {
     if (this.state.purchaseTo){
       if (this.props.web3.utils.isAddress(this.state.purchaseToAddress)){
         alert("You are purchasing a token for another user directly. The NFT will be deposited directly into the Ethereum account that you set. Please reject the transaction if this is not your intention.");
-        await this.state.artBlocks.methods.purchaseTo(this.state.purchaseToAddress, this.props.project).send({
-          from:this.props.account,
-          value:this.state.projectTokenDetails[1]
-        })
-        .once('receipt', (receipt) => {
-          const mintedToken = receipt.events.Mint.returnValues[1];
-          console.log("mintedtoken:"+mintedToken);
-          //this.updateTokens();
-          this.props.handleToggleView("newToken",mintedToken);
-        })
-        .catch(err => {
-          //alert(err);
-          this.updateValues();
-          this.setState({purchase:false});
-        });
+        if (this.props.project<3){
+          await this.state.artBlocks.methods.purchaseTo(this.state.purchaseToAddress, this.props.project).send({
+            from:this.props.account,
+            value:this.state.projectTokenDetails[1]
+          })
+          .once('receipt', (receipt) => {
+            const mintedToken = receipt.events.Mint.returnValues[1];
+            console.log("mintedtoken:"+mintedToken);
+            //this.updateTokens();
+            this.props.handleToggleView("newToken",mintedToken);
+          })
+          .catch(err => {
+            //alert(err);
+            this.updateValues();
+            this.setState({purchase:false});
+          });
+        } else {
+          await this.props.mainMinter.methods.purchaseTo(this.state.purchaseToAddress, this.props.project).send({
+            from:this.props.account,
+            value:this.state.currency==='ETH'?this.state.projectTokenDetails[1]:0
+          })
+          .once('receipt', (receipt) => {
+            const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
+            console.log("mintedtoken:"+mintedToken);
+            this.props.handleToggleView("newToken",mintedToken);
+          })
+          .catch(err => {
+            //alert(err);
+            this.updateValues();
+            this.setState({purchase:false});
+          });
+        }
       } else {
         alert("This is not a valid Ethereum address.");
         this.setState({purchase:false});
       }
-    }
+    } else {
+    if (this.props.project<3){
+      await this.props.artBlocks.methods.purchase(this.props.project).send({
+        from:this.props.account,
+        value:this.state.projectTokenDetails[1]
+      })
+      .once('receipt', (receipt) => {
+        const mintedToken = receipt.events.Mint.returnValues[1];
+        console.log("mintedtoken:"+mintedToken);
+        console.log(receipt);
+        this.props.handleToggleView("newToken",mintedToken);
+      })
+      .catch(err => {
+        alert(err);
+        this.updateValues();
+        this.setState({purchase:false});
+      });
+    } else {
+      await this.props.mainMinter.methods.purchase(this.props.project).send({
+        from:this.props.account,
+        value:this.state.currency==='ETH'?this.state.projectTokenDetails[1]:0
+      })
+      .once('receipt', (receipt) => {
+        const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
+        console.log("mintedtoken:"+mintedToken);
+        console.log(receipt);
+        this.props.handleToggleView("newToken",mintedToken);
 
-    await this.state.artBlocks.methods.purchase(this.props.project).send({
-      from:this.props.account,
-      value:this.state.projectTokenDetails[1]
-    })
-    .once('receipt', (receipt) => {
-      const mintedToken = receipt.events.Mint.returnValues[1];
-      console.log("mintedtoken:"+mintedToken);
-      //this.updateTokens();
-      this.props.handleToggleView("newToken",mintedToken);
-    })
-    .catch(err => {
-      //alert(err);
-      this.updateValues();
-      this.setState({purchase:false});
-    });
+      })
+      .catch(err => {
+        //alert(err);
+        this.updateValues();
+        this.setState({purchase:false});
+        this.checkAllowance();
+      });
+    }
   }
+}
 
   handleNextImage(){
     //console.log('clicked');
@@ -550,6 +755,15 @@ class Project extends Component {
     //console.log("addr:"+this.state.purchaseToAddress);
     //console.log(JSON.stringify(this.state.scriptJSON));
     //console.log(this.props.project);
+    //console.log(this.props.mainMinter);
+    //console.log(this.state.currency, this.state.currencyAddress);
+    //console.log(this.state.erc20);
+    //console.log(this.state.currencyAddress);
+    //console.log(this.state.approved);
+    //console.log(this.state.erc20);
+    //console.log(this.props.account);
+    console.log(this.state.idValue);
+    console.log(this.state.formValue);
 
 
 
@@ -639,15 +853,21 @@ const paginationBasic = (
 
         {this.state.projectTokens && this.state.projectTokenDetails && this.state.projectTokens.length<this.state.projectTokenDetails[3] &&
           <div>
-          <p>Price per token: {this.state.projectTokenDetails && this.props.web3.utils.fromWei(this.state.projectTokenDetails[1],'ether')}Ξ</p>
-          <br />
-        {!this.props.connected &&
+          <p>Price per token: {this.state.projectTokenDetails && this.props.web3.utils.fromWei(this.state.projectTokenDetails[1],'ether')}{this.state.currency && this.state.currency==="ETH"?"Ξ":" "+this.state.currency}</p>
 
+
+        {!this.props.connected &&
+          <div>
+          <br />
           <p>Please connect to MetaMask to enable purchases.</p>
+          </div>
         }
 
-        {this.props.connected && this.state.projectScriptDetails &&
+        {this.props.connected && this.state.projectScriptDetails && this.state.approved &&
           <div>
+          {this.state.currency!=="ETH" &&
+          <p>{this.state.currency} Balance: {this.state.erc20Balance}</p>
+          }
           <Button className='btn-primary btn-block' disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} onClick={this.purchase}>{this.state.purchase?<div><Spinner
             as="span"
             animation="border"
@@ -672,6 +892,20 @@ const paginationBasic = (
 
           </div>
           }
+
+          {this.props.connected && this.state.projectScriptDetails && !this.state.approved &&
+            <div>
+            <Button className='btn-primary btn-block' /*disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} */ onClick={this.approve}>{this.state.purchase?<div><Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              />
+              <span className="sr-only">Pending...</span> Pending...</div>:"Approve "+this.state.currency+" for Purchasing"}</Button>
+
+            </div>
+            }
 
 
           </div>
@@ -846,7 +1080,7 @@ const paginationBasic = (
             <Form onSubmit={e => this.handleChange(e, "price")}>
               <Form.Group>
                 <Form.Label><b>Update Price per Token</b></Form.Label>
-                <Form.Control onChange={this.handleValueChange} type="number" min="0" step="any" placeholder="Price for each purchase in ETH." />
+                <Form.Control onChange={this.handleValueChange} type="number" min="0" step="any" placeholder={`Price for each purchase in ${this.state.currency}.`} />
                 <Form.Text className="text-muted">
                   This can be modified after a project is locked.
                 </Form.Text>
@@ -858,6 +1092,37 @@ const paginationBasic = (
             <br/>
           </div>
 
+          <div>
+          {this.props.project>=3 &&
+          <Form onSubmit={e => this.handleChange(e, "updateProjectCurrencyInfo")}>
+            <Form.Group>
+              <Form.Label><b>Update Currency Information</b></Form.Label>
+              <br />
+
+              <Form.Label>Current Currency: {this.state.currency && this.state.currency}</Form.Label>
+              <br />
+              <Form.Label>Current Currency Address: {this.state.currencyAddress && this.state.currencyAddress}</Form.Label>
+              <br />
+
+              <Form.Label>Currency Symbol:</Form.Label>
+              <Form.Control onChange={this.handleIdChange} type="text" placeholder="Specify the symbol for the currency you are using. ETH, DAI, etc." >
+              </Form.Control>
+              <Form.Label>Currency Address:</Form.Label>
+              <Form.Control onChange={this.handleValueChange} type="text" placeholder="Specify the ERC20 Contract Address for selected currency. If ETH leave blank." >
+              </Form.Control>
+
+              <Form.Text className="text-muted">
+                The above values <b>can</b> be changed once project is locked. Both of these fields are updated in the same function call so make sure you fill both in (or just the currency field if you're setting the currency to ETH.)
+              </Form.Text>
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        }
+          </div>
+          <br/>
           <div>
             <Form onSubmit={e => this.handleChange(e, "maxInvocations")}>
               <Form.Group>
@@ -905,7 +1170,7 @@ const paginationBasic = (
                 <Form.Control onChange={e => this.handleJSON(e, "version")} value={this.state.scriptJSON.version || ''} type="text" placeholder="Specify version number of script, if applicable." >
                 </Form.Control>
                 <Form.Label>Aspect Ratio (width/height):</Form.Label>
-                <Form.Control onChange={e => this.handleJSON(e, "aspectRatio")} type="text" value={this.state.scriptJSON.aspectRatio || ''} placeholder="Specify aspect ratio (width divided by height). If left blank will default to 1 which is a square." >
+                <Form.Control onChange={e => this.handleJSON(e, "aspectRatio")} type="text" value={this.state.scriptJSON.aspectRatio || ''} placeholder="Required. Specify aspect ratio (width divided by height)." >
                 </Form.Control>
                 <Form.Label>Instructions:</Form.Label>
                 <Form.Control onChange={e => this.handleJSON(e, "instructions")} value={this.state.scriptJSON.instructions || ''} as="textarea" rows={3} type="text" placeholder="Use this space to give user interactivity instructions if appropriate. Separate each instruction with a '|' (pipe)" >
@@ -973,22 +1238,24 @@ const paginationBasic = (
           </div>
           <br/>
           <div>
-            <Form onSubmit={e => this.handleChange(e, "hashesPerToken")}>
+            <Form>
               <Form.Group>
-                <Form.Label><b>Update Hashes Minted per Token</b></Form.Label>
+                <Form.Label><b>Use Hashes?</b></Form.Label>
                 <br/>
-                <Form.Label>Current Hashes Minted per Token: {this.state.projectScriptDetails && this.state.projectScriptDetails[2]}</Form.Label>
-                <Form.Control onChange={this.handleValueChange} type="number" placeholder="Choose wisely! More hashes means more random inputs but also more gas per purchase." />
+                <Button variant="primary mx-1" onClick={e => this.handleChange(e, "hashesPerToken")}>
+                  {this.state.projectScriptDetails && this.state.projectScriptDetails[2]?"Project is uses/stores a token hash. Click to set it to remove.":"Project does not use a token hash. Click to add."}
+                </Button>
+
+                <Button variant="primary mx-1" onClick={e => this.handleChange(e, "isDynamic")}>
+                  {this.state.projectDescription && this.state.projectDescription[5]?"Project is dynamic. Click to set it to static.":"Project is static. Click to set it to dynamic."}
+                </Button>
                 <Form.Text className="text-muted">
-                  This <b>cannot</b> be changed once project is locked.
+
+                  This <b>cannot</b> be changed once project is locked or once a purchase has been made.
                 </Form.Text>
               </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-              <Button variant="primary mx-1" onClick={e => this.handleChange(e, "isDynamic")}>
-                {this.state.projectDescription && this.state.projectDescription[5]?"Project is dynamic. Click to set it to static.":"Project is static. Click to set it to dynamic."}
-              </Button>
+
+
             </Form>
             <br/>
           </div>

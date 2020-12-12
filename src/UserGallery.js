@@ -12,18 +12,29 @@ class UserGallery extends Component {
 
   async componentDidMount() {
     const artBlocks = this.props.artBlocks;
+    const artBlocks2 = this.props.artBlocks2;
     const network = this.props.network;
-    console.log("lua"+this.props.lookupAcct);
-    const tokensOfAccount = await artBlocks.methods.tokensOfOwner(this.props.lookupAcct).call();
+    //console.log("lua"+this.props.lookupAcct);
+    const tokensOfAccountA = await artBlocks.methods.tokensOfOwner(this.props.lookupAcct).call();
+    const tokensOfAccountAFiltered = tokensOfAccountA.filter(token => token < 3000000);
+    //console.log(tokensOfAccountAFiltered);
+    //console.log("TA"+tokensOfAccountA);
+    const tokensOfAccountB = await artBlocks2.methods.tokensOfOwner(this.props.lookupAcct).call();
+    //console.log("TB"+tokensOfAccountB);
+    const tokensOfAccount = tokensOfAccountAFiltered.concat(tokensOfAccountB);
+    //console.log("TOA"+tokensOfAccount);
+
+
     const tokenData = await Promise.all(tokensOfAccount.map(async (token)=>{
-      const projectId = await artBlocks.methods.tokenIdToProjectId(token).call();
+      const projectId = token<3000000?await artBlocks.methods.tokenIdToProjectId(token).call():await artBlocks2.methods.tokenIdToProjectId(token).call();
       return [token, projectId];
     }));
     let projectsOfAccount = new Set(await Promise.all(tokensOfAccount.map(async (token)=>{
-      let projectId = await artBlocks.methods.tokenIdToProjectId(token).call();
+      let projectId = token<3000000?await artBlocks.methods.tokenIdToProjectId(token).call():await artBlocks2.methods.tokenIdToProjectId(token).call();
       return projectId;
     })));
-    this.setState({artBlocks, tokenData, projectsOfAccount, network, tokensOfAccount});
+
+    this.setState({artBlocks, artBlocks2, tokenData, projectsOfAccount, network, tokensOfAccount});
     this.buildUserTokenArray();
   }
 
@@ -31,14 +42,15 @@ class UserGallery extends Component {
     if (oldProps.lookupAcct !== this.props.lookupAcct){
       console.log('acctchange');
     const artBlocks = this.props.artBlocks;
+    const artBlocks2 = this.props.artBlocks2;
     const network = this.props.network;
     const tokensOfAccount = await artBlocks.methods.tokensOfOwner(this.props.lookupAcct).call();
     const tokenData = await Promise.all(tokensOfAccount.map(async (token)=>{
-      const projectId = await artBlocks.methods.tokenIdToProjectId(token).call();
+      const projectId = token<3000000?await artBlocks.methods.tokenIdToProjectId(token).call():await artBlocks2.methods.tokenIdToProjectId(token).call();
       return [token, projectId];
     }));
     let projectsOfAccount = new Set(await Promise.all(tokensOfAccount.map(async (token)=>{
-      let projectId = await artBlocks.methods.tokenIdToProjectId(token).call();
+      let projectId = token<3000000?await artBlocks.methods.tokenIdToProjectId(token).call():await artBlocks2.methods.tokenIdToProjectId(token).call();
       return projectId;
     })));
     this.setState({artBlocks, tokenData, projectsOfAccount, network, tokensOfAccount});
@@ -50,10 +62,11 @@ class UserGallery extends Component {
     let projects ={};
 
     for (let project of this.state.projectsOfAccount) {
-      const projectDescription = await this.state.artBlocks.methods.projectDetails(project).call();
-      const projectTokenDetails = await this.state.artBlocks.methods.projectTokenInfo(project).call();
-      const projectScriptDetails = await this.state.artBlocks.methods.projectScriptInfo(project).call();
-      const projectURIInfo = await this.state.artBlocks.methods.projectURIInfo(project).call();
+      const contract = project<3?this.state.artBlocks:this.state.artBlocks2;
+      const projectDescription = await contract.methods.projectDetails(project).call();
+      const projectTokenDetails = await contract.methods.projectTokenInfo(project).call();
+      const projectScriptDetails = await contract.methods.projectScriptInfo(project).call();
+      const projectURIInfo = await contract.methods.projectURIInfo(project).call();
 
       let tokens = [];
       for (let i=0;i<this.state.tokenData.length;i++){

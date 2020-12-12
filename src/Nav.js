@@ -8,33 +8,55 @@ import './Nav.css'
 class Navigation extends Component {
   async componentDidMount() {
     const artBlocks = this.props.artBlocks;
+    const artBlocks2 = this.props.artBlocks2;
     const activeProjects = this.props.activeProjects;
     //console.log(activeProjects);
     let activeProjectsDetails = [];
       //for (let i=0;i<activeProjects.length;i++){
       for (let project in activeProjects){
-        //console.log(project, activeProjects[project]);
-        let nameArtist = [];
-        const projectDetails = await artBlocks.methods.projectDetails(activeProjects[project]).call();
-        nameArtist.push(activeProjects[project]);
-        nameArtist.push(projectDetails[0]);
-        nameArtist.push(projectDetails[1]);
-        activeProjectsDetails.push(nameArtist);
+        if (project<3){
+          let nameArtist = [];
+          const projectDetails = await artBlocks.methods.projectDetails(activeProjects[project]).call();
+          nameArtist.push(activeProjects[project]);
+          nameArtist.push(projectDetails[0]);
+          nameArtist.push(projectDetails[1]);
+          activeProjectsDetails.push(nameArtist);
+        } else {
+          let nameArtist = [];
+          const projectDetails = await artBlocks2.methods.projectDetails(activeProjects[project]).call();
+          nameArtist.push(activeProjects[project]);
+          nameArtist.push(projectDetails[0]);
+          nameArtist.push(projectDetails[1]);
+          activeProjectsDetails.push(nameArtist);
+        }
+
       }
 
       const allProjects = this.props.allProjects;
       let allProjectsDetails = [];
         for (let i=0;i<allProjects.length;i++){
-          let nameArtist = [];
-          const projectDetails = await artBlocks.methods.projectDetails(i).call();
-          nameArtist.push(i);
-          nameArtist.push(projectDetails[0]);
-          nameArtist.push(projectDetails[1]);
-          allProjectsDetails.push(nameArtist);
+          if (i<3){
+            let nameArtist = [];
+            console.log("project"+i);
+            const projectDetails = await artBlocks.methods.projectDetails(i).call();
+            nameArtist.push(i);
+            nameArtist.push(projectDetails[0]);
+            nameArtist.push(projectDetails[1]);
+            allProjectsDetails.push(nameArtist);
+          } else {
+            let nameArtist = [];
+            console.log("project"+i);
+            const projectDetails = await artBlocks2.methods.projectDetails(i).call();
+            nameArtist.push(i);
+            nameArtist.push(projectDetails[0]);
+            nameArtist.push(projectDetails[1]);
+            allProjectsDetails.push(nameArtist);
+          }
+
         }
       //console.log(activeProjectsDetails);
 
-      this.setState({artBlocks, activeProjects, activeProjectsDetails, allProjectsDetails});
+      this.setState({artBlocks, artBlocks2, activeProjects, activeProjectsDetails, allProjectsDetails});
     }
 
 

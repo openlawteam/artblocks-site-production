@@ -1,7 +1,17 @@
 //https://oneclickdapp.com/child-cello/
 
 import React, { Component } from 'react'
-import { ARTBLOCKS_CONTRACT_ABI, ARTBLOCKS_CONTRACT_ADDRESS } from './config'
+import { NETWORK,
+        ARTBLOCKS_CONTRACT_ABI_A,
+        ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A,
+        ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A,
+        ARTBLOCKS_CONTRACT_ABI_B,
+        ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B,
+        ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B,
+        ARTBLOCKS_CONTRACT_MINTER_ABI,
+        ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET,
+        ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
+      } from './config'
 import Web3 from 'web3'
 import Project from './Project';
 import Highlight from './Highlight';
@@ -28,6 +38,7 @@ function UserGal(props){
   handleToggleView = {props.handleToggleView}
   web3 = {props.web3}
   artBlocks = {props.artBlocks}
+  artBlocks2 = {props.artBlocks2}
   network = {props.network}
   baseURL ={props.baseURL}
   lookupAcct={address}
@@ -45,9 +56,12 @@ function Proj(props){
   connected = {props.connected}
   web3 = {props.web3}
   artBlocks = {props.artBlocks}
+  artBlocks2 = {props.artBlocks2}
+  mainMinter = {props.mainMinter}
   network = {props.network}
   baseURL ={props.baseURL}
   isWhitelisted={props.isWhitelisted}
+  minterAddress={props.minterAddress}
   />
 )
 
@@ -59,6 +73,7 @@ function ViewTok(props){
     <ViewToken
     token={tokenId}
     artBlocks={props.artBlocks}
+    artBlocks2={props.artBlocks2}
     handleToggleView = {props.handleToggleView}
     baseURL ={props.baseURL}
     />
@@ -82,9 +97,12 @@ class App extends Component {
 
   async componentDidMount() {
 
-      const web3 = new Web3(new Web3.providers.HttpProvider(`https://mainnet.infura.io/v3/${API_KEY}`));
-      const artBlocks = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI, ARTBLOCKS_CONTRACT_ADDRESS);
-      const nextProjectId = await artBlocks.methods.nextProjectId().call();
+      const web3 = new Web3(new Web3.providers.HttpProvider(`https://${NETWORK}.infura.io/v3/${API_KEY}`));
+      const artBlocks = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI_A, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A:ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A);
+      const artBlocks2 = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI_B, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B:ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B);
+      const mainMinter = new web3.eth.Contract(ARTBLOCKS_CONTRACT_MINTER_ABI, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY:ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET);
+      const minterAddress = NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY:ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
+      const nextProjectId = await artBlocks2.methods.nextProjectId().call();
       const allProjects = [];
       for (let i=0;i<nextProjectId;i++){
         allProjects.push(i);
@@ -93,24 +111,37 @@ class App extends Component {
       //await artBlocks.methods.showAllProjectIds().call();
       let activeProjects=[];
       await Promise.all(allProjects.map(async (project)=>{
-        let details = await artBlocks.methods.projectTokenInfo(project).call();
-        if (details[4]===true){
-        activeProjects.push(project);
-      }
+        if (project<3){
+          let details = await artBlocks.methods.projectTokenInfo(project).call();
+          if (details[4]===true){
+            activeProjects.push(project);
+          }
+        } else {
+          let details = await artBlocks2.methods.projectTokenInfo(project).call();
+          if (details[4]===true){
+            activeProjects.push(project);
+          }
+        }
         return null;
       }));
       let artistAddresses = await Promise.all(allProjects.map(async (project)=>{
-        let details = await artBlocks.methods.projectTokenInfo(project).call();
-        return details[0];
+        if (project<3){
+          let details = await artBlocks.methods.projectTokenInfo(project).call();
+          return details[0];
+        } else {
+          let details = await artBlocks2.methods.projectTokenInfo(project).call();
+          return details[0];
+        }
+
       }));
-      const totalInvocations = await artBlocks.methods.totalSupply().call();
+      const totalInvocations = Number(await artBlocks.methods.totalSupply().call())+ Number(await artBlocks2.methods.totalSupply().call());
       if (this.props.project){
         this.setState({currentProject:this.props.project});
       } else {
         this.setState({currentProject:activeProjects[Math.floor(Math.random()*activeProjects.length)]});
       }
       console.log("active: "+activeProjects);
-      this.setState({artBlocks, web3, allProjects, totalInvocations, artistAddresses, activeProjects});
+      this.setState({artBlocks, artBlocks2, mainMinter, minterAddress, web3, allProjects, totalInvocations, artistAddresses, activeProjects});
     //}
   }
 
@@ -127,8 +158,11 @@ async componentDidUpdate(oldProps){
 
   async loadAccountData() {
     const accounts = await this.state.web3.eth.getAccounts();
-    const tokensOfOwner = await this.state.artBlocks.methods.tokensOfOwner(accounts[0]).call();
-    const isWhitelisted = await this.state.artBlocks.methods.isWhitelisted(accounts[0]).call();
+    const tokensOfOwnerA = await this.state.artBlocks.methods.tokensOfOwner(accounts[0]).call();
+    const tokensOfOwnerAFiltered = tokensOfOwnerA.filter(token => token<3000000);
+    const tokensOfOwnerB = await this.state.artBlocks2.methods.tokensOfOwner(accounts[0]).call();
+    const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
+    const isWhitelisted = await this.state.artBlocks.methods.isWhitelisted(accounts[0]).call() && await this.state.artBlocks2.methods.isWhitelisted(accounts[0]).call();
     let projectsOfArtist=[];
     this.state.artistAddresses.map((projectArtistAddress, index)=>{
       if (projectArtistAddress === accounts[0] || isWhitelisted){
@@ -143,15 +177,18 @@ async componentDidUpdate(oldProps){
     if (typeof web3 !== "undefined"){
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
       const network = await web3.eth.net.getNetworkType();
-      const artBlocks = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI, ARTBLOCKS_CONTRACT_ADDRESS);
-      if (network === "main"){
+      const artBlocks = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI_A, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A:ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A);
+      const artBlocks2 = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI_B, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B:ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B);
+      const mainMinter = new web3.eth.Contract(ARTBLOCKS_CONTRACT_MINTER_ABI, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY:ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET);
+
+      if (network === NETWORK){
         window.ethereum.request({method:'eth_requestAccounts'}).then(result=>{
           console.log(result);
-          this.setState({connected:true, web3, network, artBlocks});
+          this.setState({connected:true, web3, network, artBlocks, artBlocks2, mainMinter});
           this.loadAccountData();
         });
       }  else {
-        alert("please switch to mainnet and try to connect again");
+        alert(`please switch to ${NETWORK==="rinkeby"?"Rinkeby":"Main"} and try to connect again`);
       }
     } else {
       alert("MetaMask not detected. Please install extension and try again.");
@@ -188,7 +225,7 @@ async componentDidUpdate(oldProps){
 
   render() {
 
-    let baseURL = "https://api.artblocks.io";
+    let baseURL = NETWORK==="main"?"https://api.artblocks.io":"https://rinkebyapi.artblocks.io";
 
 
 
@@ -206,6 +243,7 @@ async componentDidUpdate(oldProps){
       <Navigation
       web3 = {this.state.web3}
       artBlocks = {this.state.artBlocks}
+      artBlocks2 = {this.state.artBlocks2}
       handleToggleView = {this.handleToggleView}
       allProjects = {this.state.allProjects}
       activeProjects = {this.state.activeProjects}
@@ -232,6 +270,7 @@ async componentDidUpdate(oldProps){
           <div>
           <NewToken
           artBlocks={this.state.artBlocks}
+          artBlocks2={this.state.artBlocks2}
           token ={this.state.currentToken}
           handleToggleView = {this.handleToggleView}
           baseURL ={baseURL}
@@ -247,7 +286,7 @@ async componentDidUpdate(oldProps){
           handleToggleView = {this.handleToggleView}
           connected = {this.state.connected}
           web3 = {this.state.web3}
-          artBlocks = {this.state.artBlocks}
+          artBlocks = {this.state.artBlocks2}
           network = {this.state.network}
           baseURL ={baseURL}
           isWhitelisted={this.state.isWhitelisted}
@@ -273,6 +312,7 @@ async componentDidUpdate(oldProps){
         handleToggleView = {this.handleToggleView}
         web3 = {this.state.web3}
         artBlocks = {this.state.artBlocks}
+        artBlocks2 = {this.state.artBlocks2}
         network = {this.state.network}
         baseURL ={baseURL}
         />
@@ -287,6 +327,7 @@ async componentDidUpdate(oldProps){
       {this.state.allProjects &&
       <ViewTok
       artBlocks={this.state.artBlocks}
+      artBlocks2={this.state.artBlocks2}
       handleToggleView = {this.handleToggleView}
       baseURL ={baseURL}
       />
@@ -303,6 +344,9 @@ async componentDidUpdate(oldProps){
         connected = {this.state.connected}
         web3 = {this.state.web3}
         artBlocks = {this.state.artBlocks}
+        artBlocks2 = {this.state.artBlocks2}
+        mainMinter = {this.state.mainMinter}
+        minterAddress = {this.state.minterAddress}
         network = {this.state.network}
         baseURL ={baseURL}
         isWhitelisted={this.state.isWhitelisted}
@@ -328,6 +372,7 @@ async componentDidUpdate(oldProps){
               tokensOfOwner = {this.state.tokensOfOwner}
               handleToggleView = {this.handleToggleView}
               artBlocks = {this.state.artBlocks}
+              artBlocks2 = {this.state.artBlocks2}
               network = {this.state.network}
               handleNextProject = {this.handleNextProject}
               baseURL ={baseURL}
@@ -345,6 +390,7 @@ async componentDidUpdate(oldProps){
         handleToggleView = {this.handleToggleView}
         web3 = {this.state.web3}
         artBlocks = {this.state.artBlocks}
+        artBlocks2 = {this.state.artBlocks2}
         network = {this.state.network}
         baseURL ={baseURL}
         />

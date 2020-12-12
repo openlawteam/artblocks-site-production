@@ -11,7 +11,7 @@ class Highlight extends Component {
 
   async componentDidMount() {
     //const web3 = this.props.web3;
-    const artBlocks = this.props.artBlocks;
+    const artBlocks = this.props.project<3?this.props.artBlocks:this.props.artBlocks2;
     const projectTokens = await artBlocks.methods.projectShowAllTokens(this.props.project).call();
     const projectDescription = await artBlocks.methods.projectDetails(this.props.project).call();
     const projectTokenDetails = await artBlocks.methods.projectTokenInfo(this.props.project).call();
@@ -24,7 +24,8 @@ class Highlight extends Component {
   async componentDidUpdate(oldProps){
     if (oldProps.project !== this.props.project){
       console.log('change');
-    let artBlocks = this.state.artBlocks;
+      console.log(this.props.project);
+    const artBlocks = this.props.project<3?this.props.artBlocks:this.props.artBlocks2;
     const projectTokens = await artBlocks.methods.projectShowAllTokens(this.props.project).call();
     const projectDescription = await artBlocks.methods.projectDetails(this.props.project).call();
     const projectTokenDetails = await artBlocks.methods.projectTokenInfo(this.props.project).call();
