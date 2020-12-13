@@ -68,6 +68,7 @@ class Highlight extends Component {
     let baseURL = this.props.baseURL;
 
     function tokenImage(token){
+      //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
 /*

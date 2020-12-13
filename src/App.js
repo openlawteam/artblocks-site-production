@@ -97,7 +97,7 @@ class App extends Component {
 
   async componentDidMount() {
 
-      const web3 = new Web3(new Web3.providers.HttpProvider(`https://${NETWORK}.infura.io/v3/${API_KEY}`));
+      const web3 = new Web3(new Web3.providers.HttpProvider(`https://${NETWORK==="main"?"mainnet":"rinkeby"}.infura.io/v3/${API_KEY}`));
       const artBlocks = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI_A, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A:ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A);
       const artBlocks2 = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI_B, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B:ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B);
       const mainMinter = new web3.eth.Contract(ARTBLOCKS_CONTRACT_MINTER_ABI, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY:ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET);

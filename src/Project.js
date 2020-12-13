@@ -812,6 +812,8 @@ const paginationBasic = (
     let baseURL = this.props.baseURL;
 
     function tokenImage(token){
+      //console.log("https://mainnet.oss.nodechef.com/"+token);
+      //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
 

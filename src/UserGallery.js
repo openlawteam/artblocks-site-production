@@ -86,6 +86,7 @@ class UserGallery extends Component {
     let baseURL = this.props.baseURL;
 
     function tokenImage(token){
+      //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
 
@@ -134,7 +135,9 @@ class UserGallery extends Component {
                         <Col>
                           <Card border="light" className='mx-auto' style={{ width: '16rem' }} >
                           <Card.Body>
+
                             <Card.Img src={tokenImage(token)} />
+
                             <div className="text-center">
                             <ButtonGroup size="sm">
                               <Button variant="light" disabled>#{Number(token)-Number(project)*1000000}</Button>

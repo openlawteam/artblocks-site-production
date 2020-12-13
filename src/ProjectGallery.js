@@ -63,8 +63,8 @@ handlePreviousToken(){
     //console.log(this.state.web3);
     //console.log("acct: "+this.props.account);
 
-    console.log(this.state.randomToken && this.state.randomToken);
-    console.log(this.props.tokensOfOwner && this.props.tokensOfOwner);
+    //console.log(this.state.randomToken && this.state.randomToken);
+    //console.log(this.props.tokensOfOwner && this.props.tokensOfOwner);
 
     let owned = this.state.randomToken && this.props.tokensOfOwner && this.props.tokensOfOwner.includes(this.state.randomToken.toString());
 
@@ -75,6 +75,7 @@ handlePreviousToken(){
       let baseURL = this.props.baseURL;
 
       function tokenImage(token){
+        //return "https://mainnet.oss.nodechef.com/"+token+".png";
         return baseURL+'/image/'+token;
       }
 /*

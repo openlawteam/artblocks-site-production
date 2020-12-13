@@ -61,6 +61,7 @@ class NewToken extends Component {
     let baseURL = this.props.baseURL;
 
     function tokenImage(token){
+      //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
 
@@ -123,7 +124,7 @@ class NewToken extends Component {
 
           <br />
           <TwitterShareButton
-            url={'https://rinkeby.artblocks.io/token/'+this.state.token}
+            url={'https://www.artblocks.io/token/'+this.state.token}
             options={{ text:"I just minted testnet "+this.state.projectDescription[0]+" #"+(Number(this.props.token)-Number(this.state.projectId && this.state.projectId)*1000000)+" by "+this.state.projectDescription[1]+"!", via: 'artblocks_io' }}
             tag={'genArt'}
           />

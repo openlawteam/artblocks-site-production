@@ -84,6 +84,7 @@ console.log(hyperRainbow);
     let baseURL = this.props.baseURL;
 
     function tokenImage(token){
+      //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
 
@@ -158,7 +159,7 @@ console.log(hyperRainbow);
 
           <br />
           <TwitterShareButton
-            url={'https://rinkeby.artblocks.io/token/'+this.state.token}
+            url={'https://www.artblocks.io/token/'+this.state.token}
             options={{ text:"Testnet "+this.state.projectDescription[0]+" #"+(Number(this.state.token)-Number(this.state.projectId)*1000000)+" by "+this.state.projectDescription[1], via: 'artblocks_io' }}
             hashtags={['genArt']}
           />
