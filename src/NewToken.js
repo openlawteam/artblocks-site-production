@@ -15,6 +15,7 @@ class NewToken extends Component {
   }
 
   async componentDidMount() {
+    console.log("currentNet:"+this.props.network);
     const artBlocks = this.props.token<3000000?this.props.artBlocks:this.props.artBlocks2;
     const projectId = await artBlocks.methods.tokenIdToProjectId(this.props.token).call();
     const projectTokens = await artBlocks.methods.projectShowAllTokens(projectId).call();
@@ -124,8 +125,8 @@ class NewToken extends Component {
 
           <br />
           <TwitterShareButton
-            url={'https://www.artblocks.io/token/'+this.state.token}
-            options={{ text:"I just minted testnet "+this.state.projectDescription[0]+" #"+(Number(this.props.token)-Number(this.state.projectId && this.state.projectId)*1000000)+" by "+this.state.projectDescription[1]+"!", via: 'artblocks_io' }}
+            url={this.props.network==='rinkeby'?'https://rinkeby.artblocks.io/token/'+this.state.token:'https://www.artblocks.io/token/'+this.state.token}
+            options={{ text:"I just minted "+(this.props.network==='rinkeby'?'testnet ':'')+this.state.projectDescription[0]+" #"+(Number(this.props.token)-Number(this.state.projectId && this.state.projectId)*1000000)+" by "+this.state.projectDescription[1]+"!", via: 'artblocks_io' }}
             tag={'genArt'}
           />
           </div>

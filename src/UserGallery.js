@@ -90,6 +90,11 @@ class UserGallery extends Component {
       return baseURL+'/image/'+token;
     }
 
+    function tokenThumb(token){
+      return "https://rinkthumb.oss.nodechef.com/"+token+".png";
+      //return baseURL+'/thumb/'+token;
+    }
+
     function tokenGenerator(token){
       return baseURL+'/generator/'+token;
     }
@@ -136,7 +141,7 @@ class UserGallery extends Component {
                           <Card border="light" className='mx-auto' style={{ width: '16rem' }} >
                           <Card.Body>
 
-                            <Card.Img src={tokenImage(token)} />
+                            {<Card.Img src={tokenThumb(token)} />}
 
                             <div className="text-center">
                             <ButtonGroup size="sm">

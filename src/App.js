@@ -76,6 +76,7 @@ function ViewTok(props){
     artBlocks2={props.artBlocks2}
     handleToggleView = {props.handleToggleView}
     baseURL ={props.baseURL}
+    network = {props.network}
     />
   )
 }
@@ -274,6 +275,7 @@ async componentDidUpdate(oldProps){
           token ={this.state.currentToken}
           handleToggleView = {this.handleToggleView}
           baseURL ={baseURL}
+          network = {NETWORK}
           />
           </div>
         }
@@ -330,6 +332,7 @@ async componentDidUpdate(oldProps){
       artBlocks2={this.state.artBlocks2}
       handleToggleView = {this.handleToggleView}
       baseURL ={baseURL}
+      network={NETWORK}
       />
     }
       </Route>

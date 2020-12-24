@@ -15,7 +15,7 @@ class ViewToken extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props);
+    console.log("currentNet: "+this.props.network);
     const artBlocks = this.props.token<3000000?this.props.artBlocks:this.props.artBlocks2;
     const projectId = await artBlocks.methods.tokenIdToProjectId(this.props.token).call();
     const projectTokens = await artBlocks.methods.projectShowAllTokens(projectId).call();
@@ -159,8 +159,8 @@ console.log(hyperRainbow);
 
           <br />
           <TwitterShareButton
-            url={'https://www.artblocks.io/token/'+this.state.token}
-            options={{ text:"Testnet "+this.state.projectDescription[0]+" #"+(Number(this.state.token)-Number(this.state.projectId)*1000000)+" by "+this.state.projectDescription[1], via: 'artblocks_io' }}
+            url={this.props.network==='rinkeby'?'https://rinkeby.artblocks.io/token/'+this.state.token:'https://www.artblocks.io/token/'+this.state.token}
+            options={{ text:(this.props.network==='rinkeby'?'Testnet ':'')+ this.state.projectDescription[0]+" #"+(Number(this.state.token)-Number(this.state.projectId)*1000000)+" by "+this.state.projectDescription[1], via: 'artblocks_io' }}
             hashtags={['genArt']}
           />
           </div>

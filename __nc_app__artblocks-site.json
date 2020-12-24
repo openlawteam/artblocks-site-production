@@ -1,6 +1,6 @@
 {
   ".env": {
-    "mt": "Sun Dec 06 2020 23:56:22 GMT-0600 (Central Standard Time)",
+    "mt": "Mon Dec 21 2020 13:17:54 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/.env"
@@ -24,16 +24,52 @@
     "path": "/Users/erick/apps/artblocks-v2/site/__nc_app__artblocks-server-temp.json"
   },
   "__nc_app__artblocks-site-rinkeby.json": {
-    "mt": "Fri Dec 11 2020 15:02:19 GMT-0600 (Central Standard Time)",
+    "mt": "Thu Dec 24 2020 02:42:17 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/__nc_app__artblocks-site-rinkeby.json"
   },
   "__nc_app__artblocks-temp-site.json": {
-    "mt": "Sun Dec 06 2020 23:45:55 GMT-0600 (Central Standard Time)",
+    "mt": "Sun Dec 13 2020 16:00:27 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/__nc_app__artblocks-temp-site.json"
+  },
+  "build/favicon.ico": {
+    "mt": "Sun Dec 13 2020 13:28:52 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/build/favicon.ico"
+  },
+  "build/logo192.png": {
+    "mt": "Sun Dec 13 2020 13:28:52 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/build/logo192.png"
+  },
+  "build/logo512.png": {
+    "mt": "Sun Dec 13 2020 13:28:52 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/build/logo512.png"
+  },
+  "build/manifest.json": {
+    "mt": "Sun Dec 13 2020 13:28:52 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/build/manifest.json"
+  },
+  "build/os_logo.png": {
+    "mt": "Sun Dec 13 2020 13:28:52 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/build/os_logo.png"
+  },
+  "build/robots.txt": {
+    "mt": "Sun Dec 13 2020 13:28:52 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/build/robots.txt"
   },
   "package-lock.json": {
     "mt": "Sun Dec 06 2020 23:45:55 GMT-0600 (Central Standard Time)",
@@ -102,7 +138,7 @@
     "path": "/Users/erick/apps/artblocks-v2/site/src/App.css"
   },
   "src/App.js": {
-    "mt": "Sat Dec 12 2020 03:19:19 GMT-0600 (Central Standard Time)",
+    "mt": "Thu Dec 24 2020 01:35:34 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/App.js"
@@ -120,7 +156,7 @@
     "path": "/Users/erick/apps/artblocks-v2/site/src/ControlPanel.js"
   },
   "src/Features.js": {
-    "mt": "Sun Dec 06 2020 23:45:55 GMT-0600 (Central Standard Time)",
+    "mt": "Sun Dec 20 2020 14:58:24 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/Features.js"
@@ -156,13 +192,13 @@
     "path": "/Users/erick/apps/artblocks-v2/site/src/Nav.js"
   },
   "src/NewToken.js": {
-    "mt": "Sat Dec 12 2020 21:51:19 GMT-0600 (Central Standard Time)",
+    "mt": "Sat Dec 19 2020 23:34:27 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/NewToken.js"
   },
   "src/Project.js": {
-    "mt": "Sat Dec 12 2020 21:51:18 GMT-0600 (Central Standard Time)",
+    "mt": "Thu Dec 24 2020 02:47:09 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/Project.js"
@@ -180,19 +216,19 @@
     "path": "/Users/erick/apps/artblocks-v2/site/src/ProjectGallery.js"
   },
   "src/UserGallery.js": {
-    "mt": "Sat Dec 12 2020 21:51:15 GMT-0600 (Central Standard Time)",
+    "mt": "Thu Dec 24 2020 02:42:24 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/UserGallery.js"
   },
   "src/ViewToken.js": {
-    "mt": "Sat Dec 12 2020 21:51:14 GMT-0600 (Central Standard Time)",
+    "mt": "Sat Dec 19 2020 23:33:05 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/ViewToken.js"
   },
   "src/config.js": {
-    "mt": "Sat Dec 12 2020 03:16:32 GMT-0600 (Central Standard Time)",
+    "mt": "Thu Dec 24 2020 02:42:23 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/config.js"

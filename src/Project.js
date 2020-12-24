@@ -1,5 +1,5 @@
 import React, { Component} from 'react'
-import {Card, Button, CardDeck, Spinner,Col, Row, Form, Tabs, Tab, ButtonGroup, Pagination, Container, InputGroup, FormControl} from 'react-bootstrap';
+import {Card, Button, CardDeck, Spinner,Col, Row, Form, Tabs, Tab, ButtonGroup, Pagination, Container, InputGroup, FormControl, Image, Alert} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {ERC20_ABI} from './config';
 //import {TwitterShareButton} from 'react-twitter-embed';
@@ -8,7 +8,7 @@ import {ERC20_ABI} from './config';
 class Project extends Component {
   constructor(props) {
     super(props)
-    this.state = {loadQueue:this.props.project*1000000, account:'',tokenURIInfo:'', purchase:false, ineraction:false, project:this.props.project, artistInterface:false, formValue:'', idValue:'', page:1, scriptJSON:{}, purchaseTo:false, purchaseToAddress:'', currency:'', currencyAddress:'', erc20:'', approved:true, erc20Balance:''};
+    this.state = {loadQueue:this.props.project*1000000, account:'',tokenURIInfo:'', purchase:false, ineraction:false, project:this.props.project, artistInterface:false, formValue:'', idValue:'', page:1, scriptJSON:{}, purchaseTo:false, purchaseToAddress:'', currency:'', currencyAddress:'', erc20:'', approved:true, erc20Balance:'', latest:true};
     this.handleNextImage = this.handleNextImage.bind(this);
     this.handleToggleArtistInterface = this.handleToggleArtistInterface.bind(this);
     this.purchase = this.purchase.bind(this);
@@ -20,6 +20,8 @@ class Project extends Component {
     this.handlePurchaseTo = this.handlePurchaseTo.bind(this);
     this.handlePurchaseToAddressChange = this.handlePurchaseToAddressChange.bind(this);
     this.approve = this.approve.bind(this);
+    this.handleLatest = this.handleLatest.bind(this);
+    this.updateProjectTokenDetails = this.updateProjectTokenDetails.bind(this);
 
   }
 
@@ -56,8 +58,15 @@ class Project extends Component {
     let scriptJSON = projectScriptDetails[0] && JSON.parse(projectScriptDetails[0]);
     console.log("still setting state");
     this.setState({artBlocks, projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, scriptJSON, projectURIInfo, projectRoyaltyInfo/*, network*/});
+    //setInterval(this.updateProjectTokenDetails,5000);
   }
 
+  async updateProjectTokenDetails(state){
+    //console.log("update!!!");
+    //console.log(this.state);
+    const projectTokenDetails = await this.state.artBlocks.methods.projectTokenInfo(this.props.project).call();
+    this.setState({projectTokenDetails});
+  }
 
   async checkAllowance(){
       let allowance = await this.state.erc20.methods.allowance(this.props.account, this.props.minterAddress).call();
@@ -118,7 +127,7 @@ class Project extends Component {
 
 
       let scriptJSON = projectScriptDetails[0] && JSON.parse(projectScriptDetails[0]);
-      this.setState({page:1,loadQueue:this.props.project*1000000+((this.props.page-1)*20),projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, scriptJSON, projectURIInfo, projectRoyaltyInfo, project:this.props.project, approved:true});
+      this.setState({page:1,latest:true, loadQueue:this.props.project*1000000+((this.props.page-1)*20),projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, scriptJSON, projectURIInfo, projectRoyaltyInfo, project:this.props.project, approved:true});
 
     } else if (oldProps.artBlocks !== this.props.artBlocks){
       console.log("change artBlocks?");
@@ -201,7 +210,9 @@ class Project extends Component {
     }
     this.setState({projectDescription, projectTokenDetails, projectScriptDetails, projectURIInfo, projectRoyaltyInfo, projectTokens, project:this.props.project, approved:true});
   }
-
+  handleLatest(){
+    this.setState({latest:false});
+  }
   getOSLink(){
     if (this.props.project && this.props.project==="1"){
       console.log("osp1");
@@ -209,6 +220,8 @@ class Project extends Component {
     } else if (this.props.project && this.props.project==="2"){
       console.log("osp2");
       return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Construction%20Token%20by%20Jeff%20Davis%22%5D%7D%5D%7D";
+    } else if (this.props.project && this.props.project==="4"){
+      return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Dynamic%20Slices%20by%20pxlq%22%5D%7D%5D%7D";
     } else {
       return "";
     }
@@ -712,7 +725,7 @@ class Project extends Component {
         this.props.handleToggleView("newToken",mintedToken);
       })
       .catch(err => {
-        alert(err);
+        //alert(err);
         this.updateValues();
         this.setState({purchase:false});
       });
@@ -762,8 +775,13 @@ class Project extends Component {
     //console.log(this.state.approved);
     //console.log(this.state.erc20);
     //console.log(this.props.account);
-    console.log(this.state.idValue);
-    console.log(this.state.formValue);
+    //console.log(this.state.idValue);
+    //console.log(this.state.formValue);
+    let random = this.state.projectTokens && Math.floor(Math.random()*this.state.projectTokens.length);
+    //console.log("random"+random);
+    //console.log(random);
+    let complete = this.state.projectTokens && this.props.project && this.state.projectTokenDetails && this.state.projectTokens.length===Number(this.state.projectTokenDetails[3]) ;
+    //console.log(complete);
 
 
 
@@ -773,7 +791,7 @@ class Project extends Component {
       let projectTokens=this.state.projectTokens;
       for (let number = 1; number <= Math.ceil(projectTokens.length/20); number++) {
         items.push(
-          <Pagination.Item style={{"minWidth": "3em"}} key={number} onClick={(number!==active)?()=>{this.handlePageChange(number)}:undefined} active={number === active}>
+          <Pagination.Item style={{"minWidth": "3rem", fontSize:"0.8rem", "text-align":"center"}} key={number} onClick={(number!==active)?()=>{this.handlePageChange(number)}:undefined} active={number === active}>
           {number}
           </Pagination.Item>,
         );
@@ -811,6 +829,12 @@ const paginationBasic = (
     //console.log("interface? "+this.state.artistInterface);
     let baseURL = this.props.baseURL;
 
+
+    function tokenThumb(token){
+      return "https://rinkthumb.oss.nodechef.com/"+token+".png";
+      //return baseURL+'/thumb/'+token;
+    }
+
     function tokenImage(token){
       //console.log("https://mainnet.oss.nodechef.com/"+token);
       //return "https://mainnet.oss.nodechef.com/"+token+".png";
@@ -830,7 +854,7 @@ const paginationBasic = (
     return (
 
 
-    <Row className={this.state.projectTokens && this.state.projectTokens.length<10 && !this.state.artistInterface?"align-items-center":""}>
+    <Row className={(this.state.projectTokens && this.state.projectTokens.length<10 && !this.state.artistInterface) || (this.state.projectTokens && this.state.latest && !this.state.artistInterface)?"align-items-center":""}>
       <Col xs={12} sm={6} md={3}>
         <div >
         <div className="text-align-center">
@@ -846,16 +870,26 @@ const paginationBasic = (
           <br/>
           <p>{this.state.projectDescription[2]}</p>
           <br/>
-          <p>Total Minted: {this.state.projectTokens && this.state.projectTokens.length} / {this.state.projectTokenDetails && this.state.projectTokenDetails[3]} max</p>
+          <p>Total Minted: {this.state.projectTokenDetails && this.state.projectTokenDetails[2]} / {this.state.projectTokenDetails && this.state.projectTokenDetails[3]} max</p>
 
           <p>License: {this.state.projectDescription && this.state.projectDescription[4]}</p>
           <p>Script: {this.state.scriptJSON && this.state.scriptJSON.type}</p>
           </div>
         }
 
-        {this.state.projectTokens && this.state.projectTokenDetails && this.state.projectTokens.length<this.state.projectTokenDetails[3] &&
+        {this.state.projectTokens && this.state.projectTokenDetails && !complete &&
           <div>
           <p>Price per token: {this.state.projectTokenDetails && this.props.web3.utils.fromWei(this.state.projectTokenDetails[1],'ether')}{this.state.currency && this.state.currency==="ETH"?"Ξ":" "+this.state.currency}</p>
+
+          {this.state.latest &&
+          <div >
+          <Alert style={{width:"100%"}} variant="secondary">
+          <p>Showing the latest mint.</p>
+          <Button variant="light" block onClick={this.handleLatest}>View All</Button>
+          </Alert>
+          </div>
+        }
+
 
 
         {!this.props.connected &&
@@ -864,6 +898,8 @@ const paginationBasic = (
           <p>Please connect to MetaMask to enable purchases.</p>
           </div>
         }
+
+
 
         {this.props.connected && this.state.projectScriptDetails && this.state.approved &&
           <div>
@@ -925,8 +961,19 @@ const paginationBasic = (
         }
 
         {this.state.projectTokens && this.props.project && this.state.projectTokenDetails && this.state.projectTokens.length===Number(this.state.projectTokenDetails[3]) &&
+          <div>
+          {this.state.latest &&
+          <div>
+          <Alert variant="secondary">
+          <p>Showing random token [#{random-1}].</p>
+          <Button variant="light" block onClick={this.handleLatest}>View Entire Gallery</Button>
+          </Alert>
+          </div>
+          }
           <p><b>The max number of iterations/editions for this project have been minted. Please visit the project on <a href={this.getOSLink()} rel="noopener noreferrer" target="_blank">OpenSea</a> to see what is available on the secondary market!</b></p>
+          </div>
         }
+
 
 
 
@@ -936,7 +983,13 @@ const paginationBasic = (
 
       <Col xs={12} sm={6} md={9}>
 
-      {!this.state.artistInterface &&
+      {!this.state.artistInterface && this.state.latest && this.state.projectTokenDetails && (this.state.project===this.props.project)&&
+      <div className="text-center">
+      <a href={'/token/'+((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000))}><Image style={{"width":"60%"}} src={tokenImage(((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000)))} /></a>
+      </div>
+      }
+
+      {!this.state.artistInterface && !this.state.latest &&
         <div>
 
         <CardDeck>
@@ -950,7 +1003,7 @@ const paginationBasic = (
                 <Card.Body>
                   {this.state.loadQueue<token?<div className="spinner-border" role="status">
                   <span className="sr-only">Loading...</span>
-                  </div>:<Card.Img variant="top" src={tokenImage(token)} onLoad={this.handleNextImage}/>}
+                  </div>:<Card.Img variant="top" src={tokenThumb(token)} onLoad={this.handleNextImage}/>}
                   <div className="text-center">
 
                   <ButtonGroup size="sm">
@@ -1166,6 +1219,8 @@ const paginationBasic = (
                   <option>threejs</option>
                   <option>vox</option>
                   <option>megavox</option>
+                  <option>js</option>
+                  <option>svg</option>
                   <option>custom</option>
                 </Form.Control>
                 <Form.Label>Version:</Form.Label>
@@ -1239,6 +1294,7 @@ const paginationBasic = (
             <br/>
           </div>
           <br/>
+          {/*
           <div>
             <Form>
               <Form.Group>
@@ -1261,6 +1317,8 @@ const paginationBasic = (
             </Form>
             <br/>
           </div>
+          */
+        }
           <div>
 
           </div>
