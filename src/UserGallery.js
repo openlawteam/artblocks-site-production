@@ -1,6 +1,7 @@
 import React, { Component} from 'react'
-import {Card, Button, CardDeck, Col, Row, ButtonGroup, Image} from 'react-bootstrap';
+import {Button, Col, Row, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import UserGalleryCard from './UserGalleryCard';
 
 
 class UserGallery extends Component {
@@ -13,7 +14,7 @@ class UserGallery extends Component {
   async componentDidMount() {
     const artBlocks = this.props.artBlocks;
     const artBlocks2 = this.props.artBlocks2;
-    const network = this.props.network;
+
     //console.log("lua"+this.props.lookupAcct);
     const tokensOfAccountA = await artBlocks.methods.tokensOfOwner(this.props.lookupAcct).call();
     const tokensOfAccountAFiltered = tokensOfAccountA.filter(token => token < 3000000);
@@ -34,7 +35,7 @@ class UserGallery extends Component {
       return projectId;
     })));
 
-    this.setState({artBlocks, artBlocks2, tokenData, projectsOfAccount, network, tokensOfAccount});
+    this.setState({artBlocks, artBlocks2, tokenData, projectsOfAccount, tokensOfAccount});
     this.buildUserTokenArray();
   }
 
@@ -43,7 +44,7 @@ class UserGallery extends Component {
       console.log('acctchange');
     const artBlocks = this.props.artBlocks;
     const artBlocks2 = this.props.artBlocks2;
-    const network = this.props.network;
+
     const tokensOfAccount = await artBlocks.methods.tokensOfOwner(this.props.lookupAcct).call();
     const tokenData = await Promise.all(tokensOfAccount.map(async (token)=>{
       const projectId = token<3000000?await artBlocks.methods.tokenIdToProjectId(token).call():await artBlocks2.methods.tokenIdToProjectId(token).call();
@@ -53,7 +54,7 @@ class UserGallery extends Component {
       let projectId = token<3000000?await artBlocks.methods.tokenIdToProjectId(token).call():await artBlocks2.methods.tokenIdToProjectId(token).call();
       return projectId;
     })));
-    this.setState({artBlocks, tokenData, projectsOfAccount, network, tokensOfAccount});
+    this.setState({artBlocks, tokenData, projectsOfAccount, tokensOfAccount});
     this.buildUserTokenArray();
     }
   }
@@ -67,6 +68,14 @@ class UserGallery extends Component {
       const projectTokenDetails = await contract.methods.projectTokenInfo(project).call();
       const projectScriptDetails = await contract.methods.projectScriptInfo(project).call();
       const projectURIInfo = await contract.methods.projectURIInfo(project).call();
+      let currency;
+      if (project>=3){
+        currency = await contract.methods.projectIdToCurrencySymbol(project).call();
+      } else {
+        currency="ETH";
+      }
+
+      console.log(currency);
 
       let tokens = [];
       for (let i=0;i<this.state.tokenData.length;i++){
@@ -74,7 +83,7 @@ class UserGallery extends Component {
           tokens.push(this.state.tokenData[i][0]);
         }
       }
-      projects[project]={tokens,projectDescription,projectTokenDetails,projectScriptDetails,projectURIInfo}
+      projects[project]={tokens,projectDescription,projectTokenDetails,projectScriptDetails,projectURIInfo,currency}
       };
     this.setState({projects});
   }
@@ -82,7 +91,8 @@ class UserGallery extends Component {
   render() {
 
 
-    console.log(this.props);
+    //console.log(this.props);
+    /*
     let baseURL = this.props.baseURL;
 
     function tokenImage(token){
@@ -98,6 +108,7 @@ class UserGallery extends Component {
     function tokenGenerator(token){
       return baseURL+'/generator/'+token;
     }
+    */
 
     return (
       <div className="mt-4">
@@ -125,7 +136,7 @@ class UserGallery extends Component {
                   <br />
                   <p>{this.state.projects[project].projectDescription[2]}</p>
                   <br/>
-                  <p>Price per token: {this.props.web3.utils.fromWei(this.state.projects[project].projectTokenDetails[1] ,'ether')}Ξ</p>
+                  <p>Price per token: {this.props.web3.utils.fromWei(this.state.projects[project].projectTokenDetails[1] ,'ether')}{this.state.projects[project].currency==="ETH"?"Ξ":" "+this.state.projects[project].currency}</p>
                   <br />
                   <Button variant="dark btn-sm" as={Link} to={'/project/'+project} >Visit Project</Button>
                   </div>
@@ -133,6 +144,15 @@ class UserGallery extends Component {
                 </Col>
 
                 <Col xs={12} sm={6} md={9}>
+                <UserGalleryCard
+                project={project}
+                projects={this.state.projects}
+                baseURL={this.props.baseURL}
+                handleToggleView={this.props.handleToggleView}
+                />
+
+
+                {/*
                   <CardDeck>
                     {this.state.projects[project].tokens.map((token,index)=>{
                       return (
@@ -158,6 +178,7 @@ class UserGallery extends Component {
                       )})}
 
                   </CardDeck>
+                  */}
                 </Col>
               </Row>
               <hr />

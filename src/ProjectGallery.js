@@ -19,6 +19,12 @@ class ProjectGallery extends Component {
     const projectScriptDetails = await artBlocks.methods.projectScriptInfo(this.props.project).call();
     const projectURIInfo = await artBlocks.methods.projectURIInfo(this.props.project).call();
     const randomToken = projectTokens[Math.floor(Math.random()*projectTokens.length)];
+    if (this.props.project>=3){
+      let currency = await artBlocks.methods.projectIdToCurrencySymbol(this.props.project).call();
+      this.setState({currency});
+    } else {
+      this.setState({currency:"ETH"});
+    }
     this.setState({artBlocks, projectTokens, projectDescription, projectTokenDetails, projectScriptDetails, projectURIInfo, randomToken});
   }
 
@@ -72,11 +78,12 @@ handlePreviousToken(){
 
 
 
-      let baseURL = this.props.baseURL;
-
+      //let baseURL = this.props.baseURL;
+      let imageURL = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
       function tokenImage(token){
         //return "https://mainnet.oss.nodechef.com/"+token+".png";
-        return baseURL+'/image/'+token;
+        return imageURL+token+".png";
+        //return baseURL+'/image/'+token;
       }
 /*
       function tokenGenerator(token){
@@ -112,7 +119,7 @@ handlePreviousToken(){
             <br />
             <br />
             <p>Total Minted: {this.state.projectTokens && this.state.projectTokens.length} / {this.state.projectTokenDetails && this.state.projectTokenDetails[3]}</p>
-            <p>Price per token: {this.state.projectTokenDetails && this.props.web3.utils.fromWei(this.state.projectTokenDetails[1],'ether')}Ξ</p>
+            <p>Price per token: {this.state.projectTokenDetails && this.props.web3.utils.fromWei(this.state.projectTokenDetails[1],'ether')}{this.state.currency && this.state.currency==="ETH"?"Ξ":" "+this.state.currency}</p>
             <br />
             <p> Displaying token #{this.state.randomToken && this.state.randomToken}</p>
             <br/>

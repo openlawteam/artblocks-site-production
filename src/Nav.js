@@ -1,7 +1,7 @@
 //https://oneclickdapp.com/beast-powder/
 
 import React, { Component } from 'react'
-import {Navbar, Nav, NavDropdown, Image} from 'react-bootstrap';
+import {Navbar, Nav, NavDropdown/*, Image*/} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './Nav.css'
 
@@ -73,18 +73,19 @@ class Navigation extends Component {
     //console.log(this.props.web3);
     //console.log(this.state.network);
     //console.log(this.props.projectsOfArtist);
-    let baseURL = this.props.baseURL;
+    //let baseURL = this.props.baseURL;
 /*
     function tokenGenerator(token){
       return baseURL+'/generator/'+token;
     }
     */
 
-
+/*
     function tokenImage(token){
       //return 'https://api.artblocks.io/image/'+token;
       return baseURL+'/image/'+token;
     }
+    */
 
     //console.log("Theater?:"+this.state.theater)
     //console.log(this.state.web3 && this.state.network);
@@ -153,7 +154,7 @@ class Navigation extends Component {
 
         <NavDropdown title={this.props.account.slice(0,9)} id="basic-nav-dropdown" >
 
-            {this.props.tokensOfOwner &&
+            {/*this.props.tokensOfOwner &&
 
               this.props.tokensOfOwner.map((token, index)=>{
                 return(
@@ -163,7 +164,7 @@ class Navigation extends Component {
                 )
               })
 
-            }
+            */}
 
         </NavDropdown>
       }

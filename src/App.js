@@ -19,6 +19,7 @@ import NewToken from './NewToken';
 import Navigation from './Nav';
 import Intro from './Intro';
 import ProjectGallery from './ProjectGallery';
+//import CookieConsent from "react-cookie-consent";
 //import YourTokens from './YourTokens';
 import Learn from './Learn';
 import ControlPanel from './ControlPanel';
@@ -250,7 +251,6 @@ async componentDidUpdate(oldProps){
       activeProjects = {this.state.activeProjects}
       handleConnectToMetamask = {this.handleConnectToMetamask}
       connected = {this.state.connected}
-      network = {this.state.network}
       account = {this.state.account}
       tokensOfOwner={this.state.tokensOfOwner}
       baseURL ={baseURL}
@@ -315,7 +315,8 @@ async componentDidUpdate(oldProps){
         web3 = {this.state.web3}
         artBlocks = {this.state.artBlocks}
         artBlocks2 = {this.state.artBlocks2}
-        network = {this.state.network}
+
+        network = {NETWORK}
         baseURL ={baseURL}
         />
         </div>
@@ -350,7 +351,7 @@ async componentDidUpdate(oldProps){
         artBlocks2 = {this.state.artBlocks2}
         mainMinter = {this.state.mainMinter}
         minterAddress = {this.state.minterAddress}
-        network = {this.state.network}
+        network={NETWORK}
         baseURL ={baseURL}
         isWhitelisted={this.state.isWhitelisted}
         />
@@ -376,7 +377,7 @@ async componentDidUpdate(oldProps){
               handleToggleView = {this.handleToggleView}
               artBlocks = {this.state.artBlocks}
               artBlocks2 = {this.state.artBlocks2}
-              network = {this.state.network}
+              network={NETWORK}
               handleNextProject = {this.handleNextProject}
               baseURL ={baseURL}
             />
@@ -394,7 +395,7 @@ async componentDidUpdate(oldProps){
         web3 = {this.state.web3}
         artBlocks = {this.state.artBlocks}
         artBlocks2 = {this.state.artBlocks2}
-        network = {this.state.network}
+        network={NETWORK}
         baseURL ={baseURL}
         />
       }
@@ -409,6 +410,9 @@ async componentDidUpdate(oldProps){
         </Route>
         </Switch>
         }
+
+
+      {/*<CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>*/}
 
       </div>
 

@@ -93,7 +93,7 @@ class Learn extends Component {
       to go live the Art Blocks team will lock it and set it to "active" to enable purchases. </p>
       <br />
       <h5>More Info</h5>
-      <p>For more information please reach out to us at info at artblocks dot io or join the conversation in <a href="https://discord.gg/pA4hbkb" rel="noopener noreferrer" target="_blank">Discord</a>.</p>
+      <p>For more information please reach out to us at info at artblocks dot io or join the conversation in <a href="https://discord.gg/VGX9fyhWBn" rel="noopener noreferrer" target="_blank">Discord</a>.</p>
 
 
 

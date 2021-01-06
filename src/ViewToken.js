@@ -79,14 +79,22 @@ console.log(hyperRainbow);
     );
 
 
+    let highlightImageUrl = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
 
+    function tokenHighlightImage(token){
+      return highlightImageUrl+token+".png";
+
+    }
 
     let baseURL = this.props.baseURL;
 
+/*
     function tokenImage(token){
       //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
+    */
+    
 
     function tokenGenerator(token){
       return baseURL+'/generator/'+token;
@@ -178,7 +186,7 @@ console.log(hyperRainbow);
 
             <Card.Body>
             {this.state.token &&
-            <Card.Img variant="top" src={tokenImage(this.state.token)}/>
+            <Card.Img variant="top" src={tokenHighlightImage(this.state.token)}/>
           }
             <hr/>
             <div className="text-center">
@@ -189,7 +197,7 @@ console.log(hyperRainbow);
               placement="top"
               delay={{ show: 250, hide: 400 }}
               overlay={viewImageToolTip}>
-              <Button variant="light" onClick={()=> window.open(tokenImage(this.state.token), "_blank")}>View Image</Button>
+              <Button variant="light" onClick={()=> window.open(tokenHighlightImage(this.state.token), "_blank")}>View Image</Button>
             </OverlayTrigger>
             <OverlayTrigger
               placement="top"

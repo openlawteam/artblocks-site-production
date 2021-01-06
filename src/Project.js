@@ -1,5 +1,5 @@
 import React, { Component} from 'react'
-import {Card, Button, CardDeck, Spinner,Col, Row, Form, Tabs, Tab, ButtonGroup, Pagination, Container, InputGroup, FormControl, Image, Alert} from 'react-bootstrap';
+import {Card, Button, CardDeck, Spinner,Col, Row, Form, Tabs, Tab, ButtonGroup, Pagination, Container, InputGroup, FormControl, Image, Alert, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {ERC20_ABI} from './config';
 //import {TwitterShareButton} from 'react-twitter-embed';
@@ -41,7 +41,9 @@ class Project extends Component {
       if (currency !== "ETH"){
         let erc20 = new this.props.web3.eth.Contract(ERC20_ABI, currencyAddress);
         if (this.props.connected){
-          let erc20Balance = await erc20.methods.balanceOf(this.props.account).call();
+          let balance = await erc20.methods.balanceOf(this.props.account).call();
+          let erc20Balance = this.props.web3.utils.fromWei(balance,'ether')
+          //let erc20Balance = await erc20.methods.balanceOf(this.props.account).call();
           this.setState({erc20Balance});
         }
         this.setState({erc20});
@@ -69,10 +71,17 @@ class Project extends Component {
   }
 
   async checkAllowance(){
+    var BN = this.props.web3.utils.BN;
+    //let valToApprove = new BN(this.state.projectTokenDetails[1]).mul(new BN('10')).toString();
+    //console.log(valToApprove);
       let allowance = await this.state.erc20.methods.allowance(this.props.account, this.props.minterAddress).call();
+      let bnAllowance = new BN(allowance);
+      let bnPrice = new BN(this.state.projectTokenDetails[1]);
       console.log(allowance);
+      console.log("BnA"+bnAllowance, "BnP"+bnPrice);
 
-      if (allowance >= this.state.projectTokenDetails[1]){
+      //if (allowance >= this.state.projectTokenDetails[1]){
+      if (bnAllowance.gte(bnPrice)){
         this.setState({approved:true});
         console.log("setting approved to true");
       } else {
@@ -200,7 +209,8 @@ class Project extends Component {
     const projectRoyaltyInfo = await artBlocks.methods.getRoyaltyData(this.props.project).call();
     if (this.props.project>=3 && this.state.currency !=="ETH"){
       if (this.props.connected){
-        let erc20Balance = await this.state.erc20.methods.balanceOf(this.props.account).call();
+        let balance = await this.state.erc20.methods.balanceOf(this.props.account).call();
+        let erc20Balance = this.props.web3.utils.fromWei(balance,'ether')
         this.setState({erc20Balance});
       }
       console.log("updated values");
@@ -222,6 +232,10 @@ class Project extends Component {
       return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Construction%20Token%20by%20Jeff%20Davis%22%5D%7D%5D%7D";
     } else if (this.props.project && this.props.project==="4"){
       return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Dynamic%20Slices%20by%20pxlq%22%5D%7D%5D%7D";
+    } else if (this.props.project && this.props.project==="7"){
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Elevated%20Deconstructions%20by%20luxpris";
+    } else if (this.props.project && this.props.project==="8"){
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Singularity%20by%20Hideki%20Tsukamoto";
     } else {
       return "";
     }
@@ -650,8 +664,12 @@ class Project extends Component {
 }
 
   async approve(){
+    var BN = this.props.web3.utils.BN;
     this.setState({purchase:true});
-    await this.state.erc20.methods.approve(this.props.minterAddress, this.state.projectTokenDetails[1]).send({
+    let valToApprove = new BN(this.state.projectTokenDetails[1]).mul(new BN('10')).toString();
+    console.log(valToApprove);
+    //console.log(BN(this.state.projectTokenDetails[1]).toString());
+    await this.state.erc20.methods.approve(this.props.minterAddress, valToApprove).send({
       from:this.props.account
     })
     .once('receipt', (receipt) => {
@@ -798,6 +816,12 @@ class Project extends Component {
       }
     }
 
+    const approveDaiToolTip = (props) => (
+      <Tooltip id="button-tooltip" {...props}>
+      In an effort to conserve gas this button approves enough tokens to purchase up to 10 iterations.
+      </Tooltip>
+    );
+
 
 const paginationBasic = (
   <Container className="mx-1">
@@ -829,17 +853,24 @@ const paginationBasic = (
     //console.log("interface? "+this.state.artistInterface);
     let baseURL = this.props.baseURL;
 
-
+    let highlightImageURL = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
+    let thumbURL = this.props.network==="rinkeby"? "https://rinkthumb.oss.nodechef.com/":"https://mainthumb.oss.nodechef.com/";
     function tokenThumb(token){
-      return "https://rinkthumb.oss.nodechef.com/"+token+".png";
+      return thumbURL+token+".png";
       //return baseURL+'/thumb/'+token;
     }
 
+
+    function tokenImageHighlight(token){
+      return highlightImageURL+token+".png";
+    }
+    /*
     function tokenImage(token){
       //console.log("https://mainnet.oss.nodechef.com/"+token);
       //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
+    */
 
     function tokenGenerator(token){
       return baseURL+'/generator/'+token;
@@ -852,6 +883,10 @@ const paginationBasic = (
 
     //console.log(queue);
     return (
+      <div>
+      {this.props.network==="rinkeby" &&
+      <Alert variant="danger">You are on the Rinkeby Testnet version of the Art Blocks platform. Make sure your Metamask wallet is set to Rinkeby before confirming any transactions.</Alert>
+      }
 
 
     <Row className={(this.state.projectTokens && this.state.projectTokens.length<10 && !this.state.artistInterface) || (this.state.projectTokens && this.state.latest && !this.state.artistInterface)?"align-items-center":""}>
@@ -933,6 +968,10 @@ const paginationBasic = (
 
           {this.props.connected && this.state.projectScriptDetails && !this.state.approved &&
             <div>
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={approveDaiToolTip}>
             <Button className='btn-primary btn-block' /*disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} */ onClick={this.approve}>{this.state.purchase?<div><Spinner
               as="span"
               animation="border"
@@ -941,6 +980,7 @@ const paginationBasic = (
               aria-hidden="true"
               />
               <span className="sr-only">Pending...</span> Pending...</div>:"Approve "+this.state.currency+" for Purchasing"}</Button>
+              </OverlayTrigger>
 
             </div>
             }
@@ -985,7 +1025,7 @@ const paginationBasic = (
 
       {!this.state.artistInterface && this.state.latest && this.state.projectTokenDetails && (this.state.project===this.props.project)&&
       <div className="text-center">
-      <a href={'/token/'+((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000))}><Image style={{"width":"60%"}} src={tokenImage(((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000)))} /></a>
+      <a href={'/token/'+((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000))}><Image style={{"width":"60%"}} src={tokenImageHighlight(((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000)))} /></a>
       </div>
       }
 
@@ -1009,7 +1049,7 @@ const paginationBasic = (
                   <ButtonGroup size="sm">
                     <Button variant="light" disabled>#{Number(token)-Number(this.state.project)*1000000}</Button>
                     <Button as={Link} to={'/token/'+token} variant="light" onClick={() => this.props.handleToggleView("viewToken",token)}>Details</Button>
-                    <Button variant="light" onClick={()=> window.open(tokenImage(token), "_blank")}>Image</Button>
+                    <Button variant="light" onClick={()=> window.open(tokenImageHighlight(token), "_blank")}>Image</Button>
                     <Button variant="light" onClick={()=> window.open(tokenGenerator(token), "_blank")}>Live</Button>
                   </ButtonGroup>
 
@@ -1515,6 +1555,7 @@ const paginationBasic = (
       }
       </Col>
     </Row>
+    </div>
     );
   }
 }
