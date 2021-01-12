@@ -176,7 +176,7 @@ async componentDidUpdate(oldProps){
   }
 
   async handleConnectToMetamask(){
-    if (typeof web3 !== "undefined"){
+    if (typeof window.web3 !== "undefined"){
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
       const network = await web3.eth.net.getNetworkType();
       const artBlocks = new web3.eth.Contract(ARTBLOCKS_CONTRACT_ABI_A, NETWORK==="rinkeby"?ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A:ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A);

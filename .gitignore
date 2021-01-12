@@ -1,0 +1,6 @@
+node_modules
+build/static
+build/index.html
+build/asset-manifest.json
+.env
+.eslintcache
