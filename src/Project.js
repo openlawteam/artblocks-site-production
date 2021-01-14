@@ -71,6 +71,7 @@ class Project extends Component {
   }
 
   async checkAllowance(){
+    if (this.props.connected){
     var BN = this.props.web3.utils.BN;
     //let valToApprove = new BN(this.state.projectTokenDetails[1]).mul(new BN('10')).toString();
     //console.log(valToApprove);
@@ -88,6 +89,7 @@ class Project extends Component {
         this.setState({approved:false});
         console.log("setting approved to false");
       }
+    }
   }
 
   async checkBalance(){
@@ -224,18 +226,26 @@ class Project extends Component {
     this.setState({latest:false});
   }
   getOSLink(){
-    if (this.props.project && this.props.project==="1"){
-      console.log("osp1");
-      return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Genesis%20by%20DCA%22%5D%7D%5D%7D";
+    if (this.props.project && this.props.project==="0"){
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Chromie%20Squiggle%20by%20Snowfro";
+    } else if (this.props.project && this.props.project==="1"){
+      //console.log("osp1");
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Genesis%20by%20DCA";
     } else if (this.props.project && this.props.project==="2"){
-      console.log("osp2");
-      return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Construction%20Token%20by%20Jeff%20Davis%22%5D%7D%5D%7D";
+      //console.log("osp2");
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Construction%20Token%20by%20Jeff%20Davis";
+    } else if (this.props.project && this.props.project==="3"){
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Cryptoblots%20by%20Da%C3%AFm%20Aggott-H%C3%B6nsch";
     } else if (this.props.project && this.props.project==="4"){
-      return "https://opensea.io/assets/art-blocks?search=%7B%22collections%22%3A%5B%22art-blocks%22%5D%2C%22includeHiddenCollections%22%3Afalse%2C%22stringTraits%22%3A%5B%7B%22name%22%3A%22Project%22%2C%22values%22%3A%5B%22Dynamic%20Slices%20by%20pxlq%22%5D%7D%5D%7D";
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Dynamic%20Slices%20by%20pxlq";
+    } else if (this.props.project && this.props.project==="5"){
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Variant%20Plan%20by%20Jeff%20Davis";
     } else if (this.props.project && this.props.project==="7"){
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Elevated%20Deconstructions%20by%20luxpris";
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Elevated%20Deconstructions%20by%20luxpris";
     } else if (this.props.project && this.props.project==="8"){
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Singularity%20by%20Hideki%20Tsukamoto";
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Singularity%20by%20Hideki%20Tsukamoto";
+    } else if (this.props.project && this.props.project==="9"){
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Ignition%20by%20ge1doot";
     } else {
       return "";
     }
