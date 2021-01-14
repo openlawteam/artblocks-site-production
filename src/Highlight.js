@@ -79,18 +79,18 @@ class Highlight extends Component {
 
     //let owned = this.state.randomToken && this.props.tokensOfOwner && this.props.tokensOfOwner.includes(this.state.randomToken.toString());
 
-    //let baseURL = this.props.baseURL;
+    let baseURL = this.props.baseURL;
     let url = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
 
     function tokenImage(token){
       return url+token+".png";
 
     }
-/*
+
     function tokenGenerator(token){
       return baseURL+'/generator/'+token;
     }
-    */
+
 
 /*
     if (this.state.projectURIInfo){
@@ -111,7 +111,16 @@ class Highlight extends Component {
           delay={{ show: 250, hide: 400 }}
           overlay={highlightImageToolTip}>
           <Link to={"/token/"+this.state.randomToken}>
+          {this.props.project===8 &&
           <Image style={{width:"100%"}} src={tokenImage(this.state.randomToken)} rounded />
+        }
+        {this.props.project!==8 &&
+          <div className="live-script-container">
+            <iframe
+              src={tokenGenerator(this.state.randomToken)}
+              title={this.state.randomToken}
+            />
+          </div>}
           </Link>
         </OverlayTrigger>
 

@@ -1035,7 +1035,8 @@ const paginationBasic = (
 
       {!this.state.artistInterface && this.state.latest && this.state.projectTokenDetails && (this.state.project===this.props.project)&&
       <div className="text-center">
-      <a href={'/token/'+((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000))}><Image style={{"width":"60%"}} src={tokenImageHighlight(((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000)))} /></a>
+      <a href={'/token/'+((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000))}>
+      <Image style={{"width":"60%"}} src={tokenImageHighlight(((complete?random:Number(this.state.projectTokenDetails[2])-1)+(this.props.project*1000000)))} /></a>
       </div>
       }
 

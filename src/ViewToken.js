@@ -8,6 +8,7 @@ import {
   ButtonGroup,
   Tooltip,
   OverlayTrigger,
+  Image
 } from "react-bootstrap";
 import { TwitterShareButton } from "react-twitter-embed";
 import { Link } from "react-router-dom";
@@ -140,12 +141,12 @@ class ViewToken extends Component {
 
     let baseURL = this.props.baseURL;
 
-    /*
+
     function tokenImage(token){
       //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
-    */
+
 
     function tokenGenerator(token) {
       return baseURL + "/generator/" + token;
@@ -266,7 +267,11 @@ class ViewToken extends Component {
                 style={{ width: "18rem" }}
               >
                 <Card.Body>
-                  {this.state.token && (
+                {Math.floor(this.props.token/1000000)===8 &&
+                <Image style={{width:"100%"}} src={tokenImage(this.props.token)} rounded />
+              }
+
+                  {this.state.token && Math.floor(this.props.token/1000000)!==8 &&(
                     <div className="live-script-container">
                       <iframe
                         src={tokenGenerator(this.props.token)}

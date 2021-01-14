@@ -5,11 +5,35 @@
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/.env"
   },
+  ".eslintignore": {
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/.eslintignore"
+  },
+  ".eslintrc.json": {
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/.eslintrc.json"
+  },
   ".gitignore": {
-    "mt": "Sun Dec 06 2020 23:56:22 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/.gitignore"
+  },
+  ".prettierrc": {
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/.prettierrc"
+  },
+  ".vscode/settings.json": {
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
+    "exists": true,
+    "state": 1,
+    "path": "/Users/erick/apps/artblocks-v2/site/.vscode/settings.json"
   },
   "README.md": {
     "mt": "Sun Dec 06 2020 23:45:55 GMT-0600 (Central Standard Time)",
@@ -72,13 +96,13 @@
     "path": "/Users/erick/apps/artblocks-v2/site/build/robots.txt"
   },
   "package-lock.json": {
-    "mt": "Tue Dec 29 2020 23:10:52 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/package-lock.json"
   },
   "package.json": {
-    "mt": "Tue Dec 29 2020 23:10:52 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/package.json"
@@ -132,13 +156,13 @@
     "path": "/Users/erick/apps/artblocks-v2/site/server.js"
   },
   "src/App.css": {
-    "mt": "Sun Dec 06 2020 23:45:55 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/App.css"
   },
   "src/App.js": {
-    "mt": "Tue Jan 05 2021 00:43:41 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/App.js"
@@ -162,7 +186,7 @@
     "path": "/Users/erick/apps/artblocks-v2/site/src/Features.js"
   },
   "src/Highlight.js": {
-    "mt": "Wed Jan 06 2021 00:29:17 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 23:12:57 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/Highlight.js"
@@ -192,13 +216,13 @@
     "path": "/Users/erick/apps/artblocks-v2/site/src/Nav.js"
   },
   "src/NewToken.js": {
-    "mt": "Sat Dec 19 2020 23:34:27 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 22:23:32 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/NewToken.js"
   },
   "src/Project.js": {
-    "mt": "Fri Jan 08 2021 21:32:59 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 22:57:49 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/Project.js"
@@ -228,7 +252,7 @@
     "path": "/Users/erick/apps/artblocks-v2/site/src/UserGalleryCard.js"
   },
   "src/ViewToken.js": {
-    "mt": "Sun Jan 03 2021 21:20:19 GMT-0600 (Central Standard Time)",
+    "mt": "Wed Jan 13 2021 23:12:53 GMT-0600 (Central Standard Time)",
     "exists": true,
     "state": 1,
     "path": "/Users/erick/apps/artblocks-v2/site/src/ViewToken.js"
