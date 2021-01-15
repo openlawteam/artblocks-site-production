@@ -267,11 +267,11 @@ class ViewToken extends Component {
                 style={{ width: "18rem" }}
               >
                 <Card.Body>
-                {Math.floor(this.props.token/1000000)===8 &&
+                {this.props.nonInter.includes(Math.floor(this.props.token/1000000)) &&
                 <Image style={{width:"100%"}} src={tokenImage(this.props.token)} rounded />
               }
 
-                  {this.state.token && Math.floor(this.props.token/1000000)!==8 &&(
+                  {!this.props.nonInter.includes(Math.floor(this.props.token/1000000)) &&(
                     <div className="live-script-container">
                       <iframe
                         src={tokenGenerator(this.props.token)}

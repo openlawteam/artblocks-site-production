@@ -63,6 +63,7 @@ function Proj(props){
   baseURL ={props.baseURL}
   isWhitelisted={props.isWhitelisted}
   minterAddress={props.minterAddress}
+  nonInter={props.nonInter}
   />
 )
 
@@ -78,6 +79,7 @@ function ViewTok(props){
     handleToggleView = {props.handleToggleView}
     baseURL ={props.baseURL}
     network = {props.network}
+    nonInter={props.nonInter}
     />
   )
 }
@@ -90,7 +92,7 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { account: '', connected:false, show:"highlight", currentProject:'', currenttoken:0, lookupAcct:'0x8De4e517A6F0B84654625228D8293b70AB49cF6C', network:'', isWhitelisted:false, overlay:false}
+    this.state = { account: '', connected:false, show:"highlight", currentProject:'', currenttoken:0, lookupAcct:'0x8De4e517A6F0B84654625228D8293b70AB49cF6C', network:'', isWhitelisted:false, overlay:false, nonInter:[1,2,3,5,7,8]}
     this.handleConnectToMetamask = this.handleConnectToMetamask.bind(this);
     this.handleToggleView = this.handleToggleView.bind(this);
     this.handleNextProject = this.handleNextProject.bind(this);
@@ -334,6 +336,7 @@ async componentDidUpdate(oldProps){
       handleToggleView = {this.handleToggleView}
       baseURL ={baseURL}
       network={NETWORK}
+      nonInter={this.state.nonInter}
       />
     }
       </Route>
@@ -354,6 +357,7 @@ async componentDidUpdate(oldProps){
         network={NETWORK}
         baseURL ={baseURL}
         isWhitelisted={this.state.isWhitelisted}
+        nonInter={this.state.nonInter}
         />
       }
       </Route>
@@ -380,6 +384,7 @@ async componentDidUpdate(oldProps){
               network={NETWORK}
               handleNextProject = {this.handleNextProject}
               baseURL ={baseURL}
+              nonInter={this.state.nonInter}
             />
           </Col>
           </Row>

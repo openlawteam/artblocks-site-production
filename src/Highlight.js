@@ -111,10 +111,10 @@ class Highlight extends Component {
           delay={{ show: 250, hide: 400 }}
           overlay={highlightImageToolTip}>
           <Link to={"/token/"+this.state.randomToken}>
-          {this.props.project===8 &&
+          {this.props.nonInter.includes(Number(this.props.project)) &&
           <Image style={{width:"100%"}} src={tokenImage(this.state.randomToken)} rounded />
         }
-        {this.props.project!==8 &&
+        {!this.props.nonInter.includes(Number(this.props.project)) &&
           <div className="live-script-container">
             <iframe
               src={tokenGenerator(this.state.randomToken)}

@@ -1027,20 +1027,7 @@ class Project extends Component {
   }
 
   render() {
-    //console.log(this.props.project);
-    //console.log(this.state.projectTokenDetails && this.state.projectTokenDetails);
-    //console.log("addr:"+this.state.purchaseToAddress);
-    //console.log(JSON.stringify(this.state.scriptJSON));
-    //console.log(this.props.project);
-    //console.log(this.props.mainMinter);
-    //console.log(this.state.currency, this.state.currencyAddress);
-    //console.log(this.state.erc20);
-    //console.log(this.state.currencyAddress);
-    //console.log(this.state.approved);
-    //console.log(this.state.erc20);
-    //console.log(this.props.account);
-    //console.log(this.state.idValue);
-    //console.log(this.state.formValue);
+  console.log(this.props.nonInter);
     let random =
       this.state.projectTokens &&
       Math.floor(Math.random() * this.state.projectTokens.length);
@@ -1439,6 +1426,7 @@ class Project extends Component {
                         this.props.project * 1000000)
                     }
                   >
+                  {!this.props.nonInter.includes(Number(this.props.project)) &&
                     <div className="live-view-container">
                       <div className="live-script-container">
                         <iframe
@@ -1452,7 +1440,9 @@ class Project extends Component {
                         />
                       </div>
                     </div>
-                    {/* <Image
+                  }
+                    { this.props.nonInter.includes(Number(this.props.project)) &&
+                      <Image
                       style={{ width: "60%" }}
                       src={tokenImageHighlight(
                         (complete
@@ -1460,7 +1450,7 @@ class Project extends Component {
                           : Number(this.state.projectTokenDetails[2]) - 1) +
                           this.props.project * 1000000
                       )}
-                    /> */}
+                    /> }
                   </a>
                 </div>
               )}
