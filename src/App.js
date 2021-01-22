@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import { NETWORK,
+        NONINTERACTIVE,
         ARTBLOCKS_CONTRACT_ABI_A,
         ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A,
         ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A,
@@ -92,7 +93,7 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { account: '', connected:false, show:"highlight", currentProject:'', currenttoken:0, lookupAcct:'0x8De4e517A6F0B84654625228D8293b70AB49cF6C', network:'', isWhitelisted:false, overlay:false, nonInter:[1,2,3,5,7,8]}
+    this.state = { account: '', connected:false, show:"highlight", currentProject:'', currenttoken:0, lookupAcct:'0x8De4e517A6F0B84654625228D8293b70AB49cF6C', network:'', isWhitelisted:false, overlay:false, nonInter:NONINTERACTIVE}
     this.handleConnectToMetamask = this.handleConnectToMetamask.bind(this);
     this.handleToggleView = this.handleToggleView.bind(this);
     this.handleNextProject = this.handleNextProject.bind(this);

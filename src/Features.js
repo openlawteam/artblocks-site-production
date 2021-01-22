@@ -77,6 +77,16 @@ class Features extends Component {
       if (decPairs[22]>=32 && decPairs[31] >= 35){
         steps=200;
       }
+
+      let startingColor=decPairs[29];
+      let endingColor=decPairs[28] < 3?(decPairs[29]+((Math.floor(decPairs[26].map( 0, 255, 12, 20))*steps))/0.5)%255:Math.floor((decPairs[29]+((Math.floor(decPairs[26].map( 0, 255, 12, 20))*steps))/Math.floor(decPairs[28].map(0,255,5,50)))%255);
+      let difference = function (a, b) { return Math.abs(startingColor - endingColor); };
+      if (difference()<3 || difference()>252){
+        if (!features.includes("Perfect Spectrum") && !features.includes("Fuzzy")){
+          features.splice(0,0,"Full Spectrum");
+        }
+      };
+
       features.push("Starting Color: "+decPairs[29]);
       if (decPairs[28] < 3){
         features.push("End Color: "+(decPairs[29]+((Math.floor(decPairs[26].map( 0, 255, 12, 20))*steps))/0.5)%255);
@@ -861,7 +871,169 @@ class Features extends Component {
 features = ignitionFeatures(tokenData);
 
 
+      } else if (this.props.projectId==="10"){
+	function to1(n){ return n/255 };
+	function to1N(n){ return n/128-1 };
+	function toNDecs(n, m){
+		n = Math.round(n*(m*10))/(m*10)
+		var a = n.toString().split('.');
+    if ( a.length === 2 ){
+			return Number(a[0]+'.'+a[1].substring(0,3));
+		} else {
+			return Number(n);
+		}
+	}
+	function printf(s,a){
+		var newS=s,i;
+		for(i=0;i<a.length;i++){
+			newS = newS.replace('%s',a[i]);
+		}
+		return newS;
+	}
+	function getNums(){
+		var hashPairs=[],rvs,j=0;
+		//let seed = parseInt(tokenData.hash.slice(0,16), 16);
+		for (j=0; j<32; j++){
+			hashPairs.push(tokenData.slice(2+(j*2),4+(j*2)));
+		}
+		rvs = hashPairs.map(n=>parseInt(n,16));
+		return rvs;
+	}
+  function getWireData(){
+       var c,i,/*d,*/y,data = {
+           "red": 0, "green": 0, "blue": 0, "yellow": 0,
+           "total": 0, "dangle":0, "hidden":0
+       };
+       for(i=0;i<cwires;i++){
+           c = colors[nums[i]%colors.length];
+           data[c]++;
+           if ( nums[i]<85 ){
+               y = to1N( nums[(i+2)%32] );
+               if ( y<0 ) data.hidden++;
+               data.dangle++;
+           }
+           data.total++;
+       }
+       return data;
+   }
+	var colors = ["red","green","blue","yellow"];
+	var nums=getNums(),cblobs,brow/*,myp*/,mw,smile,fcolor;
+	var /*ed,*/browAng/*,pupOffs*/,stache,blush,blinkRate;
+	var SZ = Math.min(window.innerWidth,window.innerHeight);
+
+	cblobs = nums[0]%7+6;
+	let cwires = nums[0]%28+4;
+	let wiredata = getWireData();
+	brow = nums[2] <= 128;
+	//myp = toNDecs( to1(nums[3]), 3 );
+	mw = toNDecs( to1(nums[4])*(SZ/6.7), 3 );
+	smile = toNDecs( to1N(nums[5])*(SZ/20)*-1, 3 );
+	fcolor = colors[nums[6]%colors.length];
+	//ed = toNDecs( to1(nums[7])*(SZ/13.33), 3 );
+	browAng = toNDecs( to1N(nums[8])*45, 3 );
+	/*pupOffs = [
+		toNDecs( to1N(nums[9]), 3 ),
+		toNDecs( to1N(nums[10]), 3 )
+	];*/
+	stache = nums[12]<39;
+	blush = nums[15]<39;
+	blinkRate = toNDecs( (to1(nums[18])*10000+5000)/1000, 3 );
+
+	features.push( "Cloud Blobs: " + cblobs );
+  features.push( printf(
+        "%s Wires / %s Dangling / %s Hidden",
+        [ cwires, wiredata.dangle, wiredata.hidden ]
+    ));
+  //features.push( printf("%s Wires / %s Dangling", [cwires,wiredata.dangle] ));
+	//features.push( printf( "%s Wires",[cwires]));
+	//features.push( "Mouth Y Position: " + myp);
+	features.push( "Mouth Width: " + Math.round(mw) );
+	features.push( "Face Color: " + fcolor );
+	features.push( "Smile Amount: " + Math.round(smile) );
+	features.push( "Blink Rate: " + Math.round(blinkRate) + " seconds" );
+	if (blush) features.push( "Blush Variant" );
+	//features.push( "Eye Distance: " + ed );
+	//features.push( "Eye Direction: " + pupOffs );
+	if (brow){
+		features.push( "Eyebrow Angle: " + Math.round(browAng) );
+	} else {
+		features.push( "No Eyebrows Variant" );
+	}
+	if (stache) features.push( "Mustache Variant" );
+
+	console.log( features.join('\n') );
+} else if (this.props.projectId==="11"){
+
+
+      let hashPairs = [];
+
+      for (let j = 0; j < 32; j++) {
+         hashPairs.push(tokenData.slice(2 + (j * 2), 4 + (j * 2)));
       }
+
+      let decPairs = hashPairs.map(x => {
+           return parseInt(x, 16);
+      });
+
+      let colorTypes = ["Gradient",
+      "Rainbow",
+      "None"
+      ];
+
+      let flipModes = ["None",
+      "XFlip",
+      "YFlip",
+      "XYFlip",
+      "Kaleido"
+      ];
+
+      let layers = Math.round(decPairs[0].map(0, 255, 1, 3));
+
+      let cT = 0;
+      if (decPairs[1 + layers + 2] % 50 === 1) {
+        cT= 1;
+      }
+      if (decPairs[1 + layers + 8] % 25 === 3) {
+        cT= 2;
+     }
+
+      let fM = 0;
+      let mirror = Math.round(decPairs[1 + layers + 7].map(0, 255, 0.0, 5.0));
+      if(mirror === 0.){
+        fM = 1;
+      }
+      if(mirror === 1.){
+        fM = 2;
+      }
+
+      if(mirror === 2.){
+        fM = 3;
+      }
+      if(mirror === 3.){
+        fM = 4;
+      }
+
+      var colorMode = colorTypes[cT];
+      var flipMode = flipModes[fM];
+
+      let colorBase = decPairs[1 + layers + 1];
+      let speed = 0;
+      let dimensions = 0;
+      for (let i = 0; i < layers; i++) {
+
+          dimensions += Math.round(decPairs[1 + i].map( 0, 255, 1, 6));
+          speed += decPairs[1 + i].map(0, 255, 0.05, 0.5);
+
+     }
+
+      features = ["ColorMode: " + colorMode,
+              "FlipMode: " + flipMode,
+              "Layers: " + String(layers),
+              "ColorBase(0-255): " + String(colorBase),
+              "Speed: " + String(speed.toFixed(2)),
+              "Dimension: " + String(dimensions)
+            ]
+          }
 
 
     return(

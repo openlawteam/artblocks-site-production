@@ -1,5 +1,10 @@
 export const NETWORK = 'main';
+export const NONINTERACTIVE = [1,2,3,5,7,8];
+//export const NONCURATED = [5,6];
+
 //export const NETWORK = 'rinkeby';
+//export const NONINTERACTIVE = [1,2,3,5,10,11,14,15,16,17,18];
+//export const NONCURATED = [];
 
 export const ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A = '0x059EDD72Cd353dF5106D2B9cC5ab83a52287aC3a'
 export const ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B = '0xa7d8d9ef8D8Ce8992Df33D8b8CF4Aebabd5bD270'
