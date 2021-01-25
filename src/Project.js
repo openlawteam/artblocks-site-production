@@ -1908,6 +1908,17 @@ class Project extends Component {
                             type="text"
                             placeholder="If your project can be interacted with set to true, otherwise leave blank."
                           ></Form.Control>
+                          {this.props.isWhitelisted &&
+                            <div>
+                            <Form.Label>Curated?</Form.Label>
+                            <Form.Control
+                              onChange={(e) => this.handleJSON(e, "curated")}
+                              value={this.state.scriptJSON.curated || ""}
+                              type="text"
+                              placeholder="If a project is curated set to true."
+                            ></Form.Control>
+                            </div>
+                          }
                           <Form.Text className="text-muted">
                             The above values <b>cannot</b> be changed once
                             project is locked.

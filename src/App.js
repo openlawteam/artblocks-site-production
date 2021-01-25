@@ -3,6 +3,9 @@
 import React, { Component } from 'react'
 import { NETWORK,
         NONINTERACTIVE,
+        CURATED,
+        COMPLETE,
+        PLAYGROUND,
         ARTBLOCKS_CONTRACT_ABI_A,
         ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A,
         ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A,
@@ -259,6 +262,9 @@ async componentDidUpdate(oldProps){
       baseURL ={baseURL}
       isWhitelisted={this.state.isWhitelisted}
       projectsOfArtist={this.state.projectsOfArtist}
+      curated={CURATED}
+      complete={COMPLETE}
+      playground={PLAYGROUND}
       />
       }
       </div>

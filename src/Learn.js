@@ -18,7 +18,7 @@ class Learn extends Component {
       <Image src={this.props.baseURL+"/image/2"} width="300px"/>
       </div>
       <h5>ELI5</h5>
-      <h6>Art Blocks is a <i>first of its kind</i> storefront for genuinely programmable on demand generative content that is stored immutably on the Ethereum Blockchain. You pick a style that you like, pay for the work, and a randomly generated version of the content is created by an algorithm and sent to your Ethereum account. The resulting piece might be a static image, 3D model, or an interactive experience.
+      <h6>Art Blocks is a <i>first of its kind</i> platform focused on genuinely programmable on demand generative content that is stored immutably on the Ethereum Blockchain. You pick a style that you like, pay for the work, and a randomly generated version of the content is created by an algorithm and sent to your Ethereum account. The resulting piece might be a static image, 3D model, or an interactive experience.
       Each output is different and there are endless possibilities for the types of content that can be created on the platform.</h6>
       <br/>
       <hr/>
@@ -32,6 +32,11 @@ class Learn extends Component {
       <p><b>Note:</b> If the Ethereum blockchain is backlogged and your token takes too long to mint, you might not be presented with the token image automatically upon minting it. The token will appear in your "my items" page once the transaction is confirmed.</p>
       <br/>
       <hr/>
+      {/*<h5>Curated Projects</h5>
+      <p>Art Blocks has established a curation board to carefully select projects for inclusion in the "official" Art Blocks <i>Curated Collection</i>.</p>
+      <p>Artists that have been included in the <i>Curated Collection</i> are then allowed to deploy a project of their choice in the Artist Playground. These projects are not "curated" and subsequently are not promoted as an official Art Blocks drop or considered to be part of the official Art Blocks collection. To participate, artists must have launched a curated project in the six months prior to deploying in the playground and can only have a single ongoing project in the playground at any given time. Additionally, artists must see the entire project through completion at the initially advertised price and edition size in order to proceed with a subsequent project in the playground. Any adjustments in a project's economics will disqualify the artist from deploying another project in the playground until a subsequent project has been accepted through the curation process.</p>
+      <br/>
+      <hr/>*/}
       <h5>How It Works In Depth</h5>
       <p>The Art Blocks platform hosts generative projects for the production of verifiably deterministic outputs. A generative script (using <a rel="noopener noreferrer" href="https://p5js.org" target="_blank">p5js</a> for example)
       is stored immutably on the Ethereum blockchain for each project. When a user wants to purchase an iteration of a project hosted on the platform, they purchase an ERC721 compliant "non-fungible" token, also stored on the Ethereum blockchain,

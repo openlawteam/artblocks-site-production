@@ -916,7 +916,7 @@ features = ignitionFeatures(tokenData);
        }
        return data;
    }
-	var colors = ["red","green","blue","yellow"];
+	var colors = ["red","blue","green","yellow"];
 	var nums=getNums(),cblobs,brow/*,myp*/,mw,smile,fcolor;
 	var /*ed,*/browAng/*,pupOffs*/,stache,blush,blinkRate;
 	var SZ = Math.min(window.innerWidth,window.innerHeight);
