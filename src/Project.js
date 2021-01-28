@@ -596,7 +596,14 @@ class Project extends Component {
           </Alert>
         )}
 
-        <Row>
+        <Row
+          className={
+            currentSubroute === "latest" ||
+            (this.state.projectTokens && this.state.projectTokens.length) < 10
+              ? "align-items-center"
+              : ""
+          }
+        >
           <Col xs={12} sm={6} md={3}>
             <div>
               <div className="text-align-center">
