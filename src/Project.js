@@ -397,6 +397,8 @@ class Project extends Component {
       return "https://opensea.io/assets/art-blocks?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=NimBuds%20by%20Bryan%20Brinkman";
     } else if (this.props.project && this.props.project==="11"){
       return "https://opensea.io/assets/art-blocks?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=HyperHash%20by%20Beervangeer";
+    } else if (this.props.project && this.props.project==="12"){
+      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Unigrids%20by%20Zeblocks";
     } else {
       return "";
     }

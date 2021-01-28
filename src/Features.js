@@ -1033,6 +1033,294 @@ features = ignitionFeatures(tokenData);
               "Speed: " + String(speed.toFixed(2)),
               "Dimension: " + String(dimensions)
             ]
+          } else if (this.props.projectId==="12"){
+
+                  let seed = parseInt(tokenData.slice(0, 16));
+                  let chance = 0;
+
+                  function rnd() {
+
+                      seed ^= seed << 13;
+
+                      seed ^= seed >> 17;
+
+                      seed ^= seed << 5;
+
+                      return (((seed < 0) ? ~seed + 1 : seed) % 1000) / 1000;
+                  }
+
+                  let colors = [
+                      ['#0c0f0a', '#ff206e', '#fbff12', '#41ead4', '#ffffff'], // Cmyk
+                      ['#000000', '#111111', '#232323', '#575757', '#7a7a7a'], // Obsidian
+                      ['#ffffff', '#e3e3e3', '#aaaaaa', '#dbdbdb', '#e5e5e5'], // Diamond
+                      ['#114b5f', '#1a936f', '#88d498', '#c6dabf', '#f3e9d2'], // Emerald
+                      ['#2b2d42', '#8d99ae', '#edf2f4', '#ef233c', '#d90429'], // Ruby
+                      ['#e63946', '#f1faee', '#a8dadc', '#457b9d', '#1d3557'], // Blue Amber
+                      ['#f72585', '#7209b7', '#3a0ca3', '#4361ee', '#4cc9f0'], // Amethyst (Fluorite)
+                      ['#003049', '#d62828', '#f77f00', '#fcbf49', '#eae2b7'], // Ocean Jasper
+                      ['#0b132b', '#1c2541', '#3a506b', '#5bc0be', '#6fffe9'], // Turquoise
+                      ['#00296b', '#003f88', '#00509d', '#fdc500', '#ffd500'], // Labradorite
+                      ['#000000', '#14213d', '#fca311', '#e5e5e5', '#ffffff'], // Sunset sodalite
+                      ['#8dd635', '#8cff00', '#052233', '#093954', '#054f77'], // Amazonite
+                      ['#562c2c', '#f2542d', '#f5dfbb', '#0e9594', '#127475'], // Ammolite
+                      ['#011627', '#fdfffc', '#2ec4b6', '#e71d36', '#ff9f1c'], // CMKY Night
+                  ];
+
+                  function shuffle(array) {
+                      var currentIndex = array.length, temporaryValue, randomIndex;
+
+                      while (0 !== currentIndex) {
+
+                          randomIndex = Math.floor(rnd() * currentIndex);
+                          currentIndex -= 1;
+
+                          temporaryValue = array[currentIndex];
+                          array[currentIndex] = array[randomIndex];
+                          array[randomIndex] = temporaryValue;
+                      }
+
+                      return array;
+                  }
+
+                  colors.forEach(function (c, i) {
+                      colors[i] = shuffle(c);
+                  })
+
+
+                  const rCol = rnd();
+                  var palletteName;
+                  let colorPointer;
+                  if (rCol < 0.03) { // 3 % chance Cmyk
+                      colorPointer = 0;
+                      palletteName = 'CMYK';
+                      chance = 0.03;
+                  } else if (rCol >= 0.03 && rCol < 0.08) { // 5 % chance Obsidian
+                      colorPointer = 1;
+                      palletteName = 'Obsidian';
+                      chance = 0.05;
+                  } else if (rCol >= 0.08 && rCol < 0.13) { // 5 % chance Diamond
+                      colorPointer = 2;
+                      palletteName = 'Diamond';
+                      chance = 0.05;
+                  } else if (rCol >= 0.13 && rCol < 0.19875) { // 6.875 % chance Emerald
+                      colorPointer = 3;
+                      palletteName = 'Emerald';
+                      chance = 0.06875;
+                  } else if (rCol >= 0.19875 && rCol < 0.2675) { // 6.875 % chance Ruby
+                      colorPointer = 4;
+                      palletteName = 'Ruby';
+                      chance = 0.06875;
+                  } else if (rCol >= 0.2675 && rCol < 0.33625) { // 6.875 % chance Blue Amber
+                      colorPointer = 5;
+                      palletteName = 'Blue Amber';
+                      chance = 0.06875;
+                  } else if (rCol >= 0.33625 && rCol < 0.405) { // 6.875 % chance Fluorite
+                      colorPointer = 6;
+                      palletteName = 'Fluorite';
+                      chance = 0.06875;
+                  } else if (rCol >= 0.405 && rCol < 0.49) { // 8.5 % chance Ocean Jasper
+                      colorPointer = 7;
+                      palletteName = 'Ocean Jasper';
+                      chance = 0.085;
+                  } else if (rCol >= 0.49 && rCol < 0.575) { // 8.5 % chance Turquoise
+                      colorPointer = 8;
+                      palletteName = 'Turquoise';
+                      chance = 0.085;
+                  } else if (rCol >= 0.575 && rCol < 0.66) { // 8.5 % chance Labradorite
+                      colorPointer = 9;
+                      palletteName = 'Labradorite';
+                      chance = 0.085;
+                  } else if (rCol >= 0.66 && rCol < 0.745) { // 8.5 % chance Sunset sodalite
+                      colorPointer = 10;
+                      palletteName = 'Sunset sodalite';
+                      chance = 0.085;
+                  } else if (rCol >= 0.745 && rCol < 0.83) { // 8.5 % chance Amazonite
+                      colorPointer = 11;
+                      palletteName = 'Amazonite';
+                      chance = 0.085;
+                  } else if (rCol >= 0.83 && rCol < 0.915) { // 8.5 % chance Ammolite
+                      colorPointer = 12;
+                      palletteName = 'Ammolite';
+                      chance = 0.085;
+                  } else { // 8.5 % chance Cmyk night
+                      colorPointer = 13;
+                      palletteName = 'CMYK night';
+                      chance = 0.085;
+                  }
+
+
+                  const numColRnd = rnd();
+                  let numColors;
+                  if (numColRnd < 0.1) { // 10 % chance 2 colors
+                      numColors = 2;
+                      chance *= 0.1;
+                  } else if (numColRnd >= 0.1 && numColRnd < 0.3) { // 20 % chance 3 colors
+                      numColors = 3;
+                      chance *= 0.2;
+                  } else if (numColRnd >= 0.3 && numColRnd < 0.5) { // 20 % chance 4 colors
+                      numColors = 4;
+                      chance *= 0.2;
+                  } else { // 50 % chance 5 colors
+                      numColors = 5;
+                      chance *= 0.5;
+                  }
+
+                  function genColor() {
+                      let col = '';
+                      col = colors[colorPointer][parseInt((rnd() * (numColors - 1)).toFixed(0))]
+                      return col;
+                  }
+
+                  function genArc() {
+                      const col1 = genColor()
+
+
+                      const rotArc = genArc ? rnd() : 0;
+                  }
+
+
+                  function genTri() {
+
+                      const col1 = genColor()
+
+
+                      const rot = rnd();
+                  }
+
+                  var letcolor = null;
+                  let letters = ''
+
+                  function genLetter(row, col, colbg) {
+                      letcolor = letcolor ? letcolor : genColor()
+
+                      while (colbg === letcolor) {
+                          letcolor = genColor();
+                      }
+
+
+                      letters += String.fromCharCode(rnd() * 25 + 65);
+
+                  }
+
+                  var numColsAndRows;
+                  var rs = rnd();
+                  if (rs >= 0 && rs < 0.3) { // 30 % chance 5x5
+                      numColsAndRows = 5;
+                      chance *= 0.3;
+                  } else if (rs >= 0.3 && rs < 0.55) { // 25 % chance 10x10
+                      numColsAndRows = 10;
+                      chance *= 0.25;
+                  } else if (rs >= 0.55 && rs < 0.80) { // 25 % chance 15x15
+                      numColsAndRows = 15;
+                      chance *= 0.25;
+                  } else { // 20 % chance 20x20
+                      numColsAndRows = 20;
+                      chance *= 0.2;
+                  }
+
+
+                  const letbg = genColor()
+
+                  const shape = rnd();
+
+                  if (shape < 0.075) { // 7.5 % chance Wave
+                      chance *= 0.075
+                  } else if (shape >= 0.075 && shape < 0.15) { // 7.5 % chance Angled
+                      chance *= 0.075
+                  } else if (shape >= 0.15 && shape < 0.65) { // 50 % chance Fifty-Fifty
+                      chance *= 0.5
+                  } else if (shape >= 0.65 && shape < 0.825) { // 17.5 % chance Wavy-up
+                      chance *= 0.175
+                  } else { // 17.5 % chance Angled-up
+                      chance *= 0.175
+                  }
+
+
+                  var shapeName;
+
+                  for (let i = 1; i <= Math.pow(numColsAndRows, 2); i++) {
+                      var row = Math.ceil(i / numColsAndRows);
+
+                      var col = i - (row - 1) * numColsAndRows;
+                      let bgcol = genColor();
+
+
+                      if (i > (Math.pow(numColsAndRows, 2) - 3)) {
+                          genLetter(row, col, letbg);
+                      }
+
+
+                      var r = rnd();
+                      if (shape < 0.075) { // 7.5 % chance Wave
+                          shapeName = 'Wave';
+                          genArc();
+                      } else if (shape >= 0.075 && shape < 0.15) { // 7.5 % chance Angled
+                          shapeName = 'Angled';
+                          genTri();
+                      } else if (shape >= 0.15 && shape < 0.65) { // 50 % chance Fifty-Fifty
+                          shapeName = 'Fifty-Fifty';
+                          if (r >= 0.5) {
+                              genArc();
+                          } else {
+                              genTri();
+                          }
+                      } else if (shape >= 0.65 && shape < 0.825) { // 17.5 % chance Wavy-up
+                          shapeName = 'Wavy-up';
+                          if (r >= 0.25) {
+                              genArc();
+                          } else {
+                              genTri();
+                          }
+                      } else { // 17.5 % chance Angled-up
+                          shapeName = 'Angled-up';
+                          if (r >= 0.25) {
+                              genTri();
+                          } else {
+                              genArc();
+                          }
+                      }
+
+
+                  }
+
+                  const rhmusic = rnd();
+
+
+                  const rmusic = rnd();
+                  let  beatName;
+                  if (rmusic >= 0 && rmusic < 0.125) {
+                      beatName = 'Beat1';
+                  } else if (rmusic >= 0.125 && rmusic < 0.25) {
+                      beatName = 'Beat2';
+                  } else if (rmusic >= 0.25 && rmusic < 0.375) {
+                      beatName = 'Beat3';
+                  } else if (rmusic >= 0.375 && rmusic < 0.5) {
+                      beatName = 'Beat4';
+                  } else if (rmusic >= 0.5 && rmusic < 0.625) {
+                      beatName = 'Beat5';
+                  } else if (rmusic >= 0.625 && rmusic < 0.75) {
+                      beatName = 'Beat6';
+                  } else if (rmusic >= 0.75 && rmusic < 0.875) {
+                      beatName = 'Beat7';
+                  } else {
+                      beatName = 'Beat8';
+                  }
+                  chance *= 0.125;
+
+                  var frq = rnd() * 1.25;
+
+                  while (frq < 0.75) { // means between 0.75 and 1.25
+                      frq = rnd() * 1.25;
+                  }
+
+
+              features = [
+                  "Palette: " + palletteName,
+                  "# of colors: " + String(numColors),
+                  "Grid size: " + String(numColsAndRows + 'x' + numColsAndRows),
+                  "Shape: " + shapeName,
+                  "Beat: " + beatName
+              ]
           }
 
 
