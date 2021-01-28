@@ -194,14 +194,12 @@ class App extends Component {
     }
 
     if (window.ethereum) {
-      // We've already connected our wallet
-      if (window.ethereum.selectedAddress) {
-        this.handleConnectToMetamask();
-      }
+      this.handleConnectToMetamask();
 
       // Make sure the site reflects if the user has disconnected their wallet
       window.ethereum.on("accountsChanged", (accounts) => {
         if (accounts.length === 0) {
+          console.log("NO ACCOUNT");
           this.setState({
             connected: false,
             account: null,
@@ -247,32 +245,37 @@ class App extends Component {
 
   async loadAccountData() {
     const accounts = await this.state.web3.eth.getAccounts();
-    const tokensOfOwnerA = await this.state.artBlocks.methods
-      .tokensOfOwner(accounts[0])
-      .call();
-    const tokensOfOwnerAFiltered = tokensOfOwnerA.filter(
-      (token) => token < 3000000
-    );
-    const tokensOfOwnerB = await this.state.artBlocks2.methods
-      .tokensOfOwner(accounts[0])
-      .call();
-    const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
-    const isWhitelisted =
-      (await this.state.artBlocks.methods.isWhitelisted(accounts[0]).call()) &&
-      (await this.state.artBlocks2.methods.isWhitelisted(accounts[0]).call());
-    let projectsOfArtist = [];
-    this.state.artistAddresses.map((projectArtistAddress, index) => {
-      if (projectArtistAddress === accounts[0] || isWhitelisted) {
-        projectsOfArtist.push(index);
-      }
-      return null;
-    });
-    this.setState({
-      account: accounts[0],
-      tokensOfOwner,
-      isWhitelisted,
-      projectsOfArtist,
-    });
+    if (accounts && accounts.length > 0) {
+      const tokensOfOwnerA = await this.state.artBlocks.methods
+        .tokensOfOwner(accounts[0])
+        .call();
+      const tokensOfOwnerAFiltered = tokensOfOwnerA.filter(
+        (token) => token < 3000000
+      );
+      const tokensOfOwnerB = await this.state.artBlocks2.methods
+        .tokensOfOwner(accounts[0])
+        .call();
+      const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
+      const isWhitelisted =
+        (await this.state.artBlocks.methods
+          .isWhitelisted(accounts[0])
+          .call()) &&
+        (await this.state.artBlocks2.methods.isWhitelisted(accounts[0]).call());
+      let projectsOfArtist = [];
+      this.state.artistAddresses.map((projectArtistAddress, index) => {
+        if (projectArtistAddress === accounts[0] || isWhitelisted) {
+          projectsOfArtist.push(index);
+        }
+        return null;
+      });
+
+      this.setState({
+        account: accounts[0],
+        tokensOfOwner,
+        isWhitelisted,
+        projectsOfArtist,
+      });
+    }
   }
 
   async handleConnectToMetamask() {

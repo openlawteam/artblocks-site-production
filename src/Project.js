@@ -64,6 +64,7 @@ class Project extends Component {
     );
     this.approve = this.approve.bind(this);
     this.updateProjectTokenDetails = this.updateProjectTokenDetails.bind(this);
+    this.updateValues = this.updateValues.bind(this);
   }
 
   async componentDidMount() {
@@ -793,7 +794,11 @@ class Project extends Component {
                     {this.props.isWhitelisted || userIsArtist ? (
                       <Button
                         as={Link}
-                        to={this.props.match.url + "/artist"}
+                        to={
+                          currentSubroute === "artist"
+                            ? this.props.match.url
+                            : this.props.match.url + "/artist"
+                        }
                         className="btn-primary btn-block"
                       >
                         Toggle Artist Interface
