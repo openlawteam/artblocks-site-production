@@ -1,7 +1,7 @@
 // export const NETWORK = 'main';
 export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8];
-export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12];
-export const COMPLETE = [1, 2, 4, 6, 7, 8, 9, 10, 11, 12];
+export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11];
+export const COMPLETE = [1, 2, 4, 6, 7, 8, 9, 10, 11];
 export const PLAYGROUND = [6];
 //export const ARTIST = []
 
