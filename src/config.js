@@ -1,11 +1,11 @@
-// export const NETWORK = 'main';
+export const NETWORK = "main";
 export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8];
 export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12];
 export const COMPLETE = [1, 2, 4, 6, 7, 8, 9, 10, 11, 12];
 export const PLAYGROUND = [6];
 //export const ARTIST = []
 
-export const NETWORK = "rinkeby";
+// export const NETWORK = "rinkeby";
 //export const NONINTERACTIVE = [1,2,3,5,10,11,14,15,16,17,18];
 //export const NONCURATED = [];
 export const BASE_URL =
