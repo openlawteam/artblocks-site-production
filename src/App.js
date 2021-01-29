@@ -54,6 +54,7 @@ function Proj(props) {
   let { project } = useParams();
   return (
     <Project
+      handleConnectToMetamask={props.handleConnectToMetamask}
       project={project}
       account={props.account}
       handleToggleView={props.handleToggleView}
@@ -194,12 +195,14 @@ class App extends Component {
     }
 
     if (window.ethereum) {
-      this.handleConnectToMetamask();
+      const accounts = await new Web3(window.ethereum).eth.getAccounts();
+      if (accounts && accounts.length > 0) {
+        this.handleConnectToMetamask();
+      }
 
       // Make sure the site reflects if the user has disconnected their wallet
       window.ethereum.on("accountsChanged", (accounts) => {
         if (accounts.length === 0) {
-          console.log("NO ACCOUNT");
           this.setState({
             connected: false,
             account: null,
@@ -302,11 +305,9 @@ class App extends Component {
       );
 
       if (network === NETWORK) {
-        console.log(window.ethereum);
         window.ethereum
           .request({ method: "eth_requestAccounts" })
           .then((result) => {
-            console.log(result);
             this.setState({
               connected: true,
               web3,
@@ -465,6 +466,7 @@ class App extends Component {
             <Route path="/project/:project">
               {this.state.allProjects && (
                 <Proj
+                  handleConnectToMetamask={this.handleConnectToMetamask}
                   account={this.state.account}
                   handleToggleView={this.handleToggleView}
                   connected={this.state.connected}

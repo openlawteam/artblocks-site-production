@@ -52,6 +52,7 @@ class Project extends Component {
       erc20: "",
       approved: true,
       erc20Balance: "",
+      randomTokenNumber: 0,
     };
     this.handleToggleArtistInterface = this.handleToggleArtistInterface.bind(
       this
@@ -131,6 +132,9 @@ class Project extends Component {
       scriptJSON,
       projectURIInfo,
       projectRoyaltyInfo /*, network*/,
+      randomTokenNumber: projectTokens
+        ? Math.floor(Math.random() * projectTokens.length)
+        : 0,
     });
     //setInterval(this.updateProjectTokenDetails,5000);
   }
@@ -245,6 +249,9 @@ class Project extends Component {
         projectRoyaltyInfo,
         project: this.props.project,
         approved: true,
+        randomTokenNumber: projectTokens
+          ? Math.floor(Math.random() * projectTokens.length)
+          : 0,
       });
     } else if (oldProps.artBlocks !== this.props.artBlocks) {
       console.log("change artBlocks?");
@@ -545,10 +552,6 @@ class Project extends Component {
   }
 
   render() {
-    let randomTokenNumber =
-      this.state.projectTokens &&
-      Math.floor(Math.random() * this.state.projectTokens.length);
-
     let complete =
       this.state.projectTokens &&
       this.props.project &&
@@ -800,12 +803,17 @@ class Project extends Component {
                   <div>
                     {this.props.isWhitelisted || userIsArtist ? (
                       <Button
-                        as={Link}
-                        to={
-                          currentSubroute === "artist"
-                            ? this.props.match.url
-                            : this.props.match.url + "/artist"
-                        }
+                        onClick={async () => {
+                          if (currentSubroute !== "artist") {
+                            await this.props.handleConnectToMetamask();
+                          }
+
+                          this.props.history.push(
+                            currentSubroute === "artist"
+                              ? this.props.match.url
+                              : this.props.match.url + "/artist"
+                          );
+                        }}
                         className="btn-primary btn-block"
                       >
                         Toggle Artist Interface
@@ -824,7 +832,8 @@ class Project extends Component {
                         <div>
                           <Alert variant="secondary">
                             <p>
-                              Showing random token [#{randomTokenNumber - 1}].
+                              Showing random token [#
+                              {this.state.randomTokenNumber - 1}].
                             </p>
                             <Button
                               variant="light"
@@ -863,7 +872,7 @@ class Project extends Component {
                 <LatestToken
                   project={this.state.project}
                   complete={complete}
-                  random={randomTokenNumber}
+                  random={this.state.randomTokenNumber}
                   latest={latestTokenNumber}
                 />
               </Route>
