@@ -874,7 +874,7 @@ class Project extends Component {
                 />
               </Route>
               <Route path={this.props.match.path + "/artist"}>
-                {userIsArtist ? (
+                {userIsArtist || this.props.isWhitelisted ? (
                   <ArtistInterface
                     project={this.state.project}
                     account={this.props.account}
