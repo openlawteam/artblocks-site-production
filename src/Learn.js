@@ -32,12 +32,18 @@ class Learn extends Component {
       <p><b>Note:</b> If the Ethereum blockchain is backlogged and your token takes too long to mint, you might not be presented with the token image automatically upon minting it. The token will appear in your "my items" page once the transaction is confirmed.</p>
       <br/>
       <hr/>
-      {/*<h5>Curated Projects</h5>
-      <p>Art Blocks has established a curation board to carefully select projects for inclusion in the "official" Art Blocks <i>Curated Collection</i>.</p>
-      <p>Artists that have been included in the <i>Curated Collection</i> are then allowed to deploy a project of their choice in the Artist Playground. These projects are not "curated" and subsequently are not promoted as an official Art Blocks drop or considered to be part of the official Art Blocks collection. To participate, artists must have launched a curated project in the six months prior to deploying in the playground and can only have a single ongoing project in the playground at any given time. Additionally, artists must see the entire project through completion at the initially advertised price and edition size in order to proceed with a subsequent project in the playground. Any adjustments in a project's economics will disqualify the artist from deploying another project in the playground until a subsequent project has been accepted through the curation process.</p>
+      <h5>Curated Projects</h5>
+      <p>Art Blocks as a platform has established a curation board to carefully select projects for inclusion in the "official" Art Blocks <i>Curated Collection</i>.</p>
+      <p>The intention is to create a collection of works that best represent the vision of the Art Blocks platform, and are released on a schedule allowing collectors to manageably build a significant set of generative works.
+      The total size and value of these curated drops will be tied to user base to allow newcomers to participate in the experience as the platform expands.</p>
+      <p>The maximum number of full curated sets to exist is tied to the edition size of the smallest drop in that set. This means there can only ever exist 200 full sets of the 2020 set of 6 works and 369 of the current 2021 Q1 set. </p>
       <br/>
-      <hr/>*/}
-      <h5>How It Works In Depth</h5>
+      <hr/>
+      <h5>Artist Playground</h5>
+      <p>Artists that have been included in the <i>Curated Collection</i> are then allowed to deploy a project of their choice in the Artist Playground. These projects are not "curated" and subsequently are not promoted as an official Art Blocks drop or considered to be part of the "official" Art Blocks collection. To participate, artists must have launched a curated project prior to deploying in the playground and can only have a single ongoing project in the playground at any given time. Additionally, artists must see the entire project through completion at the initially advertised price and edition size in order to proceed with a subsequent project in the playground. Any adjustments in a project's economics will disqualify the artist from deploying another project in the playground until a subsequent project has been accepted through the curation process.</p>
+      <br/>
+      <hr/>
+      <h5>How Art Blocks Works In Depth</h5>
       <p>The Art Blocks platform hosts generative projects for the production of verifiably deterministic outputs. A generative script (using <a rel="noopener noreferrer" href="https://p5js.org" target="_blank">p5js</a> for example)
       is stored immutably on the Ethereum blockchain for each project. When a user wants to purchase an iteration of a project hosted on the platform, they purchase an ERC721 compliant "non-fungible" token, also stored on the Ethereum blockchain,
       containing a provably unique "seed" which controls variables in the generative script. These variables, in turn, control the way the output looks and operates.</p>

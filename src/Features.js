@@ -69,7 +69,7 @@ class Features extends Component {
       }
       }
       if (decPairs[24]<30){
-        if (features.includes("Bold") || features.includes("Slinky") || features.includes("Fuzzy")){
+        if (features.includes("Bold") || features.includes("Slinky") || features.includes("Fuzzy") || features.includes("Pipe")){
         } else {
         features.push("Ribbed [Color: "+decPairs[25]+"]");
       }
@@ -1033,10 +1033,10 @@ features = ignitionFeatures(tokenData);
               "Speed: " + String(speed.toFixed(2)),
               "Dimension: " + String(dimensions)
             ]
-          } else if (this.props.projectId==="12"){
+          } if (this.props.projectId==="12"){
 
                   let seed = parseInt(tokenData.slice(0, 16));
-                  let chance = 0;
+                  //let chance = 0;
 
                   function rnd() {
 
@@ -1090,79 +1090,79 @@ features = ignitionFeatures(tokenData);
                   const rCol = rnd();
                   var palletteName;
                   let colorPointer;
-                  if (rCol < 0.03) { // 3 % chance Cmyk
+                  if (rCol < 0.03) { // 3 % //chance Cmyk
                       colorPointer = 0;
                       palletteName = 'CMYK';
-                      chance = 0.03;
-                  } else if (rCol >= 0.03 && rCol < 0.08) { // 5 % chance Obsidian
+                      //chance = 0.03;
+                  } else if (rCol >= 0.03 && rCol < 0.08) { // 5 % //chance Obsidian
                       colorPointer = 1;
                       palletteName = 'Obsidian';
-                      chance = 0.05;
-                  } else if (rCol >= 0.08 && rCol < 0.13) { // 5 % chance Diamond
+                      //chance = 0.05;
+                  } else if (rCol >= 0.08 && rCol < 0.13) { // 5 % //chance Diamond
                       colorPointer = 2;
                       palletteName = 'Diamond';
-                      chance = 0.05;
-                  } else if (rCol >= 0.13 && rCol < 0.19875) { // 6.875 % chance Emerald
+                      //chance = 0.05;
+                  } else if (rCol >= 0.13 && rCol < 0.19875) { // 6.875 % //chance Emerald
                       colorPointer = 3;
                       palletteName = 'Emerald';
-                      chance = 0.06875;
-                  } else if (rCol >= 0.19875 && rCol < 0.2675) { // 6.875 % chance Ruby
+                      //chance = 0.06875;
+                  } else if (rCol >= 0.19875 && rCol < 0.2675) { // 6.875 % //chance Ruby
                       colorPointer = 4;
                       palletteName = 'Ruby';
-                      chance = 0.06875;
-                  } else if (rCol >= 0.2675 && rCol < 0.33625) { // 6.875 % chance Blue Amber
+                      //chance = 0.06875;
+                  } else if (rCol >= 0.2675 && rCol < 0.33625) { // 6.875 % //chance Blue Amber
                       colorPointer = 5;
                       palletteName = 'Blue Amber';
-                      chance = 0.06875;
-                  } else if (rCol >= 0.33625 && rCol < 0.405) { // 6.875 % chance Fluorite
+                      //chance = 0.06875;
+                  } else if (rCol >= 0.33625 && rCol < 0.405) { // 6.875 % //chance Fluorite
                       colorPointer = 6;
                       palletteName = 'Fluorite';
-                      chance = 0.06875;
-                  } else if (rCol >= 0.405 && rCol < 0.49) { // 8.5 % chance Ocean Jasper
+                      //chance = 0.06875;
+                  } else if (rCol >= 0.405 && rCol < 0.49) { // 8.5 % //chance Ocean Jasper
                       colorPointer = 7;
                       palletteName = 'Ocean Jasper';
-                      chance = 0.085;
-                  } else if (rCol >= 0.49 && rCol < 0.575) { // 8.5 % chance Turquoise
+                      //chance = 0.085;
+                  } else if (rCol >= 0.49 && rCol < 0.575) { // 8.5 % //chance Turquoise
                       colorPointer = 8;
                       palletteName = 'Turquoise';
-                      chance = 0.085;
-                  } else if (rCol >= 0.575 && rCol < 0.66) { // 8.5 % chance Labradorite
+                      //chance = 0.085;
+                  } else if (rCol >= 0.575 && rCol < 0.66) { // 8.5 % //chance Labradorite
                       colorPointer = 9;
                       palletteName = 'Labradorite';
-                      chance = 0.085;
-                  } else if (rCol >= 0.66 && rCol < 0.745) { // 8.5 % chance Sunset sodalite
+                      //chance = 0.085;
+                  } else if (rCol >= 0.66 && rCol < 0.745) { // 8.5 % //chance Sunset sodalite
                       colorPointer = 10;
                       palletteName = 'Sunset sodalite';
-                      chance = 0.085;
-                  } else if (rCol >= 0.745 && rCol < 0.83) { // 8.5 % chance Amazonite
+                      //chance = 0.085;
+                  } else if (rCol >= 0.745 && rCol < 0.83) { // 8.5 % //chance Amazonite
                       colorPointer = 11;
                       palletteName = 'Amazonite';
-                      chance = 0.085;
-                  } else if (rCol >= 0.83 && rCol < 0.915) { // 8.5 % chance Ammolite
+                      //chance = 0.085;
+                  } else if (rCol >= 0.83 && rCol < 0.915) { // 8.5 % //chance Ammolite
                       colorPointer = 12;
                       palletteName = 'Ammolite';
-                      chance = 0.085;
-                  } else { // 8.5 % chance Cmyk night
+                      //chance = 0.085;
+                  } else { // 8.5 % //chance Cmyk night
                       colorPointer = 13;
                       palletteName = 'CMYK night';
-                      chance = 0.085;
+                      //chance = 0.085;
                   }
 
 
                   const numColRnd = rnd();
                   let numColors;
-                  if (numColRnd < 0.1) { // 10 % chance 2 colors
+                  if (numColRnd < 0.1) { // 10 % //chance 2 colors
                       numColors = 2;
-                      chance *= 0.1;
-                  } else if (numColRnd >= 0.1 && numColRnd < 0.3) { // 20 % chance 3 colors
+                      //chance *= 0.1;
+                  } else if (numColRnd >= 0.1 && numColRnd < 0.3) { // 20 % //chance 3 colors
                       numColors = 3;
-                      chance *= 0.2;
-                  } else if (numColRnd >= 0.3 && numColRnd < 0.5) { // 20 % chance 4 colors
+                      //chance *= 0.2;
+                  } else if (numColRnd >= 0.3 && numColRnd < 0.5) { // 20 % //chance 4 colors
                       numColors = 4;
-                      chance *= 0.2;
-                  } else { // 50 % chance 5 colors
+                      //chance *= 0.2;
+                  } else { // 50 % //chance 5 colors
                       numColors = 5;
-                      chance *= 0.5;
+                      //chance *= 0.5;
                   }
 
                   function genColor() {
@@ -1172,23 +1172,22 @@ features = ignitionFeatures(tokenData);
                   }
 
                   function genArc() {
-                      const col1 = genColor()
+                      genColor();
 
 
-                      const rotArc = genArc ? rnd() : 0;
+                      rnd();
                   }
 
 
                   function genTri() {
 
-                      const col1 = genColor()
+                      genColor();
 
 
-                      const rot = rnd();
+                      rnd();
                   }
 
                   var letcolor = null;
-                  let letters = ''
 
                   function genLetter(row, col, colbg) {
                       letcolor = letcolor ? letcolor : genColor()
@@ -1198,24 +1197,24 @@ features = ignitionFeatures(tokenData);
                       }
 
 
-                      letters += String.fromCharCode(rnd() * 25 + 65);
+                      rnd();
 
                   }
 
                   var numColsAndRows;
                   var rs = rnd();
-                  if (rs >= 0 && rs < 0.3) { // 30 % chance 5x5
+                  if (rs >= 0 && rs < 0.3) { // 30 % //chance 5x5
                       numColsAndRows = 5;
-                      chance *= 0.3;
-                  } else if (rs >= 0.3 && rs < 0.55) { // 25 % chance 10x10
+                      //chance *= 0.3;
+                  } else if (rs >= 0.3 && rs < 0.55) { // 25 % //chance 10x10
                       numColsAndRows = 10;
-                      chance *= 0.25;
-                  } else if (rs >= 0.55 && rs < 0.80) { // 25 % chance 15x15
+                      //chance *= 0.25;
+                  } else if (rs >= 0.55 && rs < 0.80) { // 25 % //chance 15x15
                       numColsAndRows = 15;
-                      chance *= 0.25;
-                  } else { // 20 % chance 20x20
+                      //chance *= 0.25;
+                  } else { // 20 % //chance 20x20
                       numColsAndRows = 20;
-                      chance *= 0.2;
+                      //chance *= 0.2;
                   }
 
 
@@ -1223,16 +1222,16 @@ features = ignitionFeatures(tokenData);
 
                   const shape = rnd();
 
-                  if (shape < 0.075) { // 7.5 % chance Wave
-                      chance *= 0.075
-                  } else if (shape >= 0.075 && shape < 0.15) { // 7.5 % chance Angled
-                      chance *= 0.075
-                  } else if (shape >= 0.15 && shape < 0.65) { // 50 % chance Fifty-Fifty
-                      chance *= 0.5
-                  } else if (shape >= 0.65 && shape < 0.825) { // 17.5 % chance Wavy-up
-                      chance *= 0.175
-                  } else { // 17.5 % chance Angled-up
-                      chance *= 0.175
+                  if (shape < 0.075) { // 7.5 % //chance Wave
+                      //chance *= 0.075
+                  } else if (shape >= 0.075 && shape < 0.15) { // 7.5 % //chance Angled
+                      //chance *= 0.075
+                  } else if (shape >= 0.15 && shape < 0.65) { // 50 % //chance Fifty-Fifty
+                      //chance *= 0.5
+                  } else if (shape >= 0.65 && shape < 0.825) { // 17.5 % //chance Wavy-up
+                      //chance *= 0.175
+                  } else { // 17.5 % //chance Angled-up
+                      //chance *= 0.175
                   }
 
 
@@ -1242,7 +1241,7 @@ features = ignitionFeatures(tokenData);
                       var row = Math.ceil(i / numColsAndRows);
 
                       var col = i - (row - 1) * numColsAndRows;
-                      let bgcol = genColor();
+                      genColor();
 
 
                       if (i > (Math.pow(numColsAndRows, 2) - 3)) {
@@ -1251,27 +1250,27 @@ features = ignitionFeatures(tokenData);
 
 
                       var r = rnd();
-                      if (shape < 0.075) { // 7.5 % chance Wave
+                      if (shape < 0.075) { // 7.5 % //chance Wave
                           shapeName = 'Wave';
                           genArc();
-                      } else if (shape >= 0.075 && shape < 0.15) { // 7.5 % chance Angled
+                      } else if (shape >= 0.075 && shape < 0.15) { // 7.5 % //chance Angled
                           shapeName = 'Angled';
                           genTri();
-                      } else if (shape >= 0.15 && shape < 0.65) { // 50 % chance Fifty-Fifty
+                      } else if (shape >= 0.15 && shape < 0.65) { // 50 % //chance Fifty-Fifty
                           shapeName = 'Fifty-Fifty';
                           if (r >= 0.5) {
                               genArc();
                           } else {
                               genTri();
                           }
-                      } else if (shape >= 0.65 && shape < 0.825) { // 17.5 % chance Wavy-up
+                      } else if (shape >= 0.65 && shape < 0.825) { // 17.5 % //chance Wavy-up
                           shapeName = 'Wavy-up';
                           if (r >= 0.25) {
                               genArc();
                           } else {
                               genTri();
                           }
-                      } else { // 17.5 % chance Angled-up
+                      } else { // 17.5 % //chance Angled-up
                           shapeName = 'Angled-up';
                           if (r >= 0.25) {
                               genTri();
@@ -1283,7 +1282,7 @@ features = ignitionFeatures(tokenData);
 
                   }
 
-                  const rhmusic = rnd();
+                  rnd();
 
 
                   const rmusic = rnd();
@@ -1305,7 +1304,7 @@ features = ignitionFeatures(tokenData);
                   } else {
                       beatName = 'Beat8';
                   }
-                  chance *= 0.125;
+                  //chance *= 0.125;
 
                   var frq = rnd() * 1.25;
 
@@ -1321,7 +1320,672 @@ features = ignitionFeatures(tokenData);
                   "Shape: " + shapeName,
                   "Beat: " + beatName
               ]
-          }
+          } else if (this.props.projectId==="13"){
+            // class needed for ringer
+class DeadRinger {
+  constructor(points) {
+    this.points = points
+  }
+
+  generate(wrap, forceCentroid, shouldSort) {
+    let centroid
+
+    if (forceCentroid) {
+      centroid = [forceCentroid[0], forceCentroid[1]]
+    } else {
+      centroid = [0,0]
+      this.points.forEach(i=> {
+        centroid[0] += i.cx
+        centroid[1] += i.cy
+      })
+      centroid = [centroid[0]/this.points.length, centroid[1]/this.points.length]
+    }
+
+    if (shouldSort) {
+      this.points.sort((a,b) => {
+        let aAng = Math.atan2(a.cy - centroid[1], a.cx - centroid[0])
+        let bAng = Math.atan2(b.cy - centroid[1], b.cx - centroid[0])
+
+        let angleDifference = (aAng - bAng) % (Math.PI * 2)
+        let spaceDifference = -(distance(a.cx, a.cy, centroid[0], centroid[1]) - distance(b.cx, b.cy, centroid[0], centroid[1]))
+
+        let zeroAngleDifference = Math.abs(angleDifference) < 0.0001
+        let zeroSpaceDifference = Math.abs(spaceDifference) < 0.0001
+
+        let qualifier = zeroAngleDifference ? spaceDifference : angleDifference
+        let result = (zeroAngleDifference && zeroSpaceDifference) ? (a.id - b.id) : qualifier
+        return result
+      })
+    }
+
+    for (let i=0; i < this.points.length && this.points.length > 1; i+=1) {
+
+      let prev = this.points[i-1 < 0 ? this.points.length - 1 : i-1 ]
+
+      let current = this.points[i]
+      current.sortedOrder = i
+
+      let next = this.points[(i+1) % this.points.length]
+
+      let dAx = prev.cx - current.cx;
+      let dAy = prev.cy - current.cy;
+      let dBx = next.cx - current.cx
+      let dBy = next.cy - current.cy;
+
+      var ang = Math.atan2(dAx * dBy - dAy * dBx, dAx * dBx + dAy * dBy)
+      current.isConcave = (ang < 0 && Math.abs(ang) <= Math.PI) ||  Math.abs(Math.abs(ang) - Math.PI) < 0.0001
+    }
+  }
+}
+
+let rawParams = setupParametersFromTokenData(tokenData)
+// we may need to rename?
+let seed = generateSeedFromTokenData(tokenData)
+
+let GRID_ALGORITHM = 0
+let RECURSIVE_GRID_ALGORITHM = 1
+let CONSTANT_RADIUS = 0
+let BIGGER_NEAR_CENTER_RADIUS = 1
+let BIGGER_FAR_CENTER_RADIUS = 2
+
+//let tokenId = parseInt(tokenData.tokenId.substring(2))
+
+let params = {
+  gridDimension: parseInt(mapParam(rawParams[0], 3, 6)),
+  radius: mapParam(rawParams[1], 0.5, 0.8),
+  sampleRate: mapParam(rawParams[2], 0.5, 0.8),
+  wrapped: rawParams[3] < 127,
+  drawAllPoints: rawParams[4] < 127,
+  forceCentroid: rawParams[5] > 200,
+  fill: rawParams[6] < 127,
+  pointsAlgorithm: rawParams[7] < 220 ? GRID_ALGORITHM: RECURSIVE_GRID_ALGORITHM,
+  variableRadius: rawParams[8] > 200 ? (rawParams[8] > 227 ? BIGGER_NEAR_CENTER_RADIUS : BIGGER_FAR_CENTER_RADIUS) : CONSTANT_RADIUS,
+  backgroundHighlight: rawParams[9] > 220,
+  fillHighlight: rawParams[10] > 220,
+  useSecondaryColor: rawParams[11] < 75,
+  useSecondaryColorForBackground: rawParams[12] > 170,
+  concentric: (rawParams[13] <= 13) || (rawParams[13] > 108 && rawParams[13] <= 110) || (rawParams[13] === 69) || (rawParams[13] === 33)||(rawParams[13] === 43),
+  flipConcaveColor: rawParams[14] > 200 && (rawParams[6] >= 127 || rawParams[10] > 220),
+  backgroundColor: rawParams[22] < 250 ? '#f5f5f5': '#2b2b2b',
+  subtleBackgroundColor: '#f7f7e6',
+  strokeColor: rawParams[22] < 250 ? '#2b2b2b' : '#f5f5f5',
+  highlightColor: rawParams[22] < 250 ?'#f2c945': '#2b2b2b',
+  secondaryColor: (rawParams[15] >= 19 && rawParams[15] <= 230) ? '#c3423f' : (rawParams[15] > 230 && rawParams[15] <= 234 ? '#3b9764': '#4381c1'),
+  useSecondaryColorForFill: rawParams[16] <= 85,
+  strokeWeight: 8,
+  padding: (rawParams[17] > 14 ? 1 : 2.66),
+  shrinkConcavePegs: rawParams[18] >= 245,
+  useSubtleBackground: rawParams[19] >= 245,
+  offsetGrid: rawParams[7] < 220 && rawParams[20] > 205,
+  offsetGridStarting: rawParams[21] > 127
+}
+
+// where the magic happens, this is very sensitive so be careful
+calculateFeatures()
+
+// The features array now is filled
+console.log(features)
+
+// Function to calculate features
+
+function calculateFeatures() {
+
+  let dimWidth = 1200
+  let dimHeight = dimWidth
+
+  //let strokeWidth = params.strokeWeight * dimWidth/800
+  let highlightBackgroundPick = params.useSecondaryColorForBackground ? params.secondaryColor : params.highlightColor
+  let actualBackgroundColor = params.backgroundHighlight ? highlightBackgroundPick : (params.useSubtleBackground ? params.subtleBackgroundColor : params.backgroundColor)
+  features.push("Background: " +hexToName(actualBackgroundColor))
+
+  let padding = dimWidth * params.padding * 0.08
+  features.push("Size: " + (params.padding === 1 ? 'Normal' : 'smol boi'))
+  let innerWidth = dimWidth - 2*padding
+  let innerHeight = dimHeight - 2*padding
+
+  let cellDimension = innerWidth/params.gridDimension
+
+  let points = []
+
+  let sampleRate = params.sampleRate
+
+  let centroid = params.forceCentroid ? [range(0, cellDimension*2), range(dimHeight/2, dimHeight)] : false
+  let wrapped = params.wrapped
+
+  features.push('Wrap orientation: '+ (centroid ? 'Off-center' : 'Balanced'))
+
+  features.push('Wrap style: '+ (wrapped ? 'Weave' : 'Loop'))
+
+  if (params.pointsAlgorithm === GRID_ALGORITHM) {
+    points = pointsOnGrid(points, padding, cellDimension)
+    if (!params.offsetGrid) {
+      features.push('Peg layout: ' +params.gridDimension+'x'+ params.gridDimension+' grid')
+    } else {
+      features.push('Peg layout: Tiled ' + (params.gridDimension - (params.offsetGridStarting ? 0: 1)) +','+ (params.gridDimension - (params.offsetGridStarting ? 1: 0) ))
+    }
+  } else if (params.pointsAlgorithm === RECURSIVE_GRID_ALGORITHM) {
+    pointsOnRecursiveGrid(points, padding, padding, innerWidth, innerHeight)
+    features.push('Peg layout: Recursive grid')
+  }
+
+  if (params.variableRadius !== CONSTANT_RADIUS) {
+    let biggerCenter = params.variableRadius === BIGGER_NEAR_CENTER_RADIUS
+    if (biggerCenter) {
+      features.push('Peg scaling: Bigger near center')
+    } else {
+      features.push('Peg scaling: Smaller near center')
+    }
+
+    points.forEach((p,i) => {
+      let distanceToCenter = distance(dimWidth/2, dimHeight/2, p.cx, p.cy)
+      let biggerCenterCoefficient = 1 / (1 + distanceToCenter/(dimWidth/5))
+      let smallerCenterCoefficient = (1 + distanceToCenter + cellDimension) / distance(dimWidth/2, dimHeight/2, 0, 0)
+      let coefficient = range(0.8, 1) * (biggerCenter ? biggerCenterCoefficient : smallerCenterCoefficient)
+      p.r *= coefficient
+    })
+  } else {
+    features.push('Peg scaling: Uniform')
+  }
+
+  let {samples, leftOver} = sampleSize(points, parseInt(sampleRate * points.length))
+
+  let ringer = new DeadRinger(samples)
+
+  ringer.generate(wrapped, centroid, true)
+
+  let bodyFillColor
+
+  if (params.fill){
+    let fillHighlightColor = params.useSecondaryColorForFill ? params.secondaryColor : params.highlightColor
+    bodyFillColor = params.fillHighlight ? fillHighlightColor : params.strokeColor
+  } else {
+    bodyFillColor = params.backgroundColor
+  }
+
+  features.push("Body: " +hexToName(bodyFillColor))
+
+  rangeFloor(0, samples.length)
+
+  if (params.concentric) {
+    features.push('Peg style: Bullseye')
+  } else {
+    features.push('Peg style: Solid')
+  }
+
+  if (params.drawAllPoints) {
+    rangeFloor(0, leftOver.length)
+    //let unusedPegFill = (params.flipConcaveColor ? params.strokeColor : params.backgroundColor)
+    if (params.useSecondaryColor) {
+      features.push('Extra color: '+hexToName(params.secondaryColor))
+    } else {
+      features.push('Extra color: N/A')
+    }
+  } else {
+    features.push('Extra color: N/A')
+  }
+
+  features.push('Peg count: '+ (params.drawAllPoints ? points.length : samples.length))
+}
+
+/**
+ * Helper functions
+ */
+
+function hexToName (hexString) {
+  let colMap = {
+    '#f5f5f5': 'White',
+    '#2b2b2b': 'Black',
+    '#f7f7e6': 'Beige',
+    '#f2c945': 'Yellow',
+    '#c3423f': 'Red',
+    '#4381c1': 'Blue',
+    '#3b9764': 'Green'
+  }
+
+  return colMap[hexString]
+}
+
+function pointsOnGrid(points, padding, cellDimension) {
+  for (let i = 0; i < params.gridDimension; i++) {
+    let boolFunction = params.offsetGridStarting ? (i%2 !== 0) : (i%2 === 0)
+    let offsetter = params.offsetGrid ? (boolFunction ? 1: 0) : 0
+
+    for (let j = 0; j < params.gridDimension - offsetter; j++) {
+      let cx = padding + (i+0.5) * cellDimension;
+      let cy = padding + (j+0.5 + offsetter/2) * cellDimension;
+      let r = cellDimension/2 * params.radius
+      points.push({cx, cy, r, originalR: r, i, j, id: points.length})
+    }
+  }
+  return points
+}
+
+function pointsOnRecursiveGrid(points, x, y, w, h, iter=1) {
+  let dimW = parseInt(range(2,4))
+  let dimH = dimW
+
+  let nw = w/dimW
+  let nh = h/dimH
+
+  for (let nx=x; nx < x+w-1; nx+=nw) {
+    for (let ny=y; ny <y+h-1; ny+=nh) {
+      if (rnd() < 0.5 && iter < 2) {
+        pointsOnRecursiveGrid(points, nx, ny, nw, nh, iter+1)
+      } else {
+        let r = params.radius*Math.min(nw,nh)/2
+        points.push({r, cx: nx+nw/2, cy: ny+nh/2, originalR: r, id: points.length})
+      }
+    }
+  }
+}
+
+// parse parameters
+function setupParametersFromTokenData(token) {
+  let hashPairs = []
+  //parse hash
+  for (let j = 0; j < 32; j++) {
+    hashPairs.push(tokenData.slice(2 + (j * 2), 4 + (j * 2)))
+  }
+  // map to 0-255
+  return hashPairs.map(x => {
+    return parseInt(x, 16)
+  })
+}
+
+function generateSeedFromTokenData(token) {
+
+  return parseInt(tokenData.slice(0, 16), 16)
+}
+
+function rnd() {
+  seed ^= seed << 13
+  seed ^= seed >> 17
+  seed ^= seed << 5
+
+  let result = (((seed < 0) ? ~seed + 1 : seed) % 1000) / 1000
+  return result
+}
+
+function range (min, max) {
+  if (max === undefined) {
+    max = min;
+    min = 0;
+  }
+
+  return rnd() * (max - min) + min;
+}
+
+function rangeFloor (min, max) {
+  if (max === undefined) {
+    max = min
+    min = 0
+  }
+  return Math.floor(range(min, max))
+}
+
+function shuffleArray (arr) {
+  var rand;
+  var tmp;
+  var len = arr.length;
+  var ret = arr.slice();
+  while (len) {
+    rand = Math.floor(rnd() * len--);
+    tmp = ret[len];
+    ret[len] = ret[rand];
+    ret[rand] = tmp;
+  }
+  return ret;
+}
+
+function distance (x1, y1, x2, y2) {
+  return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1))
+}
+
+function sampleSize(arr, num) {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Expected Array, got ' + typeof arr);
+  }
+
+  if (arr.length < num) {
+    throw new TypeError('Array is has less elements than sample size, ' + arr.length + ' vs '+num);
+  }
+
+  let shuffled = shuffleArray(arr)
+
+  return {samples: shuffled.slice(0, num), leftOver: shuffled.slice(num)}
+}
+
+function mapd(n, start1, stop1, start2, stop2) {
+  return ((n-start1)/(stop1-start1))*(stop2-start2)+start2
+}
+
+function mapParam(n, start, stop) {
+  return mapd(n, 0, 255, start, stop)
+}
+
+////////////////
+
+}  else if ( this.props.projectId==="14"){
+  let seed = parseInt(tokenData.slice(0, 16), 16);
+
+  class Palette {
+    constructor(colors, repeat=3) {
+      this.c = colors;
+      this.repeat = repeat;
+      this.i = 0;
+      this.u = 0;
+    }
+    increment() {
+      if (this.i === this.c.length-1) {
+        this.i = 0;
+      } else {
+        this.i += 1;
+      }
+    }
+    usage() {
+      if (this.u % this.repeat === 0) {
+        this.increment();
+      }
+      this.u += 1;
+    }
+    color() {
+      this.usage();
+      return this.c[this.i];
+    }
+  }
+
+  class Ship {
+    constructor() {
+      this.objects = [];
+      this.dyn = false;
+      this.push = 0;
+      this.speed = 0;
+    }
+  }
+
+  var DEFAULT_SIZE = 1000;
+  var WIDTH = window.innerWidth;
+  var HEIGHT = window.innerHeight;
+  var DIM = Math.min(WIDTH, HEIGHT);
+  var M = DIM / DEFAULT_SIZE;
+
+  var PALS = [["#F72585", "#B5179E", "#7209B7", "#4361EE", "#4361EE", "#4895EF", "#4CC9F0"],
+  ["#FF184C", "#FF184C", "#0A9CF5"],
+  ["#E92EFB", "#FF2079", "#440BD4", "#04005E"],
+  ["#08F7FE", "#09FBD3", "#FE53BB", "#F5D300"],
+  ["#D9EB4B", "#00A9FE", "#FD6BB6", "#EF0888"],
+  ["#3B27BA", "#E847AE", "#13CA91", "#FF9472"],
+  ["#E96D5E", "#EEEEEE", "#FFE69D", "#6A7E6A", "#393F5F"],
+  ["#63345E", "#FD8090", "#B7C1DE", "#06569C", "#092047"]];
+
+  var PALS_N = ["Cyber","Azure","Viper","Neopunk","Sentinel","Eternity","Voyage","Essence"];
+  var PAL_C = rnd_choice([0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]);
+  var PAL = PALS[PAL_C];
+  var REP = rnd_choice([2,3,3,3,3,4,5,6,7,8,9,10,15,20,30,50,100]);
+  var P1 = new Palette(PAL, REP);
+  var max_h = rnd_between(10, 50)*M;
+  var max_w = rnd_between(10, 50)*M;
+  var dyn_true = rnd_between(0, 1) > 0.5;
+  var dyn_thresh = rnd_between(0.5, 1);
+  var Ships = [];
+
+  function rr(x, y, w, h) {
+    if (rnd_between(0, 0.55) > 0.5) {
+      rect_partition(x, y, x+w, y+h);
+    }
+    let sw = rnd_between(0, 0.7) > 0.5;
+    let sl = rnd_between(0.1, 0.8);
+    if (sw && w > max_w) {
+      rr(x, y, w * sl, h);
+      rr(x + (w * sl), y, w * (1 - sl), h);
+    } else if (h > max_h) {
+      rr(x, y, w, h * sl);
+      rr(x, y + (h * sl), w, h * (1 - sl));
+    }
+  }
+  function rescale(e, t, r, i, a) {
+    return ((e - t) / (r - t)) * (a - i) + i;
+  }
+  function range(start, stop, step) {
+      var a = [start], b = start;
+      while (b < stop) {
+          a.push(b += step || 1);
+      }
+      return (b > stop) ? a.slice(0,-1) : a;
+  }
+  function rect_partition(x1, y1, x2, y2) {
+    let ship = new Ship();
+    let sw = rnd_between(1, 15)*M;
+    let dyn = rnd_choice([false,true,true]);
+    let step = 15*M;
+    let breaks = range(x1, x2, step).slice(rnd_between(1,5));
+    ship.objects.push({x:x1, y:y1, xs:(x2-x1), ys:(y2-y1), c:P1.color(), sw:sw, dyn:dyn, tl:0});
+    let height = y2-y1;
+    for (let xm of breaks) {
+      ship.objects.push({x:x1, y:y1, xs:(xm-x1), ys:(y2-y1), c:P1.color(), sw:sw, dyn:dyn, tl:0});
+      x1 = xm;
+    }
+    if (height < 25*M && sw < 5*M && dyn_true && rnd_between(0, 1) < dyn_thresh) {
+      ship.dyn = true;
+      ship.speed = (1-rescale(height, 0, 25*M, 0.7, 0.9))*M;
+    }
+    Ships.push(ship);
+  }
+  function rnd_dec() {
+    seed ^= seed << 13
+    seed ^= seed >> 17
+    seed ^= seed << 5
+    return ((seed < 0 ? ~seed + 1 : seed) % 1000) / 1000
+  }
+  function rnd_between(a, b) {
+    return a + (b - a) * rnd_dec()
+  }
+  function rnd_choice(choices) {
+    return choices[Math.floor(rnd_between(0, choices.length * 0.99))]
+  }
+
+  rr(0, 0, DIM, DIM);
+  let travelers = []
+  for (let s of Ships) {
+    if (s.speed > 0) {
+      travelers.push(s.speed);
+    }
+  }
+  //let max_sp = travelers.length > 0 ? Math.max(...travelers) : 0;
+  //let min_sp = travelers.length > 0 ? Math.min(...travelers) : 0;
+  function cat(input, values, outcome, fallback) {
+  var zip = (a, b) => a.map((x, i) => [x, b[i]]);
+  for (let [a, b] of zip(values, outcome))
+    if (input >= a) {
+      return b;
+    }
+  return fallback;
+}
+
+features = [
+  "Palette:" + PALS_N[PAL_C],
+  "Components:" +
+    cat(
+      Ships.length,
+      [700, 500, 250, 100],
+      ["700+", "500-699", "250-499", "100-249"],
+      "0-99"
+    ),
+  "State:" + cat(travelers.length, [1], ["Dynamic"], "Static"),
+  "Ships:" +
+    cat(
+      travelers.length,
+      [50, 25, 10, 1],
+      ["50+", "25-49", "10-24", "1-10"],
+      "0"
+    ),
+  "Color Repeat:" + REP
+];
+
+  console.log(features)
+}
+
+else if (this.props.projectId==="15"){
+
+  const utopiaFeatures = (hash) => {
+	let features = [],
+		RandomGenerator = function (s) {
+			let seedA = s;
+			return function () {
+				seedA ^= seedA << 13;
+				seedA ^= seedA >> 17;
+				seedA ^= seedA << 5;
+				return ((seedA < 0 ? ~seedA + 1 : seedA) % 1000) / 1000;
+			};
+		},
+		random = RandomGenerator(parseInt(hash.slice(0, 16), 16)),
+		randint = (s, e = 0) => {
+			if (e === 0) {
+				e = s;
+				s = 0;
+			}
+			return Math.floor(s + random() * (e - s + 1));
+		},
+		randpos = (a) => {
+			return a[Math.floor(random() * a.length)];
+		};
+		random();
+		let sky = randpos([
+			["Black & White", "Day"],
+			["Yellow", "Day"],
+			["Green", "Day"],
+			["Orange", "Day"],
+			["Orange", "Day"],
+			["Neon", "Day"],
+			["Blue", "Day"],
+			["Purple", "Day"],
+			["Grey", "Night"],
+			["Orange", "Night"],
+			["Blue", "Night"],
+			["Green", "Night"],
+			["Cyan", "Night"],
+			["Sepia", "Night"],
+			["Purple", "Night"],
+			["Yellow", "Dawn"],
+			["Orange", "Dawn"],
+			["Blue", "Dawn"],
+			["Sepia", "Dawn"],
+			["Black", "Night"]
+		]),
+		skyCol = sky[0],
+		time = sky[1],
+		structList = [
+			"Pyramid",
+			"Ether",
+			"Skyscraper",
+			"Laser tower",
+			"Nuclear plant",
+			"Generator"
+		],
+		struct = randint(5),
+		ufo = random() > 0.95 ? 1 : 0,
+		spa = random() > 0.95 ? 1 : 0;
+	if (struct === 5) ufo = 0;
+	features.push("Sky color: " + skyCol);
+	features.push("Time: " + time);
+	features.push("Structure: " + structList[struct]);
+	if (ufo) features.push("UFO");
+	if (struct === 0 && spa) features.push("Aliens contamination");
+	return features;
+};
+
+
+/////////////////////////////////////////////////////////////////////
+
+
+features = utopiaFeatures(tokenData);
+console.log(features)
+
+}
+
+/////////
+
+else if (this.props.projectId==="16"){
+
+  let hashPairs = [];
+  for (let i = 0; i < 32; i++) {
+  	let hex = tokenData.slice((2 * i) + 2, (2 * i) + 4);
+  	hashPairs[i] = parseInt(hex, 16);
+  }
+  let albers, rndcolor, blackcorner, tinted, hline, vline, circles = false;
+  let divs = [3, 4, 4, 5, 5, 6, 6, 6, 8, 8, 8, 10, 10, 10, 12, 12, 12, 15, 15, 15, 20, 20, 20, 24, 24, 24, 30, 30, 30, 40, 40, 60, 60, 120];
+  let hdiv, vdiv;
+  hdiv = divs[Math.floor(hashPairs[0].map(0, 255, 0, divs.length - .0000000001))];
+  vdiv = divs[Math.floor(hashPairs[1].map(0, 255, 0, divs.length - .0000000001))];
+
+
+  for (let i = 0; i < 61; i++) {
+  	let hexquad = tokenData.slice(i + 2, i + 6);
+  	if (hexquad === 'a1be' || hexquad === 'a1b3') {
+  		albers = true;
+  	}
+  }
+  if (albers) {
+  	//append(features, 'Albers')
+    features.push('Albers');
+  }
+  if (hashPairs[14] > 250 && !albers) {
+  	rndcolor = true;
+  	//append(features, 'Random')
+    features.push('Random');
+  }
+  if (hashPairs[14] > 244 && !rndcolor && !albers) {
+  	//complementary = true;
+  	//append(features, 'Complementary')
+    features.push('Complementary');
+  }
+  if (hashPairs[15] > 248 && !rndcolor && !albers) {
+  	blackcorner = true;
+  	//append(features, 'Black Corner')
+    features.push('Black Corner');
+  }
+  if (hashPairs[15] > 225 && !blackcorner && !rndcolor && !albers) {
+  	tinted = true;
+  	//append(features, 'Tinted')
+    features.push('Tinted');
+  }
+  if (hashPairs[15] > 202 && !tinted && !blackcorner && !rndcolor && !albers) {
+  	//saturated = true;
+  	//append(features, 'Saturated')
+    features.push('Saturated');
+  }
+  if (hdiv === vdiv && !albers) {
+  	if (hashPairs[29] > 127) {
+  		circles = true;
+  		//append(features, 'Circles')
+      features.push('Circles');
+  	}
+  }
+  //let hline,vline;
+  if (hashPairs[30] > 191 && !circles) {
+  	hline = true;
+  }
+  if (hashPairs[31] > 191 && !circles) {
+  	vline = true;
+  }
+  if (!hline && !vline) {
+  	//append(features, 'Adjacent')
+    features.push('Adjacent');
+  }
+  if (hline && !vline) {
+  	//append(features, 'Horizontal Lines')
+    features.push('Horizontal Lines');
+  }
+  if (vline && !hline) {
+  	//append(features, 'Vertical Lines')
+    features.push('Vertical Lines');
+  }
+  if (hline && vline) {
+  	//append(features, 'Grid Lines')
+    features.push('Grid Lines');
+  }
+
+}
 
 
     return(

@@ -396,14 +396,20 @@ class Project extends Component {
     } else if (this.props.project && this.props.project === "9") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ignition&search[stringTraits][0][values][0]=All%20Ignitions";
     } else if (this.props.project && this.props.project==="10"){
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Nimbuds&search[stringTraits][0][values][0]=All%20Nimbuds";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=NimBuds&search[stringTraits][0][values][0]=All%20NimBuds";
     } else if (this.props.project && this.props.project==="11"){
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=HyperHash&search[stringTraits][0][values][0]=All%20HyperHashs";
     } else if (this.props.project && this.props.project==="12"){
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Unigrids&search[stringTraits][0][values][0]=All%20Unigrids";
     } else if (this.props.project && this.props.project==="13"){
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ringers&search[stringTraits][0][values][0]=All%20Ringers";
-    } else {
+    } else if (this.props.project && this.props.project==="14"){
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Cyber%20Cities&search[stringTraits][0][values][0]=All%20Cyber%20Cities"
+    } else if (this.props.project && this.props.project==="15"){
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Utopia&search[stringTraits][0][values][0]=All%20Utopias"
+    }
+
+    else {
       return "";
     }
   }
@@ -945,8 +951,6 @@ class Project extends Component {
               const mintedToken = receipt.events.Mint.returnValues[1];
               console.log("mintedtoken:" + mintedToken);
               //this.updateTokens();
-              let fetchURL = 'https://rinkebyapi.artblocks.io/image/'+mintedToken;
-              fetch(fetchURL).then((x) => console.log(x));;
               this.props.handleToggleView("newToken", mintedToken);
             })
             .catch((err) => {
@@ -967,8 +971,6 @@ class Project extends Component {
             .once("receipt", (receipt) => {
               const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
               console.log("mintedtoken:" + mintedToken);
-              let fetchURL = 'https://rinkebyapi.artblocks.io/image/'+mintedToken;
-              fetch(fetchURL).then((x) => console.log(x));;
               this.props.handleToggleView("newToken", mintedToken);
             })
             .catch((err) => {
@@ -993,8 +995,6 @@ class Project extends Component {
             const mintedToken = receipt.events.Mint.returnValues[1];
             console.log("mintedtoken:" + mintedToken);
             console.log(receipt);
-            let fetchURL = 'https://rinkebyapi.artblocks.io/image/'+mintedToken;
-            fetch(fetchURL).then((x) => console.log(x));;
             this.props.handleToggleView("newToken", mintedToken);
           })
           .catch((err) => {
@@ -1016,8 +1016,6 @@ class Project extends Component {
             const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
             console.log("mintedtoken:" + mintedToken);
             console.log(receipt);
-            let fetchURL = 'https://rinkebyapi.artblocks.io/image/'+mintedToken;
-            fetch(fetchURL).then((x) => console.log(x));;
             this.props.handleToggleView("newToken", mintedToken);
           })
           .catch((err) => {
@@ -1165,10 +1163,7 @@ class Project extends Component {
 
 
       <div>
-      {this.state.projectTokenDetails && (this.props.isWhitelisted ||
-        this.state.projectTokenDetails[0] ===
-          this.props.account || this.state.projectTokenDetails[4]) &&
-        <div>
+
         {this.props.network === "rinkeby" && (
           <Alert variant="danger">
             You are on the Rinkeby Testnet version of the Art Blocks platform.
@@ -2416,8 +2411,7 @@ class Project extends Component {
           </Col>
         </Row>
       </div>
-    }
-    </div>
+
     );
   }
 }

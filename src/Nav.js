@@ -11,15 +11,18 @@ class Navigation extends Component {
     const artBlocks2 = this.props.artBlocks2;
     const activeProjects = this.props.activeProjects;
     //console.log(activeProjects);
+    //console.log(activeProjects);
     let activeProjectsDetails = [];
       //for (let i=0;i<activeProjects.length;i++){
       for (let project in activeProjects){
-        if (project<3){
+        if (activeProjects[project]<3){
+          //console.log(Number(project));
           let nameArtist = [];
           const projectDetails = await artBlocks.methods.projectDetails(activeProjects[project]).call();
           nameArtist.push(activeProjects[project]);
           nameArtist.push(projectDetails[0]);
           nameArtist.push(projectDetails[1]);
+          console.log(nameArtist);
           activeProjectsDetails.push(nameArtist);
         } else {
           let nameArtist = [];
@@ -37,7 +40,7 @@ class Navigation extends Component {
         for (let i=0;i<allProjects.length;i++){
           if (i<3){
             let nameArtist = [];
-            console.log("project"+i);
+            //console.log("project"+i);
             const projectDetails = await artBlocks.methods.projectDetails(i).call();
             nameArtist.push(i);
             nameArtist.push(projectDetails[0]);
@@ -45,7 +48,7 @@ class Navigation extends Component {
             allProjectsDetails.push(nameArtist);
           } else {
             let nameArtist = [];
-            console.log("project"+i);
+            //console.log("project"+i);
             const projectDetails = await artBlocks2.methods.projectDetails(i).call();
             nameArtist.push(i);
             nameArtist.push(projectDetails[0]);
@@ -67,6 +70,7 @@ class Navigation extends Component {
   }
 
   render() {
+    //console.log(this.state.allProjectsDetails);
     //console.log('active: '+this.props.activeProjects);
     //console.log("whitlisted?:" + this.props.isWhitelisted);
     //console.log(this.props.projectsOfArtist);
