@@ -1704,8 +1704,8 @@ function mapParam(n, start, stop) {
   }
 
   var DEFAULT_SIZE = 1000;
-  var WIDTH = window.innerWidth;
-  var HEIGHT = window.innerHeight;
+  var WIDTH = 2400;
+  var HEIGHT = 2400;
   var DIM = Math.min(WIDTH, HEIGHT);
   var M = DIM / DEFAULT_SIZE;
 
@@ -1718,8 +1718,7 @@ function mapParam(n, start, stop) {
   ["#E96D5E", "#EEEEEE", "#FFE69D", "#6A7E6A", "#393F5F"],
   ["#63345E", "#FD8090", "#B7C1DE", "#06569C", "#092047"]];
 
-  var PALS_N = ["Cyber","Azure","Viper","Neopunk","Sentinel","Eternity","Voyage","Essence"];
-  var PAL_C = rnd_choice([0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]);
+  var PAL_C = rnd_choice([0,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7]);
   var PAL = PALS[PAL_C];
   var REP = rnd_choice([2,3,3,3,3,4,5,6,7,8,9,10,15,20,30,50,100]);
   var P1 = new Palette(PAL, REP);
@@ -1728,6 +1727,14 @@ function mapParam(n, start, stop) {
   var dyn_true = rnd_between(0, 1) > 0.5;
   var dyn_thresh = rnd_between(0.5, 1);
   var Ships = [];
+
+  let travelers = [];
+  rr(0, 0, DIM, DIM);
+  for (let s of Ships) {
+    if (s.speed > 0) {
+      travelers.push(s.speed);
+    }
+  }
 
   function rr(x, y, w, h) {
     if (rnd_between(0, 0.55) > 0.5) {
@@ -1784,43 +1791,35 @@ function mapParam(n, start, stop) {
     return choices[Math.floor(rnd_between(0, choices.length * 0.99))]
   }
 
-  rr(0, 0, DIM, DIM);
-  let travelers = []
-  for (let s of Ships) {
-    if (s.speed > 0) {
-      travelers.push(s.speed);
-    }
-  }
-  //let max_sp = travelers.length > 0 ? Math.max(...travelers) : 0;
-  //let min_sp = travelers.length > 0 ? Math.min(...travelers) : 0;
+  var PALS_N = ["Cyber","Azure","Viper","Neopunk","Sentinel","Eternity","Voyage","Essence"];
   function cat(input, values, outcome, fallback) {
-  var zip = (a, b) => a.map((x, i) => [x, b[i]]);
-  for (let [a, b] of zip(values, outcome))
-    if (input >= a) {
-      return b;
-    }
-  return fallback;
-}
+    var zip = (a, b) => a.map((x, i) => [x, b[i]]);
+    for (let [a, b] of zip(values, outcome))
+      if (input >= a) {
+        return b;
+      }
+    return fallback;
+  }
 
-features = [
-  "Palette:" + PALS_N[PAL_C],
-  "Components:" +
-    cat(
-      Ships.length,
-      [700, 500, 250, 100],
-      ["700+", "500-699", "250-499", "100-249"],
-      "0-99"
-    ),
-  "State:" + cat(travelers.length, [1], ["Dynamic"], "Static"),
-  "Ships:" +
-    cat(
-      travelers.length,
-      [50, 25, 10, 1],
-      ["50+", "25-49", "10-24", "1-10"],
-      "0"
-    ),
-  "Color Repeat:" + REP
-];
+  features = [
+    "Palette:" + PALS_N[PAL_C],
+    "Components:" +
+      cat(
+        Ships.length,
+        [700, 500, 250, 100],
+        ["700+", "500-699", "250-499", "100-249"],
+        "0-99"
+      ),
+    "State:" + cat(travelers.length, [1], ["Dynamic"], "Static"),
+    "Ships:" +
+      cat(
+        travelers.length,
+        [50, 25, 10, 1],
+        ["50+", "25-49", "10-24", "1-10"],
+        "0"
+      ),
+    "Color Repeat:" + REP
+  ];
 
   console.log(features)
 }
