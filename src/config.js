@@ -1,17 +1,17 @@
 export const NETWORK = "main";
-export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8];
-export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12];
-export const COMPLETE = [1, 2, 4, 6, 7, 8, 9, 10, 11, 12];
-export const PLAYGROUND = [6];
+export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16];
+export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17];
+export const COMPLETE = [1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+export const PLAYGROUND = [6, 14, 15, 16];
 //export const ARTIST = []
 
-// export const NETWORK = "rinkeby";
-//export const NONINTERACTIVE = [1,2,3,5,10,11,14,15,16,17,18];
-//export const NONCURATED = [];
-export const BASE_URL =
-  NETWORK === "main"
-    ? "https://api.artblocks.io"
-    : "https://rinkebyapi.artblocks.io";
+/*
+export const NETWORK = 'rinkeby';
+export const NONINTERACTIVE = [1,2];
+export const COMPLETE = [0,1,2];
+export const CURATED =[0,1,2];
+export const PLAYGROUND =[];
+*/
 
 export const ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A =
   "0x059EDD72Cd353dF5106D2B9cC5ab83a52287aC3a";
@@ -23,9 +23,17 @@ export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET =
 export const ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A =
   "0x7b404C05733344eA9a618b95B21Ad27090B53456";
 export const ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B =
-  "0x0d86198A785D9Cabf3ce9A2032D6cf4a1Ec1235b";
+  "0x152eeE3DCc5526efd646E9b45c9a9672BfFcc097";
 export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY =
-  "0x571E0Cc6827946b65CF3756Bb1AFe753Edb7B474";
+  "0xa58EC37211A040aBB9f0c1931Ce83CF094E68ff1";
+
+/*
+TESTNET TERMINATED 1/4/2021
+export const NONINTERACTIVE = [1,2,3,5,10,11,14,15,16,17,18];
+export const ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A = '0x7b404C05733344eA9a618b95B21Ad27090B53456'
+export const ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B = '0x0d86198A785D9Cabf3ce9A2032D6cf4a1Ec1235b'
+export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY = '0x571E0Cc6827946b65CF3756Bb1AFe753Edb7B474'
+*/
 
 export const ARTBLOCKS_CONTRACT_ABI_A = [
   {

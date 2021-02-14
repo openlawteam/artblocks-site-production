@@ -376,29 +376,35 @@ class Project extends Component {
   }
   getOSLink() {
     if (this.props.project && this.props.project === "0") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Chromie%20Squiggle%20by%20Snowfro";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Chromie%20Squiggle&search[stringTraits][0][values][0]=All%20Chromie%20Squiggles";
     } else if (this.props.project && this.props.project === "1") {
       //console.log("osp1");
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Genesis%20by%20DCA";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Genesis&search[stringTraits][0][values][0]=All%20Genesis";
     } else if (this.props.project && this.props.project === "2") {
       //console.log("osp2");
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Construction%20Token%20by%20Jeff%20Davis";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Construction%20Token&search[stringTraits][0][values][0]=All%20Construction%20Tokens";
     } else if (this.props.project && this.props.project === "3") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Cryptoblots%20by%20Da%C3%AFm%20Aggott-H%C3%B6nsch";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Cryptoblots&search[stringTraits][0][values][0]=All%20Cryptoblots";
     } else if (this.props.project && this.props.project === "4") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Dynamic%20Slices%20by%20pxlq";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Dynamic%20Slices&search[stringTraits][0][values][0]=All%20Dynamic%20Slices";
     } else if (this.props.project && this.props.project === "5") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Variant%20Plan%20by%20Jeff%20Davis";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Variant%20Plan&search[stringTraits][0][values][0]=All%20Variant%20Plans";
+    } else if (this.props.project && this.props.project === "6") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=View%20Card&search[stringTraits][0][values][0]=All%20View%20Cards";
     } else if (this.props.project && this.props.project === "7") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Elevated%20Deconstructions%20by%20luxpris";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Elevated%20Deconstructions&search[stringTraits][0][values][0]=All%20Elevated%20Deconstructions";
     } else if (this.props.project && this.props.project === "8") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Singularity%20by%20Hideki%20Tsukamoto";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Singularity&search[stringTraits][0][values][0]=All%20Singularitys";
     } else if (this.props.project && this.props.project === "9") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=Ignition%20by%20ge1doot";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ignition&search[stringTraits][0][values][0]=All%20Ignitions";
     } else if (this.props.project && this.props.project === "10") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=NimBuds%20by%20Bryan%20Brinkman";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Nimbuds&search[stringTraits][0][values][0]=All%20Nimbuds";
     } else if (this.props.project && this.props.project === "11") {
-      return "https://opensea.io/assets/art-blocks?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[stringTraits][0][name]=Project&search[stringTraits][0][values][0]=HyperHash%20by%20Beervangeer";
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=HyperHash&search[stringTraits][0][values][0]=All%20HyperHashs";
+    } else if (this.props.project && this.props.project === "12") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Unigrids&search[stringTraits][0][values][0]=All%20Unigrids";
+    } else if (this.props.project && this.props.project === "13") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ringers&search[stringTraits][0][values][0]=All%20Ringers";
     } else {
       return "";
     }
@@ -474,6 +480,9 @@ class Project extends Component {
               const mintedToken = receipt.events.Mint.returnValues[1];
               console.log("mintedtoken:" + mintedToken);
               //this.updateTokens();
+              let fetchURL =
+                "https://rinkebyapi.artblocks.io/image/" + mintedToken;
+              fetch(fetchURL).then((x) => console.log(x));
               this.props.handleToggleView("newToken", mintedToken);
             })
             .catch((err) => {
@@ -494,6 +503,9 @@ class Project extends Component {
             .once("receipt", (receipt) => {
               const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
               console.log("mintedtoken:" + mintedToken);
+              let fetchURL =
+                "https://rinkebyapi.artblocks.io/image/" + mintedToken;
+              fetch(fetchURL).then((x) => console.log(x));
               this.props.handleToggleView("newToken", mintedToken);
             })
             .catch((err) => {
@@ -518,6 +530,9 @@ class Project extends Component {
             const mintedToken = receipt.events.Mint.returnValues[1];
             console.log("mintedtoken:" + mintedToken);
             console.log(receipt);
+            let fetchURL =
+              "https://rinkebyapi.artblocks.io/image/" + mintedToken;
+            fetch(fetchURL).then((x) => console.log(x));
             this.props.handleToggleView("newToken", mintedToken);
           })
           .catch((err) => {
@@ -539,6 +554,9 @@ class Project extends Component {
             const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
             console.log("mintedtoken:" + mintedToken);
             console.log(receipt);
+            let fetchURL =
+              "https://rinkebyapi.artblocks.io/image/" + mintedToken;
+            fetch(fetchURL).then((x) => console.log(x));
             this.props.handleToggleView("newToken", mintedToken);
           })
           .catch((err) => {
@@ -591,322 +609,346 @@ class Project extends Component {
 
     return (
       <div>
-        {this.props.network === "rinkeby" && (
-          <Alert variant="danger">
-            You are on the Rinkeby Testnet version of the Art Blocks platform.
-            Make sure your Metamask wallet is set to Rinkeby before confirming
-            any transactions.
-          </Alert>
-        )}
-
-        <Row
-          className={
-            currentSubroute === "latest" ||
-            (this.state.projectTokens && this.state.projectTokens.length) < 10
-              ? "align-items-center"
-              : ""
-          }
-        >
-          <Col xs={12} sm={6} md={3}>
+        {this.state.projectTokenDetails &&
+          (this.props.isWhitelisted ||
+            this.state.projectTokenDetails[0] === this.props.account ||
+            this.state.projectTokenDetails[4]) && (
             <div>
-              <div className="text-align-center">
-                <br />
-                <br />
-                <br />
-                {this.state.projectDescription && (
+              {this.props.network === "rinkeby" && (
+                <Alert variant="danger">
+                  You are on the Rinkeby Testnet version of the Art Blocks
+                  platform. Make sure your Metamask wallet is set to Rinkeby
+                  before confirming any transactions.
+                </Alert>
+              )}
+
+              <Row
+                className={
+                  currentSubroute === "latest" ||
+                  (this.state.projectTokens &&
+                    this.state.projectTokens.length) < 10
+                    ? "align-items-center"
+                    : ""
+                }
+              >
+                <Col xs={12} sm={6} md={3}>
                   <div>
-                    <h1>{this.state.projectDescription[0]}</h1>
-                    <h3>by {this.state.projectDescription[1]}</h3>
-                    <a
-                      href={
-                        this.state.projectDescription[3] &&
-                        this.state.projectDescription[3]
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {this.state.projectDescription[3] &&
-                        this.state.projectDescription[3]}
-                    </a>
-                    <br />
-                    <br />
-                    <p>{this.state.projectDescription[2]}</p>
-                    <br />
-                    <p>
-                      Total Minted:{" "}
-                      {this.state.projectTokenDetails &&
-                        this.state.projectTokenDetails[2]}{" "}
-                      /{" "}
-                      {this.state.projectTokenDetails &&
-                        this.state.projectTokenDetails[3]}{" "}
-                      max
-                    </p>
-
-                    <p>
-                      License:{" "}
-                      {this.state.projectDescription &&
-                        this.state.projectDescription[4]}
-                    </p>
-                    <p>
-                      Script:{" "}
-                      {this.state.scriptJSON && this.state.scriptJSON.type}
-                    </p>
-                  </div>
-                )}
-
-                {this.state.projectTokens &&
-                  this.state.projectTokenDetails &&
-                  !complete && (
-                    <div>
-                      <p>
-                        Price per token:{" "}
-                        {this.state.projectTokenDetails &&
-                          this.props.web3.utils.fromWei(
-                            this.state.projectTokenDetails[1],
-                            "ether"
-                          )}
-                        {this.state.currency && this.state.currency === "ETH"
-                          ? "Ξ"
-                          : " " + this.state.currency}
-                      </p>
-
-                      {currentSubroute === "latest" ? (
+                    <div className="text-align-center">
+                      <br />
+                      <br />
+                      <br />
+                      {this.state.projectDescription && (
                         <div>
-                          <Alert style={{ width: "100%" }} variant="secondary">
-                            <p>Showing the latest mint.</p>
-                            <Button
-                              variant="light"
-                              block
-                              to={this.props.match.url + "/gallery"}
-                              as={Link}
-                            >
-                              View All
-                            </Button>
-                          </Alert>
-                        </div>
-                      ) : null}
-
-                      {!this.props.connected && (
-                        <div>
+                          <h1>{this.state.projectDescription[0]}</h1>
+                          <h3>by {this.state.projectDescription[1]}</h3>
+                          <a
+                            href={
+                              this.state.projectDescription[3] &&
+                              this.state.projectDescription[3]
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {this.state.projectDescription[3] &&
+                              this.state.projectDescription[3]}
+                          </a>
                           <br />
-                          <p>Please connect to MetaMask to enable purchases.</p>
+                          <br />
+                          <p>{this.state.projectDescription[2]}</p>
+                          <br />
+                          <p>
+                            Total Minted:{" "}
+                            {this.state.projectTokenDetails &&
+                              this.state.projectTokenDetails[2]}{" "}
+                            /{" "}
+                            {this.state.projectTokenDetails &&
+                              this.state.projectTokenDetails[3]}{" "}
+                            max
+                          </p>
+
+                          <p>
+                            License:{" "}
+                            {this.state.projectDescription &&
+                              this.state.projectDescription[4]}
+                          </p>
+                          <p>
+                            Script:{" "}
+                            {this.state.scriptJSON &&
+                              this.state.scriptJSON.type}
+                          </p>
                         </div>
                       )}
 
-                      {this.props.connected &&
-                        this.state.projectScriptDetails &&
-                        this.state.approved && (
+                      {this.state.projectTokens &&
+                        this.state.projectTokenDetails &&
+                        !complete && (
                           <div>
-                            {this.state.currency !== "ETH" && (
-                              <p>
-                                {this.state.currency} Balance:{" "}
-                                {this.state.erc20Balance}
-                              </p>
-                            )}
-                            <Button
-                              className="btn-primary btn-block"
-                              disabled={
-                                this.state.purchase
-                                  ? true
-                                  : this.state.projectScriptDetails[5] &&
-                                    this.state.projectTokenDetails[0] !==
-                                      this.props.account
-                                  ? true
-                                  : false
-                              }
-                              onClick={this.purchase}
-                            >
-                              {this.state.purchase ? (
-                                <div>
-                                  <Spinner
-                                    as="span"
-                                    animation="border"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                  />
-                                  <span className="sr-only">Pending...</span>{" "}
-                                  Pending...
-                                </div>
-                              ) : this.state.projectScriptDetails[5] ? (
-                                "Purchases Paused"
-                              ) : (
-                                "Purchase"
-                              )}
-                            </Button>
-                            {this.state.purchaseTo && (
-                              <InputGroup className="mb-3">
-                                <InputGroup.Prepend>
-                                  <InputGroup.Text id="basic-addon3">
-                                    Address:
-                                  </InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl
-                                  onChange={this.handlePurchaseToAddressChange}
-                                  id="text"
-                                  aria-describedby="basic-addon3"
-                                />
-                              </InputGroup>
-                            )}
-                            <div className="text-center">
-                              <Button
-                                variant="link"
-                                onClick={this.handlePurchaseTo}
-                              >
-                                Purchase To Another User
-                              </Button>
-                            </div>
-                          </div>
-                        )}
-
-                      {this.props.connected &&
-                        this.state.projectScriptDetails &&
-                        !this.state.approved && (
-                          <div>
-                            <OverlayTrigger
-                              placement="top"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={approveDaiToolTip}
-                            >
-                              <Button
-                                className="btn-primary btn-block"
-                                /*disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} */ onClick={
-                                  this.approve
-                                }
-                              >
-                                {this.state.purchase ? (
-                                  <div>
-                                    <Spinner
-                                      as="span"
-                                      animation="border"
-                                      size="sm"
-                                      role="status"
-                                      aria-hidden="true"
-                                    />
-                                    <span className="sr-only">Pending...</span>{" "}
-                                    Pending...
-                                  </div>
-                                ) : (
-                                  "Approve " +
-                                  this.state.currency +
-                                  " for Purchasing"
-                                )}
-                              </Button>
-                            </OverlayTrigger>
-                          </div>
-                        )}
-                    </div>
-                  )}
-
-                <br />
-                {this.state.projectTokenDetails && (
-                  <div>
-                    {this.props.isWhitelisted || userIsArtist ? (
-                      <Button
-                        onClick={async () => {
-                          if (currentSubroute !== "artist") {
-                            await this.props.handleConnectToMetamask();
-                          }
-
-                          this.props.history.push(
-                            currentSubroute === "artist"
-                              ? this.props.match.url
-                              : this.props.match.url + "/artist"
-                          );
-                        }}
-                        className="btn-primary btn-block"
-                      >
-                        Toggle Artist Interface
-                      </Button>
-                    ) : null}
-                  </div>
-                )}
-
-                {this.state.projectTokens &&
-                  this.props.project &&
-                  this.state.projectTokenDetails &&
-                  this.state.projectTokens.length ===
-                    Number(this.state.projectTokenDetails[3]) && (
-                    <div>
-                      {currentSubroute === "latest" ? (
-                        <div>
-                          <Alert variant="secondary">
                             <p>
-                              Showing random token [#
-                              {this.state.randomTokenNumber - 1}].
+                              Price per token:{" "}
+                              {this.state.projectTokenDetails &&
+                                this.props.web3.utils.fromWei(
+                                  this.state.projectTokenDetails[1],
+                                  "ether"
+                                )}
+                              {this.state.currency &&
+                              this.state.currency === "ETH"
+                                ? "Ξ"
+                                : " " + this.state.currency}
                             </p>
+
+                            {currentSubroute === "latest" ? (
+                              <div>
+                                <Alert
+                                  style={{ width: "100%" }}
+                                  variant="secondary"
+                                >
+                                  <p>Showing the latest mint.</p>
+                                  <Button
+                                    variant="light"
+                                    block
+                                    to={this.props.match.url + "/gallery"}
+                                    as={Link}
+                                  >
+                                    View All
+                                  </Button>
+                                </Alert>
+                              </div>
+                            ) : null}
+
+                            {!this.props.connected && (
+                              <div>
+                                <br />
+                                <p>
+                                  Please connect to MetaMask to enable
+                                  purchases.
+                                </p>
+                              </div>
+                            )}
+
+                            {this.props.connected &&
+                              this.state.projectScriptDetails &&
+                              this.state.approved && (
+                                <div>
+                                  {this.state.currency !== "ETH" && (
+                                    <p>
+                                      {this.state.currency} Balance:{" "}
+                                      {this.state.erc20Balance}
+                                    </p>
+                                  )}
+                                  <Button
+                                    className="btn-primary btn-block"
+                                    disabled={
+                                      this.state.purchase
+                                        ? true
+                                        : this.state.projectScriptDetails[5] &&
+                                          this.state.projectTokenDetails[0] !==
+                                            this.props.account
+                                        ? true
+                                        : false
+                                    }
+                                    onClick={this.purchase}
+                                  >
+                                    {this.state.purchase ? (
+                                      <div>
+                                        <Spinner
+                                          as="span"
+                                          animation="border"
+                                          size="sm"
+                                          role="status"
+                                          aria-hidden="true"
+                                        />
+                                        <span className="sr-only">
+                                          Pending...
+                                        </span>{" "}
+                                        Pending...
+                                      </div>
+                                    ) : this.state.projectScriptDetails[5] ? (
+                                      "Purchases Paused"
+                                    ) : (
+                                      "Purchase"
+                                    )}
+                                  </Button>
+                                  {this.state.purchaseTo && (
+                                    <InputGroup className="mb-3">
+                                      <InputGroup.Prepend>
+                                        <InputGroup.Text id="basic-addon3">
+                                          Address:
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        onChange={
+                                          this.handlePurchaseToAddressChange
+                                        }
+                                        id="text"
+                                        aria-describedby="basic-addon3"
+                                      />
+                                    </InputGroup>
+                                  )}
+                                  <div className="text-center">
+                                    <Button
+                                      variant="link"
+                                      onClick={this.handlePurchaseTo}
+                                    >
+                                      Purchase To Another User
+                                    </Button>
+                                  </div>
+                                </div>
+                              )}
+
+                            {this.props.connected &&
+                              this.state.projectScriptDetails &&
+                              !this.state.approved && (
+                                <div>
+                                  <OverlayTrigger
+                                    placement="top"
+                                    delay={{ show: 250, hide: 400 }}
+                                    overlay={approveDaiToolTip}
+                                  >
+                                    <Button
+                                      className="btn-primary btn-block"
+                                      /*disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} */ onClick={
+                                        this.approve
+                                      }
+                                    >
+                                      {this.state.purchase ? (
+                                        <div>
+                                          <Spinner
+                                            as="span"
+                                            animation="border"
+                                            size="sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                          />
+                                          <span className="sr-only">
+                                            Pending...
+                                          </span>{" "}
+                                          Pending...
+                                        </div>
+                                      ) : (
+                                        "Approve " +
+                                        this.state.currency +
+                                        " for Purchasing"
+                                      )}
+                                    </Button>
+                                  </OverlayTrigger>
+                                </div>
+                              )}
+                          </div>
+                        )}
+
+                      <br />
+                      {this.state.projectTokenDetails && (
+                        <div>
+                          {this.props.isWhitelisted || userIsArtist ? (
                             <Button
-                              variant="light"
-                              block
-                              as={Link}
-                              to={this.props.match.url + "/gallery"}
+                              onClick={async () => {
+                                if (currentSubroute !== "artist") {
+                                  await this.props.handleConnectToMetamask();
+                                }
+
+                                this.props.history.push(
+                                  currentSubroute === "artist"
+                                    ? this.props.match.url
+                                    : this.props.match.url + "/artist"
+                                );
+                              }}
+                              className="btn-primary btn-block"
                             >
-                              View Entire Gallery
+                              Toggle Artist Interface
                             </Button>
-                          </Alert>
+                          ) : null}
                         </div>
-                      ) : null}
-                      <p>
-                        <b>
-                          The max number of iterations/editions for this project
-                          have been minted. Please visit the project on{" "}
-                          <a
-                            href={this.getOSLink()}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                          >
-                            OpenSea
-                          </a>{" "}
-                          to see what is available on the secondary market!
-                        </b>
-                      </p>
+                      )}
+
+                      {this.state.projectTokens &&
+                        this.props.project &&
+                        this.state.projectTokenDetails &&
+                        this.state.projectTokens.length ===
+                          Number(this.state.projectTokenDetails[3]) && (
+                          <div>
+                            {currentSubroute === "latest" ? (
+                              <div>
+                                <Alert variant="secondary">
+                                  <p>
+                                    Showing random token [#
+                                    {this.state.randomTokenNumber - 1}].
+                                  </p>
+                                  <Button
+                                    variant="light"
+                                    block
+                                    as={Link}
+                                    to={this.props.match.url + "/gallery"}
+                                  >
+                                    View Entire Gallery
+                                  </Button>
+                                </Alert>
+                              </div>
+                            ) : null}
+                            <p>
+                              <b>
+                                The max number of iterations/editions for this
+                                project have been minted. Please visit the
+                                project on{" "}
+                                <a
+                                  href={this.getOSLink()}
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                >
+                                  OpenSea
+                                </a>{" "}
+                                to see what is available on the secondary
+                                market!
+                              </b>
+                            </p>
+                          </div>
+                        )}
                     </div>
-                  )}
-              </div>
+                  </div>
+                </Col>
+                {/* Right Section */}
+                <Col xs={12} sm={6} md={9}>
+                  <Switch>
+                    <Route exact path={this.props.match.path + "/"}>
+                      <LatestToken
+                        project={this.state.project}
+                        complete={complete}
+                        random={this.state.randomTokenNumber}
+                        latest={latestTokenNumber}
+                      />
+                    </Route>
+                    <Route path={this.props.match.path + "/gallery"}>
+                      <TokenGallery
+                        project={this.state.project}
+                        projectTokens={this.state.projectTokens}
+                      />
+                    </Route>
+                    <Route path={this.props.match.path + "/artist"}>
+                      {userIsArtist || this.props.isWhitelisted ? (
+                        <ArtistInterface
+                          project={this.state.project}
+                          account={this.props.account}
+                          isWhitelisted={this.props.isWhitelisted}
+                          artBlocks={this.state.artBlocks}
+                          web3={this.props.web3}
+                          scriptJSON={this.state.scriptJSON}
+                          projectTokenDetails={this.state.projectTokenDetails}
+                          projectScriptDetails={this.state.projectScriptDetails}
+                          projectURIInfo={this.state.projectURIInfo}
+                          projectRoyaltyInfo={this.state.projectRoyaltyInfo}
+                          currency={this.state.currency}
+                          currencyAddress={this.state.currencyAddress}
+                          onJSONChange={this.handleJSON}
+                          onValuesUpdated={this.updateValues}
+                        />
+                      ) : (
+                        <Redirect to={this.props.match.url} />
+                      )}
+                    </Route>
+                  </Switch>
+                </Col>
+              </Row>
             </div>
-          </Col>
-          {/* Right Section */}
-          <Col xs={12} sm={6} md={9}>
-            <Switch>
-              <Route exact path={this.props.match.path + "/"}>
-                <LatestToken
-                  project={this.state.project}
-                  complete={complete}
-                  random={this.state.randomTokenNumber}
-                  latest={latestTokenNumber}
-                />
-              </Route>
-              <Route path={this.props.match.path + "/gallery"}>
-                <TokenGallery
-                  project={this.state.project}
-                  projectTokens={this.state.projectTokens}
-                />
-              </Route>
-              <Route path={this.props.match.path + "/artist"}>
-                {userIsArtist || this.props.isWhitelisted ? (
-                  <ArtistInterface
-                    project={this.state.project}
-                    account={this.props.account}
-                    isWhitelisted={this.props.isWhitelisted}
-                    artBlocks={this.state.artBlocks}
-                    web3={this.props.web3}
-                    scriptJSON={this.state.scriptJSON}
-                    projectTokenDetails={this.state.projectTokenDetails}
-                    projectScriptDetails={this.state.projectScriptDetails}
-                    projectURIInfo={this.state.projectURIInfo}
-                    projectRoyaltyInfo={this.state.projectRoyaltyInfo}
-                    currency={this.state.currency}
-                    currencyAddress={this.state.currencyAddress}
-                    onJSONChange={this.handleJSON}
-                    onValuesUpdated={this.updateValues}
-                  />
-                ) : (
-                  <Redirect to={this.props.match.url} />
-                )}
-              </Route>
-            </Switch>
-          </Col>
-        </Row>
+          )}
       </div>
     );
   }
