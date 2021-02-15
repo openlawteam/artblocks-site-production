@@ -1984,6 +1984,261 @@ else if (this.props.projectId==="16"){
     features.push('Grid Lines');
   }
 
+} else if (this.props.projectId==="17"){
+
+    const getFromHash = h => {
+        h = h.substr(2);
+        let table = [];
+        for (let i = 0; i < 16; i++) { table[i] = parseInt("0x"+(h.substr(i+8, 1) + h.substr(i+24, 1) + h.substr(i+40, 1)),16)/4096; }
+        return table;
+    }
+    const values = getFromHash(tokenData);
+    const E = value => { return Math.floor(value+0.5); }
+    const SF = (value, minRange, maxRange) => { return Math.floor(((value*(maxRange-minRange))+minRange)+0.5); }
+    const S = (value, minRange, maxRange) => { return (value*(maxRange-minRange))+minRange; }
+    //const sh = v => { return  Number.parseFloat(v).toFixed(3); }
+    const isMonotone = (v) => {
+        let monotone = false;
+        // If the palette is set to monotone then *it is* monotone
+        if (!E(((values[12]+values[15])*0.5)+0.2)) { monotone = true; }
+        // v[2] || v[3] might be -1, in case just exclude them
+        let colors = [v[0], v[1]];
+        if (v[2] >= 0) { colors.push(v[2]); }
+        if (v[3] >= 0) { colors.push(v[3]); }
+        // Otherwise we need to check for color similarities
+        let center = 0.41;
+        // Check if all under center
+        if (colors.every((v) => v <= center)) { monotone = true };
+        // Check if all over center
+        if (colors.every((v) => v > center)) { monotone = true };
+        return monotone;
+    }
+  const metadata = {};
+  // Orientation
+  metadata.orientation = E(values[12]-0.35) ?
+    E(values[10]) ? "Horizontal" : "Vertical"
+  : E(values[10]) ?  "Vertical" : "Horizontal";
+  features.push("Orientation: " + metadata.orientation);
+
+
+  // Palette
+  if (E(((values[12]+values[15])*0.5)+0.2)) {
+    if (E(values[11]-0.25) === 1) {
+      metadata.palette = "Purple-Yellow";
+    } else {
+      if (S(values[5],0., 0.07) < 0.03) {
+        metadata.palette = "Coral-Teal";
+      } else {
+        metadata.palette = "Pink–Mint";
+      }
+    }
+  }
+  let colors = [values[7], values[6], values[9], values[2]];
+    // If LFO is off, the color will just be black.
+    if (E(values[12]-0.4)) { colors[2] = -1 };
+    // If brightness is very low, the color will just look like black.
+    if ((1 - Math.abs(values[6]-0.45)) >= 0.85) { colors[3] = -1 };
+  if (isMonotone(colors)) { metadata.palette = "Monotone" };
+  features.push("Palette: " + metadata.palette);
+
+
+  // Modulation frequency
+  let mf = SF(values[2], 1., 35.);
+  if (mf < 8) {
+    metadata.modulation_frequency = "Low";
+  } else if (mf >= 8 && mf < 15) {
+    metadata.modulation_frequency = "Medium";
+  } else if (mf >= 15) {
+    metadata.modulation_frequency = "High";
+  }
+  features.push("Frequency modulation: " + metadata.modulation_frequency);
+
+
+  // Bitwise operators
+  if (E(values[11]) && E(values[3]+0.1)) {
+    metadata.bitwise = "OR";
+  } else if (!E(values[11]) && !E(values[3]+0.1)) {
+    metadata.bitwise = "AND";
+  } else {
+    metadata.bitwise = "Mixed";
+  }
+  features.push("Bitwise operators: " + metadata.bitwise);
+
+
+}
+
+///////////
+
+
+else if (this.props.projectId==="18"){
+  let hp = [];
+  let hashstring = "";
+  let sprite = false;
+  let monochrome = false;
+  let rainbow = false;
+  let log_features = false;
+
+
+  function mapperz(n, start1, stop1, start2, stop2, withinBounds) {
+    const newval = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
+    if (!withinBounds) {
+      return newval;
+    }
+    if (start2 < stop2) {
+      return this.constrain(newval, start2, stop2);
+    } else {
+      return this.constrain(newval, stop2, start2);
+    }
+  }
+
+  function floor(num) {
+    return Math.floor(num);
+  }
+
+  function unhex(n) {
+      return parseInt(`0x${n}`, 16);
+  }
+
+  hashstring = tokenData.substring(2)
+  for (let i = 0; i < hashstring.length / 2; i++) {
+    hp[i] = unhex(hashstring.substring(i + i, i + i + 2));
+  }
+
+  if (unhex(hashstring[5]) >= 1) {
+    if (unhex(hashstring[39]) >= 14) {
+      monochrome = true;
+      features.push("Gen 2: Monochrome")
+      //featuresReduced.push("Gen 2: Monochrome")
+    } else if (unhex(hashstring[39]) >= 12) {
+      rainbow = true;
+      features.push("Gen 2: Rainbow")
+      //featuresReduced.push("Gen 2: Rainbow")
+    } else {
+      features.push("Gen 2: Standard");
+      //featuresReduced.push("Gen 2: Standard");
+    }
+  } else {
+    sprite = true;
+    features.push("Gen 2: Spectra");
+    //featuresReduced.push("Gen 2: Spectra");
+    if (floor(mapperz(unhex(hashstring[24]), 0, 16, 0, 7)) === 0) {
+      features.push("Sprite: Heart");
+      //featuresReduced.push("Sprite: Heart");
+    } else if (floor(mapperz(unhex(hashstring[24]), 0, 16, 0, 7)) === 1) {
+      features.push("Sprite: Mushroom");
+      //featuresReduced.push("Sprite: Mushroom");
+    } else if (floor(mapperz(unhex(hashstring[24]), 0, 16, 0, 7)) === 2) {
+      features.push("Sprite: Star");
+      //featuresReduced.push("Sprite: Star");
+    } else if (floor(mapperz(unhex(hashstring[24]), 0, 16, 0, 7)) === 3) {
+      features.push("Sprite: Hero");
+      //featuresReduced.push("Sprite: Hero");
+    } else if (floor(mapperz(unhex(hashstring[24]), 0, 16, 0, 7)) === 4) {
+      features.push("Sprite: Plumber");
+      //featuresReduced.push("Sprite: Plumber");
+    } else if (floor(mapperz(unhex(hashstring[24]), 0, 16, 0, 7)) === 5) {
+      features.push("Sprite: Cherry");
+      //featuresReduced.push("Sprite: Cherry");
+    } else if (floor(mapperz(unhex(hashstring[24]), 0, 16, 0, 7)) === 6) {
+      features.push("Sprite: Eth");
+      //featuresReduced.push("Sprite: Eth");
+    }
+  }
+
+  if (rainbow && !sprite && !monochrome) {
+    if (!log_features) {
+      log_features = true;
+    }
+  } else {
+    if (unhex(hashstring[45]) >= 12) {
+      if (!log_features && !monochrome && !sprite) {
+        log_features = true;
+        features.push("Color Variant: 3");
+        //featuresReduced.push("Color Variant: 3");
+      }
+    } else if (unhex(hashstring[45]) >= 8) {
+      if (!log_features && !monochrome && !sprite) {
+        log_features = true;
+        features.push("Color Variant: 2");
+        //featuresReduced.push("Color Variant: 2");
+      }
+    } else if (unhex(hashstring[45]) >= 2) {
+      if (!log_features && !monochrome && !sprite) {
+        log_features = true;
+        features.push("Color Variant: 1");
+        //featuresReduced.push("Color Variant: 1");
+      }
+    } else {
+      if (!log_features) {
+        log_features = true;
+        features.push("Color Variant: Ghost");
+        //featuresReduced.push("Color Variant: Ghost");
+      }
+    }
+  }
+
+  if (!rainbow && !monochrome && !sprite && (unhex(hashstring[45]) >= 8)) {
+    if (unhex(hashstring[7]) > 8) {
+      features.push("Color Accent: Light");
+      //featuresReduced.push("Color Accent: Light");
+    } else {
+      features.push("Color Accent: Dark");
+      //featuresReduced.push("Color Accent: Dark");
+    }
+  }
+
+  log_features = false
+  if (unhex(hashstring[30]) === 15) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 10");
+    }
+  } else if (unhex(hashstring[30]) === 14) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 9");
+    }
+  } else if (unhex(hashstring[30]) === 13) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 8");
+    }
+  } else if (unhex(hashstring[30]) === 12) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 7");
+    }
+  } else if (unhex(hashstring[30]) === 11) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 6");
+    }
+  } else if (unhex(hashstring[30]) === 10) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 5");
+    }
+  } else if (unhex(hashstring[30]) === 9) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 4");
+    }
+  } else if (unhex(hashstring[30]) === 8) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 3");
+    }
+  } else if (unhex(hashstring[30]) === 7) {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 2");
+    }
+  } else {
+    if (!log_features) {
+      log_features = true;
+      features.push("Bitmap Style: 1");
+    }
+  }
 }
 
 
