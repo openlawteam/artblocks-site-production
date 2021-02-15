@@ -5,13 +5,16 @@ export const COMPLETE = [1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 export const PLAYGROUND = [6, 14, 15, 16];
 //export const ARTIST = []
 
-/*
-export const NETWORK = 'rinkeby';
-export const NONINTERACTIVE = [1,2];
-export const COMPLETE = [0,1,2];
-export const CURATED =[0,1,2];
-export const PLAYGROUND =[];
-*/
+// export const NETWORK = "rinkeby";
+// export const NONINTERACTIVE = [1, 2];
+// export const COMPLETE = [0, 1, 2];
+// export const CURATED = [0, 1, 2];
+// export const PLAYGROUND = [];
+
+export const BASE_URL =
+  NETWORK === "rinkeby"
+    ? "https://rinkebyapi.artblocks.io"
+    : "https://api.artblocks.io";
 
 export const ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A =
   "0x059EDD72Cd353dF5106D2B9cC5ab83a52287aC3a";

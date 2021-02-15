@@ -8,11 +8,13 @@ import {
   ButtonGroup,
   Tooltip,
   OverlayTrigger,
-  Image
+  Image,
+  Alert,
+  Container,
 } from "react-bootstrap";
 import { TwitterShareButton } from "react-twitter-embed";
 import { Link } from "react-router-dom";
-import Features from "./Features";
+import { tokenDetailsUrl, reverseResolveEns } from "./utils";
 import "./ProjectGallery.css";
 
 class ViewToken extends Component {
@@ -51,6 +53,24 @@ class ViewToken extends Component {
       this.props.token < 3000000
         ? await artBlocks.methods.showTokenHashes(this.props.token).call()
         : await artBlocks.methods.tokenIdToHash(this.props.token).call();
+
+    let prettyIdentifier;
+    try {
+      prettyIdentifier = await reverseResolveEns(ownerOfToken, this.props.web3);
+    } catch (e) {
+      console.log(e);
+    }
+
+    fetch(tokenDetailsUrl(this.props.token))
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        this.setState({
+          features: json.features,
+        });
+      });
+
     this.setState({
       artBlocks,
       projectTokens,
@@ -60,6 +80,7 @@ class ViewToken extends Component {
       projectURIInfo,
       projectId,
       ownerOfToken,
+      prettyIdentifier,
       tokenHashes,
     });
   }
@@ -141,12 +162,10 @@ class ViewToken extends Component {
 
     let baseURL = this.props.baseURL;
 
-
-    function tokenImage(token){
+    function tokenImage(token) {
       //return "https://mainnet.oss.nodechef.com/"+token+".png";
-      return baseURL+'/image/'+token;
+      return baseURL + "/image/" + token;
     }
-
 
     function tokenGenerator(token) {
       return baseURL + "/generator/" + token;
@@ -187,17 +206,37 @@ class ViewToken extends Component {
                   <p>
                     Owned by{" "}
                     <Link to={"/user/" + this.state.ownerOfToken}>
-                      {this.state.ownerOfToken.slice(0, 10)}
+                      {this.state.prettyIdentifier
+                        ? this.state.prettyIdentifier
+                        : this.state.ownerOfToken.slice(0, 10)}
                     </Link>
                   </p>
                 )}
 
-                {this.state.projectId && this.state.tokenHashes && (
-                  <Features
-                    projectId={this.state.projectId}
-                    tokenHashes={this.state.tokenHashes}
-                  />
-                )}
+                {this.state.features && this.state.features.length > 0 ? (
+                  <div>
+                    <Alert variant="info">
+                      <p>Features</p>
+                      <Container>
+                        {this.state.features.map((feature, index) => {
+                          return (
+                            <Row key={index}>
+                              <p
+                                style={{
+                                  fontSize: "12px",
+                                  lineHeight: "1px",
+                                }}
+                                key={index}
+                              >
+                                {feature}
+                              </p>
+                            </Row>
+                          );
+                        })}
+                      </Container>
+                    </Alert>
+                  </div>
+                ) : null}
 
                 {/*
           <p style={{"fontSize":"12px"}}>{this.state.tokenHashes && this.state.tokenHashes.length===1?"Token hash:":"Token hashes:"} {this.state.tokenHashes && this.state.tokenHashes}</p>
@@ -267,11 +306,19 @@ class ViewToken extends Component {
                 style={{ width: "18rem" }}
               >
                 <Card.Body>
-                {this.props.nonInter.includes(Math.floor(this.props.token/1000000)) &&
-                <Image style={{width:"100%"}} src={tokenImage(this.props.token)} rounded />
-              }
+                  {this.props.nonInter.includes(
+                    Math.floor(this.props.token / 1000000)
+                  ) && (
+                    <Image
+                      style={{ width: "100%" }}
+                      src={tokenImage(this.props.token)}
+                      rounded
+                    />
+                  )}
 
-                  {!this.props.nonInter.includes(Math.floor(this.props.token/1000000)) &&(
+                  {!this.props.nonInter.includes(
+                    Math.floor(this.props.token / 1000000)
+                  ) && (
                     <div className="live-script-container">
                       <iframe
                         src={tokenGenerator(this.props.token)}

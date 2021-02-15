@@ -465,13 +465,26 @@ class Project extends Component {
     this.setState({ purchase: true });
 
     if (this.state.purchaseTo) {
-      if (this.props.web3.utils.isAddress(this.state.purchaseToAddress)) {
+      let purchaseToAddress = this.props.web3.utils.isAddress(
+        this.state.purchaseToAddress
+      )
+        ? this.props.purchaseToAddress
+        : undefined;
+      try {
+        purchaseToAddress = await this.props.web3.eth.ens.getAddress(
+          this.state.purchaseToAddress
+        );
+      } catch (e) {
+        purchaseToAddress = undefined;
+      }
+
+      if (purchaseToAddress) {
         alert(
           "You are purchasing a token for another user directly. The NFT will be deposited directly into the Ethereum account that you set. Please reject the transaction if this is not your intention."
         );
         if (this.props.project < 3) {
           await this.state.artBlocks.methods
-            .purchaseTo(this.state.purchaseToAddress, this.props.project)
+            .purchaseTo(purchaseToAddress, this.props.project)
             .send({
               from: this.props.account,
               value: this.state.projectTokenDetails[1],
@@ -486,13 +499,13 @@ class Project extends Component {
               this.props.handleToggleView("newToken", mintedToken);
             })
             .catch((err) => {
-              //alert(err);
+              console.log(err);
               this.updateValues();
               this.setState({ purchase: false });
             });
         } else {
           await this.props.mainMinter.methods
-            .purchaseTo(this.state.purchaseToAddress, this.props.project)
+            .purchaseTo(purchaseToAddress, this.props.project)
             .send({
               from: this.props.account,
               value:

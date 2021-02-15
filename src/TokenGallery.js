@@ -64,7 +64,7 @@ const TokenGallery = ({ project, projectTokens = [] }) => {
       <Pagination.Item
         key={totalPages}
         as={Link}
-        to={`${location.pathname}?p=${totalPages}`}
+        onClick={() => history.push(`${location.pathname}?p=${totalPages}`)}
       >
         {totalPages}
       </Pagination.Item>

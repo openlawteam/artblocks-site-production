@@ -83,6 +83,7 @@ function ViewTok(props) {
       baseURL={props.baseURL}
       network={props.network}
       nonInter={props.nonInter}
+      web3={props.web3}
     />
   );
 }
@@ -459,6 +460,7 @@ class App extends Component {
                   baseURL={baseURL}
                   network={NETWORK}
                   nonInter={this.state.nonInter}
+                  web3={this.state.web3}
                 />
               )}
             </Route>
