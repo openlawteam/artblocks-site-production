@@ -1,8 +1,30 @@
 export const NETWORK = "main";
-export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16];
-export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17];
-export const COMPLETE = [1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18];
-export const PLAYGROUND = [6, 14, 15, 16, 18, 19];
+export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16, 21, 23, 24];
+export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17, 21, 23];
+export const COMPLETE = [
+  1,
+  2,
+  3,
+  4,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  20,
+  21,
+  22,
+];
+export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24];
+export const FACTORY = [5];
 //export const ARTIST = []
 
 // export const NETWORK = "rinkeby";

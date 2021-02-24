@@ -7,6 +7,7 @@ import {
   CURATED,
   COMPLETE,
   PLAYGROUND,
+  FACTORY,
   ARTBLOCKS_CONTRACT_ABI_A,
   ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A,
   ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A,
@@ -387,6 +388,7 @@ class App extends Component {
               curated={CURATED}
               complete={COMPLETE}
               playground={PLAYGROUND}
+              factory={FACTORY}
             />
           )}
         </div>

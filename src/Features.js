@@ -1916,7 +1916,12 @@ else if (this.props.projectId==="16"){
   let hdiv, vdiv;
   hdiv = divs[Math.floor(hashPairs[0].map(0, 255, 0, divs.length - .0000000001))];
   vdiv = divs[Math.floor(hashPairs[1].map(0, 255, 0, divs.length - .0000000001))];
-
+  if (hdiv === 3 || hdiv === 4) {
+	vdiv = divs[Math.floor((hashPairs[1].map(0, 255, 8, divs.length - .0000000001)))];
+  }
+  if (vdiv === 3 || vdiv === 4) {
+	hdiv = divs[Math.floor((hashPairs[0].map(0, 255, 8, divs.length - .0000000001)))];
+  }
 
   for (let i = 0; i < 61; i++) {
   	let hexquad = tokenData.slice(i + 2, i + 6);
@@ -1925,65 +1930,64 @@ else if (this.props.projectId==="16"){
   	}
   }
   if (albers) {
-  	//append(features, 'Albers')
-    features.push('Albers');
+	features.push('Albers');
+	//featuresReduced.push('Albers');
+  }
+  if (!albers) {
+	features.push([hdiv, vdiv].join(' x '));
   }
   if (hashPairs[14] > 250 && !albers) {
   	rndcolor = true;
-  	//append(features, 'Random')
-    features.push('Random');
+	features.push('Random');
+	//featuresReduced.push('Random');
   }
   if (hashPairs[14] > 244 && !rndcolor && !albers) {
-  	//complementary = true;
-  	//append(features, 'Complementary')
-    features.push('Complementary');
+	features.push('Complementary');
+	//featuresReduced.push('Complementary');
   }
   if (hashPairs[15] > 248 && !rndcolor && !albers) {
   	blackcorner = true;
-  	//append(features, 'Black Corner')
-    features.push('Black Corner');
+	features.push('Black Corner');
+	//featuresReduced.push('Black Corner');
   }
   if (hashPairs[15] > 225 && !blackcorner && !rndcolor && !albers) {
   	tinted = true;
-  	//append(features, 'Tinted')
-    features.push('Tinted');
+	features.push('Tinted');
+	//featuresReduced.push('Tinted');
   }
   if (hashPairs[15] > 202 && !tinted && !blackcorner && !rndcolor && !albers) {
-  	//saturated = true;
-  	//append(features, 'Saturated')
-    features.push('Saturated');
+	features.push('Saturated');
+	//featuresReduced.push('Saturated');
   }
   if (hdiv === vdiv && !albers) {
   	if (hashPairs[29] > 127) {
   		circles = true;
-  		//append(features, 'Circles')
-      features.push('Circles');
+		features.push('Circles');
+		//featuresReduced.push('Circles');
   	}
   }
-  //let hline,vline;
   if (hashPairs[30] > 191 && !circles) {
   	hline = true;
   }
   if (hashPairs[31] > 191 && !circles) {
   	vline = true;
   }
-  if (!hline && !vline) {
-  	//append(features, 'Adjacent')
-    features.push('Adjacent');
+  if (!hline && !vline && !albers) {
+	features.push('Adjacent');
+	//featuresReduced.push('Adjacent');
   }
-  if (hline && !vline) {
-  	//append(features, 'Horizontal Lines')
-    features.push('Horizontal Lines');
+  if (hline && !vline && !albers) {
+	features.push('Horizontal Lines');
+	//featuresReduced.push('Horizontal Lines');
   }
-  if (vline && !hline) {
-  	//append(features, 'Vertical Lines')
-    features.push('Vertical Lines');
+  if (vline && !hline && !albers) {
+	features.push('Vertical Lines');
+	//featuresReduced.push('Vertical Lines');
   }
-  if (hline && vline) {
-  	//append(features, 'Grid Lines')
-    features.push('Grid Lines');
+  if (hline && vline && !albers) {
+	features.push('Grid Lines');
+	//featuresReduced.push('Grid Lines');
   }
-
 } else if (this.props.projectId==="17"){
 
     const getFromHash = h => {
@@ -2177,15 +2181,21 @@ else if (this.props.projectId==="18"){
     }
   }
 
-  if (!rainbow && !monochrome && !sprite && (unhex(hashstring[45]) >= 8)) {
-    if (unhex(hashstring[7]) > 8) {
-      features.push("Color Accent: Light");
-      //featuresReduced.push("Color Accent: Light");
-    } else {
-      features.push("Color Accent: Dark");
-      //featuresReduced.push("Color Accent: Dark");
-    }
+  if (!rainbow && !monochrome && !sprite){
+  if (unhex(hashstring[45]) >= 12) {
+
+  if (unhex(hashstring[7]) > 8 || unhex(hashstring[45])<12) {
+    features.push("Color Accent: Light");
+    //featuresReduced.push("Color Accent: Light");
+  } else {
+    features.push("Color Accent: Dark");
+    //featuresReduced.push("Color Accent: Dark");
   }
+  } else {
+    features.push("Color Accent: Dark");
+    //featuresReduced.push("Color Accent: Dark");
+  }
+}
 
   log_features = false
   if (unhex(hashstring[30]) === 15) {
@@ -2239,6 +2249,325 @@ else if (this.props.projectId==="18"){
       features.push("Bitmap Style: 1");
     }
   }
+} else if (this.props.projectId==="20"){
+  let seed = parseInt(tokenData.slice(0, 16), 16);
+
+  rnd_bet(0.1, 0.9);
+  Math.floor(rnd_bet(1, 9999999999));
+
+  var BGL = "#EEEEEE";
+  var BGD = "#08090A";
+  PALS = [
+   ["#1B064C", "#F72585", "#B5179E", "#7209B7", "#4361EE", "#4361EE", "#4895EF", "#4CC9F0"],
+   [BGL, "#FF0000", "#00A08A", "#F2AD00", "#F98400", "#5BBCD6"],
+   [BGL, "#85D4E3", "#F4B5BD", "#CDC08C", "#FAD77B"],
+   [BGL, "#E6A0C4", "#C6CDF7", "#D8A499", "#7294D4"],
+   [BGL, "#E92EFB", "#FF2079", "#440BD4", "#04005E"],
+   [BGL, "#B0305C", "#EB564B", "#73275C"],
+   [BGL, "#FF2E63", "#FF9D9D", "#FFC2C2"],
+   [BGL, "#363636", "#E8175D"],
+   [BGL, "#132743", "#EDC988"],
+   [BGD, "#08F7FE", "#09FBD3", "#FE53BB", "#F5D300"],
+   [BGD, "#FF184C", "#FF184C", "#0A9CF5"],
+   [BGD, "#FFFFEB", "#C2C2D1"],
+   [BGD, "#283149", "#A7FF83"],
+   [BGD, "#544F63", "#F2D2EC"]
+  ];
+
+  var PN = rnd_cho([0,1,2,3,4,5,6,7,8,9,10,11,12,13]);
+  var P = PALS[PN];
+  PAL = P.slice(1);
+  rnd_cho(PAL);
+  var CURSOR = rnd_cho(["Cross", "Flat", "Bar"]);
+
+  function rnd_dec() {
+    seed ^= seed << 13;
+    seed ^= seed >> 17;
+    seed ^= seed << 5;
+    return (((seed < 0) ? ~seed + 1 : seed) % 1000) / 1000;
+  }
+  function rnd_bet(a, b) {
+    return a+(b-a)*rnd_dec();
+  }
+  function rnd_cho(z) {
+    return z[Math.floor(rnd_bet(0, z.length*0.99))];
+  }
+
+  let PLS = ["Royalty",
+  "Moonrise",
+  "Fairy",
+  "Budapest",
+  "Punk",
+  "Rushmore",
+  "Peach",
+  "Invaders",
+  "Knight",
+  "Neon",
+  "Bleed",
+  "Frost",
+  "Dearth",
+  "Aspen"]
+
+  let BGS = ["Royal",
+  "Silver",
+  "Silver",
+  "Silver",
+  "Silver",
+  "Silver",
+  "Silver",
+  "Silver",
+  "Silver",
+  "Night",
+  "Night",
+  "Night",
+  "Night",
+  "Night"]
+
+  features = ["Palette:"+PLS[PN],
+  "Colors:"+(PALS[PN].length-1),
+  "Background:"+BGS[PN],
+  "Cursor:"+CURSOR]
+
+  console.log(features)
+
+}
+
+
+////////
+
+else if (this.props.projectId==="22"){
+  let rawParams = setupParametersFromTokenData(tokenData)
+// we may need to rename?
+generateSeedFromTokenData(tokenData)
+
+//console.log(seed);
+
+let pc = "Bright White"
+
+let paperColors = [
+  "Pink","Canary","Orchid","Pastel Green","Pastel Blue","Ivory","Tan","Warm White",
+  pc, pc, pc, pc, pc, pc, pc, pc, pc, pc, pc, pc, pc, pc
+]
+
+let bg = pickX(rawParams[0], paperColors)
+
+let rings = Math.floor(mapParam(rawParams[1], 5, 12)) - 1
+
+let smallRings = (rings <= 5)
+
+let palette = pickX(rawParams[7],['Shimmering', 'Riso', 'Chill', 'Flamingo', 'Golden', 'Flourescent', 'Rainbow'])
+
+let b = "Bottom",t = "Top",r = "Right",l ="Left"
+let n = "Normal", s = "Slow", c = "Crawl", q = "Quick", f="Fast"
+
+features.push("Background: "+bg)
+features.push("View: " + (rawParams[10] >= 32 ? "Normal" : "Close-up"))
+features.push("Rings: " + (rings-1) )
+features.push("Position: "+pickX(rawParams[2], [b+" "+l, l, t+" "+l, b, t, b+" "+r, r, t+" "+r]))
+features.push("Speed: " + pickX(rawParams[4], [s, n, n, n, c, n, n, q, f]))
+features.push("Wall: "+ (smallRings ? (rawParams[5] < 127 ? "Chunky" : "Slim"): "Slim"))
+features.push("Vibe: "+ (rawParams[6] >= 64 ? "Smooth": "Rigid"))
+features.push("Palette: "+palette)
+features.push("Amplitude: " + pickX(rawParams[8], ["Less", "Normal", "Extra"]))
+features.push("Shape: "+ (rawParams[9] < 20 ? "Hexagon" : "Ring"))
+
+function setupParametersFromTokenData(tokenData) {
+  let hashPairs = []
+  //parse hash
+  for (let j = 0; j < 32; j++) {
+    hashPairs.push(tokenData.slice(2 + (j * 2), 4 + (j * 2)))
+  }
+  // map to 0-255
+  return hashPairs.map(x => {
+    return parseInt(x, 16)
+  })
+}
+
+function generateSeedFromTokenData(tokenData) {
+  return parseInt(tokenData.slice(0, 16), 16)
+}
+
+function pickX(n, ar) {
+  return ar[Math.max(0, Math.floor((n/255) * ar.length - 0.000001))]
+}
+
+function map(n, s1, st1, s2, st2) {
+  return ((n-s1)/(st1-s1))*(st2-s2)+s2
+}
+
+function mapParam(n, s, st) {
+  return map(n, 0, 255, s, st)
+}
+}
+
+//////
+
+else if (this.props.projectId==="21"){
+
+    setMetadata(tokenData)
+
+    function setMetadata(hash){
+
+        const seed = parseInt(hash.substr(-7),16)
+        const colorSeed = seed & 0xfff
+        const segmentSeed = (seed & 0x7f000) >> 12
+        const rSeed = ((seed >> 19) & 0xff) === 1 ? 5 : ((seed >> 19) & 0xf) === 1 ? 3 : 4
+        const res = rSeed === 5 ? 'LoRes 32x32' : rSeed === 3 ? 'HiRes 8x8' : 'VGA 16x16'
+
+        let glyph = 'Glitch'
+        switch(segmentSeed){
+            case 0x0:
+                glyph = 'Ghost'
+                break
+
+            case 0x3f: // A
+            case 0x7a: // b
+            case 0x53: // C
+            case 0x7c: // d
+            case 0x5b: // E
+            case 0x1b: // F
+            case 0x3a: // h
+            case 0x74: // J
+            case 0x52: // L
+            case 0x38: // n
+            case 0x1f: // P
+            case 0x76: // U
+            case 0x3e: // X
+            case 0x6e: // y
+                glyph = 'Alphabetic'
+                break
+
+            case 0x5d: // 2
+            case 0x6d: // 3
+            case 0x2e: // 4
+            case 0x7b: // 6
+            case 0x25: // 7
+            case 0x6f: // 9
+            case 0x36: // 11
+                glyph = 'Numeric'
+                break
+
+            case 0x12: // I, l, 1
+            case 0x24: // I, l, 1
+            case 0x77: // O,0
+            case 0x6b: // S,5
+                glyph = 'Alphanumeric'
+                break
+
+            case 0x7f:
+                glyph = 'Lucky 8'
+                break
+
+                case 0x46:
+                    glyph = 'OTTO'
+                    break
+
+                default:
+                    // do nothing
+
+        }
+
+        let pattern = 'Mix'
+        let p1 = colorSeed & 0x7
+        let p2 = (colorSeed & (0x7<<3)) >> 3
+        let p3 = (colorSeed & (0x7<<6)) >> 6
+        let p4 = (colorSeed & (0x7<<9)) >> 9
+
+        let black_white = 0
+
+        if(
+            p1 === 0 &&
+            p2 === 0 &&
+            p3 === 0 &&
+            p4 === 0
+        ){
+            if(segmentSeed === 0){
+                pattern = 'Blackout'
+            }else{
+                pattern = 'Binary'
+            }
+        }else if(
+            p1 === 7 &&
+            p2 === 7 &&
+            p3 === 7 &&
+            p4 === 7
+        ){
+            pattern = 'Whiteout'
+        }else if(
+            p1 === p2 &&
+            p2 === p3 &&
+            p3 === p4
+        ){
+            pattern = 'Solid'
+        }else
+        if(
+            (p1 === 0 || p1 === 7) &&
+            (p2 === 0 || p2 === 7) &&
+            (p3 === 0 || p3 === 7) &&
+            (p4 === 0 || p4 === 7)
+        ){
+            // Black & White
+            black_white = 1
+        }
+
+        if(
+            p1 === p3 &&
+            p2 === p4 &&
+            p1 !== p2
+        ){
+            pattern = 'Bars'
+        }
+
+        if(
+            p1 === p2 &&
+            p3 === p4 &&
+            p1 !== p3
+        ){
+            if(p1 === 0 || p3 === 0){
+                pattern = 'Scanlines'
+            }else{
+                pattern = 'Stripes'
+            }
+        }
+
+        if(
+            p1 === p4 &&
+            p2 === p3 &&
+            p1 !== p2
+        ){
+            pattern = 'Checkerboard'
+        }
+
+        if(
+            ( p1 === p2 && p1 === p3 && p1 !== p4 ) ||
+            ( p1 !== p2 && p1 === p3 && p1 === p4 ) ||
+            ( p1 === p2 && p1 !== p3 && p1 === p4 ) ||
+            ( p1 !== p2 && p2 === p3 && p2 === p4 )
+
+        ){
+            pattern = 'Pointillist'
+        }
+
+        switch(colorSeed){
+            case (7<<9)+(3<<6)+(6<<3)+2:
+            case (7<<9)+(6<<6)+(3<<3)+2:
+            case (3<<9)+(7<<6)+(2<<3)+6:
+            case (3<<9)+(2<<6)+(7<<3)+6:
+            case (6<<9)+(7<<6)+(2<<3)+3:
+            case (6<<9)+(2<<6)+(7<<3)+3:
+            case (2<<9)+(6<<6)+(3<<3)+7:
+            case (2<<9)+(3<<6)+(6<<3)+7:
+                pattern = 'Highlighter'
+            break
+            default:
+                // do nothing
+        }
+
+        features.push(`Glyph: ${glyph}`)
+        features.push(`Resolution: ${res}`)
+        features.push(`Pattern: ${pattern}`)
+        features.push(`Black & White: ${black_white ? 'Yes' : 'No'}`)
+    }
 }
 
 
