@@ -163,6 +163,34 @@ class Navigation extends Component {
         }
 
         </NavDropdown>
+        <NavDropdown title="Factory" id="basic-nav-dropdown">
+        <NavDropdown.Item><b>Open</b></NavDropdown.Item>
+        {this.state.activeProjectsDetails &&
+          this.state.activeProjectsDetails.filter(projectInfo=>!this.props.complete.includes(projectInfo[0]) && !this.props.curated.includes(projectInfo[0]) && !this.props.playground.includes(projectInfo[0]))
+          .map((projectInfo,index)=>{
+            return(
+              <NavDropdown.Item key={index} as={Link} onClick={()=>{this.props.handleToggleView("off")}} to={"/project/"+projectInfo[0]}>{projectInfo[1]} by {projectInfo[2]}</NavDropdown.Item>
+            )
+        })
+        }
+        {this.state.activeProjectsDetails && this.state.activeProjectsDetails.filter(projectInfo=>!this.props.complete.includes(projectInfo[0]) && !this.props.curated.includes(projectInfo[0]) && !this.props.playground.includes(projectInfo[0])).length<1 &&
+          <NavDropdown.Item><i>None</i></NavDropdown.Item>
+        }
+        <div className="dropdown-divider"></div>
+          <NavDropdown.Item><b>Complete</b></NavDropdown.Item>
+          {this.state.activeProjectsDetails &&
+            this.state.activeProjectsDetails.filter(projectInfo=>this.props.complete.includes(projectInfo[0]) && !this.props.curated.includes(projectInfo[0]) && !this.props.playground.includes(projectInfo[0]))
+            .map((projectInfo,index)=>{
+              return(
+                <NavDropdown.Item key={index} as={Link} onClick={()=>{this.props.handleToggleView("off")}} to={"/project/"+projectInfo[0]}>{projectInfo[1]} by {projectInfo[2]}</NavDropdown.Item>
+              )
+          })
+          }
+          {this.state.activeProjectsDetails && this.state.activeProjectsDetails.filter(projectInfo=>this.props.complete.includes(projectInfo[0]) && !this.props.curated.includes(projectInfo[0]) && !this.props.playground.includes(projectInfo[0])).length<1 &&
+            <NavDropdown.Item><i>None</i></NavDropdown.Item>
+          }
+
+          </NavDropdown>
         <NavDropdown title="All Projects" id="basic-nav-dropdown">
         <NavDropdown.Item><b>Open</b></NavDropdown.Item>
         {this.state.activeProjectsDetails &&

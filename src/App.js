@@ -6,6 +6,7 @@ import { NETWORK,
         CURATED,
         COMPLETE,
         PLAYGROUND,
+        FACTORY,
         ARTBLOCKS_CONTRACT_ABI_A,
         ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A,
         ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A,
@@ -265,6 +266,7 @@ async componentDidUpdate(oldProps){
       curated={CURATED}
       complete={COMPLETE}
       playground={PLAYGROUND}
+      factory={FACTORY}
       />
       }
       </div>
