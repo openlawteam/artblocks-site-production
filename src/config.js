@@ -1,6 +1,8 @@
+//Minter https://oneclickdapp.com/scoop-major
+
 export const NETWORK = "main";
 export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16, 21, 23, 24];
-export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17, 21, 23];
+export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17, 21, 23,27];
 export const COMPLETE = [
   1,
   2,
@@ -19,19 +21,26 @@ export const COMPLETE = [
   16,
   17,
   18,
+  19,
   20,
   21,
   22,
+  23,
+  24,
+  25,
+  26
 ];
-export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24];
+export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24, 25, 26];
 export const FACTORY = [5];
 //export const ARTIST = []
-
-// export const NETWORK = "rinkeby";
-// export const NONINTERACTIVE = [1, 2];
-// export const COMPLETE = [0, 1, 2];
-// export const CURATED = [0, 1, 2];
-// export const PLAYGROUND = [];
+/*
+ export const NETWORK = "rinkeby";
+ export const NONINTERACTIVE = [1, 2];
+ export const COMPLETE = [0, 1, 2];
+ export const CURATED = [0, 1, 2];
+ export const PLAYGROUND = [];
+ export const FACTORY = [];
+ */
 
 export const BASE_URL =
   NETWORK === "rinkeby"
@@ -43,14 +52,17 @@ export const ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A =
 export const ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B =
   "0xa7d8d9ef8D8Ce8992Df33D8b8CF4Aebabd5bD270";
 export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET =
-  "0x091dcd914fCEB1d47423e532955d1E62d1b2dAEf";
+  //oldMinter"0x091dcd914fCEB1d47423e532955d1E62d1b2dAEf";
+  "0x1Db80B860081AF41Bc0ceb3c877F8AcA8379F869";
+
 
 export const ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A =
   "0x7b404C05733344eA9a618b95B21Ad27090B53456";
 export const ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B =
   "0x152eeE3DCc5526efd646E9b45c9a9672BfFcc097";
 export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY =
-  "0xa58EC37211A040aBB9f0c1931Ce83CF094E68ff1";
+  //testMinter "0x152eeE3DCc5526efd646E9b45c9a9672BfFcc097";
+  "0x15dA12452cE8DffC056C91117f31910aC9090D82";
 
 /*
 TESTNET TERMINATED 1/4/2021

@@ -1,20 +1,11 @@
 import React, { Component } from "react";
 import {
-  Card,
   Button,
-  CardDeck,
   Spinner,
   Col,
   Row,
-  Form,
-  Tabs,
-  Tab,
-  ButtonGroup,
-  Pagination,
-  Container,
   InputGroup,
   FormControl,
-  Image,
   Alert,
   Tooltip,
   OverlayTrigger,
@@ -388,9 +379,9 @@ class Project extends Component {
     } else if (this.props.project && this.props.project === "4") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Dynamic%20Slices&search[stringTraits][0][values][0]=All%20Dynamic%20Slices";
     } else if (this.props.project && this.props.project === "5") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Variant%20Plan&search[stringTraits][0][values][0]=All%20Variant%20Plans";
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Variant%20Plan&search[stringTraits][0][values][0]=All%20Variant%20Plans";
     } else if (this.props.project && this.props.project === "6") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=View%20Card&search[stringTraits][0][values][0]=All%20View%20Cards";
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=View%20Card&search[stringTraits][0][values][0]=All%20View%20Cards";
     } else if (this.props.project && this.props.project === "7") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Elevated%20Deconstructions&search[stringTraits][0][values][0]=All%20Elevated%20Deconstructions";
     } else if (this.props.project && this.props.project === "8") {
@@ -406,22 +397,34 @@ class Project extends Component {
     } else if (this.props.project && this.props.project === "13") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ringers&search[stringTraits][0][values][0]=All%20Ringers";
     } else if (this.props.project && this.props.project === "14") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Cyber%20Cities&search[stringTraits][0][values][0]=All%20Cyber%20Cities";
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Cyber%20Cities&search[stringTraits][0][values][0]=All%20Cyber%20Cities";
     } else if (this.props.project && this.props.project === "15") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Utopia&search[stringTraits][0][values][0]=All%20Utopias";
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Utopia&search[stringTraits][0][values][0]=All%20Utopias";
     } else if (this.props.project && this.props.project === "16") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Color%20Study&search[stringTraits][0][values][0]=All%20Color%20Studys";
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Color%20Study&search[stringTraits][0][values][0]=All%20Color%20Studys";
     } else if (this.props.project && this.props.project === "17") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Spectron&search[stringTraits][0][values][0]=All%20Spectrons";
     } else if (this.props.project && this.props.project === "18") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Gen%202&search[stringTraits][0][values][0]=All%20Gen%202s";
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Gen%202&search[stringTraits][0][values][0]=All%20Gen%202s";
+    } else if (this.props.project && this.props.project === "19") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=R3sonance&search[stringTraits][0][values][0]=All%20R3sonances";
     } else if (this.props.project && this.props.project === "20") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Sentience&search[stringTraits][0][values][0]=All%20Sentiences";
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Sentience&search[stringTraits][0][values][0]=All%20Sentiences";
     } else if (this.props.project && this.props.project === "21") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=27-Bit%20Digital&search[stringTraits][0][values][0]=All%2027-Bit%20Digitals";
     } else if (this.props.project && this.props.project === "22") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=The%20Eternal%20Pump&search[stringTraits][0][values][0]=All%20The%20Eternal%20Pumps";
-    } else {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=The%20Eternal%20Pump&search[stringTraits][0][values][0]=All%20The%20Eternal%20Pumps";
+    } else if (this.props.project && this.props.project === "23") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Archetype&search[stringTraits][0][values][0]=All%20Archetypes";
+    } else if (this.props.project && this.props.project === "24") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Pixel%20Glass&search[stringTraits][0][values][0]=All%20Pixel%20Glass";
+    } else if (this.props.project && this.props.project === "25") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Pathfinders&search[stringTraits][0][values][0]=All%20Pathfinders";
+    } else if (this.props.project && this.props.project === "26") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=EnergySculpture&search[stringTraits][0][values][0]=All%20EnergySculptures";
+    }
+
+    else {
       return "https://opensea.io/assets/art-blocks";
     }
   }
@@ -484,15 +487,17 @@ class Project extends Component {
       let purchaseToAddress = this.props.web3.utils.isAddress(
         this.state.purchaseToAddress
       )
-        ? this.props.purchaseToAddress
+        ? this.state.purchaseToAddress
         : undefined;
-      try {
-        purchaseToAddress = await this.props.web3.eth.ens.getAddress(
-          this.state.purchaseToAddress
-        );
-      } catch (e) {
-        purchaseToAddress = undefined;
-      }
+        if (!purchaseToAddress) {
+          try {
+          purchaseToAddress = await this.props.web3.eth.ens.getAddress(
+            this.state.purchaseToAddress
+          );
+        } catch (e) {
+          purchaseToAddress = undefined;
+        }}
+
 
       if (purchaseToAddress) {
         alert(
