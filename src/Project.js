@@ -422,6 +422,10 @@ class Project extends Component {
       return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Pathfinders&search[stringTraits][0][values][0]=All%20Pathfinders";
     } else if (this.props.project && this.props.project === "26") {
       return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=EnergySculpture&search[stringTraits][0][values][0]=All%20EnergySculptures";
+    } else if (this.props.project && this.props.project === "27") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=720%20Minutes&search[stringTraits][0][values][0]=All%20720%20Minutes"
+    } else if (this.props.project && this.props.project === "28") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Apparitions&search[stringTraits][0][values][0]=All%20Apparitions"
     }
 
     else {

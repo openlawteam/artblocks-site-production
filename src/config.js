@@ -1,8 +1,8 @@
 //Minter https://oneclickdapp.com/scoop-major
 
 export const NETWORK = "main";
-export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16, 21, 23, 24];
-export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17, 21, 23,27];
+export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16, 21, 23, 24,28];
+export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17, 21, 23,27,28];
 export const COMPLETE = [
   1,
   2,
@@ -28,7 +28,8 @@ export const COMPLETE = [
   23,
   24,
   25,
-  26
+  26,
+  27
 ];
 export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24, 25, 26];
 export const FACTORY = [5];
@@ -54,6 +55,7 @@ export const ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B =
 export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET =
   //oldMinter"0x091dcd914fCEB1d47423e532955d1E62d1b2dAEf";
   "0x1Db80B860081AF41Bc0ceb3c877F8AcA8379F869";
+  //"0xAA6EBab3Bf3Ce561305bd53E4BD3B3945920B176";
 
 
 export const ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A =
