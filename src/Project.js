@@ -9,6 +9,7 @@ import {
   Alert,
   Tooltip,
   OverlayTrigger,
+  Modal,
 } from "react-bootstrap";
 import {
   Link,
@@ -44,6 +45,7 @@ class Project extends Component {
       approved: true,
       erc20Balance: "",
       randomTokenNumber: 0,
+      showWarningModal: false,
     };
     this.handleToggleArtistInterface = this.handleToggleArtistInterface.bind(
       this
@@ -57,6 +59,7 @@ class Project extends Component {
     this.approve = this.approve.bind(this);
     this.updateProjectTokenDetails = this.updateProjectTokenDetails.bind(this);
     this.updateValues = this.updateValues.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   async componentDidMount() {
@@ -423,12 +426,10 @@ class Project extends Component {
     } else if (this.props.project && this.props.project === "26") {
       return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=EnergySculpture&search[stringTraits][0][values][0]=All%20EnergySculptures";
     } else if (this.props.project && this.props.project === "27") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=720%20Minutes&search[stringTraits][0][values][0]=All%20720%20Minutes"
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=720%20Minutes&search[stringTraits][0][values][0]=All%20720%20Minutes";
     } else if (this.props.project && this.props.project === "28") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Apparitions&search[stringTraits][0][values][0]=All%20Apparitions"
-    }
-
-    else {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Apparitions&search[stringTraits][0][values][0]=All%20Apparitions";
+    } else {
       return "https://opensea.io/assets/art-blocks";
     }
   }
@@ -493,15 +494,15 @@ class Project extends Component {
       )
         ? this.state.purchaseToAddress
         : undefined;
-        if (!purchaseToAddress) {
-          try {
+      if (!purchaseToAddress) {
+        try {
           purchaseToAddress = await this.props.web3.eth.ens.getAddress(
             this.state.purchaseToAddress
           );
         } catch (e) {
           purchaseToAddress = undefined;
-        }}
-
+        }
+      }
 
       if (purchaseToAddress) {
         alert(
@@ -593,6 +594,10 @@ class Project extends Component {
           });
       }
     }
+  }
+
+  closeModal() {
+    this.setState({ showWarningModal: false });
   }
 
   render() {
@@ -757,7 +762,11 @@ class Project extends Component {
                                   ? true
                                   : false
                               }
-                              onClick={this.purchase}
+                              onClick={() =>
+                                this.setState({
+                                  showWarningModal: true,
+                                })
+                              }
                             >
                               {this.state.purchase ? (
                                 <div>
@@ -950,6 +959,45 @@ class Project extends Component {
             </Switch>
           </Col>
         </Row>
+        <Modal show={this.state.showWarningModal} onHide={this.closeModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>WARNING</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              Participating in a live Art Blocks drop is for experts only. By
+              submitting a transaction you acknowledge the following:
+            </p>
+            <ol>
+              <li>You are competing with others.</li>
+              <li>
+                You might have to increase your gas price in order to have your
+                transaction processed before others.
+              </li>
+              <li>
+                Even with a high gas price it is possible your transaction will
+                be confirmed AFTER the drop is sold out in which case your
+                transaction will fail and you will lose the transaction fee for
+                the failed transaction.
+              </li>
+            </ol>
+            <p style={{ fontWeight: "bold" }}>PROCEED AT YOUR OWN RISK</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.closeModal}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => {
+                this.closeModal();
+                this.purchase();
+              }}
+            >
+              Agree
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
