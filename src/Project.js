@@ -369,6 +369,9 @@ class Project extends Component {
     });
   }
   getOSLink() {
+    if (this.props.project === "rinkeby") {
+      return "https://opensea.io/assets/art-blocks";
+    } else {
     if (this.props.project && this.props.project === "0") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Chromie%20Squiggle&search[stringTraits][0][values][0]=All%20Chromie%20Squiggles";
     } else if (this.props.project && this.props.project === "1") {
@@ -433,6 +436,7 @@ class Project extends Component {
       return "https://opensea.io/assets/art-blocks";
     }
   }
+}
 
   handleToggleArtistInterface() {
     this.setState({ artistInterface: !this.state.artistInterface });
@@ -639,6 +643,11 @@ class Project extends Component {
       this.state.projectTokenDetails[0] === this.props.account;
 
     return (
+      <div>
+      {this.state.projectTokenDetails && (this.props.isWhitelisted ||
+        this.state.projectTokenDetails[0] ===
+          this.props.account || this.state.projectTokenDetails[4]) &&
+
       <div>
         {this.props.network === "rinkeby" && (
           <Alert variant="danger">
@@ -999,6 +1008,8 @@ class Project extends Component {
           </Modal.Footer>
         </Modal>
       </div>
+    }
+    </div>
     );
   }
 }

@@ -746,6 +746,7 @@ const ArtistInterface = ({
                   <option>js</option>
                   <option>svg</option>
                   <option>custom</option>
+                  <option>regl</option>
                 </Form.Control>
                 <Form.Label>Version:</Form.Label>
                 <Form.Control
@@ -786,12 +787,12 @@ const ArtistInterface = ({
                 ></Form.Control>
                 {isWhitelisted && (
                   <div>
-                    <Form.Label>Curated?</Form.Label>
+                    <Form.Label>Curation Status</Form.Label>
                     <Form.Control
-                      onChange={(e) => onJSONChange(e, "curated")}
-                      value={scriptJSON.curated || ""}
+                      onChange={(e) => onJSONChange(e, "curation_status")}
+                      value={scriptJSON.curation_status || ""}
                       type="text"
-                      placeholder="If a project is curated set to true."
+                      placeholder="curated | playground | factory"
                     ></Form.Control>
                   </div>
                 )}

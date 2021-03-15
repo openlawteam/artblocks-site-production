@@ -373,39 +373,7 @@ class Project extends Component {
     this.setState({ latest: false });
   }
   getOSLink() {
-    if (this.props.project && this.props.project === "0") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Chromie%20Squiggle&search[stringTraits][0][values][0]=All%20Chromie%20Squiggles";
-    } else if (this.props.project && this.props.project === "1") {
-      //console.log("osp1");
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Genesis&search[stringTraits][0][values][0]=All%20Genesis";
-    } else if (this.props.project && this.props.project === "2") {
-      //console.log("osp2");
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Construction%20Token&search[stringTraits][0][values][0]=All%20Construction%20Tokens";
-    } else if (this.props.project && this.props.project === "3") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Cryptoblots&search[stringTraits][0][values][0]=All%20Cryptoblots";
-    } else if (this.props.project && this.props.project === "4") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Dynamic%20Slices&search[stringTraits][0][values][0]=All%20Dynamic%20Slices";
-    } else if (this.props.project && this.props.project === "5") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Variant%20Plan&search[stringTraits][0][values][0]=All%20Variant%20Plans";
-    } else if (this.props.project && this.props.project === "6") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=View%20Card&search[stringTraits][0][values][0]=All%20View%20Cards";
-    } else if (this.props.project && this.props.project === "7") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Elevated%20Deconstructions&search[stringTraits][0][values][0]=All%20Elevated%20Deconstructions";
-    } else if (this.props.project && this.props.project === "8") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Singularity&search[stringTraits][0][values][0]=All%20Singularitys";
-    } else if (this.props.project && this.props.project === "9") {
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ignition&search[stringTraits][0][values][0]=All%20Ignitions";
-    } else if (this.props.project && this.props.project==="10"){
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Nimbuds&search[stringTraits][0][values][0]=All%20Nimbuds";
-    } else if (this.props.project && this.props.project==="11"){
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=HyperHash&search[stringTraits][0][values][0]=All%20HyperHashs";
-    } else if (this.props.project && this.props.project==="12"){
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Unigrids&search[stringTraits][0][values][0]=All%20Unigrids";
-    } else if (this.props.project && this.props.project==="13"){
-      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ringers&search[stringTraits][0][values][0]=All%20Ringers";
-    } else {
-      return "";
-    }
+    return "https://opensea.io/assets/art-blocks";
   }
 
   handleToggleArtistInterface() {
