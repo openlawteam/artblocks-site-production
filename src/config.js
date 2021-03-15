@@ -1,5 +1,5 @@
 //Minter https://oneclickdapp.com/scoop-major
-/*
+
 export const NETWORK = "main";
 export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16, 21, 23, 24,28];
 export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17, 21, 23,27,28];
@@ -33,15 +33,15 @@ export const COMPLETE = [
 ];
 export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24, 25, 26];
 export const FACTORY = [5];
-*/
 
+/*
  export const NETWORK = "rinkeby";
  export const NONINTERACTIVE = [];
  export const COMPLETE = [];
  export const CURATED = [];
  export const PLAYGROUND = [];
  export const FACTORY = [];
- 
+ */
 
 export const BASE_URL =
   NETWORK === "rinkeby"
