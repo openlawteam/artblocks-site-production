@@ -48,6 +48,25 @@ app.get('/project/:projectId', (req, res) => {
     }
 })
 
+app.get('/sustainability', (req, res) => {
+    const raw = fs.readFileSync(pathToIndex, "utf8");
+    //const project = req.params.projectId;
+
+    /*if (isNumber(project) === false) {
+        res.redirect("/project/0");
+    } else {*/
+        const updated1 = raw.replace('https://api.artblocks.io/image/248', (
+            `https://lh3.googleusercontent.com/Pb95y9FbyRaibJ2qvm3AhiQ83xTDr98EGsJ6kGNZrSdLQ0EXZFRYS_5lwRhrL6_2q9D-Wo9WNE641LlUUHMlgld4loz5PQmrVfo2=s0`));
+        const updated2 = updated1.replace('https://api.artblocks.io/image/248', (
+            `https://lh3.googleusercontent.com/Pb95y9FbyRaibJ2qvm3AhiQ83xTDr98EGsJ6kGNZrSdLQ0EXZFRYS_5lwRhrL6_2q9D-Wo9WNE641LlUUHMlgld4loz5PQmrVfo2=s0`));
+        const updated3 = updated2.replace('https://api.artblocks.io/image/248', (
+            `https://lh3.googleusercontent.com/Pb95y9FbyRaibJ2qvm3AhiQ83xTDr98EGsJ6kGNZrSdLQ0EXZFRYS_5lwRhrL6_2q9D-Wo9WNE641LlUUHMlgld4loz5PQmrVfo2=s0`));
+        const updated4 = updated3.replace('https://api.artblocks.io/image/248', (
+            `https://lh3.googleusercontent.com/Pb95y9FbyRaibJ2qvm3AhiQ83xTDr98EGsJ6kGNZrSdLQ0EXZFRYS_5lwRhrL6_2q9D-Wo9WNE641LlUUHMlgld4loz5PQmrVfo2=s0`));
+
+        res.send(updated4);
+    //}
+})
 
 app.use(express.static(path.join(__dirname, "build")));
 app.get("*", (req, res) =>

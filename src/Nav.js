@@ -406,7 +406,8 @@ class Navigation extends Component {
                 Gallery View
               </Nav.Link>
 
-              {
+
+
                 <Nav.Link
                   as={Link}
                   onClick={() => {
@@ -416,7 +417,16 @@ class Navigation extends Component {
                 >
                   Learn
                 </Nav.Link>
-              }
+                <Nav.Link
+                  as={Link}
+                  onClick={() => {
+                    this.props.handleToggleView("off");
+                  }}
+                  to={"/sustainability"}
+                >
+                  Sustainability
+                </Nav.Link>
+              
             </Nav>
             <Nav className="ml-auto">
               {this.props.isWhitelisted && (

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { tokenDetailsUrl} from "./utils";
 import {
   Card,
   Button,
@@ -8,6 +9,8 @@ import {
   ButtonGroup,
   Tooltip,
   OverlayTrigger,
+  Alert,
+  Container
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { TwitterShareButton } from "react-twitter-embed";
@@ -43,6 +46,17 @@ class NewToken extends Component {
     const projectURIInfo = await artBlocks.methods
       .projectURIInfo(projectId)
       .call();
+
+      fetch(tokenDetailsUrl(this.props.token))
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          this.setState({
+            features: json.features,
+          });
+        });
+
     this.setState({
       artBlocks,
       projectId,
@@ -50,7 +64,7 @@ class NewToken extends Component {
       projectDescription,
       projectTokenDetails,
       projectScriptDetails,
-      projectURIInfo,
+      projectURIInfo
     });
   }
 
@@ -174,6 +188,31 @@ class NewToken extends Component {
                       )}
                     </div>
                   )}
+
+                  {this.state.features && this.state.features.length > 0 ? (
+                    <div>
+                      <Alert variant="info">
+                        <p>Features</p>
+                        <Container>
+                          {this.state.features.map((feature, index) => {
+                            return (
+                              <Row key={index}>
+                                <p
+                                  style={{
+                                    fontSize: "12px",
+                                    lineHeight: "1px",
+                                  }}
+                                  key={index}
+                                >
+                                  {feature}
+                                </p>
+                              </Row>
+                            );
+                          })}
+                        </Container>
+                      </Alert>
+                    </div>
+                  ) : null}
                 {/*
           <p style={{"fontSize":"12px"}}>{this.state.tokenHashes && this.state.tokenHashes.length===1?"Token hash:":"Token hashes:"} {this.state.tokenHashes && this.state.tokenHashes}</p>
           */}

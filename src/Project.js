@@ -432,6 +432,30 @@ class Project extends Component {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=720%20Minutes&search[stringTraits][0][values][0]=All%20720%20Minutes";
     } else if (this.props.project && this.props.project === "28") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Apparitions&search[stringTraits][0][values][0]=All%20Apparitions";
+    } else if (this.props.project && this.props.project === "29") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Inspirals&search[stringTraits][0][values][0]=All%20Inspirals";
+    } else if (this.props.project && this.props.project === "30") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Hieroglyphs&search[stringTraits][0][values][0]=All%20Hieroglyphs";
+    } else if (this.props.project && this.props.project === "31") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Galaxiss&search[stringTraits][0][values][0]=All%20Galaxiss";
+    } else if (this.props.project && this.props.project === "32") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Light%20Beams&search[stringTraits][0][values][0]=All%20Light%20Beams";
+    } else if (this.props.project && this.props.project === "33") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Empyreans&search[stringTraits][0][values][0]=All%20Empyreans";
+    } else if (this.props.project && this.props.project === "34") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Ensōs&search[stringTraits][0][values][0]=All%20Ensōs";
+    } else if (this.props.project && this.props.project === "35") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Aerial%20View&search[stringTraits][0][values][0]=All%20Aerial%20Views";
+    } else if (this.props.project && this.props.project === "36") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Gazettes&search[stringTraits][0][values][0]=All%20Gazettes";
+    } else if (this.props.project && this.props.project === "37") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Paper%20Armadas&search[stringTraits][0][values][0]=All%20Paper%20Armadas";
+    } else if (this.props.project && this.props.project === "38") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=ByteBeats&search[stringTraits][0][values][0]=All%20ByteBeats";
+    } else if (this.props.project && this.props.project === "39") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Synapses&search[stringTraits][0][values][0]=All%20Synapses";
+    } else if (this.props.project && this.props.project === "46") {
+      return "https://opensea.io/assets/art-blocks-factory?search[resultModel]=ASSETS&search[stringTraits][0][name]=70s%20Pop%20Series%20One&search[stringTraits][0][values][0]=All%2070s%20Pop%20Series%20Ones";
     } else {
       return "https://opensea.io/assets/art-blocks";
     }

@@ -31,9 +31,9 @@ class ViewToken extends Component {
     const projectId = await artBlocks.methods
       .tokenIdToProjectId(this.props.token)
       .call();
-    const projectTokens = await artBlocks.methods
+    /*const projectTokens = await artBlocks.methods
       .projectShowAllTokens(projectId)
-      .call();
+      .call();*/
     const projectDescription = await artBlocks.methods
       .projectDetails(projectId)
       .call();
@@ -53,6 +53,7 @@ class ViewToken extends Component {
       this.props.token < 3000000
         ? await artBlocks.methods.showTokenHashes(this.props.token).call()
         : await artBlocks.methods.tokenIdToHash(this.props.token).call();
+        console.log(tokenHashes);
 
     let prettyIdentifier;
     try {
@@ -73,7 +74,7 @@ class ViewToken extends Component {
 
     this.setState({
       artBlocks,
-      projectTokens,
+      //projectTokens,
       projectDescription,
       projectTokenDetails,
       projectScriptDetails,
@@ -175,6 +176,15 @@ class ViewToken extends Component {
       return baseURL + "/vox/" + token;
     }
 
+    function tokenOSURL(token){
+      if (token<3000000){
+        return "https://opensea.io/assets/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/"+token;
+      } else {
+        return "https://opensea.io/assets/0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270/"+token;
+      }
+    }
+    console.log(tokenOSURL(this.props.token));
+
     return (
       <div className="container mt-5">
         <Row>
@@ -203,6 +213,7 @@ class ViewToken extends Component {
                 )}
 
                 {this.state.ownerOfToken && (
+                  <div>
                   <p>
                     Owned by{" "}
                     <Link to={"/user/" + this.state.ownerOfToken}>
@@ -210,7 +221,16 @@ class ViewToken extends Component {
                         ? this.state.prettyIdentifier
                         : this.state.ownerOfToken.slice(0, 10)}
                     </Link>
+
+                  <a
+                    href={tokenOSURL(this.props.token)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image width="50" src="/os_logo.png" />
+                  </a>
                   </p>
+                  </div>
                 )}
 
                 {this.state.features && this.state.features.length > 0 ? (
@@ -269,7 +289,7 @@ class ViewToken extends Component {
                 <br />
                 <p>
                   Total Minted:{" "}
-                  {this.state.projectTokens && this.state.projectTokens.length}{" "}
+                  {/*this.state.projectTokens && this.state.projectTokens.length*/this.state.projectTokenDetails && this.state.projectTokenDetails[2]}{" "}
                   out of a maximum of{" "}
                   {this.state.projectTokenDetails &&
                     this.state.projectTokenDetails[3]}
@@ -295,6 +315,7 @@ class ViewToken extends Component {
                   }}
                   hashtags={["genArt"]}
                 />
+
               </div>
             )}
           </Col>

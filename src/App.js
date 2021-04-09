@@ -28,6 +28,7 @@ import ProjectGallery from "./ProjectGallery";
 //import CookieConsent from "react-cookie-consent";
 //import YourTokens from './YourTokens';
 import Learn from "./Learn";
+import Sustainability from "./Sustainability";
 import ControlPanel from "./ControlPanel";
 import UserGallery from "./UserGallery";
 import ViewToken from "./ViewToken";
@@ -532,6 +533,9 @@ class App extends Component {
 
             <Route exact path="/learn">
               <Learn baseURL={baseURL} />
+            </Route>
+            <Route exact path="/sustainability">
+              <Sustainability baseURL={baseURL} />
             </Route>
           </Switch>
         )}
