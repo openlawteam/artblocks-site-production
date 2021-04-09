@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import {
   CardDeck,
@@ -19,20 +19,6 @@ const TokenGallery = ({ project, projectTokens = [] }) => {
   const history = useHistory();
   const pageParam = new URLSearchParams(location.search).get("p") || 1;
   const currentPage = parseInt(pageParam);
-
-  // Image loading queue
-  const [loadQueue, setLoadQueue] = React.useState(project * 1000000);
-  function handleNextImage() {
-    //console.log('clicked');
-    let currentCard = loadQueue;
-    let nextCard = currentCard + 1;
-    setLoadQueue(nextCard);
-  }
-
-  // Reset load queue to current page
-  React.useEffect(() => {
-    setLoadQueue(project * 1000000 + (currentPage - 1) * 20);
-  }, [currentPage, project]);
 
   // Set up Pagination Items
   const pageNumbers = [];
@@ -97,17 +83,7 @@ const TokenGallery = ({ project, projectTokens = [] }) => {
                     style={{ width: "16rem" }}
                   >
                     <Card.Body>
-                      {loadQueue < token ? (
-                        <div className="spinner-border" role="status">
-                          <span className="sr-only">Loading...</span>
-                        </div>
-                      ) : (
-                        <Card.Img
-                          variant="top"
-                          src={tokenThumbImage(token)}
-                          onLoad={handleNextImage}
-                        />
-                      )}
+                      <GalleryImage src={tokenThumbImage(token)} />
                       <div className="text-center">
                         <ButtonGroup size="sm">
                           <Button variant="light" disabled>
@@ -169,6 +145,39 @@ const TokenGallery = ({ project, projectTokens = [] }) => {
           Back To Project List
         </Button>
       </div> */}
+    </div>
+  );
+};
+
+const GalleryImage = ({ src }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div style={{ position: "relative", paddingTop: "100%" }}>
+      <div
+        style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
+      >
+        <Card.Img variant="top" src={src} onLoad={() => setLoaded(true)} />
+        <div
+          style={{
+            backgroundColor: "#fff",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            opacity: loaded ? 0 : 1,
+            transition: "opacity 1s",
+          }}
+        >
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
