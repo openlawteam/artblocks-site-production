@@ -40,7 +40,7 @@ export const COMPLETE = [
   46
 ];
 export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24, 25, 26, 30, 37,42];
-export const FACTORY = [5,31,32,33,34,36,38,43,44,45,46];
+export const FACTORY = [5,31,32,33,34,36,38,43,44,45,46, 47];
 
 /*
  export const NETWORK = "rinkeby";

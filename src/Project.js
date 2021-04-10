@@ -454,6 +454,8 @@ class Project extends Component {
       return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=ByteBeats&search[stringTraits][0][values][0]=All%20ByteBeats";
     } else if (this.props.project && this.props.project === "39") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Synapses&search[stringTraits][0][values][0]=All%20Synapses";
+    } else if (this.props.project && this.props.project === "40") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Algobots&search[stringTraits][0][values][0]=All%20Algobots";
     } else if (this.props.project && this.props.project === "46") {
       return "https://opensea.io/assets/art-blocks-factory?search[resultModel]=ASSETS&search[stringTraits][0][name]=70s%20Pop%20Series%20One&search[stringTraits][0][values][0]=All%2070s%20Pop%20Series%20Ones";
     } else {
