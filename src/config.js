@@ -1,7 +1,7 @@
 //Minter https://oneclickdapp.com/scoop-major
 
 export const NETWORK = "main";
-export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16, 21, 23, 24, 28, 30, 34, 35, 36, 37,41,42];
+export const NONINTERACTIVE = [1, 2, 3, 5, 7, 8, 13, 16, 21, 23, 24, 28, 30, 34, 35, 36, 37,41,42, 49];
 export const CURATED = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 17, 21, 23, 27, 28, 29, 35,39,40,41];
 export const COMPLETE = [
   0,
@@ -37,10 +37,14 @@ export const COMPLETE = [
   32,
   35,
   39,
-  46
+  40,
+  41,
+  42,
+  46,
+  51
 ];
-export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24, 25, 26, 30, 37,42];
-export const FACTORY = [5,31,32,33,34,36,38,43,44,45,46, 47];
+export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24, 25, 26, 30, 37,42, 48];
+export const FACTORY = [5,31,32,33,34,36,38,43,44,45,46, 47, 49, 50, 51, 52];
 
 /*
  export const NETWORK = "rinkeby";

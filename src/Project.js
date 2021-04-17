@@ -449,13 +449,17 @@ class Project extends Component {
     } else if (this.props.project && this.props.project === "36") {
       return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Gazettes&search[stringTraits][0][values][0]=All%20Gazettes";
     } else if (this.props.project && this.props.project === "37") {
-      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Paper%20Armadas&search[stringTraits][0][values][0]=All%20Paper%20Armadas";
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Paper%20Armada&search[stringTraits][0][values][0]=All%20Paper%20Armadas";
     } else if (this.props.project && this.props.project === "38") {
       return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=ByteBeats&search[stringTraits][0][values][0]=All%20ByteBeats";
     } else if (this.props.project && this.props.project === "39") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Synapses&search[stringTraits][0][values][0]=All%20Synapses";
     } else if (this.props.project && this.props.project === "40") {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Algobots&search[stringTraits][0][values][0]=All%20Algobots";
+    } else if (this.props.project && this.props.project === "41") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Elementals&search[stringTraits][0][values][0]=All%20Elementals";
+    } else if (this.props.project && this.props.project === "42") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Void&search[stringTraits][0][values][0]=All%20Voids";
     } else if (this.props.project && this.props.project === "46") {
       return "https://opensea.io/assets/art-blocks-factory?search[resultModel]=ASSETS&search[stringTraits][0][name]=70s%20Pop%20Series%20One&search[stringTraits][0][values][0]=All%2070s%20Pop%20Series%20Ones";
     } else {
@@ -546,6 +550,7 @@ class Project extends Component {
               value: this.state.projectTokenDetails[1],
             })
             .once("receipt", (receipt) => {
+              console.log(receipt);
               const mintedToken = receipt.events.Mint.returnValues[1];
               console.log("mintedtoken:" + mintedToken);
               //this.updateTokens();
@@ -567,6 +572,7 @@ class Project extends Component {
                   : 0,
             })
             .once("receipt", (receipt) => {
+              console.log(receipt);
               const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
               console.log("mintedtoken:" + mintedToken);
               this.props.handleToggleView("newToken", mintedToken);
@@ -611,7 +617,7 @@ class Project extends Component {
                 : 0,
           })
           .once("receipt", (receipt) => {
-            const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
+            const mintedToken = this.props.project==="51"?parseInt(receipt.events[1].raw.topics[3], 16):parseInt(receipt.events[0].raw.topics[3], 16);
             console.log("mintedtoken:" + mintedToken);
             console.log(receipt);
             this.props.handleToggleView("newToken", mintedToken);
