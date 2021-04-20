@@ -159,7 +159,7 @@ class UserGallery extends Component {
   }
 
   render() {
-    //console.log(this.props);
+    console.log(this.props);
     /*
     let baseURL = this.props.baseURL;
 
@@ -275,6 +275,7 @@ class UserGallery extends Component {
                       projects={this.state.projects}
                       baseURL={this.props.baseURL}
                       handleToggleView={this.props.handleToggleView}
+                      network={this.props.network}
                     />
 
                     {/*
