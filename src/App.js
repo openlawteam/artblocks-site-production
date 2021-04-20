@@ -34,8 +34,19 @@ import UserGallery from "./UserGallery";
 import ViewToken from "./ViewToken";
 import { Col, Row } from "react-bootstrap";
 import { Switch, Route, useParams } from "react-router-dom";
-
+import { request, gql } from "graphql-request";
 import "./App.css";
+
+const allProjectsQuery = gql`
+  {
+    projects(first: 300, orderBy: index) {
+      index
+      id
+      artistAddress
+      active
+    }
+  }
+`;
 
 function UserGal(props) {
   let { address } = useParams();
@@ -142,49 +153,70 @@ class App extends Component {
       NETWORK === "rinkeby"
         ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
         : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
-    const nextProjectId = await artBlocks2.methods.nextProjectId().call();
-    const allProjects = [];
-    for (let i = 0; i < nextProjectId; i++) {
-      allProjects.push(i);
+
+    let allProjects = [];
+    let activeProjects = [];
+    let artistAddresses = [];
+    try {
+      const data = await request(
+        process.env.REACT_APP_GRAPHQL_API_ENDPOINT,
+        allProjectsQuery
+      );
+
+      allProjects = data.projects.map((project) => parseInt(project.id, 10));
+      activeProjects = data.projects
+        .filter((project) => project.active)
+        .map((project) => parseInt(project.id, 10));
+      artistAddresses = data.projects.map((project) => project.artistAddress);
+    } catch (err) {
+      console.error(err);
+      console.warn(
+        "graphql api request failed, attempting to fetch data from infura"
+      );
+      const nextProjectId = await artBlocks2.methods.nextProjectId().call();
+      for (let i = 0; i < nextProjectId; i++) {
+        allProjects.push(i);
+      }
+
+      //await artBlocks.methods.showAllProjectIds().call();
+      await Promise.all(
+        allProjects.map(async (project) => {
+          if (project < 3) {
+            let details = await artBlocks.methods
+              .projectTokenInfo(project)
+              .call();
+            if (details[4] === true) {
+              activeProjects.push(project);
+            }
+          } else {
+            let details = await artBlocks2.methods
+              .projectTokenInfo(project)
+              .call();
+            if (details[4] === true) {
+              activeProjects.push(project);
+            }
+          }
+          return null;
+        })
+      );
+
+      artistAddresses = await Promise.all(
+        allProjects.map(async (project) => {
+          if (project < 3) {
+            let details = await artBlocks.methods
+              .projectTokenInfo(project)
+              .call();
+            return details[0];
+          } else {
+            let details = await artBlocks2.methods
+              .projectTokenInfo(project)
+              .call();
+            return details[0];
+          }
+        })
+      );
     }
 
-    //await artBlocks.methods.showAllProjectIds().call();
-    let activeProjects = [];
-    await Promise.all(
-      allProjects.map(async (project) => {
-        if (project < 3) {
-          let details = await artBlocks.methods
-            .projectTokenInfo(project)
-            .call();
-          if (details[4] === true) {
-            activeProjects.push(project);
-          }
-        } else {
-          let details = await artBlocks2.methods
-            .projectTokenInfo(project)
-            .call();
-          if (details[4] === true) {
-            activeProjects.push(project);
-          }
-        }
-        return null;
-      })
-    );
-    let artistAddresses = await Promise.all(
-      allProjects.map(async (project) => {
-        if (project < 3) {
-          let details = await artBlocks.methods
-            .projectTokenInfo(project)
-            .call();
-          return details[0];
-        } else {
-          let details = await artBlocks2.methods
-            .projectTokenInfo(project)
-            .call();
-          return details[0];
-        }
-      })
-    );
     const totalInvocations =
       Number(await artBlocks.methods.totalSupply().call()) +
       Number(await artBlocks2.methods.totalSupply().call());
