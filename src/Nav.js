@@ -5,6 +5,7 @@ import { Navbar, Nav, NavDropdown /*, Image*/ } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Nav.css";
 import { request, gql } from "graphql-request";
+import { NETWORK } from "./config";
 
 // Duplicating this + other logic here instead of including
 // project details in prop so that we can minimize the amount
@@ -30,30 +31,34 @@ class Navigation extends Component {
     //console.log(activeProjects);
     let activeProjectsDetails = [];
     let allProjectsDetails = [];
-    try {
-      const data = await request(
-        process.env.REACT_APP_GRAPHQL_API_ENDPOINT,
-        allProjectsQuery
-      );
+    if (NETWORK === "main") {
+      try {
+        const data = await request(
+          process.env.REACT_APP_GRAPHQL_API_ENDPOINT,
+          allProjectsQuery
+        );
 
-      allProjectsDetails = data.projects.map((project) => [
-        parseInt(project.id),
-        project.name,
-        project.artistName,
-      ]);
-
-      activeProjectsDetails = data.projects
-        .filter((project) => project.active)
-        .map((project) => [
+        allProjectsDetails = data.projects.map((project) => [
           parseInt(project.id),
           project.name,
           project.artistName,
         ]);
-    } catch (err) {
-      console.error(err);
-      console.warn(
-        "graphql api request failed, attempting to fetch data from infura"
-      );
+
+        activeProjectsDetails = data.projects
+          .filter((project) => project.active)
+          .map((project) => [
+            parseInt(project.id),
+            project.name,
+            project.artistName,
+          ]);
+      } catch (err) {
+        console.error(err);
+        activeProjectsDetails = [];
+        allProjectsDetails = [];
+      }
+    }
+    // Either the graph failed or we're on rinkeby
+    if (allProjectsDetails.length === 0) {
       //for (let i=0;i<activeProjects.length;i++){
       for (let project in activeProjects) {
         if (activeProjects[project] < 3) {
@@ -104,13 +109,6 @@ class Navigation extends Component {
         }
       }
     }
-    //console.log(activeProjectsDetails);
-
-    console.log({
-      activeProjects,
-      activeProjectsDetails,
-      allProjectsDetails,
-    });
 
     this.setState({
       artBlocks,

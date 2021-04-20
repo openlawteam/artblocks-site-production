@@ -154,26 +154,37 @@ class App extends Component {
         ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
         : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
 
+    const nextProjectId = await artBlocks2.methods.nextProjectId().call();
     let allProjects = [];
     let activeProjects = [];
     let artistAddresses = [];
-    try {
-      const data = await request(
-        process.env.REACT_APP_GRAPHQL_API_ENDPOINT,
-        allProjectsQuery
-      );
+    // Attempt to get initial project data from
+    // the graph if we're on mainnet
+    if (NETWORK === "main") {
+      try {
+        const data = await request(
+          process.env.REACT_APP_GRAPHQL_API_ENDPOINT,
+          allProjectsQuery
+        );
 
-      allProjects = data.projects.map((project) => parseInt(project.id, 10));
-      activeProjects = data.projects
-        .filter((project) => project.active)
-        .map((project) => parseInt(project.id, 10));
-      artistAddresses = data.projects.map((project) => project.artistAddress);
-    } catch (err) {
-      console.error(err);
-      console.warn(
-        "graphql api request failed, attempting to fetch data from infura"
-      );
-      const nextProjectId = await artBlocks2.methods.nextProjectId().call();
+        allProjects = data.projects.map((project) => parseInt(project.id, 10));
+        if (allProjects.length !== parseInt(nextProjectId, 10)) {
+          throw Error("Subgraph not synced");
+        }
+
+        activeProjects = data.projects
+          .filter((project) => project.active)
+          .map((project) => parseInt(project.id, 10));
+        artistAddresses = data.projects.map((project) => project.artistAddress);
+      } catch (err) {
+        console.error(err);
+        allProjects = [];
+        activeProjects = [];
+        artistAddresses = [];
+      }
+    }
+    // the graph failed or we're on rinkeby
+    if (allProjects.length === 0) {
       for (let i = 0; i < nextProjectId; i++) {
         allProjects.push(i);
       }
