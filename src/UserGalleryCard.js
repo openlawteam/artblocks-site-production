@@ -43,11 +43,12 @@ class UserGalleryCard extends Component {
     );
 
 
-
+    console.log(this.props.baseURL);
+    console.log(this.props.network);
     //console.log(this.props);
     let baseURL = this.props.baseURL;
 
-    //let imageURL = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
+
     let thumbURL = this.props.network==="rinkeby"? "https://rinkthumb.oss.nodechef.com/":"https://mainthumb.oss.nodechef.com/";
     let imgURL = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
 
