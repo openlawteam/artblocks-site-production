@@ -46,7 +46,6 @@ export const COMPLETE = [
 ];
 export const PLAYGROUND = [6, 14, 15, 16, 18, 19, 20, 22, 24, 25, 26, 30, 37,42, 48, 56];
 export const FACTORY = [5,31,32,33,34,36,38,43,44,45,46, 47, 49, 50, 51, 52, 54, 55];
-
 /*
  export const NETWORK = "rinkeby";
  export const NONINTERACTIVE = [];
@@ -54,7 +53,9 @@ export const FACTORY = [5,31,32,33,34,36,38,43,44,45,46, 47, 49, 50, 51, 52, 54,
  export const CURATED = [];
  export const PLAYGROUND = [];
  export const FACTORY = [];
+
  */
+
 
 export const BASE_URL =
   NETWORK === "rinkeby"

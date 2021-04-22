@@ -747,6 +747,8 @@ const ArtistInterface = ({
                   <option>svg</option>
                   <option>custom</option>
                   <option>regl</option>
+                  <option>tonejs</option>
+                  <option>paperjs</option>
                 </Form.Control>
                 <Form.Label>Version:</Form.Label>
                 <Form.Control
