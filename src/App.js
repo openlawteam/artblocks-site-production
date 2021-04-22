@@ -311,8 +311,9 @@ class App extends Component {
           .call()) &&
         (await this.state.artBlocks2.methods.isWhitelisted(accounts[0]).call());
       let projectsOfArtist = [];
+      const account = accounts[0] ? accounts[0].toLowerCase() : null;
       this.state.artistAddresses.map((projectArtistAddress, index) => {
-        if (projectArtistAddress === accounts[0] || isWhitelisted) {
+        if (projectArtistAddress.toLowerCase() === account || isWhitelisted) {
           projectsOfArtist.push(index);
         }
         return null;
