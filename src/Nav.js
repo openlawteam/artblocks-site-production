@@ -128,6 +128,7 @@ class Navigation extends Component {
   }
 
   render() {
+    console.log(this.props.projectsOfArtist);
     //console.log(this.state.allProjectsDetails);
     //console.log('active: '+this.props.activeProjects);
     //console.log("whitlisted?:" + this.props.isWhitelisted);

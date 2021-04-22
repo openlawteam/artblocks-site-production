@@ -65,15 +65,18 @@ class Project extends Component {
   async componentDidMount() {
     const artBlocks =
       this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
-    const projectTokens = await artBlocks.methods
-      .projectShowAllTokens(this.props.project)
-      .call();
     const projectDescription = await artBlocks.methods
       .projectDetails(this.props.project)
       .call();
     const projectTokenDetails = await artBlocks.methods
       .projectTokenInfo(this.props.project)
       .call();
+    const projectTokens = projectTokenDetails[2];
+    const projectTokensArray = [];
+    for (let i=0;i<projectTokens;i++){
+      projectTokensArray.push((this.props.project*1000000) + i);
+    }
+    //console.log(projectTokensArray);
     const projectScriptDetails = await artBlocks.methods
       .projectScriptInfo(this.props.project)
       .call();
@@ -120,6 +123,7 @@ class Project extends Component {
     this.setState({
       artBlocks,
       projectTokens,
+      projectTokensArray,
       projectDescription,
       projectTokenDetails,
       projectScriptDetails,
@@ -127,7 +131,7 @@ class Project extends Component {
       projectURIInfo,
       projectRoyaltyInfo /*, network*/,
       randomTokenNumber: projectTokens
-        ? Math.floor(Math.random() * projectTokens.length)
+        ? Math.floor(Math.random() * projectTokens)
         : 0,
     });
     //setInterval(this.updateProjectTokenDetails,5000);
@@ -181,15 +185,17 @@ class Project extends Component {
 
       const artBlocks =
         this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
-      const projectTokens = await artBlocks.methods
-        .projectShowAllTokens(this.props.project)
-        .call();
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
         .call();
       const projectTokenDetails = await artBlocks.methods
         .projectTokenInfo(this.props.project)
         .call();
+      const projectTokens = projectTokenDetails[2];
+      const projectTokensArray = [];
+      for (let i=0;i<projectTokens;i++){
+        projectTokensArray.push((this.props.project*1000000) + i);
+      }
       const projectScriptDetails = await artBlocks.methods
         .projectScriptInfo(this.props.project)
         .call();
@@ -235,6 +241,7 @@ class Project extends Component {
       this.setState({
         loadQueue: this.props.project * 1000000 + (this.props.page - 1) * 20,
         projectTokens,
+        projectTokensArray,
         projectDescription,
         projectTokenDetails,
         projectScriptDetails,
@@ -244,7 +251,7 @@ class Project extends Component {
         project: this.props.project,
         approved: true,
         randomTokenNumber: projectTokens
-          ? Math.floor(Math.random() * projectTokens.length)
+          ? Math.floor(Math.random() * projectTokens)
           : 0,
       });
     } else if (oldProps.artBlocks !== this.props.artBlocks) {
@@ -326,15 +333,17 @@ class Project extends Component {
   async updateValues() {
     const artBlocks =
       this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
-    const projectTokens = await artBlocks.methods
-      .projectShowAllTokens(this.props.project)
-      .call();
     const projectDescription = await artBlocks.methods
       .projectDetails(this.props.project)
       .call();
     const projectTokenDetails = await artBlocks.methods
       .projectTokenInfo(this.props.project)
       .call();
+    const projectTokens = projectTokenDetails[2];
+    const projectTokensArray = [];
+    for (let i=0;i<projectTokens;i++){
+      projectTokensArray.push((this.props.project*1000000) + i);
+    }
     const projectScriptDetails = await artBlocks.methods
       .projectScriptInfo(this.props.project)
       .call();
@@ -364,6 +373,7 @@ class Project extends Component {
       projectURIInfo,
       projectRoyaltyInfo,
       projectTokens,
+      projectTokensArray,
       project: this.props.project,
       approved: true,
     });
@@ -641,7 +651,7 @@ class Project extends Component {
       this.state.projectTokens &&
       this.props.project &&
       this.state.projectTokenDetails &&
-      this.state.projectTokens.length ===
+      this.state.projectTokens ===
         Number(this.state.projectTokenDetails[3]);
 
     const latestTokenNumber = this.state.projectTokenDetails
@@ -691,7 +701,7 @@ class Project extends Component {
         <Row
           className={
             currentSubroute === "latest" ||
-            (this.state.projectTokens && this.state.projectTokens.length) < 10
+            (this.state.projectTokens && this.state.projectTokens) < 10
               ? "align-items-center"
               : ""
           }
@@ -918,7 +928,7 @@ class Project extends Component {
                 {this.state.projectTokens &&
                   this.props.project &&
                   this.state.projectTokenDetails &&
-                  this.state.projectTokens.length ===
+                  this.state.projectTokens ===
                     Number(this.state.projectTokenDetails[3]) && (
                     <div>
                       {currentSubroute === "latest" ? (
@@ -972,7 +982,7 @@ class Project extends Component {
               <Route path={this.props.match.path + "/gallery"}>
                 <TokenGallery
                   project={this.state.project}
-                  projectTokens={this.state.projectTokens}
+                  projectTokens={this.state.projectTokensArray}
                 />
               </Route>
               <Route path={this.props.match.path + "/artist"}>
