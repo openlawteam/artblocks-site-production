@@ -31,7 +31,7 @@ class Sustainability extends Component {
       <p>There is a lot of controversy around the energy consumption of NFTs. While there is absolutely zero doubt that blockchain technology is a massive energy consumer around the globe, the energy consumption as a direct result of the NFT ecosystem is not fully understood. Yes, you can examine energy consumption per transaction on the Ethereum blockchain and estimate the direct energy cost of minting a new NFT. However NFTs are not (yet) a major source of overall transaction volume on the Ethereum blockchain and Ethereum blocks will be mined regardless of the existence of NFTs.</p>
       <p>However, it is important to note that this is only the beginning of the NFT movement, and if NFTs were to be adopted more widely, that percentage of the activity on the Ethereum blockchain <i>would increase</i> along with the wider adoption. So while our little nerdy NFT world might not be directly responsible for a villainous amount of energy consumption at this very moment, platforms need to begin participating in ecological initiatives <b>NOW</b> to ingrain sustainability practices into their company culture and actually contribute in a positive way as our ecosystem expands.</p>
       <p>Everyone participating in the Ethereum network is excited for and patiently waiting for the launch of ETH2.0, an upgraded version of Ethereum that operates purely on a "Proof of Stake" model. This model is significantly more energy efficient and will make operating on the newtwork an overall more positive experience for all. The problem is that this transition could be 1-2 years away. Art Blocks has started building a portfolio of carbon offset initiatives that will allow is to help lessen the negative impacts our technology is having on our planet now, but our intention is to make it part of our culture and continue to regularly retire carbon credits even after Ethereum transitions to a purely proof of stake validation model.</p>
-      <p>As of March 26th, 2021 Art Blocks has retired a total of 7,000 tons of carbon offset credits and will continue to retire more as the platform grows. While credits can vary dramatically in price and type, we are committed to purchasing and retiring credits for projects located all over the world in an effort to maximize the overall impact we, as a platform, are having on the environment.</p>
+      <p>As of March 26th, 2021 Art Blocks has retired a total of 10,000 tons of carbon offset credits and will continue to retire more as the platform grows. While credits can vary dramatically in price and type, we are committed to purchasing and retiring credits for projects located all over the world in an effort to maximize the overall impact we, as a platform, are having on the environment.</p>
       <p>Below are certificates that represent our contributions to date:</p>
       <ul>
       <li>
@@ -43,13 +43,25 @@ class Sustainability extends Component {
       <li>
       <a href="/Certificate_Guyuan_Wuhuaping_Art Blocks.pdf" rel="noopener noreferrer" target="_blank">Guyuan Wuhuaping Wind Power Project</a>
       </li>
+      <li>
+      <a href="/Credit Retirement _Balikesir.pdf" rel="noopener noreferrer" target="_blank">Balikesir Susurluk 45 MW Wind Farm Project</a>
+      </li>
       </ul>
       <br/>
       <hr/>
       <h5>Community</h5>
-      <p>There is simply too much money flowing throught the NFT space to ignore opportunities to help our communities. So far Art Blocks has contributed over $25,000 to our creative coding community. As we grow as a platform we intend to grow our community outreach and support as well and like our sustainability initiatives want to incorporate charitable giving and foundational support into our corporate culture.</p>
-      <p>Not only will Art Blocks be providing financial support to organizations at the platform level, but we encourage artists to share some of their success with local charities and organizations as well.</p>
+      <p>There is simply too much money flowing throught the NFT space to ignore opportunities to help our communities. So far Art Blocks as a platform, along with our growing community of artists and collectors, has donated over $140,000 in 2021 alone. As we grow as a platform we intend to increase our community outreach and support as well, and like our sustainability initiatives, want to incorporate charitable giving and foundational support into our corporate culture.</p>
+
+      <p>Below is a list of artists that have participated in some form of charitable contribution, whether directly from minting of works on the platform or independent personal contributions:</p>
+      <ul>
+      <li>Snowfro</li>
+      <li>Dmitri Cherniak</li>
+      <li>Jeff Davis</li>
+      <li>Rockland.eth</li>
+      <li>DCA</li>
+      </ul>
       <br/>
+      <p>We are grateful to have such a giving community. And conceptually it's amazing that when an artist sets an organization as a secondary beneficiary in their project directly, it is the collector that's making the donation at the time of purchase and getting a beautiful NFT in exchange.</p>
       <hr/>
 
       <h5>More Info</h5>

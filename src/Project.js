@@ -470,8 +470,36 @@ class Project extends Component {
       return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Elementals&search[stringTraits][0][values][0]=All%20Elementals";
     } else if (this.props.project && this.props.project === "42") {
       return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Void&search[stringTraits][0][values][0]=All%20Voids";
+    } else if (this.props.project && this.props.project === "43") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Origami%20Dream&search[stringTraits][0][values][0]=All%20Origami%20Dreams";
+    } else if (this.props.project && this.props.project === "44") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=CryptoGodKing&search[stringTraits][0][values][0]=All%20CryptoGodKings";
+    } else if (this.props.project && this.props.project === "45") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Gravity%20Grid&search[stringTraits][0][values][0]=All%20Gravity%20Grids";
     } else if (this.props.project && this.props.project === "46") {
       return "https://opensea.io/assets/art-blocks-factory?search[resultModel]=ASSETS&search[stringTraits][0][name]=70s%20Pop%20Series%20One&search[stringTraits][0][values][0]=All%2070s%20Pop%20Series%20Ones";
+    } else if (this.props.project && this.props.project === "47") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Asterisms&search[stringTraits][0][values][0]=All%20Asterisms";
+    } else if (this.props.project && this.props.project === "48") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Gen3&search[stringTraits][0][values][0]=All%20Gen3s";
+    } else if (this.props.project && this.props.project === "49") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Dear%20Hash&search[stringTraits][0][values][0]=All%20Dear%20Hashs";
+    } else if (this.props.project && this.props.project === "50") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=The%20Opera&search[stringTraits][0][values][0]=All%20The%20Operas";
+    } else if (this.props.project && this.props.project === "51") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Stipple%20Sunsets&search[stringTraits][0][values][0]=All%20Stipple%20Sunsets";
+    } else if (this.props.project && this.props.project === "52") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Star%20Flower&search[stringTraits][0][values][0]=All%20Start%20Flowers";
+    } else if (this.props.project && this.props.project === "53") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Subscapes&search[stringTraits][0][values][0]=All%20Subscapes";
+    } else if (this.props.project && this.props.project === "54") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=P:X&search[stringTraits][0][values][0]=All%20P:Xs";
+    } else if (this.props.project && this.props.project === "55") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Talking%20Blocks&search[stringTraits][0][values][0]=All%20Talking%20Blocks";
+    } else if (this.props.project && this.props.project === "56") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Aurora%20IV&search[stringTraits][0][values][0]=All%20Aurora%20IVs";
+    } else if (this.props.project && this.props.project === "56") {
+      return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Rhythm&search[stringTraits][0][values][0]=All%20Rhythms";
     } else {
       return "https://opensea.io/assets/art-blocks";
     }
@@ -652,7 +680,7 @@ class Project extends Component {
       this.props.project &&
       this.state.projectTokenDetails &&
       this.state.projectTokens ===
-        Number(this.state.projectTokenDetails[3]);
+        this.state.projectTokenDetails[3];
 
     const latestTokenNumber = this.state.projectTokenDetails
       ? Number(this.state.projectTokenDetails[2]) - 1
@@ -929,7 +957,7 @@ class Project extends Component {
                   this.props.project &&
                   this.state.projectTokenDetails &&
                   this.state.projectTokens ===
-                    Number(this.state.projectTokenDetails[3]) && (
+                    this.state.projectTokenDetails[3] && (
                     <div>
                       {currentSubroute === "latest" ? (
                         <div>
