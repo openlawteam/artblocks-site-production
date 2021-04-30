@@ -155,7 +155,7 @@ class ViewToken extends Component {
     let highlightImageUrl =
       this.props.network === "rinkeby"
         ? "https://rinkeby.oss.nodechef.com/"
-        : "https://mainnet.oss.nodechef.com/";
+        : "https://artblocks-mainnet.s3.amazonaws.com/";
 
     function tokenHighlightImage(token) {
       return highlightImageUrl + token + ".png";
@@ -164,7 +164,7 @@ class ViewToken extends Component {
     let baseURL = this.props.baseURL;
 
     function tokenImage(token) {
-      //return "https://mainnet.oss.nodechef.com/"+token+".png";
+      //return "https://artblocks-mainnet.s3.amazonaws.com/"+token+".png";
       return baseURL + "/image/" + token;
     }
 

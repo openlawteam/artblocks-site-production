@@ -164,7 +164,7 @@ class UserGallery extends Component {
     let baseURL = this.props.baseURL;
 
     function tokenImage(token){
-      //return "https://mainnet.oss.nodechef.com/"+token+".png";
+      //return "https://artblocks-mainnet.s3.amazonaws.com/"+token+".png";
       return baseURL+'/image/'+token;
     }
 

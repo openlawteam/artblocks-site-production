@@ -49,8 +49,8 @@ class UserGalleryCard extends Component {
     let baseURL = this.props.baseURL;
 
 
-    let thumbURL = this.props.network==="rinkeby"? "https://rinkthumb.oss.nodechef.com/":"https://mainthumb.oss.nodechef.com/";
-    let imgURL = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
+    let thumbURL = this.props.network==="rinkeby"? "https://rinkthumb.oss.nodechef.com/":"https://artblocks-mainthumb.s3.amazonaws.com/";
+    let imgURL = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://artblocks-mainnet.s3.amazonaws.com/";
 
 /*
     function tokenImage(token){
@@ -63,7 +63,7 @@ class UserGalleryCard extends Component {
     }
 
     function tokenImage(token){
-      //return "https://mainnet.oss.nodechef.com/"+token+".png";
+      //return "https://artblocks-mainnet.s3.amazonaws.com/"+token+".png";
       return imgURL+token+".png";
       //return baseURL+'/image/'+token;
     }

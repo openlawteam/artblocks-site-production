@@ -100,9 +100,9 @@ class ProjectGallery extends Component {
     let imageURL =
       this.props.network === "rinkeby"
         ? "https://rinkeby.oss.nodechef.com/"
-        : "https://mainnet.oss.nodechef.com/";
+        : "https://artblocks-mainnet.s3.amazonaws.com/";
     function tokenImage(token) {
-      //return "https://mainnet.oss.nodechef.com/"+token+".png";
+      //return "https://artblocks-mainnet.s3.amazonaws.com/"+token+".png";
       return imageURL + token + ".png";
       //return baseURL+'/image/'+token;
     }

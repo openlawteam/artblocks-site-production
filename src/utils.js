@@ -13,7 +13,7 @@ function tokenHighlightImage(tokenId) {
   const baseImageUrl =
     NETWORK === "rinkeby"
       ? "https://rinkeby.oss.nodechef.com/"
-      : "https://mainnet.oss.nodechef.com/";
+      : "https://artblocks-mainnet.s3.amazonaws.com/";
 
   return baseImageUrl + tokenId + ".png";
 }
@@ -22,7 +22,7 @@ function tokenThumbImage(tokenId) {
   let baseImageUrl =
     NETWORK === "rinkeby"
       ? "https://rinkthumb.oss.nodechef.com/"
-      : "https://mainthumb.oss.nodechef.com/";
+      : "https://artblocks-mainthumb.s3.amazonaws.com/";
 
   return baseImageUrl + tokenId + ".png";
 }

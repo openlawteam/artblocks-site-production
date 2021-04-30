@@ -80,7 +80,7 @@ class Highlight extends Component {
     //let owned = this.state.randomToken && this.props.tokensOfOwner && this.props.tokensOfOwner.includes(this.state.randomToken.toString());
 
     let baseURL = this.props.baseURL;
-    let url = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
+    let url = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://artblocks-mainnet.s3.amazonaws.com/";
 
     function tokenImage(token){
       return url+token+".png";
