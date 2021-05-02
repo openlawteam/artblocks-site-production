@@ -498,8 +498,12 @@ class Project extends Component {
       return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Talking%20Blocks&search[stringTraits][0][values][0]=All%20Talking%20Blocks";
     } else if (this.props.project && this.props.project === "56") {
       return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Aurora%20IV&search[stringTraits][0][values][0]=All%20Aurora%20IVs";
-    } else if (this.props.project && this.props.project === "56") {
+    } else if (this.props.project && this.props.project === "57") {
       return "https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Rhythm&search[stringTraits][0][values][0]=All%20Rhythms";
+    } else if (this.props.project && this.props.project === "58") {
+      return "https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Color%20MAgic%20Planets&search[stringTraits][0][values][0]=All%20Color%20Magic%20Planets";
+    } else if (this.props.project && this.props.project === "59") {
+      return "https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Watercolor%20Dreams&search[stringTraits][0][values][0]=All%20Watercolor%20Dreams";
     } else {
       return "https://opensea.io/assets/art-blocks";
     }
