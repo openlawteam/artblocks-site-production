@@ -8,12 +8,9 @@ import {
   COMPLETE,
   PLAYGROUND,
   FACTORY,
-  ARTBLOCKS_CONTRACT_ABI_A,
-  ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A,
-  ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A,
-  ARTBLOCKS_CONTRACT_ABI_B,
-  ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B,
-  ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B,
+  ARTBLOCKS_CONTRACT_ABI,
+  ARTBLOCKS_CONTRACT_ADDRESS_MAINNET,
+  ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY,
   ARTBLOCKS_CONTRACT_MINTER_ABI,
   ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET,
   ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY,
@@ -44,7 +41,6 @@ function UserGal(props) {
       handleToggleView={props.handleToggleView}
       web3={props.web3}
       artBlocks={props.artBlocks}
-      artBlocks2={props.artBlocks2}
       network={props.network}
       baseURL={props.baseURL}
       lookupAcct={address}
@@ -63,7 +59,6 @@ function Proj(props) {
       connected={props.connected}
       web3={props.web3}
       artBlocks={props.artBlocks}
-      artBlocks2={props.artBlocks2}
       mainMinter={props.mainMinter}
       network={props.network}
       baseURL={props.baseURL}
@@ -80,7 +75,6 @@ function ViewTok(props) {
     <ViewToken
       token={tokenId}
       artBlocks={props.artBlocks}
-      artBlocks2={props.artBlocks2}
       handleToggleView={props.handleToggleView}
       baseURL={props.baseURL}
       network={props.network}
@@ -121,16 +115,10 @@ class App extends Component {
       )
     );
     const artBlocks = new web3.eth.Contract(
-      ARTBLOCKS_CONTRACT_ABI_A,
+      ARTBLOCKS_CONTRACT_ABI,
       NETWORK === "rinkeby"
-        ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A
-        : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A
-    );
-    const artBlocks2 = new web3.eth.Contract(
-      ARTBLOCKS_CONTRACT_ABI_B,
-      NETWORK === "rinkeby"
-        ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B
-        : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B
+        ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
+        : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
     );
     const mainMinter = new web3.eth.Contract(
       ARTBLOCKS_CONTRACT_MINTER_ABI,
@@ -142,7 +130,7 @@ class App extends Component {
       NETWORK === "rinkeby"
         ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
         : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
-    const nextProjectId = await artBlocks2.methods.nextProjectId().call();
+    const nextProjectId = await artBlocks.methods.nextProjectId().call();
     const allProjects = [];
     for (let i = 0; i < nextProjectId; i++) {
       allProjects.push(i);
@@ -160,7 +148,7 @@ class App extends Component {
             activeProjects.push(project);
           }
         } else {
-          let details = await artBlocks2.methods
+          let details = await artBlocks.methods
             .projectTokenInfo(project)
             .call();
           if (details[4] === true) {
@@ -178,7 +166,7 @@ class App extends Component {
             .call();
           return details[0];
         } else {
-          let details = await artBlocks2.methods
+          let details = await artBlocks.methods
             .projectTokenInfo(project)
             .call();
           return details[0];
@@ -186,8 +174,7 @@ class App extends Component {
       })
     );
     const totalInvocations =
-      Number(await artBlocks.methods.totalSupply().call()) +
-      Number(await artBlocks2.methods.totalSupply().call());
+      Number(await artBlocks.methods.totalSupply().call());
     if (this.props.project) {
       this.setState({ currentProject: this.props.project });
     } else {
@@ -219,7 +206,6 @@ class App extends Component {
 
     this.setState({
       artBlocks,
-      artBlocks2,
       mainMinter,
       minterAddress,
       web3,
@@ -258,7 +244,7 @@ class App extends Component {
       const tokensOfOwnerAFiltered = tokensOfOwnerA.filter(
         (token) => token < 3000000
       );
-      const tokensOfOwnerB = await this.state.artBlocks2.methods
+      const tokensOfOwnerB = await this.state.artBlocks.methods
         .tokensOfOwner(accounts[0])
         .call();
       const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
@@ -266,7 +252,7 @@ class App extends Component {
         (await this.state.artBlocks.methods
           .isWhitelisted(accounts[0])
           .call()) &&
-        (await this.state.artBlocks2.methods.isWhitelisted(accounts[0]).call());
+        (await this.state.artBlocks.methods.isWhitelisted(accounts[0]).call());
       let projectsOfArtist = [];
       this.state.artistAddresses.map((projectArtistAddress, index) => {
         if (projectArtistAddress === accounts[0] || isWhitelisted) {
@@ -289,18 +275,11 @@ class App extends Component {
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
       const network = await web3.eth.net.getNetworkType();
       const artBlocks = new web3.eth.Contract(
-        ARTBLOCKS_CONTRACT_ABI_A,
+        ARTBLOCKS_CONTRACT_ABI,
         NETWORK === "rinkeby"
-          ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_A
-          : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_A
+          ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
+          : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
       );
-      const artBlocks2 = new web3.eth.Contract(
-        ARTBLOCKS_CONTRACT_ABI_B,
-        NETWORK === "rinkeby"
-          ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY_B
-          : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET_B
-      );
-      const mainMinter = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_MINTER_ABI,
         NETWORK === "rinkeby"
           ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
@@ -316,7 +295,6 @@ class App extends Component {
               web3,
               network,
               artBlocks,
-              artBlocks2,
               mainMinter,
             });
             this.loadAccountData();
@@ -375,7 +353,6 @@ class App extends Component {
             <Navigation
               web3={this.state.web3}
               artBlocks={this.state.artBlocks}
-              artBlocks2={this.state.artBlocks2}
               handleToggleView={this.handleToggleView}
               allProjects={this.state.allProjects}
               activeProjects={this.state.activeProjects}
@@ -400,7 +377,6 @@ class App extends Component {
               <div>
                 <NewToken
                   artBlocks={this.state.artBlocks}
-                  artBlocks2={this.state.artBlocks2}
                   token={this.state.currentToken}
                   handleToggleView={this.handleToggleView}
                   baseURL={baseURL}
@@ -416,7 +392,7 @@ class App extends Component {
                   handleToggleView={this.handleToggleView}
                   connected={this.state.connected}
                   web3={this.state.web3}
-                  artBlocks={this.state.artBlocks2}
+                  artBlocks={this.state.artBlocks}
                   network={this.state.network}
                   baseURL={baseURL}
                   isWhitelisted={this.state.isWhitelisted}
@@ -445,7 +421,6 @@ class App extends Component {
                           handleToggleView={this.handleToggleView}
                           web3={this.state.web3}
                           artBlocks={this.state.artBlocks}
-                          artBlocks2={this.state.artBlocks2}
                           network={NETWORK}
                           baseURL={baseURL}
                         />
@@ -458,7 +433,6 @@ class App extends Component {
               {this.state.allProjects && (
                 <ViewTok
                   artBlocks={this.state.artBlocks}
-                  artBlocks2={this.state.artBlocks2}
                   handleToggleView={this.handleToggleView}
                   baseURL={baseURL}
                   network={NETWORK}
@@ -477,7 +451,6 @@ class App extends Component {
                   connected={this.state.connected}
                   web3={this.state.web3}
                   artBlocks={this.state.artBlocks}
-                  artBlocks2={this.state.artBlocks2}
                   mainMinter={this.state.mainMinter}
                   minterAddress={this.state.minterAddress}
                   network={NETWORK}
@@ -506,7 +479,6 @@ class App extends Component {
                           tokensOfOwner={this.state.tokensOfOwner}
                           handleToggleView={this.handleToggleView}
                           artBlocks={this.state.artBlocks}
-                          artBlocks2={this.state.artBlocks2}
                           network={NETWORK}
                           handleNextProject={this.handleNextProject}
                           baseURL={baseURL}
@@ -524,7 +496,6 @@ class App extends Component {
                   handleToggleView={this.handleToggleView}
                   web3={this.state.web3}
                   artBlocks={this.state.artBlocks}
-                  artBlocks2={this.state.artBlocks2}
                   network={NETWORK}
                   baseURL={baseURL}
                 />
