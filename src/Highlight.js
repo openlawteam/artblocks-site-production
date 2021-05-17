@@ -18,53 +18,8 @@ class Highlight extends Component {
   }
 
   async componentDidMount() {
-    //const web3 = this.props.web3;
-    const artBlocks =
-      this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
-    const projectTokens = await artBlocks.methods
-      .projectShowAllTokens(this.props.project)
-      .call();
-    const projectDescription = await artBlocks.methods
-      .projectDetails(this.props.project)
-      .call();
-    const projectTokenDetails = await artBlocks.methods
-      .projectTokenInfo(this.props.project)
-      .call();
-    const projectScriptDetails = await artBlocks.methods
-      .projectScriptInfo(this.props.project)
-      .call();
-    const projectURIInfo = await artBlocks.methods
-      .projectURIInfo(this.props.project)
-      .call();
-    const randomToken =
-      projectTokens[Math.floor(Math.random() * projectTokens.length)];
-    // if (this.props.project >= 3) {
-    let currency = await artBlocks.methods
-      .projectIdToCurrencySymbol(this.props.project)
-      .call();
-    this.setState({currency});
-    // } else {
-    //   this.setState({currency: 'ETH'});
-    // }
-
-    this.setState({
-      artBlocks,
-      projectTokens,
-      projectDescription,
-      projectTokenDetails,
-      projectScriptDetails,
-      projectURIInfo,
-      randomToken,
-      project: this.props.project,
-    });
-  }
-
-  async componentDidUpdate(oldProps) {
-    if (oldProps.project !== this.props.project) {
-      console.log('change');
-      console.log(this.props.project);
-      const artBlocks =
-        this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+    try {
+      const artBlocks = this.props.artBlocks;
       const projectTokens = await artBlocks.methods
         .projectShowAllTokens(this.props.project)
         .call();
@@ -82,15 +37,15 @@ class Highlight extends Component {
         .call();
       const randomToken =
         projectTokens[Math.floor(Math.random() * projectTokens.length)];
-      if (this.props.project >= 3) {
-        let currency = await artBlocks.methods
-          .projectIdToCurrencySymbol(this.props.project)
-          .call();
-        this.setState({currency});
-      } else {
-        this.setState({currency: 'ETH'});
-      }
+
+      let currency = await artBlocks.methods
+        .projectIdToCurrencySymbol(this.props.project)
+        .call();
+
+      this.setState({currency});
+
       this.setState({
+        artBlocks,
         projectTokens,
         projectDescription,
         projectTokenDetails,
@@ -99,12 +54,57 @@ class Highlight extends Component {
         randomToken,
         project: this.props.project,
       });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async componentDidUpdate(oldProps) {
+    try {
+      if (oldProps.project !== this.props.project) {
+        console.log('change');
+        console.log(this.props.project);
+        const artBlocks =
+          this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+        const projectTokens = await artBlocks.methods
+          .projectShowAllTokens(this.props.project)
+          .call();
+        const projectDescription = await artBlocks.methods
+          .projectDetails(this.props.project)
+          .call();
+        const projectTokenDetails = await artBlocks.methods
+          .projectTokenInfo(this.props.project)
+          .call();
+        const projectScriptDetails = await artBlocks.methods
+          .projectScriptInfo(this.props.project)
+          .call();
+        const projectURIInfo = await artBlocks.methods
+          .projectURIInfo(this.props.project)
+          .call();
+        const randomToken =
+          projectTokens[Math.floor(Math.random() * projectTokens.length)];
+
+        let currency = await artBlocks.methods
+          .projectIdToCurrencySymbol(this.props.project)
+          .call();
+        this.setState({currency});
+
+        this.setState({
+          projectTokens,
+          projectDescription,
+          projectTokenDetails,
+          projectScriptDetails,
+          projectURIInfo,
+          randomToken,
+          project: this.props.project,
+        });
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
   render() {
-    //console.log(this.props.network);
-
     const highlightImageToolTip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
         This is a randomly selected generative work on the Art Blocks platform!
