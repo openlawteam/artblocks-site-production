@@ -16,7 +16,7 @@ export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET =
   '0xAA6EBab3Bf3Ce561305bd53E4BD3B3945920B176';
 
 export const ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY =
-  '0x7b404C05733344eA9a618b95B21Ad27090B53456';
+  '0xECE0b4d21DB0AbD81Cd48f1cA6B9CB0238D753e1';
 export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY =
   '0x3Bb110d670699fd4F17b6d0b57331Bce17f2014F';
 
@@ -32,6 +32,11 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         internalType: 'string',
         name: '_tokenSymbol',
         type: 'string',
+      },
+      {
+        internalType: 'address',
+        name: '_randomizerContract',
+        type: 'address',
       },
     ],
     payable: false,
@@ -109,18 +114,6 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         name: '_projectId',
         type: 'uint256',
       },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_invocations',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_value',
-        type: 'uint256',
-      },
     ],
     name: 'Mint',
     type: 'event',
@@ -153,6 +146,31 @@ export const ARTBLOCKS_CONTRACT_ABI = [
   {
     constant: false,
     inputs: [
+      {
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
+    ],
+    name: 'addMintWhitelisted',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'string',
+        name: '_projectName',
+        type: 'string',
+      },
+      {
+        internalType: 'address',
+        name: '_artistAddress',
+        type: 'address',
+      },
       {
         internalType: 'uint256',
         name: '_pricePerTokenInWei',
@@ -246,7 +264,7 @@ export const ARTBLOCKS_CONTRACT_ABI = [
     name: 'artblocksAddress',
     outputs: [
       {
-        internalType: 'address payable',
+        internalType: 'address',
         name: '',
         type: 'address',
       },
@@ -419,6 +437,27 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         type: 'address',
       },
     ],
+    name: 'isMintWhitelisted',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
     name: 'isWhitelisted',
     outputs: [
       {
@@ -429,6 +468,37 @@ export const ARTBLOCKS_CONTRACT_ABI = [
     ],
     payable: false,
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_projectId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_by',
+        type: 'address',
+      },
+    ],
+    name: 'mint',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '_tokenId',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -553,6 +623,153 @@ export const ARTBLOCKS_CONTRACT_ABI = [
     inputs: [
       {
         internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'projectIdToAdditionalPayee',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'projectIdToAdditionalPayeePercentage',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'projectIdToArtistAddress',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'projectIdToCurrencyAddress',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'projectIdToCurrencySymbol',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'projectIdToPricePerTokenInWei',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'projectIdToSecondaryMarketRoyaltyPercentage',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
         name: '_projectId',
         type: 'uint256',
       },
@@ -596,9 +813,9 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
-        internalType: 'uint256',
-        name: 'hashes',
-        type: 'uint256',
+        internalType: 'bool',
+        name: 'useHashString',
+        type: 'bool',
       },
       {
         internalType: 'string',
@@ -614,27 +831,6 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         internalType: 'bool',
         name: 'paused',
         type: 'bool',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_projectId',
-        type: 'uint256',
-      },
-    ],
-    name: 'projectShowAllTokens',
-    outputs: [
-      {
-        internalType: 'uint256[]',
-        name: '',
-        type: 'uint256[]',
       },
     ],
     payable: false,
@@ -687,6 +883,16 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         name: 'additionalPayeePercentage',
         type: 'uint256',
       },
+      {
+        internalType: 'string',
+        name: 'currency',
+        type: 'string',
+      },
+      {
+        internalType: 'address',
+        name: 'currencyAddress',
+        type: 'address',
+      },
     ],
     payable: false,
     stateMutability: 'view',
@@ -724,24 +930,18 @@ export const ARTBLOCKS_CONTRACT_ABI = [
     type: 'function',
   },
   {
-    constant: false,
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_projectId',
-        type: 'uint256',
-      },
-    ],
-    name: 'purchase',
+    constant: true,
+    inputs: [],
+    name: 'randomizerContract',
     outputs: [
       {
-        internalType: 'uint256',
-        name: '_tokenId',
-        type: 'uint256',
+        internalType: 'contract Randomizer',
+        name: '',
+        type: 'address',
       },
     ],
-    payable: true,
-    stateMutability: 'payable',
+    payable: false,
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -749,25 +949,14 @@ export const ARTBLOCKS_CONTRACT_ABI = [
     inputs: [
       {
         internalType: 'address',
-        name: '_to',
+        name: '_address',
         type: 'address',
       },
-      {
-        internalType: 'uint256',
-        name: '_projectId',
-        type: 'uint256',
-      },
     ],
-    name: 'purchaseTo',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '_tokenId',
-        type: 'uint256',
-      },
-    ],
-    payable: true,
-    stateMutability: 'payable',
+    name: 'removeMintWhitelisted',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -873,27 +1062,6 @@ export const ARTBLOCKS_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_tokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'showTokenHashes',
-    outputs: [
-      {
-        internalType: 'bytes32[]',
-        name: '',
-        type: 'bytes32[]',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -1022,6 +1190,21 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         type: 'uint256',
       },
     ],
+    name: 'toggleProjectUseHashString',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_projectId',
+        type: 'uint256',
+      },
+    ],
     name: 'toggleProjectUseIpfsForStatic',
     outputs: [],
     payable: false,
@@ -1043,6 +1226,27 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         internalType: 'uint256',
         name: '',
         type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenIdToHash',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
       },
     ],
     payable: false,
@@ -1182,7 +1386,22 @@ export const ARTBLOCKS_CONTRACT_ABI = [
     constant: false,
     inputs: [
       {
-        internalType: 'address payable',
+        internalType: 'address',
+        name: '_adminAddress',
+        type: 'address',
+      },
+    ],
+    name: 'updateAdmin',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
         name: '_artblocksAddress',
         type: 'address',
       },
@@ -1217,7 +1436,7 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
-        internalType: 'address payable',
+        internalType: 'address',
         name: '_additionalPayee',
         type: 'address',
       },
@@ -1242,7 +1461,7 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
-        internalType: 'address payable',
+        internalType: 'address',
         name: '_artistAddress',
         type: 'address',
       },
@@ -1323,11 +1542,16 @@ export const ARTBLOCKS_CONTRACT_ABI = [
       },
       {
         internalType: 'string',
-        name: '_projectDescription',
+        name: '_currencySymbol',
         type: 'string',
       },
+      {
+        internalType: 'address',
+        name: '_currencyAddress',
+        type: 'address',
+      },
     ],
-    name: 'updateProjectDescription',
+    name: 'updateProjectCurrencyInfo',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -1342,12 +1566,12 @@ export const ARTBLOCKS_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
-        internalType: 'uint256',
-        name: '_hashes',
-        type: 'uint256',
+        internalType: 'string',
+        name: '_projectDescription',
+        type: 'string',
       },
     ],
-    name: 'updateProjectHashesGenerated',
+    name: 'updateProjectDescription',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -1533,6 +1757,21 @@ export const ARTBLOCKS_CONTRACT_ABI = [
       },
     ],
     name: 'updateProjectWebsite',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_randomizerAddress',
+        type: 'address',
+      },
+    ],
+    name: 'updateRandomizerAddress',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
