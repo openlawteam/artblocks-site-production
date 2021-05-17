@@ -36,6 +36,21 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "prettier": "^2.2.1"
+    "prettier": "^2.3.0"
+  },
+  "prettier": {
+    "overrides": [
+      {
+        "files": [
+          "src/**/*.{js,jsx,ts,tsx}"
+        ],
+        "options": {
+          "singleQuote": true,
+          "bracketSpacing": false,
+          "jsxBracketSameLine": true,
+          "tabWidth": 2
+        }
+      }
+    ]
   }
 }

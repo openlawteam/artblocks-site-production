@@ -1,9 +1,11 @@
 //Minter https://oneclickdapp.com/scoop-major
 
-export const NETWORK = "main";
+export const NETWORK = "rinkeby";
 export const NONINTERACTIVE = [];
 export const CURATED = [0];
 export const COMPLETE = [];
+export const FACTORY = [];
+export const PLAYGROUND = [];
 
 export const BASE_URL =
   NETWORK === "rinkeby"

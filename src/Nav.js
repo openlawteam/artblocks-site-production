@@ -6,10 +6,15 @@ import { Link } from "react-router-dom";
 import "./Nav.css";
 
 class Navigation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   async componentDidMount() {
     const artBlocks = this.props.artBlocks;
-    const artBlocks2 = this.props.artBlocks2;
     const activeProjects = this.props.activeProjects;
+
     //console.log(activeProjects);
     //console.log(activeProjects);
     let activeProjectsDetails = [];
@@ -26,16 +31,17 @@ class Navigation extends Component {
         nameArtist.push(projectDetails[1]);
         console.log(nameArtist);
         activeProjectsDetails.push(nameArtist);
-      } else {
-        let nameArtist = [];
-        const projectDetails = await artBlocks2.methods
-          .projectDetails(activeProjects[project])
-          .call();
-        nameArtist.push(activeProjects[project]);
-        nameArtist.push(projectDetails[0]);
-        nameArtist.push(projectDetails[1]);
-        activeProjectsDetails.push(nameArtist);
-      }
+      } 
+      // else {
+      //   let nameArtist = [];
+      //   const projectDetails = await artBlocks2.methods
+      //     .projectDetails(activeProjects[project])
+      //     .call();
+      //   nameArtist.push(activeProjects[project]);
+      //   nameArtist.push(projectDetails[0]);
+      //   nameArtist.push(projectDetails[1]);
+      //   activeProjectsDetails.push(nameArtist);
+      // }
     }
 
     const allProjects = this.props.allProjects;
@@ -49,60 +55,31 @@ class Navigation extends Component {
         nameArtist.push(projectDetails[0]);
         nameArtist.push(projectDetails[1]);
         allProjectsDetails.push(nameArtist);
-      } else {
-        let nameArtist = [];
-        //console.log("project"+i);
-        const projectDetails = await artBlocks2.methods
-          .projectDetails(i)
-          .call();
-        nameArtist.push(i);
-        nameArtist.push(projectDetails[0]);
-        nameArtist.push(projectDetails[1]);
-        allProjectsDetails.push(nameArtist);
-      }
+      } 
+      // else {
+      //   let nameArtist = [];
+      //   //console.log("project"+i);
+      //   const projectDetails = await artBlocks2.methods
+      //     .projectDetails(i)
+      //     .call();
+      //   nameArtist.push(i);
+      //   nameArtist.push(projectDetails[0]);
+      //   nameArtist.push(projectDetails[1]);
+      //   allProjectsDetails.push(nameArtist);
+      // }
     }
     //console.log(activeProjectsDetails);
 
     this.setState({
       artBlocks,
-      artBlocks2,
+      // artBlocks2,
       activeProjects,
       activeProjectsDetails,
       allProjectsDetails,
     });
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-    //this.handleConnectToMetaMask = this.handleConnectToMetaMask.bind(this);
-  }
-
   render() {
-    //console.log(this.state.allProjectsDetails);
-    //console.log('active: '+this.props.activeProjects);
-    //console.log("whitlisted?:" + this.props.isWhitelisted);
-    //console.log(this.props.projectsOfArtist);
-    //console.log(this.props.web3);
-    //console.log(this.state.network);
-    //console.log(this.props.projectsOfArtist);
-    //let baseURL = this.props.baseURL;
-    /*
-    function tokenGenerator(token){
-      return baseURL+'/generator/'+token;
-    }
-    */
-
-    /*
-    function tokenImage(token){
-      //return 'https://api.artblocks.io/image/'+token;
-      return baseURL+'/image/'+token;
-    }
-    */
-
-    //console.log("Theater?:"+this.state.theater)
-    //console.log(this.state.web3 && this.state.network);
-    //let etherscanAddy = `https://etherscan.io/address/${this.props.account}`;
     return (
       <div>
         <Navbar className="navBar" fixed="top" bg="light" expand="lg">
