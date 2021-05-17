@@ -1,41 +1,39 @@
 //https://oneclickdapp.com/child-cello/
 
-import React, { Component } from "react";
+import React, {Component} from 'react';
 import {
   NETWORK,
   NONINTERACTIVE,
   CURATED,
   COMPLETE,
-  PLAYGROUND,
-  FACTORY,
   ARTBLOCKS_CONTRACT_ABI,
   ARTBLOCKS_CONTRACT_ADDRESS_MAINNET,
   ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY,
   ARTBLOCKS_CONTRACT_MINTER_ABI,
   ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET,
   ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY,
-} from "./config";
-import Web3 from "web3";
-import Project from "./Project";
-import Highlight from "./Highlight";
-import NewToken from "./NewToken";
-import Navigation from "./Nav";
-import Intro from "./Intro";
-import ProjectGallery from "./ProjectGallery";
+} from './config';
+import Web3 from 'web3';
+import Project from './Project';
+import Highlight from './Highlight';
+import NewToken from './NewToken';
+import Navigation from './Nav';
+import Intro from './Intro';
+import ProjectGallery from './ProjectGallery';
 //import CookieConsent from "react-cookie-consent";
 //import YourTokens from './YourTokens';
-import Learn from "./Learn";
-import Sustainability from "./Sustainability";
-import ControlPanel from "./ControlPanel";
-import UserGallery from "./UserGallery";
-import ViewToken from "./ViewToken";
-import { Col, Row } from "react-bootstrap";
-import { Switch, Route, useParams } from "react-router-dom";
+import Learn from './Learn';
+import Sustainability from './Sustainability';
+import ControlPanel from './ControlPanel';
+import UserGallery from './UserGallery';
+import ViewToken from './ViewToken';
+import {Col, Row} from 'react-bootstrap';
+import {Switch, Route, useParams} from 'react-router-dom';
 
-import "./App.css";
+import './App.css';
 
 function UserGal(props) {
-  let { address } = useParams();
+  let {address} = useParams();
   return (
     <UserGallery
       handleToggleView={props.handleToggleView}
@@ -49,7 +47,7 @@ function UserGal(props) {
 }
 
 function Proj(props) {
-  let { project } = useParams();
+  let {project} = useParams();
   return (
     <Project
       handleConnectToMetamask={props.handleConnectToMetamask}
@@ -70,7 +68,7 @@ function Proj(props) {
 }
 
 function ViewTok(props) {
-  let { tokenId } = useParams();
+  let {tokenId} = useParams();
   return (
     <ViewToken
       token={tokenId}
@@ -90,13 +88,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: "",
+      account: '',
       connected: false,
-      show: "highlight",
-      currentProject: "",
+      show: 'highlight',
+      currentProject: '',
       currenttoken: 0,
-      lookupAcct: "0x8De4e517A6F0B84654625228D8293b70AB49cF6C",
-      network: "",
+      lookupAcct: '0x8De4e517A6F0B84654625228D8293b70AB49cF6C',
+      network: '',
       isWhitelisted: false,
       overlay: false,
       nonInter: NONINTERACTIVE,
@@ -110,24 +108,24 @@ class App extends Component {
     const web3 = new Web3(
       new Web3.providers.HttpProvider(
         `https://${
-          NETWORK === "main" ? "mainnet" : "rinkeby"
+          NETWORK === 'main' ? 'mainnet' : 'rinkeby'
         }.infura.io/v3/${API_KEY}`
       )
     );
     const artBlocks = new web3.eth.Contract(
       ARTBLOCKS_CONTRACT_ABI,
-      NETWORK === "rinkeby"
+      NETWORK === 'rinkeby'
         ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
         : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
     );
     const mainMinter = new web3.eth.Contract(
       ARTBLOCKS_CONTRACT_MINTER_ABI,
-      NETWORK === "rinkeby"
+      NETWORK === 'rinkeby'
         ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
         : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET
     );
     const minterAddress =
-      NETWORK === "rinkeby"
+      NETWORK === 'rinkeby'
         ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
         : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
     const nextProjectId = await artBlocks.methods.nextProjectId().call();
@@ -173,10 +171,11 @@ class App extends Component {
         }
       })
     );
-    const totalInvocations =
-      Number(await artBlocks.methods.totalSupply().call());
+    const totalInvocations = Number(
+      await artBlocks.methods.totalSupply().call()
+    );
     if (this.props.project) {
-      this.setState({ currentProject: this.props.project });
+      this.setState({currentProject: this.props.project});
     } else {
       this.setState({
         currentProject:
@@ -191,7 +190,7 @@ class App extends Component {
       }
 
       // Make sure the site reflects if the user has disconnected their wallet
-      window.ethereum.on("accountsChanged", (accounts) => {
+      window.ethereum.on('accountsChanged', (accounts) => {
         if (accounts.length === 0) {
           this.setState({
             connected: false,
@@ -223,15 +222,16 @@ class App extends Component {
       oldProps.project !== this.props.project
     ) {
       if (this.props.project) {
-        this.setState({ currentProject: this.props.project });
+        this.setState({currentProject: this.props.project});
       } else {
         this.setState({
-          currentProject: this.state.activeProjects[
-            Math.floor(Math.random() * this.state.activeProjects.length)
-          ],
+          currentProject:
+            this.state.activeProjects[
+              Math.floor(Math.random() * this.state.activeProjects.length)
+            ],
         });
       }
-      this.setState({ show: this.props.show });
+      this.setState({show: this.props.show});
     }
   }
 
@@ -271,25 +271,25 @@ class App extends Component {
   }
 
   async handleConnectToMetamask() {
-    if (typeof window.web3 !== "undefined") {
-      const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+    if (typeof window.web3 !== 'undefined') {
+      const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
       const network = await web3.eth.net.getNetworkType();
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
-        NETWORK === "rinkeby"
+        NETWORK === 'rinkeby'
           ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
           : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
       );
       const mainMinter = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_MINTER_ABI,
-        NETWORK === "rinkeby"
+        NETWORK === 'rinkeby'
           ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
           : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET
       );
 
       if (network === NETWORK) {
         window.ethereum
-          .request({ method: "eth_requestAccounts" })
+          .request({method: 'eth_requestAccounts'})
           .then((result) => {
             this.setState({
               connected: true,
@@ -303,34 +303,35 @@ class App extends Component {
       } else {
         alert(
           `please switch to ${
-            NETWORK === "rinkeby" ? "Rinkeby" : "Main"
+            NETWORK === 'rinkeby' ? 'Rinkeby' : 'Main'
           } and try to connect again`
         );
       }
     } else {
-      alert("MetaMask not detected. Please install extension and try again.");
+      alert('MetaMask not detected. Please install extension and try again.');
     }
   }
 
   handleNextProject() {
-    let newProject = this.state.activeProjects[
-      Math.floor(Math.random() * this.state.activeProjects.length)
-    ];
+    let newProject =
+      this.state.activeProjects[
+        Math.floor(Math.random() * this.state.activeProjects.length)
+      ];
     let oldProject = this.state.currentProject;
     if (newProject !== oldProject) {
-      this.setState({ currentProject: newProject });
+      this.setState({currentProject: newProject});
     } else {
       this.handleNextProject();
     }
   }
 
   handleToggleView(view, input) {
-    if (view === "newToken") {
-      this.setState({ show: "newToken", currentToken: input, overlay: true });
-    } else if (view === "controlPanel") {
-      this.setState({ show: "controlPanel", overlay: true });
-    } else if (view === "off") {
-      this.setState({ overlay: false });
+    if (view === 'newToken') {
+      this.setState({show: 'newToken', currentToken: input, overlay: true});
+    } else if (view === 'controlPanel') {
+      this.setState({show: 'controlPanel', overlay: true});
+    } else if (view === 'off') {
+      this.setState({overlay: false});
     }
     if (this.state.connected) {
       this.loadAccountData();
@@ -338,10 +339,11 @@ class App extends Component {
   }
 
   render() {
+    // console.log('his.state.currentProject', this.state.currentProject);
     let baseURL =
-      NETWORK === "main"
-        ? "https://api.artblocks.io"
-        : "https://rinkebyapi.artblocks.io";
+      NETWORK === 'main'
+        ? 'https://api.artblocks.io'
+        : 'https://rinkebyapi.artblocks.io';
 
     //let baseURL = "http://localhost:8080"
 
@@ -366,15 +368,13 @@ class App extends Component {
               projectsOfArtist={this.state.projectsOfArtist}
               curated={CURATED}
               complete={COMPLETE}
-              playground={PLAYGROUND}
-              factory={FACTORY}
             />
           )}
         </div>
 
         {this.state.overlay && (
           <div>
-            {this.state.show === "newToken" && (
+            {this.state.show === 'newToken' && (
               <div>
                 <NewToken
                   artBlocks={this.state.artBlocks}
@@ -386,7 +386,7 @@ class App extends Component {
               </div>
             )}
 
-            {this.state.allProjects && this.state.show === "controlPanel" && (
+            {this.state.allProjects && this.state.show === 'controlPanel' && (
               <div>
                 <ControlPanel
                   account={this.state.account}

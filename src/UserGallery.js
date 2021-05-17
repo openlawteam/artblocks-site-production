@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Button, Col, Row, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import UserGalleryCard from "./UserGalleryCard";
-import { reverseResolveEns } from "./utils";
+import React, {Component} from 'react';
+import {Button, Col, Row, Image} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import UserGalleryCard from './UserGalleryCard';
+import {reverseResolveEns} from './utils';
 
 class UserGallery extends Component {
   constructor(props) {
@@ -74,7 +74,7 @@ class UserGallery extends Component {
 
   async componentDidUpdate(oldProps) {
     if (oldProps.lookupAcct !== this.props.lookupAcct) {
-      console.log("acctchange");
+      console.log('acctchange');
       const artBlocks = this.props.artBlocks;
       const artBlocks2 = this.props.artBlocks2;
 
@@ -135,7 +135,7 @@ class UserGallery extends Component {
           .projectIdToCurrencySymbol(project)
           .call();
       } else {
-        currency = "ETH";
+        currency = 'ETH';
       }
 
       console.log(currency);
@@ -155,7 +155,7 @@ class UserGallery extends Component {
         currency,
       };
     }
-    this.setState({ projects });
+    this.setState({projects});
   }
 
   render() {
@@ -181,28 +181,26 @@ class UserGallery extends Component {
     return (
       <div className="mt-4">
         <h5>
-          User{" "}
+          User{' '}
           <a
-            href={"https://www.etherscan.io/address/" + this.props.lookupAcct}
+            href={'https://www.etherscan.io/address/' + this.props.lookupAcct}
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             {this.state.prettyIdentifier
               ? this.state.prettyIdentifier
               : this.props.lookupAcct.slice(0, 10)}
             's
-          </a>{" "}
-          Collection{" "}
+          </a>{' '}
+          Collection{' '}
           <a
-            href={"https://opensea.io/accounts/" + this.props.lookupAcct}
+            href={'https://opensea.io/accounts/' + this.props.lookupAcct}
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             <Image width="50" src="/os_logo.png" />
           </a>
         </h5>
         <p>
-          Total works purchased or minted:{" "}
+          Total works purchased or minted:{' '}
           {this.state.tokensOfAccount && this.state.tokensOfAccount.length}
         </p>
 
@@ -223,7 +221,7 @@ class UserGallery extends Component {
                           {this.state.projects[project].projectDescription[0]}
                         </h1>
                         <h3>
-                          by{" "}
+                          by{' '}
                           {this.state.projects[project].projectDescription[1]}
                         </h3>
                         <a
@@ -231,15 +229,14 @@ class UserGallery extends Component {
                             this.state.projects[project].projectDescription[3]
                           }
                           target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                          rel="noopener noreferrer">
                           {this.state.projects[project].projectDescription[3]}
                         </a>
                         <p>
-                          Total Minted:{" "}
-                          {this.state.projects[project].projectTokenDetails[2]}{" "}
-                          /{" "}
-                          {this.state.projects[project].projectTokenDetails[3]}{" "}
+                          Total Minted:{' '}
+                          {this.state.projects[project].projectTokenDetails[2]}{' '}
+                          /{' '}
+                          {this.state.projects[project].projectTokenDetails[3]}{' '}
                           max
                         </p>
                         <br />
@@ -248,21 +245,20 @@ class UserGallery extends Component {
                         </p>
                         <br />
                         <p>
-                          Price per token:{" "}
+                          Price per token:{' '}
                           {this.props.web3.utils.fromWei(
                             this.state.projects[project].projectTokenDetails[1],
-                            "ether"
+                            'ether'
                           )}
-                          {this.state.projects[project].currency === "ETH"
-                            ? "Ξ"
-                            : " " + this.state.projects[project].currency}
+                          {this.state.projects[project].currency === 'ETH'
+                            ? 'Ξ'
+                            : ' ' + this.state.projects[project].currency}
                         </p>
                         <br />
                         <Button
                           variant="dark btn-sm"
                           as={Link}
-                          to={"/project/" + project}
-                        >
+                          to={'/project/' + project}>
                           Visit Project
                         </Button>
                       </div>

@@ -1,9 +1,9 @@
 //https://oneclickdapp.com/beast-powder/
 
-import React, { Component } from "react";
-import { Navbar, Nav, NavDropdown /*, Image*/ } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import "./Nav.css";
+import React, {Component} from 'react';
+import {Navbar, Nav, NavDropdown /*, Image*/} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import './Nav.css';
 
 class Navigation extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Navigation extends Component {
         nameArtist.push(projectDetails[1]);
         console.log(nameArtist);
         activeProjectsDetails.push(nameArtist);
-      } 
+      }
       // else {
       //   let nameArtist = [];
       //   const projectDetails = await artBlocks2.methods
@@ -55,7 +55,7 @@ class Navigation extends Component {
         nameArtist.push(projectDetails[0]);
         nameArtist.push(projectDetails[1]);
         allProjectsDetails.push(nameArtist);
-      } 
+      }
       // else {
       //   let nameArtist = [];
       //   //console.log("project"+i);
@@ -72,7 +72,6 @@ class Navigation extends Component {
 
     this.setState({
       artBlocks,
-      // artBlocks2,
       activeProjects,
       activeProjectsDetails,
       allProjectsDetails,
@@ -86,10 +85,9 @@ class Navigation extends Component {
           <Navbar.Brand
             as={Link}
             onClick={() => {
-              this.props.handleToggleView("off");
+              this.props.handleToggleView('off');
             }}
-            to="/"
-          >
+            to="/">
             Art Blocks
           </Navbar.Brand>
 
@@ -114,10 +112,9 @@ class Navigation extends Component {
                           key={index}
                           as={Link}
                           onClick={() => {
-                            this.props.handleToggleView("off");
+                            this.props.handleToggleView('off');
                           }}
-                          to={"/project/" + projectInfo[0]}
-                        >
+                          to={'/project/' + projectInfo[0]}>
                           {projectInfo[1]} by {projectInfo[2]}
                         </NavDropdown.Item>
                       );
@@ -149,10 +146,9 @@ class Navigation extends Component {
                           key={index}
                           as={Link}
                           onClick={() => {
-                            this.props.handleToggleView("off");
+                            this.props.handleToggleView('off');
                           }}
-                          to={"/project/" + projectInfo[0]}
-                        >
+                          to={'/project/' + projectInfo[0]}>
                           {projectInfo[1]} by {projectInfo[2]}
                         </NavDropdown.Item>
                       );
@@ -176,10 +172,9 @@ class Navigation extends Component {
                           key={index}
                           as={Link}
                           onClick={() => {
-                            this.props.handleToggleView("off");
+                            this.props.handleToggleView('off');
                           }}
-                          to={"/project/" + projectInfo[0]}
-                        >
+                          to={'/project/' + projectInfo[0]}>
                           {projectInfo[1]} by {projectInfo[2]}
                         </NavDropdown.Item>
                       );
@@ -213,10 +208,9 @@ class Navigation extends Component {
                           key={index}
                           as={Link}
                           onClick={() => {
-                            this.props.handleToggleView("off");
+                            this.props.handleToggleView('off');
                           }}
-                          to={"/project/" + projectInfo[0]}
-                        >
+                          to={'/project/' + projectInfo[0]}>
                           {projectInfo[1]} by {projectInfo[2]}
                         </NavDropdown.Item>
                       );
@@ -251,10 +245,9 @@ class Navigation extends Component {
                           key={index}
                           as={Link}
                           onClick={() => {
-                            this.props.handleToggleView("off");
+                            this.props.handleToggleView('off');
                           }}
-                          to={"/project/" + projectInfo[0]}
-                        >
+                          to={'/project/' + projectInfo[0]}>
                           {projectInfo[1]} by {projectInfo[2]}
                         </NavDropdown.Item>
                       );
@@ -288,10 +281,9 @@ class Navigation extends Component {
                           key={index}
                           as={Link}
                           onClick={() => {
-                            this.props.handleToggleView("off");
+                            this.props.handleToggleView('off');
                           }}
-                          to={"/project/" + projectInfo[0]}
-                        >
+                          to={'/project/' + projectInfo[0]}>
                           {projectInfo[1]} by {projectInfo[2]}
                         </NavDropdown.Item>
                       );
@@ -324,10 +316,9 @@ class Navigation extends Component {
                           key={index}
                           as={Link}
                           onClick={() => {
-                            this.props.handleToggleView("off");
+                            this.props.handleToggleView('off');
                           }}
-                          to={"/project/" + projectInfo[0]}
-                        >
+                          to={'/project/' + projectInfo[0]}>
                           {projectInfo[1]} by {projectInfo[2]}
                         </NavDropdown.Item>
                       );
@@ -356,10 +347,9 @@ class Navigation extends Component {
                           key={index}
                           as={Link}
                           onClick={() => {
-                            this.props.handleToggleView("off");
+                            this.props.handleToggleView('off');
                           }}
-                          to={"/project/" + projectInfo[0]}
-                        >
+                          to={'/project/' + projectInfo[0]}>
                           {projectInfo[1]} by {projectInfo[2]}
                         </NavDropdown.Item>
                       );
@@ -376,43 +366,36 @@ class Navigation extends Component {
               <Nav.Link
                 as={Link}
                 onClick={() => {
-                  this.props.handleToggleView("off");
+                  this.props.handleToggleView('off');
                 }}
-                to="/gallery"
-              >
+                to="/gallery">
                 Gallery View
               </Nav.Link>
 
-
-
-                <Nav.Link
-                  as={Link}
-                  onClick={() => {
-                    this.props.handleToggleView("off");
-                  }}
-                  to={"/learn"}
-                >
-                  Learn
-                </Nav.Link>
-                <Nav.Link
-                  as={Link}
-                  onClick={() => {
-                    this.props.handleToggleView("off");
-                  }}
-                  to={"/sustainability"}
-                >
-                  Sustainability
-                </Nav.Link>
-              
+              <Nav.Link
+                as={Link}
+                onClick={() => {
+                  this.props.handleToggleView('off');
+                }}
+                to={'/learn'}>
+                Learn
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                onClick={() => {
+                  this.props.handleToggleView('off');
+                }}
+                to={'/sustainability'}>
+                Sustainability
+              </Nav.Link>
             </Nav>
             <Nav className="ml-auto">
               {this.props.isWhitelisted && (
                 <Nav.Link
                   href="#"
                   onClick={() => {
-                    this.props.handleToggleView("controlPanel", 0);
-                  }}
-                >
+                    this.props.handleToggleView('controlPanel', 0);
+                  }}>
                   Control Panel
                 </Nav.Link>
               )}
@@ -420,10 +403,9 @@ class Navigation extends Component {
                 <Nav.Link
                   as={Link}
                   onClick={() => {
-                    this.props.handleToggleView("off");
+                    this.props.handleToggleView('off');
                   }}
-                  to={"/user/" + this.props.account}
-                >
+                  to={'/user/' + this.props.account}>
                   Your Items
                 </Nav.Link>
               )}
@@ -438,16 +420,15 @@ class Navigation extends Component {
                     <NavDropdown.Item
                       as={Link}
                       onClick={() => {
-                        this.props.handleToggleView("off");
+                        this.props.handleToggleView('off');
                       }}
-                      to={"/project/" + project}
+                      to={'/project/' + project}
                       className="text-center"
-                      key={index}
-                    >
+                      key={index}>
                       {this.state.allProjectsDetails &&
                       this.state.allProjectsDetails[project]
                         ? this.state.allProjectsDetails[project][1]
-                        : "New Project"}
+                        : 'New Project'}
                     </NavDropdown.Item>
                   );
                 })}
@@ -462,8 +443,7 @@ class Navigation extends Component {
           {this.props.account && (
             <NavDropdown
               title={this.props.account.slice(0, 9)}
-              id="basic-nav-dropdown"
-            >
+              id="basic-nav-dropdown">
               {/*this.props.tokensOfOwner &&
 
               this.props.tokensOfOwner.map((token, index)=>{
