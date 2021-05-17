@@ -12,7 +12,7 @@ class UserGallery extends Component {
 
   async componentDidMount() {
     const artBlocks = this.props.artBlocks;
-    const artBlocks2 = this.props.artBlocks2;
+    // const artBlocks2 = this.props.artBlocks2;
 
     //console.log("lua"+this.props.lookupAcct);
     const tokensOfAccountA = await artBlocks.methods
@@ -23,29 +23,33 @@ class UserGallery extends Component {
     );
     //console.log(tokensOfAccountAFiltered);
     //console.log("TA"+tokensOfAccountA);
-    const tokensOfAccountB = await artBlocks2.methods
-      .tokensOfOwner(this.props.lookupAcct)
-      .call();
+    // const tokensOfAccountB = await artBlocks2.methods
+    //   .tokensOfOwner(this.props.lookupAcct)
+    //   .call();
     //console.log("TB"+tokensOfAccountB);
-    const tokensOfAccount = tokensOfAccountAFiltered.concat(tokensOfAccountB);
+    const tokensOfAccount = tokensOfAccountAFiltered; //.concat(tokensOfAccountB);
     //console.log("TOA"+tokensOfAccount);
 
     const tokenData = await Promise.all(
       tokensOfAccount.map(async (token) => {
-        const projectId =
-          token < 3000000
-            ? await artBlocks.methods.tokenIdToProjectId(token).call()
-            : await artBlocks2.methods.tokenIdToProjectId(token).call();
+        const projectId = await artBlocks.methods
+          .tokenIdToProjectId(token)
+          .call();
+        // token < 3000000
+        //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
+        //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
         return [token, projectId];
       })
     );
     let projectsOfAccount = new Set(
       await Promise.all(
         tokensOfAccount.map(async (token) => {
-          let projectId =
-            token < 3000000
-              ? await artBlocks.methods.tokenIdToProjectId(token).call()
-              : await artBlocks2.methods.tokenIdToProjectId(token).call();
+          let projectId = await artBlocks.methods
+            .tokenIdToProjectId(token)
+            .call();
+          // token < 3000000
+          //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
+          //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
           return projectId;
         })
       )
@@ -63,7 +67,7 @@ class UserGallery extends Component {
 
     this.setState({
       artBlocks,
-      artBlocks2,
+      // artBlocks2,
       tokenData,
       projectsOfAccount,
       tokensOfAccount,
@@ -76,27 +80,31 @@ class UserGallery extends Component {
     if (oldProps.lookupAcct !== this.props.lookupAcct) {
       console.log('acctchange');
       const artBlocks = this.props.artBlocks;
-      const artBlocks2 = this.props.artBlocks2;
+      // const artBlocks2 = this.props.artBlocks2;
 
       const tokensOfAccount = await artBlocks.methods
         .tokensOfOwner(this.props.lookupAcct)
         .call();
       const tokenData = await Promise.all(
         tokensOfAccount.map(async (token) => {
-          const projectId =
-            token < 3000000
-              ? await artBlocks.methods.tokenIdToProjectId(token).call()
-              : await artBlocks2.methods.tokenIdToProjectId(token).call();
+          const projectId = await artBlocks.methods
+            .tokenIdToProjectId(token)
+            .call();
+          // token < 3000000
+          //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
+          //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
           return [token, projectId];
         })
       );
       let projectsOfAccount = new Set(
         await Promise.all(
           tokensOfAccount.map(async (token) => {
-            let projectId =
-              token < 3000000
-                ? await artBlocks.methods.tokenIdToProjectId(token).call()
-                : await artBlocks2.methods.tokenIdToProjectId(token).call();
+            let projectId = await artBlocks.methods
+              .tokenIdToProjectId(token)
+              .call();
+            // token < 3000000
+            //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
+            //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
             return projectId;
           })
         )
@@ -112,50 +120,49 @@ class UserGallery extends Component {
   }
 
   async buildUserTokenArray() {
-    let projects = {};
+    try {
+      let projects = {};
 
-    for (let project of this.state.projectsOfAccount) {
-      const contract =
-        project < 3 ? this.state.artBlocks : this.state.artBlocks2;
-      const projectDescription = await contract.methods
-        .projectDetails(project)
-        .call();
-      const projectTokenDetails = await contract.methods
-        .projectTokenInfo(project)
-        .call();
-      const projectScriptDetails = await contract.methods
-        .projectScriptInfo(project)
-        .call();
-      const projectURIInfo = await contract.methods
-        .projectURIInfo(project)
-        .call();
-      let currency;
-      if (project >= 3) {
-        currency = await contract.methods
+      for (let project of this.state.projectsOfAccount) {
+        const contract = this.state.artBlocks;
+        // project < 3 ? this.state.artBlocks : this.state.artBlocks2;
+        const projectDescription = await contract.methods
+          .projectDetails(project)
+          .call();
+        const projectTokenDetails = await contract.methods
+          .projectTokenInfo(project)
+          .call();
+        const projectScriptDetails = await contract.methods
+          .projectScriptInfo(project)
+          .call();
+        const projectURIInfo = await contract.methods
+          .projectURIInfo(project)
+          .call();
+        let currency = await contract.methods
           .projectIdToCurrencySymbol(project)
           .call();
-      } else {
-        currency = 'ETH';
-      }
 
-      console.log(currency);
+        console.log(currency);
 
-      let tokens = [];
-      for (let i = 0; i < this.state.tokenData.length; i++) {
-        if (this.state.tokenData[i][1] === project) {
-          tokens.push(this.state.tokenData[i][0]);
+        let tokens = [];
+        for (let i = 0; i < this.state.tokenData.length; i++) {
+          if (this.state.tokenData[i][1] === project) {
+            tokens.push(this.state.tokenData[i][0]);
+          }
         }
+        projects[project] = {
+          tokens,
+          projectDescription,
+          projectTokenDetails,
+          projectScriptDetails,
+          projectURIInfo,
+          currency,
+        };
       }
-      projects[project] = {
-        tokens,
-        projectDescription,
-        projectTokenDetails,
-        projectScriptDetails,
-        projectURIInfo,
-        currency,
-      };
+      this.setState({projects});
+    } catch (error) {
+      console.error(error);
     }
-    this.setState({projects});
   }
 
   render() {

@@ -15,60 +15,29 @@ class Navigation extends Component {
     const artBlocks = this.props.artBlocks;
     const activeProjects = this.props.activeProjects;
 
-    //console.log(activeProjects);
-    //console.log(activeProjects);
     let activeProjectsDetails = [];
-    //for (let i=0;i<activeProjects.length;i++){
+    let activeProjectArtistName = [];
     for (let project in activeProjects) {
-      if (activeProjects[project] < 3) {
-        //console.log(Number(project));
-        let nameArtist = [];
-        const projectDetails = await artBlocks.methods
-          .projectDetails(activeProjects[project])
-          .call();
-        nameArtist.push(activeProjects[project]);
-        nameArtist.push(projectDetails[0]);
-        nameArtist.push(projectDetails[1]);
-        console.log(nameArtist);
-        activeProjectsDetails.push(nameArtist);
-      }
-      // else {
-      //   let nameArtist = [];
-      //   const projectDetails = await artBlocks2.methods
-      //     .projectDetails(activeProjects[project])
-      //     .call();
-      //   nameArtist.push(activeProjects[project]);
-      //   nameArtist.push(projectDetails[0]);
-      //   nameArtist.push(projectDetails[1]);
-      //   activeProjectsDetails.push(nameArtist);
-      // }
+      const projectDetails = await artBlocks.methods
+        .projectDetails(activeProjects[project])
+        .call();
+      activeProjectArtistName.push(activeProjects[project]);
+      activeProjectArtistName.push(projectDetails[0]);
+      activeProjectArtistName.push(projectDetails[1]);
+      console.log(activeProjectArtistName);
+      activeProjectsDetails.push(activeProjectArtistName);
     }
 
     const allProjects = this.props.allProjects;
     let allProjectsDetails = [];
+    let projectDetailsArtistName = [];
     for (let i = 0; i < allProjects.length; i++) {
-      if (i < 3) {
-        let nameArtist = [];
-        //console.log("project"+i);
-        const projectDetails = await artBlocks.methods.projectDetails(i).call();
-        nameArtist.push(i);
-        nameArtist.push(projectDetails[0]);
-        nameArtist.push(projectDetails[1]);
-        allProjectsDetails.push(nameArtist);
-      }
-      // else {
-      //   let nameArtist = [];
-      //   //console.log("project"+i);
-      //   const projectDetails = await artBlocks2.methods
-      //     .projectDetails(i)
-      //     .call();
-      //   nameArtist.push(i);
-      //   nameArtist.push(projectDetails[0]);
-      //   nameArtist.push(projectDetails[1]);
-      //   allProjectsDetails.push(nameArtist);
-      // }
+      const projectDetails = await artBlocks.methods.projectDetails(i).call();
+      projectDetailsArtistName.push(i);
+      projectDetailsArtistName.push(projectDetails[0]);
+      projectDetailsArtistName.push(projectDetails[1]);
+      allProjectsDetails.push(projectDetailsArtistName);
     }
-    //console.log(activeProjectsDetails);
 
     this.setState({
       artBlocks,
@@ -154,7 +123,7 @@ class Navigation extends Component {
                       );
                     })}
               </NavDropdown>
-              <NavDropdown title="Artist Playground" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Artist Playground" id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <b>Open</b>
                 </NavDropdown.Item>
@@ -226,8 +195,8 @@ class Navigation extends Component {
                       <i>None</i>
                     </NavDropdown.Item>
                   )}
-              </NavDropdown>
-              <NavDropdown title="Factory" id="basic-nav-dropdown">
+              </NavDropdown> */}
+              {/* <NavDropdown title="Factory" id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <b>Open</b>
                 </NavDropdown.Item>
@@ -299,8 +268,8 @@ class Navigation extends Component {
                       <i>None</i>
                     </NavDropdown.Item>
                   )}
-              </NavDropdown>
-              <NavDropdown title="All Projects" id="basic-nav-dropdown">
+              </NavDropdown> */}
+              {/* <NavDropdown title="All Projects" id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <b>Open</b>
                 </NavDropdown.Item>
@@ -362,15 +331,15 @@ class Navigation extends Component {
                       <i>None</i>
                     </NavDropdown.Item>
                   )}
-              </NavDropdown>
-              <Nav.Link
+              </NavDropdown> */}
+              {/* <Nav.Link
                 as={Link}
                 onClick={() => {
                   this.props.handleToggleView('off');
                 }}
                 to="/gallery">
                 Gallery View
-              </Nav.Link>
+              </Nav.Link> */}
 
               <Nav.Link
                 as={Link}
