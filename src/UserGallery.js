@@ -77,45 +77,49 @@ class UserGallery extends Component {
   }
 
   async componentDidUpdate(oldProps) {
-    if (oldProps.lookupAcct !== this.props.lookupAcct) {
-      console.log('acctchange');
-      const artBlocks = this.props.artBlocks;
-      // const artBlocks2 = this.props.artBlocks2;
+    try {
+      if (oldProps.lookupAcct !== this.props.lookupAcct) {
+        console.log('acctchange');
+        const artBlocks = this.props.artBlocks;
+        // const artBlocks2 = this.props.artBlocks2;
 
-      const tokensOfAccount = await artBlocks.methods
-        .tokensOfOwner(this.props.lookupAcct)
-        .call();
-      const tokenData = await Promise.all(
-        tokensOfAccount.map(async (token) => {
-          const projectId = await artBlocks.methods
-            .tokenIdToProjectId(token)
-            .call();
-          // token < 3000000
-          //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
-          //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
-          return [token, projectId];
-        })
-      );
-      let projectsOfAccount = new Set(
-        await Promise.all(
+        const tokensOfAccount = await artBlocks.methods
+          .tokensOfOwner(this.props.lookupAcct)
+          .call();
+        const tokenData = await Promise.all(
           tokensOfAccount.map(async (token) => {
-            let projectId = await artBlocks.methods
+            const projectId = await artBlocks.methods
               .tokenIdToProjectId(token)
               .call();
             // token < 3000000
             //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
             //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
-            return projectId;
+            return [token, projectId];
           })
-        )
-      );
-      this.setState({
-        artBlocks,
-        tokenData,
-        projectsOfAccount,
-        tokensOfAccount,
-      });
-      this.buildUserTokenArray();
+        );
+        let projectsOfAccount = new Set(
+          await Promise.all(
+            tokensOfAccount.map(async (token) => {
+              let projectId = await artBlocks.methods
+                .tokenIdToProjectId(token)
+                .call();
+              // token < 3000000
+              //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
+              //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
+              return projectId;
+            })
+          )
+        );
+        this.setState({
+          artBlocks,
+          tokenData,
+          projectsOfAccount,
+          tokensOfAccount,
+        });
+        this.buildUserTokenArray();
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
