@@ -4,3 +4,4 @@ build/index.html
 build/asset-manifest.json
 .env
 .eslintcache
+.DS_Store
