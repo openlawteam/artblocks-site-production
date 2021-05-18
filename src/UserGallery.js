@@ -11,69 +11,72 @@ class UserGallery extends Component {
   }
 
   async componentDidMount() {
-    const artBlocks = this.props.artBlocks;
-    // const artBlocks2 = this.props.artBlocks2;
+    if (!this.props.artBlocks) return;
 
-    //console.log("lua"+this.props.lookupAcct);
-    const tokensOfAccountA = await artBlocks.methods
-      .tokensOfOwner(this.props.lookupAcct)
-      .call();
-    const tokensOfAccountAFiltered = tokensOfAccountA.filter(
-      (token) => token < 3000000
-    );
-    //console.log(tokensOfAccountAFiltered);
-    //console.log("TA"+tokensOfAccountA);
-    // const tokensOfAccountB = await artBlocks2.methods
-    //   .tokensOfOwner(this.props.lookupAcct)
-    //   .call();
-    //console.log("TB"+tokensOfAccountB);
-    const tokensOfAccount = tokensOfAccountAFiltered; //.concat(tokensOfAccountB);
-    //console.log("TOA"+tokensOfAccount);
+    try {
+      const artBlocks = this.props.artBlocks;
 
-    const tokenData = await Promise.all(
-      tokensOfAccount.map(async (token) => {
-        const projectId = await artBlocks.methods
-          .tokenIdToProjectId(token)
-          .call();
-        // token < 3000000
-        //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
-        //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
-        return [token, projectId];
-      })
-    );
-    let projectsOfAccount = new Set(
-      await Promise.all(
+      const tokensOfAccountHolder = await artBlocks.methods
+        .tokensOfOwner(this.props.lookupAcct)
+        .call();
+
+      // if no tokens, no need to proceed any further
+      if (!tokensOfAccountHolder.length) return;
+
+      const tokensOfAccountHolderFiltered = tokensOfAccountHolder.filter(
+        (token) => token < 3000000
+      );
+      //console.log(tokensOfAccountHolderFiltered);
+      //console.log("TA"+tokensOfAccountHolder);
+      // const tokensOfAccountB = await artBlocks2.methods
+      //   .tokensOfOwner(this.props.lookupAcct)
+      //   .call();
+      //console.log("TB"+tokensOfAccountB);
+      const tokensOfAccount = tokensOfAccountHolderFiltered; //.concat(tokensOfAccountB);
+      //console.log("TOA"+tokensOfAccount);
+
+      const tokenData = await Promise.all(
         tokensOfAccount.map(async (token) => {
-          let projectId = await artBlocks.methods
+          const projectId = await artBlocks.methods
             .tokenIdToProjectId(token)
             .call();
           // token < 3000000
           //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
           //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
-          return projectId;
+          return [token, projectId];
         })
-      )
-    );
+      );
+      let projectsOfAccount = new Set(
+        await Promise.all(
+          tokensOfAccount.map(async (token) => {
+            let projectId = await artBlocks.methods
+              .tokenIdToProjectId(token)
+              .call();
+            // token < 3000000
+            //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
+            //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
+            return projectId;
+          })
+        )
+      );
 
-    let prettyIdentifier;
-    try {
-      prettyIdentifier = await reverseResolveEns(
+      let prettyIdentifier = await reverseResolveEns(
         this.props.lookupAcct,
         this.props.web3
       );
-    } catch (e) {
-      console.log(e);
-    }
 
-    this.setState({
-      artBlocks,
-      // artBlocks2,
-      tokenData,
-      projectsOfAccount,
-      tokensOfAccount,
-      prettyIdentifier,
-    });
-    this.buildUserTokenArray();
+      this.setState({
+        artBlocks,
+        tokenData,
+        projectsOfAccount,
+        tokensOfAccount,
+        prettyIdentifier,
+      });
+
+      this.buildUserTokenArray();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async componentDidUpdate(oldProps) {

@@ -1,27 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Exa&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Roboto:wght@100&family=Space+Mono&display=swap");
+
+/* 
+    font-family: 'Major Mono Display', monospace;
+
+    font-family: 'Roboto', sans-serif;
+
+    font-family: 'Space Mono', monospace;
+*/
 .custom {
-    width: 78px !important;
+  width: 78px !important;
 }
 
+html,
 body {
-    padding-top: 65px;
+  font-family: "Roboto", sans-serif;
+  padding-top: 65px;
 }
 
 .live-script-container {
-    position: relative;
-    width: 100%;
-    padding-top: 100%;
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
 }
 
 .live-script-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .dropdown-menu.show {
-    max-height: 50vh;
-    overflow: auto;
+  max-height: 50vh;
+  overflow: auto;
 }
+
+.flutter {
+  font-family: "Major Mono Display", monospace;
+}
+
+/* 
+- METAMASK SVG FILL STYLES - BEGIN
+*/
+.st0 {
+  fill: #e17726;
+  stroke: #e17726;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st1 {
+  fill: #e27625;
+  stroke: #e27625;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st2 {
+  fill: #d5bfb2;
+  stroke: #d5bfb2;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st3 {
+  fill: #233447;
+  stroke: #233447;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st4 {
+  fill: #cc6228;
+  stroke: #cc6228;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st5 {
+  fill: #e27525;
+  stroke: #e27525;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st6 {
+  fill: #f5841f;
+  stroke: #f5841f;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st7 {
+  fill: #c0ac9d;
+  stroke: #c0ac9d;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st8 {
+  fill: #161616;
+  stroke: #161616;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st9 {
+  fill: #763e1a;
+  stroke: #763e1a;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* METAMASK SVG FILL STYLES - END */

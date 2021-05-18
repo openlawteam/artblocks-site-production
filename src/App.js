@@ -303,7 +303,7 @@ class App extends Component {
       } else {
         alert(
           `please switch to ${
-            NETWORK === 'rinkeby' ? 'Rinkeby' : 'Main'
+            NETWORK === 'rinkeby' ? 'Rinkeby' : 'Mainnet'
           } and try to connect again`
         );
       }
@@ -339,7 +339,7 @@ class App extends Component {
   }
 
   render() {
-    // console.log('his.state.currentProject', this.state.currentProject);
+    console.log('this.state.currentProject', this.state.currentProject);
     let baseURL =
       NETWORK === 'main'
         ? 'https://api.artblocks.io'
