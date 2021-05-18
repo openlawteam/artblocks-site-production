@@ -31,9 +31,10 @@ class ViewToken extends Component {
     const projectId = await artBlocks.methods
       .tokenIdToProjectId(this.props.token)
       .call();
-    /*const projectTokens = await artBlocks.methods
-      .projectShowAllTokens(projectId)
-      .call();*/
+    const projectTokenInfo = await artBlocks.methods
+      .projectTokenInfo(this.props.project)
+      .call();
+    const projectTokens = Array.from(Array(projectTokenInfo.invocations).keys());
     const projectDescription = await artBlocks.methods
       .projectDetails(projectId)
       .call();
