@@ -545,73 +545,8 @@ class Project extends Component {
         alert(
           "You are purchasing a token for another user directly. The NFT will be deposited directly into the Ethereum account that you set. Please reject the transaction if this is not your intention."
         );
-        if (this.props.project < 3) {
-          await this.state.artBlocks.methods
-            .purchaseTo(purchaseToAddress, this.props.project)
-            .send({
-              from: this.props.account,
-              value: this.state.projectTokenDetails[1],
-            })
-            .once("receipt", (receipt) => {
-              console.log(receipt);
-              const mintedToken = receipt.events.Mint.returnValues[1];
-              console.log("mintedtoken:" + mintedToken);
-              //this.updateTokens();
-              this.props.handleToggleView("newToken", mintedToken);
-            })
-            .catch((err) => {
-              console.log(err);
-              this.updateValues();
-              this.setState({ purchase: false });
-            });
-        } else {
-          await this.props.mainMinter.methods
-            .purchaseTo(purchaseToAddress, this.props.project)
-            .send({
-              from: this.props.account,
-              value:
-                this.state.currency === "ETH"
-                  ? this.state.projectTokenDetails[1]
-                  : 0,
-            })
-            .once("receipt", (receipt) => {
-              console.log(receipt);
-              const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
-              console.log("mintedtoken:" + mintedToken);
-              this.props.handleToggleView("newToken", mintedToken);
-            })
-            .catch((err) => {
-              //alert(err);
-              this.updateValues();
-              this.setState({ purchase: false });
-            });
-        }
-      } else {
-        alert("This is not a valid Ethereum address.");
-        this.setState({ purchase: false });
-      }
-    } else {
-      if (this.props.project < 3) {
-        await this.props.artBlocks.methods
-          .purchase(this.props.project)
-          .send({
-            from: this.props.account,
-            value: this.state.projectTokenDetails[1],
-          })
-          .once("receipt", (receipt) => {
-            const mintedToken = receipt.events.Mint.returnValues[1];
-            console.log("mintedtoken:" + mintedToken);
-            console.log(receipt);
-            this.props.handleToggleView("newToken", mintedToken);
-          })
-          .catch((err) => {
-            //alert(err);
-            this.updateValues();
-            this.setState({ purchase: false });
-          });
-      } else {
         await this.props.mainMinter.methods
-          .purchase(this.props.project)
+          .purchaseTo(purchaseToAddress, this.props.project)
           .send({
             from: this.props.account,
             value:
@@ -620,18 +555,42 @@ class Project extends Component {
                 : 0,
           })
           .once("receipt", (receipt) => {
-            const mintedToken = this.props.project==="51"?parseInt(receipt.events[1].raw.topics[3], 16):parseInt(receipt.events[0].raw.topics[3], 16);
-            console.log("mintedtoken:" + mintedToken);
             console.log(receipt);
+            const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
+            console.log("mintedtoken:" + mintedToken);
             this.props.handleToggleView("newToken", mintedToken);
           })
           .catch((err) => {
             //alert(err);
             this.updateValues();
             this.setState({ purchase: false });
-            this.checkAllowance();
           });
+      } else {
+        alert("This is not a valid Ethereum address.");
+        this.setState({ purchase: false });
       }
+    } else {
+      await this.props.mainMinter.methods
+        .purchase(this.props.project)
+        .send({
+          from: this.props.account,
+          value:
+            this.state.currency === "ETH"
+              ? this.state.projectTokenDetails[1]
+              : 0,
+        })
+        .once("receipt", (receipt) => {
+          const mintedToken = this.props.project==="51"?parseInt(receipt.events[1].raw.topics[3], 16):parseInt(receipt.events[0].raw.topics[3], 16);
+          console.log("mintedtoken:" + mintedToken);
+          console.log(receipt);
+          this.props.handleToggleView("newToken", mintedToken);
+        })
+        .catch((err) => {
+          //alert(err);
+          this.updateValues();
+          this.setState({ purchase: false });
+          this.checkAllowance();
+        });
     }
   }
 
