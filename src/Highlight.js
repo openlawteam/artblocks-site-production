@@ -20,12 +20,10 @@ class Highlight extends Component {
   async componentDidMount() {
     try {
       const artBlocks = this.props.artBlocks;
-			const projectTokens = [0]
-			/*
-      const projectTokens = {
-				const invocations = await artBlocks.methods.projectShowAllTokens(this.props.project)
+      const projectTokenInfo = await artBlocks.methods
+        .projectTokenInfo(this.props.project)
         .call();
-				*/
+      const projectTokens = Array.from(Array(projectTokenInfo.invocations).keys());
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
         .call();
@@ -69,9 +67,10 @@ class Highlight extends Component {
         console.log(this.props.project);
         const artBlocks =
           this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
-        const projectTokens = await artBlocks.methods
-          .projectShowAllTokens(this.props.project)
-          .call();
+        const projectTokenInfo = await artBlocks.methods
+        .projectTokenInfo(this.props.project)
+        .call();
+        const projectTokens = Array.from(Array(projectTokenInfo.invocations).keys());
         const projectDescription = await artBlocks.methods
           .projectDetails(this.props.project)
           .call();
