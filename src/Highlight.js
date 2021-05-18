@@ -20,9 +20,12 @@ class Highlight extends Component {
   async componentDidMount() {
     try {
       const artBlocks = this.props.artBlocks;
-      const projectTokens = await artBlocks.methods
-        .projectShowAllTokens(this.props.project)
+			const projectTokens = [0]
+			/*
+      const projectTokens = {
+				const invocations = await artBlocks.methods.projectShowAllTokens(this.props.project)
         .call();
+				*/
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
         .call();
