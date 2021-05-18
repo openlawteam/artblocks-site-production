@@ -5,6 +5,10 @@ import {Navbar, Nav, NavDropdown /*, Image*/} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './Nav.css';
 
+import {MetaMaskSVG, WalletSVG} from './svg';
+
+import {formatEthereumAddress} from './utils/helpers';
+
 class Navigation extends Component {
   constructor(props) {
     super(props);
@@ -57,12 +61,13 @@ class Navigation extends Component {
               this.props.handleToggleView('off');
             }}
             to="/">
-            Art Blocks
+            <span className="flutter">Flutter</span> by{' '}
+            <span className="flamingo-logo">Flamingo</span> x ArtBlocks
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
+            <Nav className="mr-auto flamingo-navbar-nav">
               <NavDropdown title="Curated Projects" id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <b>Open</b>
@@ -379,53 +384,55 @@ class Navigation extends Component {
                 </Nav.Link>
               )}
             </Nav>
-          </Navbar.Collapse>
 
-          {this.props.projectsOfArtist &&
-            this.props.projectsOfArtist.length > 0 && (
-              <NavDropdown title="Your Projects" id="basic-nav-dropdown">
-                {this.props.projectsOfArtist.map((project, index) => {
-                  return (
-                    <NavDropdown.Item
-                      as={Link}
-                      onClick={() => {
-                        this.props.handleToggleView('off');
-                      }}
-                      to={'/project/' + project}
-                      className="text-center"
-                      key={index}>
-                      {this.state.allProjectsDetails &&
-                      this.state.allProjectsDetails[project]
-                        ? this.state.allProjectsDetails[project][1]
-                        : 'New Project'}
-                    </NavDropdown.Item>
-                  );
-                })}
-              </NavDropdown>
+            {this.props.projectsOfArtist &&
+              this.props.projectsOfArtist.length > 0 && (
+                <NavDropdown title="Your Projects" id="basic-nav-dropdown">
+                  {this.props.projectsOfArtist.map((project, index) => {
+                    return (
+                      <NavDropdown.Item
+                        as={Link}
+                        onClick={() => {
+                          this.props.handleToggleView('off');
+                        }}
+                        to={'/project/' + project}
+                        className="text-center"
+                        key={index}>
+                        {this.state.allProjectsDetails &&
+                        this.state.allProjectsDetails[project]
+                          ? this.state.allProjectsDetails[project][1]
+                          : 'New Project'}
+                      </NavDropdown.Item>
+                    );
+                  })}
+                </NavDropdown>
+              )}
+
+            {this.props.connected === false && (
+              <Nav.Link
+                onClick={this.props.handleConnectToMetamask}
+                href="#"
+                className="org-get-connected-btn">
+                Connect to Metamask <WalletSVG />
+              </Nav.Link>
             )}
-
-          {this.props.connected === false && (
-            <Nav.Link onClick={this.props.handleConnectToMetamask} href="#">
-              Connect to Metamask
-            </Nav.Link>
-          )}
-          {this.props.account && (
-            <NavDropdown
-              title={this.props.account.slice(0, 9)}
-              id="basic-nav-dropdown">
-              {/*this.props.tokensOfOwner &&
-
-              this.props.tokensOfOwner.map((token, index)=>{
-                return(
-                      <NavDropdown.Item   onClick={()=>{this.props.handleToggleView("off")}} as={Link} to={"/token/"+token} className="text-center" key={index}>
-                        <Image  className="d-block mx-auto img-fluid" alt="token" src={tokenImage(token)} fluid/>
-                        </NavDropdown.Item>
-                )
-              })
-
-            */}
-            </NavDropdown>
-          )}
+            {this.props.account && (
+              <Nav.Link href="#" className="org-get-connected-btn">
+                {formatEthereumAddress(this.props.account)}
+                <span
+                  style={{
+                    display: 'inline-block',
+                    marginLeft: '.5rem',
+                    width: '16px',
+                    verticalAlign: 'middle',
+                    top: '-3px',
+                    position: 'relative',
+                  }}>
+                  <MetaMaskSVG />
+                </span>
+              </Nav.Link>
+            )}
+          </Navbar.Collapse>
         </Navbar>
       </div>
     );

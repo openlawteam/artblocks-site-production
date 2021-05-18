@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 import {
   Card,
   Button,
@@ -11,84 +11,88 @@ import {
   Image,
   Alert,
   Container,
-} from "react-bootstrap";
-import { TwitterShareButton } from "react-twitter-embed";
-import { Link } from "react-router-dom";
-import { tokenDetailsUrl, reverseResolveEns } from "./utils";
-import "./ProjectGallery.css";
+} from 'react-bootstrap';
+import {TwitterShareButton} from 'react-twitter-embed';
+import {Link} from 'react-router-dom';
+import {tokenDetailsUrl, reverseResolveEns} from './utils';
+import './ProjectGallery.css';
 
 class ViewToken extends Component {
   constructor(props) {
     super(props);
-    this.state = { tokenURIInfo: "", token: this.props.token, embed: false };
+    this.state = {tokenURIInfo: '', token: this.props.token, embed: false};
     this.handleClickEmbed = this.handleClickEmbed.bind(this);
   }
 
   async componentDidMount() {
-    console.log("currentNet: " + this.props.network);
-    const artBlocks =
-      this.props.token < 3000000 ? this.props.artBlocks : this.props.artBlocks2;
-    const projectId = await artBlocks.methods
-      .tokenIdToProjectId(this.props.token)
-      .call();
-    /*const projectTokens = await artBlocks.methods
+    try {
+      console.log('currentNet: ' + this.props.network);
+      const artBlocks =
+        this.props.token < 3000000
+          ? this.props.artBlocks
+          : this.props.artBlocks2;
+      const projectId = await artBlocks.methods
+        .tokenIdToProjectId(this.props.token)
+        .call();
+      /*const projectTokens = await artBlocks.methods
       .projectShowAllTokens(projectId)
       .call();*/
-    const projectDescription = await artBlocks.methods
-      .projectDetails(projectId)
-      .call();
-    const projectTokenDetails = await artBlocks.methods
-      .projectTokenInfo(projectId)
-      .call();
-    const projectScriptDetails = await artBlocks.methods
-      .projectScriptInfo(projectId)
-      .call();
-    const projectURIInfo = await artBlocks.methods
-      .projectURIInfo(projectId)
-      .call();
-    const ownerOfToken = await artBlocks.methods
-      .ownerOf(this.props.token)
-      .call();
-    const tokenHashes =
-      this.props.token < 3000000
-        ? await artBlocks.methods.showTokenHashes(this.props.token).call()
-        : await artBlocks.methods.tokenIdToHash(this.props.token).call();
-        console.log(tokenHashes);
+      const projectDescription = await artBlocks.methods
+        .projectDetails(projectId)
+        .call();
+      const projectTokenDetails = await artBlocks.methods
+        .projectTokenInfo(projectId)
+        .call();
+      const projectScriptDetails = await artBlocks.methods
+        .projectScriptInfo(projectId)
+        .call();
+      const projectURIInfo = await artBlocks.methods
+        .projectURIInfo(projectId)
+        .call();
+      const ownerOfToken = await artBlocks.methods
+        .ownerOf(this.props.token)
+        .call();
+      const tokenHashes =
+        this.props.token < 3000000
+          ? await artBlocks.methods.showTokenHashes(this.props.token).call()
+          : await artBlocks.methods.tokenIdToHash(this.props.token).call();
+      console.log(tokenHashes);
 
-    let prettyIdentifier;
-    try {
-      prettyIdentifier = await reverseResolveEns(ownerOfToken, this.props.web3);
-    } catch (e) {
-      console.log(e);
-    }
+      let prettyIdentifier = await reverseResolveEns(
+        ownerOfToken,
+        this.props.web3
+      );
 
-    fetch(tokenDetailsUrl(this.props.token))
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        this.setState({
-          features: json.features,
+      fetch(tokenDetailsUrl(this.props.token))
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          this.setState({
+            features: json.features,
+          });
         });
-      });
 
-    this.setState({
-      artBlocks,
-      //projectTokens,
-      projectDescription,
-      projectTokenDetails,
-      projectScriptDetails,
-      projectURIInfo,
-      projectId,
-      ownerOfToken,
-      prettyIdentifier,
-      tokenHashes,
-    });
+      this.setState({
+        artBlocks,
+        //projectTokens,
+        projectDescription,
+        projectTokenDetails,
+        projectScriptDetails,
+        projectURIInfo,
+        projectId,
+        ownerOfToken,
+        prettyIdentifier,
+        tokenHashes,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   handleClickEmbed() {
     let embed = this.state.embed;
-    this.setState({ embed: !embed });
+    this.setState({embed: !embed});
   }
 
   render() {
@@ -97,7 +101,7 @@ class ViewToken extends Component {
     if (
       this.state.tokenHashes &&
       this.state.projectId &&
-      this.state.projectId === "0"
+      this.state.projectId === '0'
     ) {
       let tokenData = this.state.tokenHashes;
       let numHashes = tokenData.length;
@@ -133,19 +137,18 @@ class ViewToken extends Component {
     const viewGalleryToolTip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
         {this.state.projectDescription &&
-          "View all " + this.state.projectDescription[0] + " tokens."}
+          'View all ' + this.state.projectDescription[0] + ' tokens.'}
       </Tooltip>
     );
 
     const viewEmbedLink = (props) => (
       <Tooltip id="button-tooltip" {...props}>
         Copy the below link and paste it in the URL field for embedding in
-        virtual platforms like{" "}
+        virtual platforms like{' '}
         <a
           href="https://www.cryptovoxels.com"
           rel="noopener noreferrer"
-          target="_blank"
-        >
+          target="_blank">
           Cryptovoxels
         </a>
         .
@@ -153,34 +156,40 @@ class ViewToken extends Component {
     );
 
     let highlightImageUrl =
-      this.props.network === "rinkeby"
-        ? "https://rinkeby.oss.nodechef.com/"
-        : "https://mainnet.oss.nodechef.com/";
+      this.props.network === 'rinkeby'
+        ? 'https://rinkeby.oss.nodechef.com/'
+        : 'https://mainnet.oss.nodechef.com/';
 
     function tokenHighlightImage(token) {
-      return highlightImageUrl + token + ".png";
+      return highlightImageUrl + token + '.png';
     }
 
     let baseURL = this.props.baseURL;
 
     function tokenImage(token) {
       //return "https://mainnet.oss.nodechef.com/"+token+".png";
-      return baseURL + "/image/" + token;
+      return baseURL + '/image/' + token;
     }
 
     function tokenGenerator(token) {
-      return baseURL + "/generator/" + token;
+      return baseURL + '/generator/' + token;
     }
 
     function tokenVox(token) {
-      return baseURL + "/vox/" + token;
+      return baseURL + '/vox/' + token;
     }
 
-    function tokenOSURL(token){
-      if (token<3000000){
-        return "https://opensea.io/assets/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/"+token;
+    function tokenOSURL(token) {
+      if (token < 3000000) {
+        return (
+          'https://opensea.io/assets/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/' +
+          token
+        );
       } else {
-        return "https://opensea.io/assets/0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270/"+token;
+        return (
+          'https://opensea.io/assets/0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270/' +
+          token
+        );
       }
     }
     console.log(tokenOSURL(this.props.token));
@@ -201,8 +210,7 @@ class ViewToken extends Component {
                   <a
                     href={this.state.projectDescription[3]}
                     target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                    rel="noopener noreferrer">
                     {this.state.projectDescription[3]}
                   </a>
                 )}
@@ -214,22 +222,20 @@ class ViewToken extends Component {
 
                 {this.state.ownerOfToken && (
                   <div>
-                  <p>
-                    Owned by{" "}
-                    <Link to={"/user/" + this.state.ownerOfToken}>
-                      {this.state.prettyIdentifier
-                        ? this.state.prettyIdentifier
-                        : this.state.ownerOfToken.slice(0, 10)}
-                    </Link>
-
-                  <a
-                    href={tokenOSURL(this.props.token)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Image width="50" src="/os_logo.png" />
-                  </a>
-                  </p>
+                    <p>
+                      Owned by{' '}
+                      <Link to={'/user/' + this.state.ownerOfToken}>
+                        {this.state.prettyIdentifier
+                          ? this.state.prettyIdentifier
+                          : this.state.ownerOfToken.slice(0, 10)}
+                      </Link>
+                      <a
+                        href={tokenOSURL(this.props.token)}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <Image width="50" src="/os_logo.png" />
+                      </a>
+                    </p>
                   </div>
                 )}
 
@@ -243,11 +249,10 @@ class ViewToken extends Component {
                             <Row key={index}>
                               <p
                                 style={{
-                                  fontSize: "12px",
-                                  lineHeight: "1px",
+                                  fontSize: '12px',
+                                  lineHeight: '1px',
                                 }}
-                                key={index}
-                              >
+                                key={index}>
                                 {feature}
                               </p>
                             </Row>
@@ -262,18 +267,16 @@ class ViewToken extends Component {
           <p style={{"fontSize":"12px"}}>{this.state.tokenHashes && this.state.tokenHashes.length===1?"Token hash:":"Token hashes:"} {this.state.tokenHashes && this.state.tokenHashes}</p>
           */}
                 {this.state.projectScriptDetails &&
-                  (this.state.projectScriptDetails[0] === "vox" ||
-                    this.state.projectScriptDetails[0] === "megavox") && (
+                  (this.state.projectScriptDetails[0] === 'vox' ||
+                    this.state.projectScriptDetails[0] === 'megavox') && (
                     <div>
                       <OverlayTrigger
                         placement="top"
-                        delay={{ show: 250, hide: 6000 }}
-                        overlay={viewEmbedLink}
-                      >
+                        delay={{show: 250, hide: 6000}}
+                        overlay={viewEmbedLink}>
                         <Button
                           variant="info btn-sm"
-                          onClick={this.handleClickEmbed}
-                        >
+                          onClick={this.handleClickEmbed}>
                           Embed
                         </Button>
                       </OverlayTrigger>
@@ -288,9 +291,13 @@ class ViewToken extends Component {
                   )}
                 <br />
                 <p>
-                  Total Minted:{" "}
-                  {/*this.state.projectTokens && this.state.projectTokens.length*/this.state.projectTokenDetails && this.state.projectTokenDetails[2]}{" "}
-                  out of a maximum of{" "}
+                  Total Minted:{' '}
+                  {
+                    /*this.state.projectTokens && this.state.projectTokens.length*/ this
+                      .state.projectTokenDetails &&
+                      this.state.projectTokenDetails[2]
+                  }{' '}
+                  out of a maximum of{' '}
                   {this.state.projectTokenDetails &&
                     this.state.projectTokenDetails[3]}
                 </p>
@@ -298,40 +305,38 @@ class ViewToken extends Component {
                 <br />
                 <TwitterShareButton
                   url={
-                    this.props.network === "rinkeby"
-                      ? "https://rinkeby.artblocks.io/token/" + this.state.token
-                      : "https://www.artblocks.io/token/" + this.state.token
+                    this.props.network === 'rinkeby'
+                      ? 'https://rinkeby.artblocks.io/token/' + this.state.token
+                      : 'https://www.artblocks.io/token/' + this.state.token
                   }
                   options={{
                     text:
-                      (this.props.network === "rinkeby" ? "Testnet " : "") +
+                      (this.props.network === 'rinkeby' ? 'Testnet ' : '') +
                       this.state.projectDescription[0] +
-                      " #" +
+                      ' #' +
                       (Number(this.state.token) -
                         Number(this.state.projectId) * 1000000) +
-                      " by " +
+                      ' by ' +
                       this.state.projectDescription[1],
-                    via: "artblocks_io",
+                    via: 'artblocks_io',
                   }}
-                  hashtags={["genArt"]}
+                  hashtags={['genArt']}
                 />
-
               </div>
             )}
           </Col>
           <Col xs={12} md={6}>
             <CardDeck className="col d-flex justify-content-center">
               <Card
-                border={hyperRainbow ? "warning" : ""}
+                border={hyperRainbow ? 'warning' : ''}
                 className="mt-4"
-                style={{ width: "18rem" }}
-              >
+                style={{width: '18rem'}}>
                 <Card.Body>
                   {this.props.nonInter.includes(
                     Math.floor(this.props.token / 1000000)
                   ) && (
                     <Image
-                      style={{ width: "100%" }}
+                      style={{width: '100%'}}
                       src={tokenImage(this.props.token)}
                       rounded
                     />
@@ -353,50 +358,44 @@ class ViewToken extends Component {
                       <ButtonGroup size="md">
                         <OverlayTrigger
                           placement="top"
-                          delay={{ show: 250, hide: 400 }}
-                          overlay={viewImageToolTip}
-                        >
+                          delay={{show: 250, hide: 400}}
+                          overlay={viewImageToolTip}>
                           <Button
                             variant="light"
                             onClick={() =>
                               window.open(
                                 tokenHighlightImage(this.state.token),
-                                "_blank"
+                                '_blank'
                               )
-                            }
-                          >
+                            }>
                             View Image
                           </Button>
                         </OverlayTrigger>
                         <OverlayTrigger
                           placement="top"
-                          delay={{ show: 250, hide: 400 }}
-                          overlay={viewScriptToolTip}
-                        >
+                          delay={{show: 250, hide: 400}}
+                          overlay={viewScriptToolTip}>
                           <Button
                             variant="light"
                             onClick={() =>
                               window.open(
                                 tokenGenerator(this.state.token),
-                                "_blank"
+                                '_blank'
                               )
-                            }
-                          >
+                            }>
                             Live Script
                           </Button>
                         </OverlayTrigger>
                         <OverlayTrigger
                           placement="top"
-                          delay={{ show: 250, hide: 400 }}
-                          overlay={viewGalleryToolTip}
-                        >
+                          delay={{show: 250, hide: 400}}
+                          overlay={viewGalleryToolTip}>
                           <Button
                             variant="light"
                             as={Link}
-                            to={"/project/" + this.state.projectId}
-                          >
+                            to={'/project/' + this.state.projectId}>
                             {this.state.projectDescription &&
-                              this.state.projectDescription[0]}{" "}
+                              this.state.projectDescription[0]}{' '}
                             Gallery
                           </Button>
                         </OverlayTrigger>
