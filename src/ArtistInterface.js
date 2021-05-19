@@ -21,6 +21,7 @@ const ArtistInterface = ({
 }) => {
   const [formValue, setFormValue] = React.useState("");
   const [idValue, setIdValue] = React.useState("");
+  // eslint-disable-next-line
   const [interaction, setInteraction] = React.useState(true);
 
   const history = useHistory();
