@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap';
 import {TwitterShareButton} from 'react-twitter-embed';
 import {Link} from 'react-router-dom';
-import {tokenDetailsUrl, reverseResolveEns} from './utils';
+import {tokenDetailsUrl /*, reverseResolveEns*/} from './utils';
 import './ProjectGallery.css';
 
 class ViewToken extends Component {
@@ -34,12 +34,12 @@ class ViewToken extends Component {
       const projectId = await artBlocks.methods
         .tokenIdToProjectId(this.props.token)
         .call();
-      const projectTokenInfo = await artBlocks.methods
-        .projectTokenInfo(this.props.project)
-        .call();
-      const projectTokens = Array.from(
-        Array(projectTokenInfo.invocations).keys()
-      );
+      // const projectTokenInfo = await artBlocks.methods
+      //   .projectTokenInfo(this.props.project)
+      //   .call();
+      // const projectTokens = Array.from(
+      //   Array(projectTokenInfo.invocations).keys()
+      // );
       const projectDescription = await artBlocks.methods
         .projectDetails(projectId)
         .call();
@@ -59,12 +59,12 @@ class ViewToken extends Component {
         this.props.token < 3000000
           ? await artBlocks.methods.showTokenHashes(this.props.token).call()
           : await artBlocks.methods.tokenIdToHash(this.props.token).call();
-      console.log(tokenHashes);
+      console.log('tokenHashes', tokenHashes);
 
-      let prettyIdentifier = await reverseResolveEns(
-        ownerOfToken,
-        this.props.web3
-      );
+      // let prettyIdentifier = await reverseResolveEns(
+      //   ownerOfToken,
+      //   this.props.web3
+      // );
 
       fetch(tokenDetailsUrl(this.props.token))
         .then((res) => {
@@ -85,7 +85,7 @@ class ViewToken extends Component {
         projectURIInfo,
         projectId,
         ownerOfToken,
-        prettyIdentifier,
+        // prettyIdentifier,
         tokenHashes,
       });
     } catch (error) {

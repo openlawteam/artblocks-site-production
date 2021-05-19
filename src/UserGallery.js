@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, Row, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import UserGalleryCard from './UserGalleryCard';
-import {reverseResolveEns} from './utils';
+// import {reverseResolveEns} from './utils';
 import {ETHERSCAN_URL, OPENSEA_URL} from './config';
 
 class UserGallery extends Component {
@@ -25,7 +25,7 @@ class UserGallery extends Component {
       if (!tokensOfAccountHolder.length) return;
 
       const tokensOfAccount = tokensOfAccountHolder;
-      console.log("TOA "+tokensOfAccount);
+      console.log('TOA ' + tokensOfAccount);
 
       const tokenData = await Promise.all(
         tokensOfAccount.map(async (token) => {
