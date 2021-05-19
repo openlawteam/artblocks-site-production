@@ -61,8 +61,16 @@ class Navigation extends Component {
               this.props.handleToggleView('off');
             }}
             to="/">
-            <span className="flutter">Flutter</span> by{' '}
-            <span className="flamingo-logo">Flamingo</span> x ArtBlocks
+            <div className="flutter-container">
+              <span className="flutter-logo">Flutter</span>{' '}
+              <span className="flutter-by">by </span>
+            </div>
+            <div className="flamingo-container">
+              <span className="flamingo-logo">Flamingo</span>{' '}
+              <span className="artblocks-logo">
+                <span className="flamingo-x-artblocks">x </span> Art Blocks
+              </span>
+            </div>
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
