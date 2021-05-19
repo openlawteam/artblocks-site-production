@@ -10,6 +10,16 @@ export const BASE_URL =
     ? 'https://rinkebyapi.artblocks.io'
     : 'https://api.artblocks.io';
 
+export const ETHERSCAN_URL =
+  NETWORK === 'rinkeby'
+    ? 'https://rinkeby.etherscan.io'
+    : 'https://www.etherscan.io';
+
+export const OPENSEA_URL =
+  NETWORK === 'rinkeby'
+    ? 'https://testnets.opensea.io'
+    : 'https://www.opensea.io';
+
 export const ARTBLOCKS_CONTRACT_ADDRESS_MAINNET =
   '0x059EDD72Cd353dF5106D2B9cC5ab83a52287aC3a';
 export const ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET =

@@ -3,6 +3,7 @@ import {Button, Col, Row, Image} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import UserGalleryCard from './UserGalleryCard';
 import {reverseResolveEns} from './utils';
+import {ETHERSCAN_URL, OPENSEA_URL} from './config';
 
 class UserGallery extends Component {
   constructor(props) {
@@ -197,7 +198,7 @@ class UserGallery extends Component {
         <h5>
           User{' '}
           <a
-            href={'https://www.etherscan.io/address/' + this.props.lookupAcct}
+            href={`${ETHERSCAN_URL}/address/${this.props.lookupAcct}`}
             target="_blank"
             rel="noopener noreferrer">
             {this.state.prettyIdentifier
@@ -207,7 +208,7 @@ class UserGallery extends Component {
           </a>{' '}
           Collection{' '}
           <a
-            href={'https://opensea.io/accounts/' + this.props.lookupAcct}
+            href={`${OPENSEA_URL}/accounts/${this.props.lookupAcct}`}
             target="_blank"
             rel="noopener noreferrer">
             <Image width="50" src="/os_logo.png" />
