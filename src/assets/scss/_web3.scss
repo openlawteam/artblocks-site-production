@@ -1,0 +1,66 @@
+.org-get-connected-btn {
+  font-family: "Lexend Exa", sans-serif;
+  color: #198ad6;
+  background-color: #fffdfb;
+  border-radius: 0;
+  border-color: #198ad6;
+  border-style: solid;
+  border-width: 2px 2px 6px;
+  text-transform: uppercase;
+  padding: 0.5rem 0.8rem;
+  background-clip: initial;
+}
+
+.org-get-connected-btn.nav-link {
+  display: inline-flex;
+}
+
+.org-get-connected-btn:before {
+  display: none;
+}
+
+.org-get-connected-btn:hover {
+  color: #198ad6;
+}
+
+.org-get-connected-btn--error {
+  font-size: 0.85rem;
+}
+
+.org-get-connected-btn--error:hover {
+  color: #ff7171;
+}
+
+.org-get-connected-btn--error::after {
+  content: none !important;
+}
+
+.org-connected-address-link-button {
+  color: #198ad6;
+  background-color: #e1cfb8;
+  border: 11px;
+  padding: 0.5rem;
+}
+
+.org-get-connected-text {
+  margin-left: 0.5rem;
+  display: none;
+}
+
+.org-connection-ethaddress {
+  text-transform: none;
+}
+
+.org-modal-menu-connected-button {
+  border-bottom: 1px solid #198ad6;
+  margin-top: 0;
+}
+
+.org-modal-menu-connected-button .org-get-connected-btn {
+  width: initial;
+}
+
+.org-modal-menu-connected-button .org-get-connected-text,
+.org-get-connected-icon {
+  display: inline;
+}

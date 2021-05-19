@@ -25,66 +25,72 @@ class ViewToken extends Component {
   }
 
   async componentDidMount() {
-    console.log('currentNet: ' + this.props.network);
-    const artBlocks =
-      this.props.token < 3000000 ? this.props.artBlocks : this.props.artBlocks2;
-    const projectId = await artBlocks.methods
-      .tokenIdToProjectId(this.props.token)
-      .call();
-    const projectTokenInfo = await artBlocks.methods
-      .projectTokenInfo(this.props.project)
-      .call();
-    const projectTokens = Array.from(
-      Array(projectTokenInfo.invocations).keys()
-    );
-    const projectDescription = await artBlocks.methods
-      .projectDetails(projectId)
-      .call();
-    const projectTokenDetails = await artBlocks.methods
-      .projectTokenInfo(projectId)
-      .call();
-    const projectScriptDetails = await artBlocks.methods
-      .projectScriptInfo(projectId)
-      .call();
-    const projectURIInfo = await artBlocks.methods
-      .projectURIInfo(projectId)
-      .call();
-    const ownerOfToken = await artBlocks.methods
-      .ownerOf(this.props.token)
-      .call();
-    const tokenHashes =
-      this.props.token < 3000000
-        ? await artBlocks.methods.showTokenHashes(this.props.token).call()
-        : await artBlocks.methods.tokenIdToHash(this.props.token).call();
-    console.log(tokenHashes);
+    try {
+      console.log('currentNet: ' + this.props.network);
+      const artBlocks =
+        this.props.token < 3000000
+          ? this.props.artBlocks
+          : this.props.artBlocks2;
+      const projectId = await artBlocks.methods
+        .tokenIdToProjectId(this.props.token)
+        .call();
+      const projectTokenInfo = await artBlocks.methods
+        .projectTokenInfo(this.props.project)
+        .call();
+      const projectTokens = Array.from(
+        Array(projectTokenInfo.invocations).keys()
+      );
+      const projectDescription = await artBlocks.methods
+        .projectDetails(projectId)
+        .call();
+      const projectTokenDetails = await artBlocks.methods
+        .projectTokenInfo(projectId)
+        .call();
+      const projectScriptDetails = await artBlocks.methods
+        .projectScriptInfo(projectId)
+        .call();
+      const projectURIInfo = await artBlocks.methods
+        .projectURIInfo(projectId)
+        .call();
+      const ownerOfToken = await artBlocks.methods
+        .ownerOf(this.props.token)
+        .call();
+      const tokenHashes =
+        this.props.token < 3000000
+          ? await artBlocks.methods.showTokenHashes(this.props.token).call()
+          : await artBlocks.methods.tokenIdToHash(this.props.token).call();
+      console.log(tokenHashes);
 
-    let prettyIdentifier = await reverseResolveEns(
-      ownerOfToken,
-      this.props.web3
-    );
+      let prettyIdentifier = await reverseResolveEns(
+        ownerOfToken,
+        this.props.web3
+      );
 
-    fetch(tokenDetailsUrl(this.props.token))
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        this.setState({
-          features: json.features,
+      fetch(tokenDetailsUrl(this.props.token))
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          this.setState({
+            features: json.features,
+          });
         });
-      });
 
-    this.setState({
-      artBlocks,
-      //projectTokens,
-      projectDescription,
-      projectTokenDetails,
-      projectScriptDetails,
-      projectURIInfo,
-      projectId,
-      ownerOfToken,
-      prettyIdentifier,
-      tokenHashes,
-    });
+      this.setState({
+        artBlocks,
+        //projectTokens,
+        projectDescription,
+        projectTokenDetails,
+        projectScriptDetails,
+        projectURIInfo,
+        projectId,
+        ownerOfToken,
+        prettyIdentifier,
+        tokenHashes,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   handleClickEmbed() {

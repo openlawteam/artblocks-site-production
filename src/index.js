@@ -5,13 +5,13 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-
+import './assets/scss/style.scss';
 
 ReactDOM.render(
   <React.StrictMode>
-  <Router>
-        <App/>
-  </Router>
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -105,115 +105,119 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider(
-        `https://${
-          NETWORK === 'main' ? 'mainnet' : 'rinkeby'
-        }.infura.io/v3/${API_KEY}`
-      )
-    );
-    const artBlocks = new web3.eth.Contract(
-      ARTBLOCKS_CONTRACT_ABI,
-      NETWORK === 'rinkeby'
-        ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
-        : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
-    );
-    const mainMinter = new web3.eth.Contract(
-      ARTBLOCKS_CONTRACT_MINTER_ABI,
-      NETWORK === 'rinkeby'
-        ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
-        : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET
-    );
-    const minterAddress =
-      NETWORK === 'rinkeby'
-        ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
-        : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
-    const nextProjectId = await artBlocks.methods.nextProjectId().call();
-    const allProjects = [];
-    for (let i = 0; i < nextProjectId; i++) {
-      allProjects.push(i);
-    }
-
-    //await artBlocks.methods.showAllProjectIds().call();
-    let activeProjects = [];
-    await Promise.all(
-      allProjects.map(async (project) => {
-        if (project < 3) {
-          let details = await artBlocks.methods
-            .projectTokenInfo(project)
-            .call();
-          if (details[4] === true) {
-            activeProjects.push(project);
-          }
-        } else {
-          let details = await artBlocks.methods
-            .projectTokenInfo(project)
-            .call();
-          if (details[4] === true) {
-            activeProjects.push(project);
-          }
-        }
-        return null;
-      })
-    );
-    let artistAddresses = await Promise.all(
-      allProjects.map(async (project) => {
-        if (project < 3) {
-          let details = await artBlocks.methods
-            .projectTokenInfo(project)
-            .call();
-          return details[0];
-        } else {
-          let details = await artBlocks.methods
-            .projectTokenInfo(project)
-            .call();
-          return details[0];
-        }
-      })
-    );
-    const totalInvocations = Number(
-      await artBlocks.methods.totalSupply().call()
-    );
-    if (this.props.project) {
-      this.setState({currentProject: this.props.project});
-    } else {
-      this.setState({
-        currentProject:
-          activeProjects[Math.floor(Math.random() * activeProjects.length)],
-      });
-    }
-
-    if (window.ethereum) {
-      const accounts = await new Web3(window.ethereum).eth.getAccounts();
-      if (accounts && accounts.length > 0) {
-        this.handleConnectToMetamask();
+    try {
+      const web3 = new Web3(
+        new Web3.providers.HttpProvider(
+          `https://${
+            NETWORK === 'main' ? 'mainnet' : 'rinkeby'
+          }.infura.io/v3/${API_KEY}`
+        )
+      );
+      const artBlocks = new web3.eth.Contract(
+        ARTBLOCKS_CONTRACT_ABI,
+        NETWORK === 'rinkeby'
+          ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
+          : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
+      );
+      const mainMinter = new web3.eth.Contract(
+        ARTBLOCKS_CONTRACT_MINTER_ABI,
+        NETWORK === 'rinkeby'
+          ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
+          : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET
+      );
+      const minterAddress =
+        NETWORK === 'rinkeby'
+          ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
+          : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
+      const nextProjectId = await artBlocks.methods.nextProjectId().call();
+      const allProjects = [];
+      for (let i = 0; i < nextProjectId; i++) {
+        allProjects.push(i);
       }
 
-      // Make sure the site reflects if the user has disconnected their wallet
-      window.ethereum.on('accountsChanged', (accounts) => {
-        if (accounts.length === 0) {
-          this.setState({
-            connected: false,
-            account: null,
-            tokensOfOwner: null,
-            isWhitelisted: null,
-            projectsOfArtist: null,
-          });
-        }
-      });
-    }
+      //await artBlocks.methods.showAllProjectIds().call();
+      let activeProjects = [];
+      await Promise.all(
+        allProjects.map(async (project) => {
+          if (project < 3) {
+            let details = await artBlocks.methods
+              .projectTokenInfo(project)
+              .call();
+            if (details[4] === true) {
+              activeProjects.push(project);
+            }
+          } else {
+            let details = await artBlocks.methods
+              .projectTokenInfo(project)
+              .call();
+            if (details[4] === true) {
+              activeProjects.push(project);
+            }
+          }
+          return null;
+        })
+      );
 
-    this.setState({
-      artBlocks,
-      mainMinter,
-      minterAddress,
-      web3,
-      allProjects,
-      totalInvocations,
-      artistAddresses,
-      activeProjects,
-    });
-    //}
+      let artistAddresses = await Promise.all(
+        allProjects.map(async (project) => {
+          if (project < 3) {
+            let details = await artBlocks.methods
+              .projectTokenInfo(project)
+              .call();
+            return details[0];
+          } else {
+            let details = await artBlocks.methods
+              .projectTokenInfo(project)
+              .call();
+            return details[0];
+          }
+        })
+      );
+      const totalInvocations = Number(
+        await artBlocks.methods.totalSupply().call()
+      );
+      if (this.props.project) {
+        this.setState({currentProject: this.props.project});
+      } else {
+        this.setState({
+          currentProject:
+            activeProjects[Math.floor(Math.random() * activeProjects.length)],
+        });
+      }
+
+      if (window.ethereum) {
+        const accounts = await new Web3(window.ethereum).eth.getAccounts();
+        if (accounts && accounts.length > 0) {
+          this.handleConnectToMetamask();
+        }
+
+        // Make sure the site reflects if the user has disconnected their wallet
+        window.ethereum.on('accountsChanged', (accounts) => {
+          if (accounts.length === 0) {
+            this.setState({
+              connected: false,
+              account: null,
+              tokensOfOwner: null,
+              isWhitelisted: null,
+              projectsOfArtist: null,
+            });
+          }
+        });
+      }
+
+      this.setState({
+        artBlocks,
+        mainMinter,
+        minterAddress,
+        web3,
+        allProjects,
+        totalInvocations,
+        artistAddresses,
+        activeProjects,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async componentDidUpdate(oldProps) {

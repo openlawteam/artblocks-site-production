@@ -1,11 +1,11 @@
 //https://oneclickdapp.com/beast-powder/
 
 import React, {Component} from 'react';
-import {Navbar, Nav, NavDropdown /*, Image*/} from 'react-bootstrap';
+import {Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './Nav.css';
 
-import {MetaMaskSVG, WalletSVG} from './svg';
+import {MetaMaskSVG, WalletSVG} from './assets/svg';
 
 import {formatEthereumAddress} from './utils/helpers';
 
