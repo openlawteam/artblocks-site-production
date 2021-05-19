@@ -284,7 +284,7 @@ class App extends Component {
           ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
           : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
       );
-      const mainMinter = new web3.eth.Contract(
+			const mainMinter = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_MINTER_ABI,
         NETWORK === 'rinkeby'
           ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
