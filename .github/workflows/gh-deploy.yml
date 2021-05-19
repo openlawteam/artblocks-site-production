@@ -3,7 +3,7 @@ name: GitHub Pages Deployment
 on:
   push:
     branches:
-      - master
+      - flamingoBlocks
 
 jobs:
   deploy-dev:
