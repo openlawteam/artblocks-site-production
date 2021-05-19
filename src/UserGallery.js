@@ -24,26 +24,14 @@ class UserGallery extends Component {
       // if no tokens, no need to proceed any further
       if (!tokensOfAccountHolder.length) return;
 
-      const tokensOfAccountHolderFiltered = tokensOfAccountHolder.filter(
-        (token) => token < 3000000
-      );
-      //console.log(tokensOfAccountHolderFiltered);
-      //console.log("TA"+tokensOfAccountHolder);
-      // const tokensOfAccountB = await artBlocks2.methods
-      //   .tokensOfOwner(this.props.lookupAcct)
-      //   .call();
-      //console.log("TB"+tokensOfAccountB);
-      const tokensOfAccount = tokensOfAccountHolderFiltered; //.concat(tokensOfAccountB);
-      //console.log("TOA"+tokensOfAccount);
+      const tokensOfAccount = tokensOfAccountHolder;
+      console.log("TOA "+tokensOfAccount);
 
       const tokenData = await Promise.all(
         tokensOfAccount.map(async (token) => {
           const projectId = await artBlocks.methods
             .tokenIdToProjectId(token)
             .call();
-          // token < 3000000
-          //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
-          //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
           return [token, projectId];
         })
       );
@@ -53,18 +41,18 @@ class UserGallery extends Component {
             let projectId = await artBlocks.methods
               .tokenIdToProjectId(token)
               .call();
-            // token < 3000000
-            //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
-            //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
             return projectId;
           })
         )
       );
 
+      let prettyIdentifier = this.props.lookupAcct;
+      /*
       let prettyIdentifier = await reverseResolveEns(
         this.props.lookupAcct,
         this.props.web3
       );
+      */
 
       this.setState({
         artBlocks,
