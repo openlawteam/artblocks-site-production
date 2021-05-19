@@ -26,8 +26,7 @@ class NewToken extends Component {
 
   async componentDidMount() {
     console.log("currentNet:" + this.props.network);
-    const artBlocks =
-      this.props.token < 3000000 ? this.props.artBlocks : this.props.artBlocks2;
+    const artBlocks = this.props.artBlocks;
     const projectId = await artBlocks.methods
       .tokenIdToProjectId(this.props.token)
       .call();
