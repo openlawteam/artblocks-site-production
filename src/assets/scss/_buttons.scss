@@ -1,14 +1,53 @@
 /* BUTTONS */
 
-.btn.btn-block {
-  border: none;
-  font-family: "Major Mono Display", monospace;
-}
+// .btn.btn-block {
+//   border: none;
+//   font-family: "Major Mono Display", monospace;
+// }
 
+// .btn.btn-primary {
+//   color: #096a88;
+//   background-color: #ffffff;
+// }
+
+// .modal-content {
 .btn.btn-primary {
-  color: #096a88;
-  background-color: #ffffff;
+  color: #198ad6;
+  background-color: #fffdfb;
+  border-radius: 0;
+  border-color: #198ad6;
+  border-style: solid;
+  border-width: 2px 2px 6px;
+  padding: 0.6rem 1rem;
+  font-size: 1.125rem;
+  font-style: italic;
+  font-family: "Space Mono", monospace;
+  font-weight: bold;
 }
 
-.btn.btn-light {
+.btn.btn-secondary {
+  color: #198ad6;
+  background-color: #fdbdeb;
+  border-radius: 0;
+  border-color: #198ad6;
+  border-style: solid;
+  border-width: 2px 2px 6px;
+  // padding: 0.6rem 4rem;
+  text-transform: initial;
+  font-family: "Space Mono", monospace;
+  font-weight: bold;
+  // min-width: 12rem;
+  // line-height: 3rem;
+  // font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  width: 100%;
+}
+
+.modal-content {
+  .btn.btn-primary,
+  .btn.btn-secondary {
+    width: auto;
+    padding: 0.6rem 1rem;
+    margin: 0.25rem;
+  }
 }

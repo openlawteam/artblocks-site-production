@@ -5,7 +5,7 @@ import {Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './Nav.css';
 
-import {MetaMaskSVG, WalletSVG} from './assets/svg';
+import {MetaMaskSVG, WalletSVG, FlamingoDAOSVG} from './assets/svg';
 
 import {formatEthereumAddress} from './utils/helpers';
 
@@ -379,7 +379,7 @@ class Navigation extends Component {
                   Control Panel
                 </Nav.Link>
               )}
-              {this.props.tokensOfOwner && (
+              {/* {this.props.tokensOfOwner && (
                 <Nav.Link
                   as={Link}
                   onClick={() => {
@@ -388,7 +388,16 @@ class Navigation extends Component {
                   to={'/user/' + this.props.account}>
                   Your Items
                 </Nav.Link>
-              )}
+              )} */}
+
+              <Nav.Link
+                href={
+                  this.props.network === 'rinkeby'
+                    ? 'https://develop.flamingodao.xyz/'
+                    : 'https://www.flamingodao.xyz/'
+                }>
+                <FlamingoDAOSVG /> Flamingo DAO
+              </Nav.Link>
             </Nav>
 
             {this.props.projectsOfArtist &&

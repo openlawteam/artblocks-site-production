@@ -386,6 +386,7 @@ class App extends Component {
                 projectsOfArtist={this.state.projectsOfArtist}
                 curated={CURATED}
                 complete={COMPLETE}
+                network={NETWORK}
               />
             )}
           </div>

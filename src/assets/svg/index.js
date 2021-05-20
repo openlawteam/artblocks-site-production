@@ -1,4 +1,5 @@
 import MetaMaskSVG from './MetaMaskSVG';
 import WalletSVG from './WalletSVG';
+import FlamingoDAOSVG from './FlamingoDAOSVG';
 
-export {MetaMaskSVG, WalletSVG};
+export {FlamingoDAOSVG, MetaMaskSVG, WalletSVG};

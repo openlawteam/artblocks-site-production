@@ -742,8 +742,7 @@ class Project extends Component {
                                   variant="secondary">
                                   <p>Showing the latest mint.</p>
                                   <Button
-                                    variant="light"
-                                    block
+                                    className="btn btn-secondary"
                                     to={this.props.match.url + '/gallery'}
                                     as={Link}>
                                     View All
@@ -773,7 +772,8 @@ class Project extends Component {
                                     </p>
                                   )}
                                   <Button
-                                    className="btn-primary btn-block"
+                                    className="btn-primary"
+                                    style={{width: '100%'}}
                                     disabled={
                                       this.state.purchase
                                         ? true
@@ -843,7 +843,7 @@ class Project extends Component {
                                     delay={{show: 250, hide: 400}}
                                     overlay={approveDaiToolTip}>
                                     <Button
-                                      className="btn-primary btn-block"
+                                      className="btn-primary"
                                       /*disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} */ onClick={
                                         this.approve
                                       }>
@@ -889,7 +889,7 @@ class Project extends Component {
                                     : this.props.match.url + '/artist'
                                 );
                               }}
-                              className="btn-primary btn-block">
+                              className="btn-primary">
                               Toggle Artist Interface
                             </Button>
                           ) : null}

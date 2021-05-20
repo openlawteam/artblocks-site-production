@@ -1235,10 +1235,7 @@ class Project extends Component {
                                   style={{width: '100%'}}
                                   variant="secondary">
                                   <p>Showing the latest mint.</p>
-                                  <Button
-                                    variant="light"
-                                    block
-                                    onClick={this.handleLatest}>
+                                  <Button onClick={this.handleLatest}>
                                     View All
                                   </Button>
                                 </Alert>
@@ -1266,7 +1263,7 @@ class Project extends Component {
                                     </p>
                                   )}
                                   <Button
-                                    className="btn-primary btn-block"
+                                    className="btn-secondary"
                                     disabled={
                                       this.state.purchase
                                         ? true
