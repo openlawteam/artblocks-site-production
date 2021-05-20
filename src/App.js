@@ -324,10 +324,18 @@ class App extends Component {
 
   handleNextProject() {
     try {
+      // if there is only one project, just show it
+      if (this.state.activeProjects.length <= 1) {
+        this.setState({currentProject: 0});
+
+        return;
+      }
+
       let newProject =
         this.state.activeProjects[
           Math.floor(Math.random() * this.state.activeProjects.length)
         ];
+
       let oldProject = this.state.currentProject;
       if (newProject !== oldProject) {
         this.setState({currentProject: newProject});
