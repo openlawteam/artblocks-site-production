@@ -1,16 +1,26 @@
-// .flamingo-navbar-nav {
-//   background-color: rgba(245, 161, 159, 0.1);
-//   border-radius: 10px;
-// }
+.flamingo-navbar-nav {
+  color: #198ad6;
+
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.09rem;
+}
+
+.navbar-light {
+  .navbar-nav .nav-link {
+    color: #198ad6;
+  }
+}
+
+.navbar-brand {
+  position: relative;
+  top: -20px;
+}
 
 .flamingo-container {
-  .flamingo-logo {
-    // color: #f5a19f;
-    // font-family: "Space Mono", monospace;
-    // text-transform: uppercase;
-    // font-weight: 700;
-    // text-shadow: 2px 2px 6px #ffe0df;
+  padding-top: 2rem;
 
+  .flamingo-logo {
     color: #fff;
     font-family: "Space Mono", monospace;
     text-transform: uppercase;
@@ -20,32 +30,17 @@
     text-shadow: 2px 2px 6px #f5a19f;
   }
 
-  .flamingo-x-artblocks {
-    font-family: "Space Mono", monospace;
-  }
-
-  .artblocks-logo {
-    position: relative;
-    top: -7px;
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
+  .flutter-logo {
+    font-family: "Major Mono Display", monospace;
+    color: #198ad6;
+    font-size: 1.3rem;
   }
 }
 
-.flutter-container {
-  // text-align: right;
-  // padding-right: 5.5rem;
-
-  padding-left: 4rem;
-
-  .flutter-logo {
-    font-family: "Major Mono Display", monospace;
-    // color: #497f8f;
-    font-size: 1.3rem;
-  }
-
-  .flutter-by {
-    font-style: italic;
-    font-size: 0.9rem;
+.artblocks-container {
+  .artblocks-logo {
+    color: #567a93;
+    font-size: 1rem;
+    font-weight: 400;
   }
 }

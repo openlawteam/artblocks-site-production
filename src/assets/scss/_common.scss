@@ -23,6 +23,10 @@ body {
   margin: 0;
 }
 
+header {
+  padding: 0 3rem;
+}
+
 main {
   flex: 1 1;
   z-index: 0;
@@ -45,6 +49,24 @@ main {
   background-color: #ffffff;
   border-radius: 0;
   border: 2px solid #e08b86;
+}
+
+.dropdown-menu {
+  background-color: #fbd9b4;
+  border: none;
+  border-radius: 0;
+
+  .dropdown-item {
+    color: #198ad6;
+    // font-family: "Lexend Exa", sans-serif;
+
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}
+
+.org-proposal-content-title {
+  color: #6fa1c2;
 }
 
 /* 

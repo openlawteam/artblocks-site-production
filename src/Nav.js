@@ -61,14 +61,13 @@ class Navigation extends Component {
               this.props.handleToggleView('off');
             }}
             to="/">
-            <div className="flutter-container">
-              <span className="flutter-logo">Flutter</span>{' '}
-              <span className="flutter-by">by </span>
-            </div>
             <div className="flamingo-container">
               <span className="flamingo-logo">Flamingo</span>{' '}
+              <span className="flutter-logo">Flutter</span>
+            </div>
+            <div className="artblocks-container">
               <span className="artblocks-logo">
-                <span className="flamingo-x-artblocks">x </span> Art Blocks
+                an Art Blocks collaboration
               </span>
             </div>
           </Navbar.Brand>
@@ -354,22 +353,23 @@ class Navigation extends Component {
                 Gallery View
               </Nav.Link> */}
 
-              <Nav.Link
+              {/* <Nav.Link
                 as={Link}
                 onClick={() => {
                   this.props.handleToggleView('off');
                 }}
                 to={'/learn'}>
                 Learn
-              </Nav.Link>
-              <Nav.Link
+              </Nav.Link> */}
+
+              {/* <Nav.Link
                 as={Link}
                 onClick={() => {
                   this.props.handleToggleView('off');
                 }}
                 to={'/sustainability'}>
                 Sustainability
-              </Nav.Link>
+              </Nav.Link> */}
             </Nav>
             <Nav className="ml-auto">
               {this.props.isWhitelisted && (
