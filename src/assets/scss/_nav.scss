@@ -1,19 +1,23 @@
-.flamingo-navbar-nav {
-  background-color: rgba(245, 161, 159, 0.1);
-  border-radius: 10px;
-  /* color: #fee2ee; */
-}
+// .flamingo-navbar-nav {
+//   background-color: rgba(245, 161, 159, 0.1);
+//   border-radius: 10px;
+// }
 
 .flamingo-container {
   .flamingo-logo {
-    color: #f5a19f;
+    // color: #f5a19f;
+    // font-family: "Space Mono", monospace;
+    // text-transform: uppercase;
+    // font-weight: 700;
+    // text-shadow: 2px 2px 6px #ffe0df;
+
+    color: #fff;
     font-family: "Space Mono", monospace;
     text-transform: uppercase;
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: 700;
-    /* text-shadow: 2px 2px 6px #f5a19f; */
-    text-shadow: 2px 2px 6px #ffe0df;
     letter-spacing: 0.105em;
+    text-shadow: 2px 2px 6px #f5a19f;
   }
 
   .flamingo-x-artblocks {
@@ -32,7 +36,7 @@
   // text-align: right;
   // padding-right: 5.5rem;
 
-  padding-left: 1rem;
+  padding-left: 4rem;
 
   .flutter-logo {
     font-family: "Major Mono Display", monospace;

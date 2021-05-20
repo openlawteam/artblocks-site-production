@@ -54,7 +54,7 @@ class Navigation extends Component {
   render() {
     return (
       <div>
-        <Navbar className="navBar" fixed="top" bg="light" expand="lg">
+        <Navbar className="navBar" expand="lg">
           <Navbar.Brand
             as={Link}
             onClick={() => {

@@ -652,7 +652,7 @@ class Project extends Component {
       this.state.projectTokenDetails[0] === this.props.account;
 
     return (
-      <div>
+      <div className="section-wrapper">
         {this.state.projectTokenDetails &&
           (this.props.isWhitelisted ||
             this.state.projectTokenDetails[0] === this.props.account ||
@@ -670,15 +670,12 @@ class Project extends Component {
                   currentSubroute === 'latest' ||
                   (this.state.projectTokens &&
                     this.state.projectTokens.length) < 10
-                    ? 'align-items-center'
+                    ? 'align-items-center wrapper-container'
                     : ''
                 }>
                 <Col xs={12} sm={6} md={3}>
-                  <div>
+                  <div className="">
                     <div className="text-align-center">
-                      <br />
-                      <br />
-                      <br />
                       {this.state.projectDescription && (
                         <div>
                           <h1>{this.state.projectDescription[0]}</h1>
@@ -693,10 +690,9 @@ class Project extends Component {
                             {this.state.projectDescription[3] &&
                               this.state.projectDescription[3]}
                           </a>
-                          <br />
-                          <br />
+
                           <p>{this.state.projectDescription[2]}</p>
-                          <br />
+
                           <p>
                             Total Minted:{' '}
                             {this.state.projectTokenDetails &&
@@ -942,7 +938,7 @@ class Project extends Component {
                   </div>
                 </Col>
                 {/* Right Section */}
-                <Col xs={12} sm={6} md={9}>
+                <Col xs={12} sm={6} md={9} className="content-container">
                   <Switch>
                     <Route exact path={this.props.match.path + '/'}>
                       <LatestToken

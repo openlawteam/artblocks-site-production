@@ -240,37 +240,43 @@ class App extends Component {
   }
 
   async loadAccountData() {
-    const accounts = await this.state.web3.eth.getAccounts();
-    if (accounts && accounts.length > 0) {
-      const tokensOfOwnerA = await this.state.artBlocks.methods
-        .tokensOfOwner(accounts[0])
-        .call();
-      const tokensOfOwnerAFiltered = tokensOfOwnerA.filter(
-        (token) => token < 3000000
-      );
-      const tokensOfOwnerB = await this.state.artBlocks.methods
-        .tokensOfOwner(accounts[0])
-        .call();
-      const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
-      const isWhitelisted =
-        (await this.state.artBlocks.methods
-          .isWhitelisted(accounts[0])
-          .call()) &&
-        (await this.state.artBlocks.methods.isWhitelisted(accounts[0]).call());
-      let projectsOfArtist = [];
-      this.state.artistAddresses.map((projectArtistAddress, index) => {
-        if (projectArtistAddress === accounts[0] || isWhitelisted) {
-          projectsOfArtist.push(index);
-        }
-        return null;
-      });
+    try {
+      const accounts = await this.state.web3.eth.getAccounts();
+      if (accounts && accounts.length > 0) {
+        const tokensOfOwnerA = await this.state.artBlocks.methods
+          .tokensOfOwner(accounts[0])
+          .call();
+        const tokensOfOwnerAFiltered = tokensOfOwnerA.filter(
+          (token) => token < 3000000
+        );
+        const tokensOfOwnerB = await this.state.artBlocks.methods
+          .tokensOfOwner(accounts[0])
+          .call();
+        const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
+        const isWhitelisted =
+          (await this.state.artBlocks.methods
+            .isWhitelisted(accounts[0])
+            .call()) &&
+          (await this.state.artBlocks.methods
+            .isWhitelisted(accounts[0])
+            .call());
+        let projectsOfArtist = [];
+        this.state.artistAddresses.map((projectArtistAddress, index) => {
+          if (projectArtistAddress === accounts[0] || isWhitelisted) {
+            projectsOfArtist.push(index);
+          }
+          return null;
+        });
 
-      this.setState({
-        account: accounts[0],
-        tokensOfOwner,
-        isWhitelisted,
-        projectsOfArtist,
-      });
+        this.setState({
+          account: accounts[0],
+          tokensOfOwner,
+          isWhitelisted,
+          projectsOfArtist,
+        });
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -284,7 +290,7 @@ class App extends Component {
           ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
           : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
       );
-			const mainMinter = new web3.eth.Contract(
+      const mainMinter = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_MINTER_ABI,
         NETWORK === 'rinkeby'
           ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
@@ -343,181 +349,183 @@ class App extends Component {
   }
 
   render() {
+    console.log('his.state.allProjects', this.state.allProjects);
     console.log('this.state.currentProject', this.state.currentProject);
     let baseURL =
       NETWORK === 'main'
         ? 'https://api.artblocks.io'
         : 'https://rinkebyapi.artblocks.io';
 
-    //let baseURL = "http://localhost:8080"
-
-    //console.log("currentProject"+this.state.currentProject);
-    //console.log(this.state.network && this.state.network);
     return (
-      <div className="container-fluid">
-        <div>
-          {this.state.allProjects && (
-            <Navigation
-              web3={this.state.web3}
-              artBlocks={this.state.artBlocks}
-              handleToggleView={this.handleToggleView}
-              allProjects={this.state.allProjects}
-              activeProjects={this.state.activeProjects}
-              handleConnectToMetamask={this.handleConnectToMetamask}
-              connected={this.state.connected}
-              account={this.state.account}
-              tokensOfOwner={this.state.tokensOfOwner}
-              baseURL={baseURL}
-              isWhitelisted={this.state.isWhitelisted}
-              projectsOfArtist={this.state.projectsOfArtist}
-              curated={CURATED}
-              complete={COMPLETE}
-            />
-          )}
-        </div>
-
-        {this.state.overlay && (
-          <div>
-            {this.state.show === 'newToken' && (
-              <div>
-                <NewToken
-                  artBlocks={this.state.artBlocks}
-                  token={this.state.currentToken}
-                  handleToggleView={this.handleToggleView}
-                  baseURL={baseURL}
-                  network={NETWORK}
-                />
-              </div>
-            )}
-
-            {this.state.allProjects && this.state.show === 'controlPanel' && (
-              <div>
-                <ControlPanel
-                  account={this.state.account}
-                  handleToggleView={this.handleToggleView}
-                  connected={this.state.connected}
-                  web3={this.state.web3}
-                  artBlocks={this.state.artBlocks}
-                  network={this.state.network}
-                  baseURL={baseURL}
-                  isWhitelisted={this.state.isWhitelisted}
-                />
-              </div>
+      <>
+        <header>
+          <div className="header">
+            {this.state.allProjects && (
+              <Navigation
+                web3={this.state.web3}
+                artBlocks={this.state.artBlocks}
+                handleToggleView={this.handleToggleView}
+                allProjects={this.state.allProjects}
+                activeProjects={this.state.activeProjects}
+                handleConnectToMetamask={this.handleConnectToMetamask}
+                connected={this.state.connected}
+                account={this.state.account}
+                tokensOfOwner={this.state.tokensOfOwner}
+                baseURL={baseURL}
+                isWhitelisted={this.state.isWhitelisted}
+                projectsOfArtist={this.state.projectsOfArtist}
+                curated={CURATED}
+                complete={COMPLETE}
+              />
             )}
           </div>
-        )}
-
-        {!this.state.overlay && (
-          <Switch>
-            <Route path="/gallery">
-              {this.state.activeProjects &&
-                this.state.activeProjects
-                  .sort(function (a, b) {
-                    return a - b;
-                  })
-                  .map((project, index) => {
-                    return (
-                      <div key={index}>
-                        <ProjectGallery
-                          key={index}
-                          project={project}
-                          account={this.state.account}
-                          tokensOfOwner={this.state.tokensOfOwner}
-                          handleToggleView={this.handleToggleView}
-                          web3={this.state.web3}
-                          artBlocks={this.state.artBlocks}
-                          network={NETWORK}
-                          baseURL={baseURL}
-                        />
-                      </div>
-                    );
-                  })}
-            </Route>
-
-            <Route path="/token/:tokenId">
-              {this.state.allProjects && (
-                <ViewTok
-                  artBlocks={this.state.artBlocks}
-                  handleToggleView={this.handleToggleView}
-                  baseURL={baseURL}
-                  network={NETWORK}
-                  nonInter={this.state.nonInter}
-                  web3={this.state.web3}
-                />
-              )}
-            </Route>
-
-            <Route path="/project/:project">
-              {this.state.allProjects && (
-                <Proj
-                  handleConnectToMetamask={this.handleConnectToMetamask}
-                  account={this.state.account}
-                  handleToggleView={this.handleToggleView}
-                  connected={this.state.connected}
-                  web3={this.state.web3}
-                  artBlocks={this.state.artBlocks}
-                  mainMinter={this.state.mainMinter}
-                  minterAddress={this.state.minterAddress}
-                  network={NETWORK}
-                  baseURL={baseURL}
-                  isWhitelisted={this.state.isWhitelisted}
-                  nonInter={this.state.nonInter}
-                />
-              )}
-            </Route>
-
-            <Route exact path="/">
-              {this.state.allProjects && (
-                <div className="container-fluid mt-5">
-                  <Intro
-                    allProjects={this.state.allProjects}
-                    activeProjects={this.state.activeProjects}
-                    totalInvocations={this.state.totalInvocations}
-                  />
-                  <div className="container mt-5">
-                    <Row className="align-items-center">
-                      <Col>
-                        <Highlight
-                          project={this.state.currentProject}
-                          web3={this.state.web3}
-                          account={this.state.account}
-                          tokensOfOwner={this.state.tokensOfOwner}
-                          handleToggleView={this.handleToggleView}
-                          artBlocks={this.state.artBlocks}
-                          network={NETWORK}
-                          handleNextProject={this.handleNextProject}
-                          baseURL={baseURL}
-                          nonInter={this.state.nonInter}
-                        />
-                      </Col>
-                    </Row>
+        </header>
+        <main>
+          <div className="container-fluid">
+            {this.state.overlay && (
+              <div>
+                {this.state.show === 'newToken' && (
+                  <div>
+                    <NewToken
+                      artBlocks={this.state.artBlocks}
+                      token={this.state.currentToken}
+                      handleToggleView={this.handleToggleView}
+                      baseURL={baseURL}
+                      network={NETWORK}
+                    />
                   </div>
-                </div>
-              )}
-            </Route>
-            <Route path="/user/:address">
-              {this.state.allProjects && (
-                <UserGal
-                  handleToggleView={this.handleToggleView}
-                  web3={this.state.web3}
-                  artBlocks={this.state.artBlocks}
-                  network={NETWORK}
-                  baseURL={baseURL}
-                />
-              )}
-            </Route>
+                )}
 
-            <Route exact path="/learn">
-              <Learn baseURL={baseURL} />
-            </Route>
-            <Route exact path="/sustainability">
-              <Sustainability baseURL={baseURL} />
-            </Route>
-          </Switch>
-        )}
+                {this.state.allProjects && this.state.show === 'controlPanel' && (
+                  <div>
+                    <ControlPanel
+                      account={this.state.account}
+                      handleToggleView={this.handleToggleView}
+                      connected={this.state.connected}
+                      web3={this.state.web3}
+                      artBlocks={this.state.artBlocks}
+                      network={this.state.network}
+                      baseURL={baseURL}
+                      isWhitelisted={this.state.isWhitelisted}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
 
-        {/*<CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>*/}
-      </div>
+            {!this.state.overlay && (
+              <Switch>
+                <Route path="/gallery">
+                  {this.state.activeProjects &&
+                    this.state.activeProjects
+                      .sort(function (a, b) {
+                        return a - b;
+                      })
+                      .map((project, index) => {
+                        return (
+                          <div key={index}>
+                            <ProjectGallery
+                              key={index}
+                              project={project}
+                              account={this.state.account}
+                              tokensOfOwner={this.state.tokensOfOwner}
+                              handleToggleView={this.handleToggleView}
+                              web3={this.state.web3}
+                              artBlocks={this.state.artBlocks}
+                              network={NETWORK}
+                              baseURL={baseURL}
+                            />
+                          </div>
+                        );
+                      })}
+                </Route>
+
+                <Route path="/token/:tokenId">
+                  {this.state.allProjects && (
+                    <ViewTok
+                      artBlocks={this.state.artBlocks}
+                      handleToggleView={this.handleToggleView}
+                      baseURL={baseURL}
+                      network={NETWORK}
+                      nonInter={this.state.nonInter}
+                      web3={this.state.web3}
+                    />
+                  )}
+                </Route>
+
+                <Route path="/project/:project">
+                  {this.state.allProjects && (
+                    <Proj
+                      handleConnectToMetamask={this.handleConnectToMetamask}
+                      account={this.state.account}
+                      handleToggleView={this.handleToggleView}
+                      connected={this.state.connected}
+                      web3={this.state.web3}
+                      artBlocks={this.state.artBlocks}
+                      mainMinter={this.state.mainMinter}
+                      minterAddress={this.state.minterAddress}
+                      network={NETWORK}
+                      baseURL={baseURL}
+                      isWhitelisted={this.state.isWhitelisted}
+                      nonInter={this.state.nonInter}
+                    />
+                  )}
+                </Route>
+
+                <Route exact path="/">
+                  {this.state.allProjects && (
+                    <div className="container-fluid mt-5">
+                      <Intro
+                        allProjects={this.state.allProjects}
+                        activeProjects={this.state.activeProjects}
+                        totalInvocations={this.state.totalInvocations}
+                      />
+                      <div className="container mt-5">
+                        <Row className="align-items-center">
+                          <Col>
+                            <Highlight
+                              project={this.state.currentProject}
+                              web3={this.state.web3}
+                              account={this.state.account}
+                              tokensOfOwner={this.state.tokensOfOwner}
+                              handleToggleView={this.handleToggleView}
+                              artBlocks={this.state.artBlocks}
+                              network={NETWORK}
+                              handleNextProject={this.handleNextProject}
+                              baseURL={baseURL}
+                              nonInter={this.state.nonInter}
+                            />
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  )}
+                </Route>
+                <Route path="/user/:address">
+                  {this.state.allProjects && (
+                    <UserGal
+                      handleToggleView={this.handleToggleView}
+                      web3={this.state.web3}
+                      artBlocks={this.state.artBlocks}
+                      network={NETWORK}
+                      baseURL={baseURL}
+                    />
+                  )}
+                </Route>
+
+                <Route exact path="/learn">
+                  <Learn baseURL={baseURL} />
+                </Route>
+                <Route exact path="/sustainability">
+                  <Sustainability baseURL={baseURL} />
+                </Route>
+              </Switch>
+            )}
+
+            {/*<CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>*/}
+          </div>
+        </main>
+      </>
     );
   }
 }

@@ -18,7 +18,7 @@ class Highlight extends Component {
   }
 
   async componentDidMount() {
-    if (!this.props.project) return;
+    if (this.props.project === undefined) return;
 
     try {
       const artBlocks = this.props.artBlocks;
@@ -133,8 +133,6 @@ class Highlight extends Component {
       </Tooltip>
     );
 
-    //console.log(this.props.web3);
-
     //let owned = this.state.randomToken && this.props.tokensOfOwner && this.props.tokensOfOwner.includes(this.state.randomToken.toString());
 
     let baseURL = this.props.baseURL;
@@ -151,12 +149,7 @@ class Highlight extends Component {
       return baseURL + '/generator/' + token;
     }
 
-    /*
-    if (this.state.projectURIInfo){
-      console.log('URI '+ this.state.projectURIInfo[0]);
-    }
-*/
-
+    console.log('this.state.randomToken', this.state.randomToken);
     return (
       <div>
         {this.state.randomToken && (
