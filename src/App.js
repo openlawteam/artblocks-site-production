@@ -323,15 +323,19 @@ class App extends Component {
   }
 
   handleNextProject() {
-    let newProject =
-      this.state.activeProjects[
-        Math.floor(Math.random() * this.state.activeProjects.length)
-      ];
-    let oldProject = this.state.currentProject;
-    if (newProject !== oldProject) {
-      this.setState({currentProject: newProject});
-    } else {
-      this.handleNextProject();
+    try {
+      let newProject =
+        this.state.activeProjects[
+          Math.floor(Math.random() * this.state.activeProjects.length)
+        ];
+      let oldProject = this.state.currentProject;
+      if (newProject !== oldProject) {
+        this.setState({currentProject: newProject});
+      } else {
+        this.handleNextProject();
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -349,8 +353,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('his.state.allProjects', this.state.allProjects);
-    console.log('this.state.currentProject', this.state.currentProject);
     let baseURL =
       NETWORK === 'main'
         ? 'https://api.artblocks.io'

@@ -28,7 +28,6 @@ class Navigation extends Component {
       activeProjectArtistName.push(activeProjects[project]);
       activeProjectArtistName.push(projectDetails[0]);
       activeProjectArtistName.push(projectDetails[1]);
-      console.log(activeProjectArtistName);
       activeProjectsDetails.push(activeProjectArtistName);
     }
 

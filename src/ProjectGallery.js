@@ -17,7 +17,9 @@ class ProjectGallery extends Component {
       const projectTokenInfo = await artBlocks.methods
         .projectTokenInfo(this.props.project)
         .call();
-      const projectTokens = Array.from(Array(projectTokenInfo.invocations).keys());
+      const projectTokens = Array.from(
+        Array(projectTokenInfo.invocations).keys()
+      );
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
         .call();
@@ -86,13 +88,6 @@ class ProjectGallery extends Component {
   }
 
   render() {
-    //console.log(this.props);
-    //console.log(this.state.web3);
-    //console.log("acct: "+this.props.account);
-
-    //console.log(this.state.randomToken && this.state.randomToken);
-    //console.log(this.props.tokensOfOwner && this.props.tokensOfOwner);
-
     let owned =
       this.state.randomToken &&
       this.props.tokensOfOwner &&

@@ -67,8 +67,6 @@ class Highlight extends Component {
   async componentDidUpdate(oldProps) {
     try {
       if (oldProps.project !== this.props.project) {
-        console.log('change');
-        console.log(this.props.project);
         const artBlocks =
           this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
         const projectTokenInfo = await artBlocks.methods
@@ -149,40 +147,35 @@ class Highlight extends Component {
       return baseURL + '/generator/' + token;
     }
 
-    console.log('this.state.randomToken', this.state.randomToken);
     return (
       <div>
-        {this.state.randomToken && (
+        {this.state.randomToken !== undefined && (
           <Row className="align-items-center">
             <Col xs={12} md={6}>
-              {this.state.randomToken && (
-                <OverlayTrigger
-                  placement="top"
-                  delay={{show: 250, hide: 400}}
-                  overlay={highlightImageToolTip}>
-                  <Link to={'/token/' + this.state.randomToken}>
-                    {this.props.nonInter.includes(
-                      Number(this.props.project)
-                    ) && (
-                      <Image
-                        style={{width: '100%'}}
-                        src={tokenImage(this.state.randomToken)}
-                        rounded
+              <OverlayTrigger
+                placement="top"
+                delay={{show: 250, hide: 400}}
+                overlay={highlightImageToolTip}>
+                <Link to={'/token/' + this.state.randomToken}>
+                  {this.props.nonInter.includes(Number(this.props.project)) && (
+                    <Image
+                      style={{width: '100%'}}
+                      src={tokenImage(this.state.randomToken)}
+                      rounded
+                    />
+                  )}
+                  {!this.props.nonInter.includes(
+                    Number(this.props.project)
+                  ) && (
+                    <div className="live-script-container">
+                      <iframe
+                        src={tokenGenerator(this.state.randomToken)}
+                        title={this.state.randomToken}
                       />
-                    )}
-                    {!this.props.nonInter.includes(
-                      Number(this.props.project)
-                    ) && (
-                      <div className="live-script-container">
-                        <iframe
-                          src={tokenGenerator(this.state.randomToken)}
-                          title={this.state.randomToken}
-                        />
-                      </div>
-                    )}
-                  </Link>
-                </OverlayTrigger>
-              )}
+                    </div>
+                  )}
+                </Link>
+              </OverlayTrigger>
             </Col>
             <Col xs={12} md={5}>
               <Container
