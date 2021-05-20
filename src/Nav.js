@@ -74,7 +74,7 @@ class Navigation extends Component {
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto flamingo-navbar-nav">
+            <Nav className="ml-auto flamingo-navbar-nav">
               <NavDropdown title="Curated Projects" id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <b>Open</b>
@@ -370,8 +370,7 @@ class Navigation extends Component {
                 to={'/sustainability'}>
                 Sustainability
               </Nav.Link> */}
-            </Nav>
-            <Nav className="ml-auto">
+
               {this.props.isWhitelisted && (
                 <Nav.Link
                   href="#"

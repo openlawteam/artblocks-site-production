@@ -4,11 +4,17 @@
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.09rem;
+
+  .nav-item,
+  .nav-link {
+    margin-right: 1.6rem;
+  }
 }
 
 .navbar-light {
   .navbar-nav .nav-link {
     color: #198ad6;
+    text-transform: uppercase;
   }
 }
 

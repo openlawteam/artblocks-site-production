@@ -474,29 +474,31 @@ class App extends Component {
 
                 <Route exact path="/">
                   {this.state.allProjects && (
-                    <div className="container-fluid mt-5">
-                      <Intro
-                        allProjects={this.state.allProjects}
-                        activeProjects={this.state.activeProjects}
-                        totalInvocations={this.state.totalInvocations}
-                      />
-                      <div className="container mt-5">
-                        <Row className="align-items-center">
-                          <Col>
-                            <Highlight
-                              project={this.state.currentProject}
-                              web3={this.state.web3}
-                              account={this.state.account}
-                              tokensOfOwner={this.state.tokensOfOwner}
-                              handleToggleView={this.handleToggleView}
-                              artBlocks={this.state.artBlocks}
-                              network={NETWORK}
-                              handleNextProject={this.handleNextProject}
-                              baseURL={baseURL}
-                              nonInter={this.state.nonInter}
-                            />
-                          </Col>
-                        </Row>
+                    <div className="section-wrapper">
+                      <div className="container-fluid mt-5 content-wrapper">
+                        <Intro
+                          allProjects={this.state.allProjects}
+                          activeProjects={this.state.activeProjects}
+                          totalInvocations={this.state.totalInvocations}
+                        />
+                        <div className="container mt-5">
+                          <Row className="align-items-center">
+                            <Col>
+                              <Highlight
+                                project={this.state.currentProject}
+                                web3={this.state.web3}
+                                account={this.state.account}
+                                tokensOfOwner={this.state.tokensOfOwner}
+                                handleToggleView={this.handleToggleView}
+                                artBlocks={this.state.artBlocks}
+                                network={NETWORK}
+                                handleNextProject={this.handleNextProject}
+                                baseURL={baseURL}
+                                nonInter={this.state.nonInter}
+                              />
+                            </Col>
+                          </Row>
+                        </div>
                       </div>
                     </div>
                   )}

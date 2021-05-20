@@ -670,9 +670,10 @@ class Project extends Component {
                   currentSubroute === 'latest' ||
                   (this.state.projectTokens &&
                     this.state.projectTokens.length) < 10
-                    ? 'align-items-center wrapper-container'
+                    ? 'align-items-center content-wrapper'
                     : ''
-                }>
+                }
+                style={{marginRight: 0, marginLeft: 0}}>
                 <Col xs={12} sm={6} md={3}>
                   <div className="">
                     <div className="text-align-center">
@@ -737,6 +738,7 @@ class Project extends Component {
                               <div>
                                 <Alert
                                   style={{width: '100%'}}
+                                  className="org-secondary-alert"
                                   variant="secondary">
                                   <p>Showing the latest mint.</p>
                                   <Button
@@ -938,7 +940,7 @@ class Project extends Component {
                   </div>
                 </Col>
                 {/* Right Section */}
-                <Col xs={12} sm={6} md={9} className="content-container">
+                <Col xs={12} sm={6} md={9} className="">
                   <Switch>
                     <Route exact path={this.props.match.path + '/'}>
                       <LatestToken

@@ -182,101 +182,110 @@ class UserGallery extends Component {
     */
 
     return (
-      <div className="mt-4">
-        <h5>
-          User{' '}
-          <a
-            href={`${ETHERSCAN_URL}/address/${this.props.lookupAcct}`}
-            target="_blank"
-            rel="noopener noreferrer">
-            {this.state.prettyIdentifier
-              ? this.state.prettyIdentifier
-              : this.props.lookupAcct.slice(0, 10)}
-            's
-          </a>{' '}
-          Collection{' '}
-          <a
-            href={`${OPENSEA_URL}/accounts/${this.props.lookupAcct}`}
-            target="_blank"
-            rel="noopener noreferrer">
-            <Image width="50" src="/os_logo.png" />
-          </a>
-        </h5>
-        <p>
-          Total works purchased or minted:{' '}
-          {this.state.tokensOfAccount && this.state.tokensOfAccount.length}
-        </p>
+      <div className="section-wrapper">
+        <div className="mt-4 content-wrapper">
+          <h5>
+            User{' '}
+            <a
+              href={`${ETHERSCAN_URL}/address/${this.props.lookupAcct}`}
+              target="_blank"
+              rel="noopener noreferrer">
+              {this.state.prettyIdentifier
+                ? this.state.prettyIdentifier
+                : this.props.lookupAcct.slice(0, 10)}
+              's
+            </a>{' '}
+            Collection{' '}
+            <a
+              href={`${OPENSEA_URL}/accounts/${this.props.lookupAcct}`}
+              target="_blank"
+              rel="noopener noreferrer">
+              <Image width="50" src="/os_logo.png" />
+            </a>
+          </h5>
+          <p>
+            Total works purchased or minted:{' '}
+            {this.state.tokensOfAccount && this.state.tokensOfAccount.length}
+          </p>
 
-        <br />
-        {this.state.projects &&
-          Object.keys(this.state.projects).map((project, index) => {
-            return (
-              <div key={index}>
-                <Row>
-                  <Col xs={12} sm={6} md={3}>
-                    <div className="sticky-top">
-                      <div className="text-align-center">
-                        <br />
-                        <br />
-                        <br />
+          <br />
+          {this.state.projects &&
+            Object.keys(this.state.projects).map((project, index) => {
+              return (
+                <div key={index}>
+                  <Row>
+                    <Col xs={12} sm={6} md={3}>
+                      <div className="sticky-top">
+                        <div className="text-align-center">
+                          <br />
+                          <br />
+                          <br />
 
-                        <h1>
-                          {this.state.projects[project].projectDescription[0]}
-                        </h1>
-                        <h3>
-                          by{' '}
-                          {this.state.projects[project].projectDescription[1]}
-                        </h3>
-                        <a
-                          href={
-                            this.state.projects[project].projectDescription[3]
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer">
-                          {this.state.projects[project].projectDescription[3]}
-                        </a>
-                        <p>
-                          Total Minted:{' '}
-                          {this.state.projects[project].projectTokenDetails[2]}{' '}
-                          /{' '}
-                          {this.state.projects[project].projectTokenDetails[3]}{' '}
-                          max
-                        </p>
-                        <br />
-                        <p>
-                          {this.state.projects[project].projectDescription[2]}
-                        </p>
-                        <br />
-                        <p>
-                          Price per token:{' '}
-                          {this.props.web3.utils.fromWei(
-                            this.state.projects[project].projectTokenDetails[1],
-                            'ether'
-                          )}
-                          {this.state.projects[project].currency === 'ETH'
-                            ? 'Ξ'
-                            : ' ' + this.state.projects[project].currency}
-                        </p>
-                        <br />
-                        <Button
-                          variant="dark btn-sm"
-                          as={Link}
-                          to={'/project/' + project}>
-                          Visit Project
-                        </Button>
+                          <h1>
+                            {this.state.projects[project].projectDescription[0]}
+                          </h1>
+                          <h3>
+                            by{' '}
+                            {this.state.projects[project].projectDescription[1]}
+                          </h3>
+                          <a
+                            href={
+                              this.state.projects[project].projectDescription[3]
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            {this.state.projects[project].projectDescription[3]}
+                          </a>
+                          <p>
+                            Total Minted:{' '}
+                            {
+                              this.state.projects[project]
+                                .projectTokenDetails[2]
+                            }{' '}
+                            /{' '}
+                            {
+                              this.state.projects[project]
+                                .projectTokenDetails[3]
+                            }{' '}
+                            max
+                          </p>
+                          <br />
+                          <p>
+                            {this.state.projects[project].projectDescription[2]}
+                          </p>
+                          <br />
+                          <p>
+                            Price per token:{' '}
+                            {this.props.web3.utils.fromWei(
+                              this.state.projects[project]
+                                .projectTokenDetails[1],
+                              'ether'
+                            )}
+                            {this.state.projects[project].currency === 'ETH'
+                              ? 'Ξ'
+                              : ' ' + this.state.projects[project].currency}
+                          </p>
+                          <br />
+                          <Button
+                            // variant="dark btn-sm"
+                            className={'btn-block '}
+                            as={Link}
+                            to={'/project/' + project}>
+                            Visit Project
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </Col>
+                    </Col>
 
-                  <Col xs={12} sm={6} md={9}>
-                    <UserGalleryCard
-                      project={project}
-                      projects={this.state.projects}
-                      baseURL={this.props.baseURL}
-                      handleToggleView={this.props.handleToggleView}
-                    />
+                    <Col xs={12} sm={6} md={9}>
+                      <UserGalleryCard
+                        project={project}
+                        projects={this.state.projects}
+                        baseURL={this.props.baseURL}
+                        handleToggleView={this.props.handleToggleView}
+                      />
 
-                    {/*
+                      {/*
                   <CardDeck>
                     {this.state.projects[project].tokens.map((token,index)=>{
                       return (
@@ -303,12 +312,13 @@ class UserGallery extends Component {
 
                   </CardDeck>
                   */}
-                  </Col>
-                </Row>
-                <hr />
-              </div>
-            );
-          })}
+                    </Col>
+                  </Row>
+                  <hr />
+                </div>
+              );
+            })}
+        </div>
       </div>
     );
   }
