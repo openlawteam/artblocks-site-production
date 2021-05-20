@@ -1,3 +1,5 @@
+@use "./mixins" as *; /* load without namespace for convenience */
+
 #root {
   display: -webkit-flex;
   display: flex;
@@ -25,6 +27,10 @@ body {
 
 header {
   padding: 0 3rem;
+
+  @include size-down-down {
+    padding: 0.5rem;
+  }
 }
 
 main {
@@ -34,13 +40,16 @@ main {
 
 .section-wrapper {
   margin: 0 3rem 9rem;
+
+  @include size-down-down {
+    margin: 0;
+  }
 }
 
 // .wrapper-container {
 //   background-color: #ffd3e5;
 //   border-radius: 0;
 //   border: 10px solid #e08b86;
-
 //   margin: 2rem 0;
 //   padding: 1rem;
 // }
@@ -55,6 +64,10 @@ main {
   background-color: #fdeeee;
   border-radius: 15px;
   padding: 3rem;
+
+  @include size-down-down {
+    padding: 2rem 0.5rem;
+  }
 }
 
 .dropdown-menu {
@@ -95,7 +108,6 @@ main {
     font-style: italic;
     font-family: "Space Mono", monospace;
     font-weight: bold;
-    // min-width: 12rem;
   }
 }
 

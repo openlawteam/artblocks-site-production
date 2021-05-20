@@ -314,7 +314,6 @@ class UserGallery extends Component {
                   */}
                     </Col>
                   </Row>
-                  <hr />
                 </div>
               );
             })}

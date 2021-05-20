@@ -1,7 +1,9 @@
+@use "./mixins";
 @use "./fonts";
+@use "./functions" as *;
 
 @use "./common"; /* common styles */
 @use "./buttons"; /* buttons styles */
-@use "./nav"; /* buttons styles */
-@use "./web3"; /* buttons styles */
-// @use "./buttons"; /* buttons styles */
+@use "./nav"; /* nav styles */
+@use "./web3"; /* web3 styles */
+@use "./modal"; /* modal styles */

@@ -1,3 +1,5 @@
+@use "./mixins" as *; /* load without namespace for convenience */
+
 .flamingo-navbar-nav {
   color: #198ad6;
 
@@ -26,6 +28,10 @@
 .flamingo-container {
   padding-top: 2rem;
 
+  @include size-down-down {
+    padding-top: 1rem;
+  }
+
   .flamingo-logo {
     color: #fff;
     font-family: "Space Mono", monospace;
@@ -34,12 +40,20 @@
     font-weight: 700;
     letter-spacing: 0.105em;
     text-shadow: 2px 2px 6px #f5a19f;
+
+    @include size-down-down {
+      font-size: 1.4em;
+    }
   }
 
   .flutter-logo {
     font-family: "Major Mono Display", monospace;
     color: #198ad6;
     font-size: 1.3rem;
+
+    @include size-down-down {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -48,5 +62,15 @@
     color: #567a93;
     font-size: 1rem;
     font-weight: 400;
+
+    @include size-down-down {
+      font-size: 0.8rem;
+    }
   }
+}
+
+.navbar-light .navbar-toggler {
+  border: none;
+  position: relative;
+  top: -24px;
 }
