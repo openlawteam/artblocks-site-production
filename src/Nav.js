@@ -62,7 +62,7 @@ class Navigation extends Component {
             to="/">
             <div className="flamingo-container">
               <span className="flamingo-logo">Flamingo</span>{' '}
-              <span className="flutter-logo">Flutter</span>
+              <span className="flutter-logo">🦋 Flutter</span>
             </div>
             <div className="artblocks-container">
               <span className="artblocks-logo">

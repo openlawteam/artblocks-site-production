@@ -62,8 +62,9 @@ main {
 
 .content-wrapper {
   background-color: #fdeeee;
-  border-radius: 15px;
+  border-radius: 20px;
   padding: 3rem;
+  box-shadow: 0 4px 4px 0 #d3d3d3;
 
   @include size-down-down {
     padding: 2rem 0.5rem;
@@ -71,16 +72,18 @@ main {
 }
 
 .dropdown-menu {
-  background-color: #fbd9b4;
+  background-color: #fdeeee;
   border: none;
-  border-radius: 0;
+  border-radius: 20px;
+  box-shadow: 0 4px 4px 0 #d3d3d3;
 
   .dropdown-item {
     color: #198ad6;
     // font-family: "Lexend Exa", sans-serif;
 
     text-decoration: none;
-    text-transform: uppercase;
+    // text-transform: uppercase;
+    text-transform: capitalize;
   }
 }
 
