@@ -22,6 +22,7 @@ import Intro from './Intro';
 import ProjectGallery from './ProjectGallery';
 //import CookieConsent from "react-cookie-consent";
 //import YourTokens from './YourTokens';
+import Footer from './Footer';
 import Learn from './Learn';
 import Sustainability from './Sustainability';
 import ControlPanel from './ControlPanel';
@@ -538,6 +539,7 @@ class App extends Component {
             {/*<CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>*/}
           </div>
         </main>
+        <Footer />
       </>
     );
   }

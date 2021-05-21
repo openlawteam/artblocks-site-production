@@ -1,9 +1,13 @@
 @use "./mixins";
 @use "./fonts";
 @use "./functions" as *;
+@use "./variables";
 
+@use "./grids"; /* bootstrap grids styles */
 @use "./common"; /* common styles */
 @use "./buttons"; /* buttons styles */
 @use "./nav"; /* nav styles */
 @use "./web3"; /* web3 styles */
 @use "./modal"; /* modal styles */
+@use "./socialmedia"; /* socialmedia styles */
+@use "./footer"; /* footer styles */
