@@ -66,7 +66,7 @@ class Navigation extends Component {
             </div>
             <div className="artblocks-container">
               <span className="artblocks-logo">
-                an Art Blocks collaboration
+                an <span>Art Blocks</span> collaboration
               </span>
             </div>
           </Navbar.Brand>
