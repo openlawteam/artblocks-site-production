@@ -94,7 +94,26 @@ main {
   border: 2px solid #e08b86;
 }
 
-// }
+.spinner-border-sm {
+  position: relative;
+  top: -5px;
+}
+
+.purchase-addr-container {
+  input {
+    border-color: #198ad6;
+    border-radius: 0;
+    border-width: 2px;
+    border-top: none;
+  }
+
+  .input-group-text {
+    border-color: #198ad6;
+    background-color: #198ad624;
+    border-top: none;
+    border-radius: 0;
+  }
+}
 
 /* 
 - METAMASK SVG FILL STYLES - BEGIN

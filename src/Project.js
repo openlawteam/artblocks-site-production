@@ -809,7 +809,7 @@ class Project extends Component {
                                     )}
                                   </Button>
                                   {this.state.purchaseTo && (
-                                    <InputGroup className="mb-3">
+                                    <InputGroup className="mb-3 purchase-addr-container">
                                       <InputGroup.Prepend>
                                         <InputGroup.Text id="basic-addon3">
                                           Address:
