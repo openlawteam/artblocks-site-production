@@ -7,7 +7,7 @@ export const COMPLETE = [];
 
 export const BASE_URL =
   NETWORK === 'rinkeby'
-    ? 'https://rinkebyapi.artblocks.io'
+    ? 'https://api.flamingo-ab.dev.thelao.io'
     : 'https://api.artblocks.io';
 
 export const ETHERSCAN_URL =
