@@ -194,7 +194,6 @@ class App extends Component {
 
         // Make sure the site reflects if the user has disconnected their wallet
         window.ethereum.on('accountsChanged', (accounts) => {
-          console.log('>> accounts', accounts);
           if (accounts.length === 0) {
             this.setState({
               connected: false,

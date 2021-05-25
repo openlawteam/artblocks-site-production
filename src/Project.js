@@ -139,11 +139,10 @@ class Project extends Component {
   }
 
   async updateProjectTokenDetails(state) {
-    //console.log("update!!!");
-    //console.log(this.state);
     const projectTokenDetails = await this.state.artBlocks.methods
       .projectTokenInfo(this.props.project)
       .call();
+
     this.setState({projectTokenDetails});
   }
 
