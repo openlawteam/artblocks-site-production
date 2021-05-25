@@ -775,7 +775,8 @@ class Project extends Component {
                                     className="btn-primary"
                                     style={{width: '100%'}}
                                     disabled={
-                                      this.state.purchase
+                                      this.state.purchase ||
+                                      !this.props.isWhitelisted
                                         ? true
                                         : this.state.projectScriptDetails[5] &&
                                           this.state.projectTokenDetails[0] !==
@@ -824,13 +825,15 @@ class Project extends Component {
                                       />
                                     </InputGroup>
                                   )}
-                                  <div className="text-center">
-                                    <Button
-                                      variant="link"
-                                      onClick={this.handlePurchaseTo}>
-                                      Purchase To Another User
-                                    </Button>
-                                  </div>
+                                  {this.props.isWhitelisted && (
+                                    <div className="text-center">
+                                      <Button
+                                        variant="link"
+                                        onClick={this.handlePurchaseTo}>
+                                        Purchase To Another User
+                                      </Button>
+                                    </div>
+                                  )}
                                 </div>
                               )}
 
