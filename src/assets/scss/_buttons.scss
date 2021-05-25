@@ -41,3 +41,7 @@
     margin: 0.25rem;
   }
 }
+
+button:disabled {
+  cursor: not-allowed;
+}

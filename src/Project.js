@@ -45,6 +45,7 @@ class Project extends Component {
       erc20Balance: '',
       randomTokenNumber: 0,
       showWarningModal: false,
+      showWhyModal: false,
     };
     this.handleToggleArtistInterface =
       this.handleToggleArtistInterface.bind(this);
@@ -609,7 +610,7 @@ class Project extends Component {
   }
 
   closeModal() {
-    this.setState({showWarningModal: false});
+    this.setState({showWarningModal: false, showWhyModal: false});
   }
 
   render() {
@@ -833,6 +834,19 @@ class Project extends Component {
                                       </Button>
                                     </div>
                                   )}
+                                  {!this.props.isWhitelisted && (
+                                    <div className="why-tooltip">
+                                      <Button
+                                        variant="link"
+                                        onClick={() =>
+                                          this.setState({
+                                            showWhyModal: true,
+                                          })
+                                        }>
+                                        Why is purchasing disabled?
+                                      </Button>
+                                    </div>
+                                  )}
                                 </div>
                               )}
 
@@ -983,46 +997,63 @@ class Project extends Component {
                   </Switch>
                 </Col>
               </Row>
-              <Modal
-                show={this.state.showWarningModal}
-                onHide={this.closeModal}>
-                <Modal.Header closeButton>
-                  <Modal.Title>WARNING</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <p>
-                    Participating in a live Art Blocks drop is for experts only.
-                    By submitting a transaction you acknowledge the following:
-                  </p>
-                  <ol>
-                    <li>You are competing with others.</li>
-                    <li>
-                      You might have to increase your gas price in order to have
-                      your transaction processed before others.
-                    </li>
-                    <li>
-                      Even with a high gas price it is possible your transaction
-                      will be confirmed AFTER the drop is sold out in which case
-                      your transaction will fail and you will lose the
-                      transaction fee for the failed transaction.
-                    </li>
-                  </ol>
-                  <p style={{fontWeight: 'bold'}}>PROCEED AT YOUR OWN RISK</p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={this.closeModal}>
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      this.closeModal();
-                      this.purchase();
-                    }}>
-                    Agree
-                  </Button>
-                </Modal.Footer>
-              </Modal>
+              {this.state.showWarningModal && (
+                <Modal
+                  show={this.state.showWarningModal}
+                  onHide={this.closeModal}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>WARNING</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>
+                      Participating in a live Art Blocks drop is for experts
+                      only. By submitting a transaction you acknowledge the
+                      following:
+                    </p>
+                    <ol>
+                      <li>You are competing with others.</li>
+                      <li>
+                        You might have to increase your gas price in order to
+                        have your transaction processed before others.
+                      </li>
+                      <li>
+                        Even with a high gas price it is possible your
+                        transaction will be confirmed AFTER the drop is sold out
+                        in which case your transaction will fail and you will
+                        lose the transaction fee for the failed transaction.
+                      </li>
+                    </ol>
+                    <p style={{fontWeight: 'bold'}}>PROCEED AT YOUR OWN RISK</p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={this.closeModal}>
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        this.closeModal();
+                        this.purchase();
+                      }}>
+                      Agree
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              )}
+
+              {this.state.showWhyModal && (
+                <Modal show={this.state.showWhyModal} onHide={this.closeModal}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>WHY IS PURCHASING DISABLED?</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>
+                      Minting is currently available for whitelisted addresses
+                      only.
+                    </p>
+                  </Modal.Body>
+                </Modal>
+              )}
             </div>
           )}
       </div>

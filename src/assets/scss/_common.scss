@@ -118,6 +118,23 @@ main {
   }
 }
 
+.why-tooltip button {
+  font-size: 0.85rem;
+  float: right;
+  opacity: 0.7;
+  cursor: pointer;
+  border-bottom: 2px dotted #198ad6;
+  // display: -webkit-inline-flex;
+  // display: inline-flex;
+  margin-top: 0;
+  // color: #fff;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 /* 
 - METAMASK SVG FILL STYLES - BEGIN
 */
