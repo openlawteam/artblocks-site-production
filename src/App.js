@@ -194,6 +194,7 @@ class App extends Component {
 
         // Make sure the site reflects if the user has disconnected their wallet
         window.ethereum.on('accountsChanged', (accounts) => {
+          console.log('>> accounts', accounts);
           if (accounts.length === 0) {
             this.setState({
               connected: false,
@@ -202,8 +203,13 @@ class App extends Component {
               isWhitelisted: null,
               projectsOfArtist: null,
             });
+          } else {
+            this.checkWhitelist(accounts[0], artBlocks);
           }
         });
+
+        // check if the connected address is whitelisted
+        this.checkWhitelist(accounts[0], artBlocks);
       }
 
       this.setState({
@@ -215,6 +221,22 @@ class App extends Component {
         totalInvocations,
         artistAddresses,
         activeProjects,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async checkWhitelist(ethereumAddress, artBlocks) {
+    try {
+      const isWhitelisted = await artBlocks.methods
+        .isWhitelisted(ethereumAddress)
+        .call();
+
+      this.setState({
+        connected: ethereumAddress !== undefined,
+        account: ethereumAddress,
+        isWhitelisted,
       });
     } catch (error) {
       console.error(error);
