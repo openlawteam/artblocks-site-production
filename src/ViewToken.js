@@ -308,8 +308,12 @@ class ViewToken extends Component {
                   <TwitterShareButton
                     url={
                       this.props.network === 'rinkeby'
-                        ? process.env.URL_RINKEBY + '/token/' + this.state.token
-                        : process.env.URL_MAINNET + '/token/' + this.state.token
+                        ? process.env.REACT_APP_URL_RINKEBY +
+                          '/token/' +
+                          this.state.token
+                        : process.env.REACT_APP_URL_MAINNET +
+                          '/token/' +
+                          this.state.token
                     }
                     options={{
                       text:

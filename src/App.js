@@ -385,8 +385,8 @@ class App extends Component {
   render() {
     let baseURL =
       NETWORK === 'main'
-        ? process.env.URL_MAINNET
-        : process.env.URL_RINKEBY;
+        ? process.env.REACT_APP_URL_MAINNET
+        : process.env.REACT_APP_URL_RINKEBY;
 
     return (
       <>
