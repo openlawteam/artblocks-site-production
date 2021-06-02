@@ -385,8 +385,8 @@ class App extends Component {
   render() {
     let baseURL =
       NETWORK === 'main'
-        ? 'https://api.artblocks.io'
-        : 'https://rinkebyapi.artblocks.io';
+        ? process.env.URL_MAINNET
+        : process.env.URL_RINKEBY;
 
     return (
       <>

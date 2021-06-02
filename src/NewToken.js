@@ -229,9 +229,8 @@ class NewToken extends Component {
                   <TwitterShareButton
                     url={
                       this.props.network === 'rinkeby'
-                        ? 'https://rinkeby.artblocks.io/token/' +
-                          this.state.token
-                        : 'https://www.artblocks.io/token/' + this.state.token
+                        ? process.env.URL_RINKEBY + '/token/' + this.state.token
+                        : process.env.URL_MAINNET + '/token/' + this.state.token
                     }
                     options={{
                       text:
