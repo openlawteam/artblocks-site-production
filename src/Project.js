@@ -62,11 +62,6 @@ class Project extends Component {
 
   async componentDidMount() {
     try {
-      console.log(
-        'this.props.project ',
-        this.props.project,
-        this.props.artBlocks
-      );
       const artBlocks = this.props.artBlocks;
       const projectTokenInfo = await artBlocks.methods
         .projectTokenInfo(this.props.project)

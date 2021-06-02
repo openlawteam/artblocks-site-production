@@ -10,15 +10,16 @@ import './Project.css';
 
 const LatestToken = ({project, complete, random, latest}) => {
   const tokenId = (complete ? random : latest) + project * 1000000;
+  const tokenURL = tokenGenerator(tokenId);
 
-  console.log('tokenGenerator(tokenId)', tokenGenerator(tokenId));
+  console.log('>>> tokenURL', tokenURL);
   return (
     <div className="text-center">
       <a href={`/token/${tokenId}`}>
         {!shouldShowNonInteractive(Number(project)) ? (
           <div className="live-view-container">
             <div className="live-script-container">
-              <iframe src={tokenGenerator(tokenId)} title="Project Live View" />
+              <iframe src={tokenURL} title="Project Live View" />
             </div>
           </div>
         ) : (

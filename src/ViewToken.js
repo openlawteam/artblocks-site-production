@@ -157,8 +157,8 @@ class ViewToken extends Component {
 
     let highlightImageUrl =
       this.props.network === 'rinkeby'
-        ? process.env.MEDIA_URL_RINKEBY
-        : process.env.MEDIA_URL_MAINNET;
+        ? process.env.REACT_APP_MEDIA_URL_RINKEBY
+        : process.env.REACT_APP_MEDIA_URL_MAINNET;
 
     function tokenHighlightImage(token) {
       return highlightImageUrl + token + '.png';

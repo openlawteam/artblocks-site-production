@@ -2,7 +2,6 @@ import {NETWORK, NONINTERACTIVE, BASE_URL} from './config';
 import namehash from 'eth-ens-namehash';
 
 function tokenGenerator(token) {
-  console.log('BASE_URL', BASE_URL);
   return BASE_URL + '/generator/' + token;
 }
 
