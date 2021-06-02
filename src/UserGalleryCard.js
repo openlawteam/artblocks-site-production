@@ -67,15 +67,14 @@ class UserGalleryCard extends Component {
     //console.log(this.props);
     let baseURL = this.props.baseURL;
 
-    //let imageURL = this.props.network==="rinkeby"? "https://rinkeby.oss.nodechef.com/":"https://mainnet.oss.nodechef.com/";
     let thumbURL =
       this.props.network === 'rinkeby'
-        ? 'https://rinkthumb.oss.nodechef.com/'
-        : 'https://mainthumb.oss.nodechef.com/';
+				? process.env.API_URI_RINKEBY_THUMB
+				: process.env.API_URI_MAINNET_THUMB;
     let imgURL =
       this.props.network === 'rinkeby'
-        ? 'https://rinkeby.oss.nodechef.com/'
-        : 'https://mainnet.oss.nodechef.com/';
+				? process.env.API_URI_RINKEBY
+				: process.env.API_URI_MAINNET;
 
     /*
     function tokenImage(token){
@@ -88,14 +87,12 @@ class UserGalleryCard extends Component {
     }
 
     function tokenImage(token) {
-      //return "https://mainnet.oss.nodechef.com/"+token+".png";
       return imgURL + token + '.png';
       //return baseURL+'/image/'+token;
     }
 
     /*
     function tokenThumb(token){
-      return "https://rinkthumb.oss.nodechef.com/"+token+".png";
       //return baseURL+'/thumb/'+token;
     }
     */

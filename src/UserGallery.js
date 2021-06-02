@@ -162,24 +162,6 @@ class UserGallery extends Component {
   }
 
   render() {
-    //console.log(this.props);
-    /*
-    let baseURL = this.props.baseURL;
-
-    function tokenImage(token){
-      //return "https://mainnet.oss.nodechef.com/"+token+".png";
-      return baseURL+'/image/'+token;
-    }
-
-    function tokenThumb(token){
-      return "https://rinkthumb.oss.nodechef.com/"+token+".png";
-      //return baseURL+'/thumb/'+token;
-    }
-
-    function tokenGenerator(token){
-      return baseURL+'/generator/'+token;
-    }
-    */
 
     return (
       <div className="section-wrapper">

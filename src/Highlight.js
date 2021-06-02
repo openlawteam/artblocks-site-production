@@ -136,8 +136,8 @@ class Highlight extends Component {
     let baseURL = this.props.baseURL;
     let url =
       this.props.network === 'rinkeby'
-        ? 'https://rinkeby.oss.nodechef.com/'
-        : 'https://mainnet.oss.nodechef.com/';
+        ?  process.env.MEDIA_URL_RINKEBY
+        :  process.env.MEDIA_URL_MAINNET;
 
     function tokenImage(token) {
       return url + token + '.png';

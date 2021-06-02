@@ -12,8 +12,8 @@ function shouldShowNonInteractive(project) {
 function tokenHighlightImage(tokenId) {
   const baseImageUrl =
     NETWORK === "rinkeby"
-      ? "https://rinkeby.oss.nodechef.com/"
-      : "https://mainnet.oss.nodechef.com/";
+      ?  process.env.MEDIA_URL_RINKEBY
+      :  process.env.MEDIA_URL_MAINNET;
 
   return baseImageUrl + tokenId + ".png";
 }
@@ -21,8 +21,8 @@ function tokenHighlightImage(tokenId) {
 function tokenThumbImage(tokenId) {
   let baseImageUrl =
     NETWORK === "rinkeby"
-      ? "https://rinkthumb.oss.nodechef.com/"
-      : "https://mainthumb.oss.nodechef.com/";
+      ?  process.env.MEDIA_URL_RINKEBY_THUMB
+      :  process.env.MEDIA_URL_MAINNET_THUMB;
 
   return baseImageUrl + tokenId + ".png";
 }
