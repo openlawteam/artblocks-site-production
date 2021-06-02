@@ -18,6 +18,9 @@ $map-grid-props: (
   "-xl": $grid__bp-xl,
 );
 
+body {
+  background-color: aqua;
+}
 @mixin create-mq($breakpoint, $min-or-max) {
   @if ($breakpoint == 0) {
     @content;

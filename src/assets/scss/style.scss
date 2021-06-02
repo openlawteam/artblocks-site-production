@@ -1,13 +1,13 @@
-@use "./mixins";
-@use "./fonts";
-@use "./functions" as *;
-@use "./variables";
+@import "./mixins";
+@import "./fonts";
+@import "./functions"; //as *;
+@import "./variables";
 
-@use "./grids"; /* bootstrap grids styles */
-@use "./common"; /* common styles */
-@use "./buttons"; /* buttons styles */
-@use "./nav"; /* nav styles */
-@use "./web3"; /* web3 styles */
-@use "./modal"; /* modal styles */
-@use "./socialmedia"; /* socialmedia styles */
-@use "./footer"; /* footer styles */
+@import "./grids"; /* bootstrap grids styles */
+@import "./common"; /* common styles */
+@import "./buttons"; /* buttons styles */
+@import "./nav"; /* nav styles */
+@import "./web3"; /* web3 styles */
+@import "./modal"; /* modal styles */
+@import "./socialmedia"; /* socialmedia styles */
+@import "./footer"; /* footer styles */
