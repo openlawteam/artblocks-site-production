@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import React, {useState} from 'react';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import {
   CardDeck,
   Col,
@@ -9,15 +9,15 @@ import {
   Row,
   Pagination,
   Container,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
-import { tokenHighlightImage, tokenGenerator, tokenThumbImage } from "./utils";
-import "./Project.css";
+import {tokenHighlightImage, tokenGenerator, tokenThumbImage} from './utils';
+import './Project.css';
 
-const TokenGallery = ({ project, projectTokens = [] }) => {
+const TokenGallery = ({project, projectTokens = []}) => {
   const location = useLocation();
   const history = useHistory();
-  const pageParam = new URLSearchParams(location.search).get("p") || 1;
+  const pageParam = new URLSearchParams(location.search).get('p') || 1;
   const currentPage = parseInt(pageParam);
 
   // Set up Pagination Items
@@ -25,40 +25,42 @@ const TokenGallery = ({ project, projectTokens = [] }) => {
   const totalPages = Math.ceil(projectTokens.length / 20);
   const start = Math.max(1, currentPage - 3);
   const end = Math.min(totalPages, start + 7);
+
   pageNumbers.push(
     <Pagination.Prev
-      key={"prev"}
+      key={'prev'}
       disabled={currentPage === 1}
       as={Link}
       to={Math.max(currentPage - 1, 1)}
     />
   );
+
   for (let pageNumber = start; pageNumber <= end; pageNumber++) {
     pageNumbers.push(
       <Pagination.Item
         key={pageNumber}
         active={pageNumber === currentPage}
-        onClick={() => history.push(`${location.pathname}?p=${pageNumber}`)}
-      >
+        onClick={() => history.push(`${location.pathname}?p=${pageNumber}`)}>
         {pageNumber}
       </Pagination.Item>
     );
   }
+
   if (end < totalPages) {
     pageNumbers.push(<Pagination.Ellipsis />);
     pageNumbers.push(
       <Pagination.Item
         key={totalPages}
         as={Link}
-        onClick={() => history.push(`${location.pathname}?p=${totalPages}`)}
-      >
+        onClick={() => history.push(`${location.pathname}?p=${totalPages}`)}>
         {totalPages}
       </Pagination.Item>
     );
   }
+
   pageNumbers.push(
     <Pagination.Next
-      key={"next"}
+      key={'next'}
       disabled={currentPage === totalPages}
       as={Link}
       to={Math.min(currentPage + 1, totalPages)}
@@ -80,8 +82,7 @@ const TokenGallery = ({ project, projectTokens = [] }) => {
                   <Card
                     border="light"
                     className="mx-auto"
-                    style={{ width: "16rem" }}
-                  >
+                    style={{width: '16rem'}}>
                     <Card.Body>
                       <GalleryImage src={tokenThumbImage(token)} />
                       <div className="text-center">
@@ -91,25 +92,22 @@ const TokenGallery = ({ project, projectTokens = [] }) => {
                           </Button>
                           <Button
                             as={Link}
-                            to={"/token/" + token}
-                            variant="light"
-                          >
+                            to={'/token/' + token}
+                            variant="light">
                             Details
                           </Button>
                           <Button
                             variant="light"
                             onClick={() =>
-                              window.open(tokenHighlightImage(token), "_blank")
-                            }
-                          >
+                              window.open(tokenHighlightImage(token), '_blank')
+                            }>
                             Image
                           </Button>
                           <Button
                             variant="light"
                             onClick={() =>
-                              window.open(tokenGenerator(token), "_blank")
-                            }
-                          >
+                              window.open(tokenGenerator(token), '_blank')
+                            }>
                             Live
                           </Button>
                         </ButtonGroup>
@@ -149,30 +147,27 @@ const TokenGallery = ({ project, projectTokens = [] }) => {
   );
 };
 
-const GalleryImage = ({ src }) => {
+const GalleryImage = ({src}) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div style={{ position: "relative", paddingTop: "100%" }}>
-      <div
-        style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-      >
+    <div style={{position: 'relative', paddingTop: '100%'}}>
+      <div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
         <Card.Img variant="top" src={src} onLoad={() => setLoaded(true)} />
         <div
           style={{
-            backgroundColor: "#fff",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
+            backgroundColor: '#fff',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
             top: 0,
             right: 0,
             bottom: 0,
             left: 0,
             opacity: loaded ? 0 : 1,
-            transition: "opacity 1s",
-          }}
-        >
+            transition: 'opacity 1s',
+          }}>
           <div className="spinner-border" role="status">
             <span className="sr-only">Loading...</span>
           </div>

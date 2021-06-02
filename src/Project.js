@@ -67,8 +67,9 @@ class Project extends Component {
         .projectTokenInfo(this.props.project)
         .call();
       const projectTokens = Array.from(
-        Array(projectTokenInfo.invocations).keys()
+        Array(Number(projectTokenInfo.invocations)).keys()
       );
+
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
         .call();
