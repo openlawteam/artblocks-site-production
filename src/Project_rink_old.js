@@ -66,8 +66,7 @@ class Project extends Component {
   }
 
   async componentDidMount() {
-    const artBlocks =
-      this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+    const artBlocks = this.props.artBlocks;
     const projectTokenInfo = await artBlocks.methods
       .projectTokenInfo(this.props.project)
       .call();

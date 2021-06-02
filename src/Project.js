@@ -62,8 +62,12 @@ class Project extends Component {
 
   async componentDidMount() {
     try {
-      const artBlocks =
-        this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+      console.log(
+        'this.props.project ',
+        this.props.project,
+        this.props.artBlocks
+      );
+      const artBlocks = this.props.artBlocks;
       const projectTokenInfo = await artBlocks.methods
         .projectTokenInfo(this.props.project)
         .call();
@@ -188,8 +192,7 @@ class Project extends Component {
     if (oldProps.project !== this.props.project) {
       console.log('change');
 
-      const artBlocks =
-        this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+      const artBlocks = this.props.artBlocks;
       const projectTokenInfo = await artBlocks.methods
         .projectTokenInfo(this.props.project)
         .call();
@@ -261,8 +264,7 @@ class Project extends Component {
       });
     } else if (oldProps.artBlocks !== this.props.artBlocks) {
       console.log('change artBlocks?');
-      const artBlocks =
-        this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+      const artBlocks = this.props.artBlocks;
       if (this.props.project >= 3) {
         let currency = await artBlocks.methods
           .projectIdToCurrencySymbol(this.props.project)
@@ -296,8 +298,7 @@ class Project extends Component {
 
     if (oldProps.connected !== this.props.connected) {
       console.log('change connected');
-      const artBlocks =
-        this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+      const artBlocks = this.props.artBlocks;
       if (this.props.project >= 3) {
         let currency = await this.state.artBlocks.methods
           .projectIdToCurrencySymbol(this.props.project)
@@ -336,8 +337,7 @@ class Project extends Component {
   }
 
   async updateValues() {
-    const artBlocks =
-      this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+    const artBlocks = this.props.artBlocks;
     const projectTokenInfo = await artBlocks.methods
       .projectTokenInfo(this.props.project)
       .call();

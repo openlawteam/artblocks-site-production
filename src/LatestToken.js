@@ -1,16 +1,17 @@
-import React from "react";
-import { Image } from "react-bootstrap";
+import React from 'react';
+import {Image} from 'react-bootstrap';
 
 import {
   shouldShowNonInteractive,
   tokenGenerator,
   tokenHighlightImage,
-} from "./utils";
-import "./Project.css";
+} from './utils';
+import './Project.css';
 
-const LatestToken = ({ project, complete, random, latest }) => {
+const LatestToken = ({project, complete, random, latest}) => {
   const tokenId = (complete ? random : latest) + project * 1000000;
 
+  console.log('tokenGenerator(tokenId)', tokenGenerator(tokenId));
   return (
     <div className="text-center">
       <a href={`/token/${tokenId}`}>
@@ -21,7 +22,7 @@ const LatestToken = ({ project, complete, random, latest }) => {
             </div>
           </div>
         ) : (
-          <Image style={{ width: "60%" }} src={tokenHighlightImage(tokenId)} />
+          <Image style={{width: '60%'}} src={tokenHighlightImage(tokenId)} />
         )}
       </a>
     </div>

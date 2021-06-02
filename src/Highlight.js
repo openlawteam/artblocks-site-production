@@ -67,8 +67,7 @@ class Highlight extends Component {
   async componentDidUpdate(oldProps) {
     try {
       if (oldProps.project !== this.props.project) {
-        const artBlocks =
-          this.props.project < 3 ? this.props.artBlocks : this.props.artBlocks2;
+        const artBlocks = this.props.artBlocks;
         const projectTokenInfo = await artBlocks.methods
           .projectTokenInfo(this.props.project)
           .call();
@@ -136,8 +135,8 @@ class Highlight extends Component {
     let baseURL = this.props.baseURL;
     let url =
       this.props.network === 'rinkeby'
-        ?  process.env.MEDIA_URL_RINKEBY
-        :  process.env.MEDIA_URL_MAINNET;
+        ? process.env.MEDIA_URL_RINKEBY
+        : process.env.MEDIA_URL_MAINNET;
 
     function tokenImage(token) {
       return url + token + '.png';

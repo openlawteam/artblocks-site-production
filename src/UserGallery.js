@@ -73,7 +73,6 @@ class UserGallery extends Component {
       if (oldProps.lookupAcct !== this.props.lookupAcct) {
         console.log('acctchange');
         const artBlocks = this.props.artBlocks;
-        // const artBlocks2 = this.props.artBlocks2;
 
         const tokensOfAccount = await artBlocks.methods
           .tokensOfOwner(this.props.lookupAcct)
@@ -83,9 +82,7 @@ class UserGallery extends Component {
             const projectId = await artBlocks.methods
               .tokenIdToProjectId(token)
               .call();
-            // token < 3000000
-            //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
-            //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
+
             return [token, projectId];
           })
         );
@@ -95,9 +92,7 @@ class UserGallery extends Component {
               let projectId = await artBlocks.methods
                 .tokenIdToProjectId(token)
                 .call();
-              // token < 3000000
-              //   ? await artBlocks.methods.tokenIdToProjectId(token).call()
-              //   : await artBlocks2.methods.tokenIdToProjectId(token).call();
+
               return projectId;
             })
           )
@@ -121,7 +116,6 @@ class UserGallery extends Component {
 
       for (let project of this.state.projectsOfAccount) {
         const contract = this.state.artBlocks;
-        // project < 3 ? this.state.artBlocks : this.state.artBlocks2;
         const projectDescription = await contract.methods
           .projectDetails(project)
           .call();
@@ -162,7 +156,6 @@ class UserGallery extends Component {
   }
 
   render() {
-
     return (
       <div className="section-wrapper">
         <div className="mt-4 content-wrapper">

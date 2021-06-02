@@ -27,10 +27,7 @@ class ViewToken extends Component {
   async componentDidMount() {
     try {
       console.log('currentNet: ' + this.props.network);
-      const artBlocks =
-        this.props.token < 3000000
-          ? this.props.artBlocks
-          : this.props.artBlocks2;
+      const artBlocks = this.props.artBlocks;
       const projectId = await artBlocks.methods
         .tokenIdToProjectId(this.props.token)
         .call();
@@ -160,8 +157,8 @@ class ViewToken extends Component {
 
     let highlightImageUrl =
       this.props.network === 'rinkeby'
-				?  process.env.MEDIA_URL_RINKEBY
-				:  process.env.MEDIA_URL_MAINNET;
+        ? process.env.MEDIA_URL_RINKEBY
+        : process.env.MEDIA_URL_MAINNET;
 
     function tokenHighlightImage(token) {
       return highlightImageUrl + token + '.png';
