@@ -1,8 +1,9 @@
-import { NETWORK, NONINTERACTIVE, BASE_URL } from "./config";
-import namehash from "eth-ens-namehash";
+import {NETWORK, NONINTERACTIVE, BASE_URL} from './config';
+import namehash from 'eth-ens-namehash';
 
 function tokenGenerator(token) {
-  return BASE_URL + "/generator/" + token;
+  console.log('BASE_URL', BASE_URL);
+  return BASE_URL + '/generator/' + token;
 }
 
 function shouldShowNonInteractive(project) {
@@ -11,20 +12,20 @@ function shouldShowNonInteractive(project) {
 
 function tokenHighlightImage(tokenId) {
   const baseImageUrl =
-    NETWORK === "rinkeby"
-      ?  process.env.MEDIA_URL_RINKEBY
-      :  process.env.MEDIA_URL_MAINNET;
+    NETWORK === 'rinkeby'
+      ? process.env.REACT_APP_MEDIA_URL_RINKEBY
+      : process.env.REACT_APP_MEDIA_URL_MAINNET;
 
-  return baseImageUrl + tokenId + ".png";
+  return baseImageUrl + tokenId + '.png';
 }
 
 function tokenThumbImage(tokenId) {
   let baseImageUrl =
-    NETWORK === "rinkeby"
-      ?  process.env.MEDIA_URL_RINKEBY_THUMB
-      :  process.env.MEDIA_URL_MAINNET_THUMB;
+    NETWORK === 'rinkeby'
+      ? process.env.REACT_APP_MEDIA_URL_RINKEBY_THUMB
+      : process.env.REACT_APP_MEDIA_URL_MAINNET_THUMB;
 
-  return baseImageUrl + tokenId + ".png";
+  return baseImageUrl + tokenId + '.png';
 }
 
 function tokenDetailsUrl(token) {
@@ -33,7 +34,7 @@ function tokenDetailsUrl(token) {
 
 // https://github.com/ChainSafe/web3.js/issues/2683#issuecomment-547348416
 async function reverseResolveEns(address, web3) {
-  var lookup = address.toLowerCase().substr(2) + ".addr.reverse";
+  var lookup = address.toLowerCase().substr(2) + '.addr.reverse';
   var ResolverContract = await web3.eth.ens.getResolver(lookup);
   var nh = namehash.hash(lookup);
   var name = await ResolverContract.methods.name(nh).call();
