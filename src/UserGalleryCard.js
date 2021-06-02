@@ -69,12 +69,12 @@ class UserGalleryCard extends Component {
 
     let thumbURL =
       this.props.network === 'rinkeby'
-				? process.env.API_URI_RINKEBY_THUMB
-				: process.env.API_URI_MAINNET_THUMB;
+				? process.env.API_URL_RINKEBY_THUMB
+				: process.env.API_URL_MAINNET_THUMB;
     let imgURL =
       this.props.network === 'rinkeby'
-				? process.env.API_URI_RINKEBY
-				: process.env.API_URI_MAINNET;
+				? process.env.API_URL_RINKEBY
+				: process.env.API_URL_MAINNET;
 
     /*
     function tokenImage(token){
