@@ -1,6 +1,6 @@
 //Minter https://oneclickdapp.com/scoop-major
 
-export const NETWORK = 'rinkeby';
+export const NETWORK = process.env.REACT_APP_NETWORK;
 export const NONINTERACTIVE = [];
 export const CURATED = [0];
 export const COMPLETE = [];
