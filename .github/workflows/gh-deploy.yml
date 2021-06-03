@@ -29,6 +29,14 @@ jobs:
       - name: Create production build
         env:
           REACT_APP_INFURA_KEY: ${{ secrets.REACT_APP_INFURA_KEY }}
+          REACT_APP_URL_MAINNET: ${{ secrets.REACT_APP_URL_MAINNET }}
+          REACT_APP_URL_RINKEBY: ${{ secrets.REACT_APP_URL_RINKEBY }}
+          REACT_APP_API_URL_MAINNET: ${{ secrets.REACT_APP_API_URL_MAINNET }}
+          REACT_APP_API_URL_RINKEBY: ${{ secrets.REACT_APP_API_URL_RINKEBY }}
+          REACT_APP_MEDIA_URL_MAINNET: ${{ secrets.REACT_APP_MEDIA_URL_MAINNET }}
+          REACT_APP_MEDIA_URL_RINKEBY: ${{ secrets.REACT_APP_MEDIA_URL_RINKEBY }}
+          REACT_APP_MEDIA_URL_MAINNET_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_MAINNET_THUMB }}
+          REACT_APP_MEDIA_URL_RINKEBY_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_RINKEBY_THUMB }}
         run: npm run build
 
       - name: Deploy to GitHub Pages site
