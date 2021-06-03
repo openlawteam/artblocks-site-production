@@ -227,10 +227,10 @@ class NewToken extends Component {
                   <TwitterShareButton
                     url={
                       this.props.network === 'rinkeby'
-                        ? process.env.REACT_APP_URL_RINKEBY +
+                        ? process.env.REACT_APP_API_URL_RINKEBY +
                           '/token/' +
                           this.state.token
-                        : process.env.REACT_APP_URL_MAINNET +
+                        : process.env.REACT_APP_API_URL_MAINNET +
                           '/token/' +
                           this.state.token
                     }

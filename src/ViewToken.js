@@ -157,8 +157,8 @@ class ViewToken extends Component {
 
     let highlightImageUrl =
       this.props.network === 'rinkeby'
-        ? process.env.REACT_APP_MEDIA_URL_RINKEBY
-        : process.env.REACT_APP_MEDIA_URL_MAINNET;
+        ? process.env.REACT_APP_MEDIA_API_URL_RINKEBY
+        : process.env.REACT_APP_MEDIA_API_URL_MAINNET;
 
     function tokenHighlightImage(token) {
       return highlightImageUrl + token + '.png';
@@ -305,10 +305,10 @@ class ViewToken extends Component {
                   <TwitterShareButton
                     url={
                       this.props.network === 'rinkeby'
-                        ? process.env.REACT_APP_URL_RINKEBY +
+                        ? process.env.REACT_APP_API_URL_RINKEBY +
                           '/token/' +
                           this.state.token
-                        : process.env.REACT_APP_URL_MAINNET +
+                        : process.env.REACT_APP_API_URL_MAINNET +
                           '/token/' +
                           this.state.token
                     }
