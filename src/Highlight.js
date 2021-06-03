@@ -146,8 +146,6 @@ class Highlight extends Component {
       return baseURL + '/generator/' + token;
     }
 
-    console.log('this.state', this.state);
-
     return (
       <div>
         {this.state.randomToken !== undefined && (
@@ -223,31 +221,33 @@ class Highlight extends Component {
                 </div>
               </Container>
             </Col>
-            <Col>
-              <OverlayTrigger
-                placement="top"
-                delay={{show: 250, hide: 400}}
-                overlay={nextHighlight}>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    this.props.handleNextProject();
-                  }}>
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 16 16"
-                    className="bi bi-arrow-right"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      fillRule="evenodd"
-                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                    />
-                  </svg>
-                </Button>
-              </OverlayTrigger>
-            </Col>
+            {this.props.allProjects.length > 1 && (
+              <Col>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{show: 250, hide: 400}}
+                  overlay={nextHighlight}>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      this.props.handleNextProject();
+                    }}>
+                    <svg
+                      width="1em"
+                      height="1em"
+                      viewBox="0 0 16 16"
+                      className="bi bi-arrow-right"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fillRule="evenodd"
+                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                      />
+                    </svg>
+                  </Button>
+                </OverlayTrigger>
+              </Col>
+            )}
           </Row>
         )}
         <hr />

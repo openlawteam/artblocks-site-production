@@ -519,6 +519,7 @@ class App extends Component {
                             <Col>
                               <Highlight
                                 project={this.state.currentProject}
+                                allProjects={this.state.allProjects}
                                 web3={this.state.web3}
                                 account={this.state.account}
                                 tokensOfOwner={this.state.tokensOfOwner}
