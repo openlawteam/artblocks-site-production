@@ -146,6 +146,8 @@ class Highlight extends Component {
       return baseURL + '/generator/' + token;
     }
 
+    console.log('this.state', this.state);
+
     return (
       <div>
         {this.state.randomToken !== undefined && (
@@ -177,8 +179,7 @@ class Highlight extends Component {
               </OverlayTrigger>
             </Col>
             <Col xs={12} md={5}>
-              <Container
-                style={{border: '1px solid gray', borderRadius: '2px'}}>
+              <Container className="org-secondary-alert show">
                 <div className="mt-2 mb-2">
                   <OverlayTrigger
                     placement="left"
