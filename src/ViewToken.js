@@ -12,9 +12,10 @@ import {
   Alert,
   Container,
 } from 'react-bootstrap';
-import {TwitterShareButton} from 'react-twitter-embed';
+import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {Link} from 'react-router-dom';
 import {tokenDetailsUrl /*, reverseResolveEns*/} from './utils';
+import OpenSeaImage from './assets/images/os_logo.png';
 import './ProjectGallery.css';
 
 class ViewToken extends Component {
@@ -26,7 +27,6 @@ class ViewToken extends Component {
 
   async componentDidMount() {
     try {
-      console.log('currentNet: ' + this.props.network);
       const artBlocks = this.props.artBlocks;
       const projectId = await artBlocks.methods
         .tokenIdToProjectId(this.props.token)
@@ -118,7 +118,6 @@ class ViewToken extends Component {
         hyperRainbow = true;
       }
     }
-    console.log(hyperRainbow);
 
     const viewImageToolTip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
@@ -191,9 +190,6 @@ class ViewToken extends Component {
         );
       }
     }
-    console.log(tokenOSURL(this.props.token));
-
-    console.log('this.state.projectDescription', this.state.projectDescription);
 
     return (
       <div className="section-wrapper">
@@ -235,7 +231,7 @@ class ViewToken extends Component {
                           href={tokenOSURL(this.props.token)}
                           target="_blank"
                           rel="noopener noreferrer">
-                          <Image width="50" src="/os_logo.png" />
+                          <Image width="50" src={OpenSeaImage} />
                         </a>
                       </p>
                     </div>
@@ -315,19 +311,11 @@ class ViewToken extends Component {
                           '/token/' +
                           this.state.token
                     }
-                    options={{
-                      text:
-                        (this.props.network === 'rinkeby' ? 'Testnet ' : '') +
-                        this.state.projectDescription[0] +
-                        ' #' +
-                        (Number(this.state.token) -
-                          Number(this.state.projectId) * 1000000) +
-                        ' by ' +
-                        this.state.projectDescription[1],
-                      via: 'artblocks_io',
-                    }}
-                    hashtags={['genArt']}
-                  />
+                    title={`${this.state.projectDescription.artist} | ${this.state.projectDescription.projectName}`}
+                    hashtags={['genArt', 'flamingodao', 'artblocks', 'flutter']}
+                    via={'FLAMINGODAO'}>
+                    <TwitterIcon size={32} round />
+                  </TwitterShareButton>
                 </div>
               )}
             </Col>

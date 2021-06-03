@@ -13,8 +13,7 @@ import {
   Container,
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {TwitterShareButton} from 'react-twitter-embed';
-//import {Link} from 'react-router-dom';
+import {TwitterIcon, TwitterShareButton} from 'react-share';
 import './ProjectGallery.css';
 
 class NewToken extends Component {
@@ -224,30 +223,33 @@ class NewToken extends Component {
                     {this.state.projectTokenDetails &&
                       this.state.projectTokenDetails[3]}
                   </p>
-
                   <br />
                   <TwitterShareButton
                     url={
                       this.props.network === 'rinkeby'
-                        ? process.env.URL_RINKEBY + '/token/' + this.state.token
-                        : process.env.URL_MAINNET + '/token/' + this.state.token
+                        ? process.env.REACT_APP_URL_RINKEBY +
+                          '/token/' +
+                          this.state.token
+                        : process.env.REACT_APP_URL_MAINNET +
+                          '/token/' +
+                          this.state.token
                     }
-                    options={{
-                      text:
-                        'I just minted ' +
-                        (this.props.network === 'rinkeby' ? 'testnet ' : '') +
-                        this.state.projectDescription[0] +
-                        ' #' +
-                        (Number(this.props.token) -
-                          Number(this.state.projectId && this.state.projectId) *
-                            1000000) +
-                        ' by ' +
-                        this.state.projectDescription[1] +
-                        '!',
-                      via: 'artblocks_io',
-                    }}
-                    tag={'genArt'}
-                  />
+                    title={
+                      'I just minted ' +
+                      (this.props.network === 'rinkeby' ? 'testnet ' : '') +
+                      this.state.projectDescription[0] +
+                      ' #' +
+                      (Number(this.props.token) -
+                        Number(this.state.projectId && this.state.projectId) *
+                          1000000) +
+                      ' by ' +
+                      this.state.projectDescription[1] +
+                      '!'
+                    }
+                    hashtags={['genArt', 'flamingodao', 'artblocks', 'flutter']}
+                    via={'FLAMINGODAO'}>
+                    <TwitterIcon size={32} round />
+                  </TwitterShareButton>
                 </div>
               )}
             </Col>

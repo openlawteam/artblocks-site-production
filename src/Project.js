@@ -23,7 +23,6 @@ import {ERC20_ABI} from './config';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
 import ArtistInterface from './ArtistInterface';
-//import {TwitterShareButton} from 'react-twitter-embed';
 import './Project.css';
 class Project extends Component {
   constructor(props) {
