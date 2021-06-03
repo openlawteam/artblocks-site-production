@@ -15,6 +15,7 @@ import {
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {Link} from 'react-router-dom';
 import {tokenDetailsUrl /*, reverseResolveEns*/} from './utils';
+import {formatEthereumAddress} from './utils/helpers';
 import OpenSeaImage from './assets/images/os_logo.png';
 import './ProjectGallery.css';
 
@@ -225,8 +226,8 @@ class ViewToken extends Component {
                         <Link to={'/user/' + this.state.ownerOfToken}>
                           {this.state.prettyIdentifier
                             ? this.state.prettyIdentifier
-                            : this.state.ownerOfToken.slice(0, 10)}
-                        </Link>
+                            : formatEthereumAddress(this.state.ownerOfToken)}
+                        </Link>{' '}
                         <a
                           href={tokenOSURL(this.props.token)}
                           target="_blank"
