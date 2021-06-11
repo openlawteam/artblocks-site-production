@@ -7,8 +7,8 @@ export const COMPLETE = [];
 
 export const BASE_URL =
   NETWORK === 'rinkeby'
-    ? process.env.REACT_APP_API_URL_RINKEBY
-    : process.env.REACT_APP_API_URL_MAINNET;
+    ? process.env.REACT_APP_URL_RINKEBY
+    : process.env.REACT_APP_URL_MAINNET;
 
 export const ETHERSCAN_URL =
   NETWORK === 'rinkeby'
