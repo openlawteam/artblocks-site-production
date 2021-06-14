@@ -1,6 +1,8 @@
 //Minter https://oneclickdapp.com/scoop-major
 
-export const NETWORK = process.env.REACT_APP_NETWORK;
+export const NETWORK =
+  process.env.REACT_APP_ENV === 'development' ? 'rinkeby' : 'mainnet';
+// process.env.REACT_APP_NETWORK;
 export const NONINTERACTIVE = [];
 export const CURATED = [0];
 export const COMPLETE = [];
