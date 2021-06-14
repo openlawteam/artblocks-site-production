@@ -4,7 +4,7 @@ export const NETWORK = process.env.REACT_APP_NETWORK;
 export const NONINTERACTIVE = [];
 export const CURATED = [0];
 export const COMPLETE = [];
-
+console.log('process.env', process.env);
 export const BASE_URL =
   NETWORK === 'rinkeby'
     ? process.env.REACT_APP_URL_RINKEBY
