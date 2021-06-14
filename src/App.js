@@ -130,6 +130,7 @@ class App extends Component {
         NETWORK === 'rinkeby'
           ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
           : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
+      console.log('NETWORK', NETWORK);
       console.log('artBlocks', artBlocks);
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
       console.log('nextProjectId', nextProjectId);
@@ -308,8 +309,6 @@ class App extends Component {
     if (typeof window.web3 !== 'undefined') {
       const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
       const network = await web3.eth.net.getNetworkType();
-
-      console.log('NETWORK', NETWORK);
 
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
