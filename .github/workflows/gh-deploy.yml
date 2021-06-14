@@ -37,7 +37,8 @@ jobs:
           REACT_APP_MEDIA_URL_RINKEBY: ${{ secrets.REACT_APP_MEDIA_URL_RINKEBY }}
           REACT_APP_MEDIA_URL_MAINNET_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_MAINNET_THUMB }}
           REACT_APP_MEDIA_URL_RINKEBY_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_RINKEBY_THUMB }}
-        run: npm run build
+        run: NODE_ENV=development npm run build
+        # run: npm run build
 
       - name: Deploy to GitHub Pages site
         uses: peaceiris/actions-gh-pages@v3
