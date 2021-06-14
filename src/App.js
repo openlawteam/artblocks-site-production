@@ -308,6 +308,9 @@ class App extends Component {
     if (typeof window.web3 !== 'undefined') {
       const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
       const network = await web3.eth.net.getNetworkType();
+
+      console.log('NETWORK', NETWORK);
+
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
         NETWORK === 'rinkeby'
