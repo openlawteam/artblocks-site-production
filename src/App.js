@@ -130,10 +130,7 @@ class App extends Component {
         NETWORK === 'rinkeby'
           ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
           : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
-      console.log('NETWORK', NETWORK);
-      console.log('artBlocks', artBlocks);
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
-      console.log('nextProjectId', nextProjectId);
       const allProjects = [];
       for (let i = 0; i < nextProjectId; i++) {
         allProjects.push(i);
