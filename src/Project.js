@@ -614,30 +614,46 @@ class Project extends Component {
 
   async txnBlockDelayer(receipt) {
     const blockDelayInterval = process.env.REACT_APP_BLOCK_DELAY_INTERVAL || 0;
-
-    console.log(
-      'txnBlockDelayer::receipt',
-      receipt,
-      'this.props.web3',
-      this.props.web3
-    );
     console.log('blockDelayInterval', blockDelayInterval);
 
     if (blockDelayInterval === 0) {
       return;
     }
 
-    const blockNumberInterval = setInterval(checkBlockNumber, 1000);
+    try {
+      console.log(
+        'txnBlockDelayer::receipt',
+        receipt,
+        'this.props.web3',
+        this.props.web3
+      );
 
-    function checkBlockNumber() {
-      const currentBlockNumber = this.props.web3.eth.getBlockNumber();
-      console.log('currentBlockNumber', currentBlockNumber);
+      const blockNumberInterval = setInterval(checkBlockNumber, 1000);
 
-      if (currentBlockNumber > receipt.block + blockDelayInterval) {
-        clearInterval(blockNumberInterval);
+      function checkBlockNumber() {
+        const currentBlockNumber = this.props.web3.eth.getBlockNumber();
+        console.log('currentBlockNumber', currentBlockNumber);
 
-        return;
+        const {block, transactionHash} = receipt;
+
+        if (currentBlockNumber > block + blockDelayInterval) {
+          const tx = this.props.web3.eth.getTransactionReceipt(transactionHash);
+
+          console.log('tx', tx);
+
+          if (tx.status) {
+            clearInterval(blockNumberInterval);
+
+            return;
+          } else {
+            clearInterval(blockNumberInterval);
+
+            throw new Error('mint failed');
+          }
+        }
       }
+    } catch (err) {
+      console.error('err', err);
     }
   }
 
