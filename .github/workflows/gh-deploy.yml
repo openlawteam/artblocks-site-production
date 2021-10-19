@@ -38,6 +38,7 @@ jobs:
           REACT_APP_MEDIA_URL_RINKEBY: ${{ secrets.REACT_APP_MEDIA_URL_RINKEBY }}
           REACT_APP_MEDIA_URL_MAINNET_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_MAINNET_THUMB }}
           REACT_APP_MEDIA_URL_RINKEBY_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_RINKEBY_THUMB }}
+          REACT_APP_BLOCK_DELAY_INTERVAL: ${{ secrets.REACT_APP_BLOCK_DELAY_INTERVAL }}
         run: npm run build
 
       - name: Deploy to GitHub Pages site

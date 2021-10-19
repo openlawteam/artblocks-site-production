@@ -563,6 +563,10 @@ class Project extends Component {
           })
           .once('receipt', (receipt) => {
             console.log(receipt);
+
+            // Delay notifcation of minted token till the nth block
+            this.txnBlockDelayer(receipt);
+
             const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
             console.log('mintedtoken:' + mintedToken);
             this.props.handleToggleView('newToken', mintedToken);
@@ -593,6 +597,10 @@ class Project extends Component {
               : parseInt(receipt.events[0].raw.topics[3], 16);
           console.log('mintedtoken:' + mintedToken);
           console.log(receipt);
+
+          // Delay notifcation of minted token till the nth block
+          this.txnBlockDelayer(receipt);
+
           this.props.handleToggleView('newToken', mintedToken);
         })
         .catch((err) => {
@@ -601,6 +609,35 @@ class Project extends Component {
           this.setState({purchase: false});
           this.checkAllowance();
         });
+    }
+  }
+
+  async txnBlockDelayer(receipt) {
+    const blockDelayInterval = process.env.REACT_APP_BLOCK_DELAY_INTERVAL || 0;
+
+    console.log(
+      'txnBlockDelayer::receipt',
+      receipt,
+      'this.props.web3',
+      this.props.web3
+    );
+    console.log('blockDelayInterval', blockDelayInterval);
+
+    if (blockDelayInterval === 0) {
+      return;
+    }
+
+    const blockNumberInterval = setInterval(checkBlockNumber, 1000);
+
+    function checkBlockNumber() {
+      const currentBlockNumber = this.props.web3.eth.getBlockNumber();
+      console.log('currentBlockNumber', currentBlockNumber);
+
+      if (currentBlockNumber > receipt.block + blockDelayInterval) {
+        clearInterval(blockNumberInterval);
+
+        return;
+      }
     }
   }
 
