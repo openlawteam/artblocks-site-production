@@ -699,6 +699,9 @@ class Project extends Component {
       this.state.projectTokenDetails &&
       this.state.projectTokenDetails[0] === this.props.account;
 
+    console.log('this.props', this.props);
+    console.log('this.state', this.state);
+
     return (
       <div className="section-wrapper">
         {this.state.projectTokenDetails &&
