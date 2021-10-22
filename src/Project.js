@@ -572,7 +572,7 @@ class Project extends Component {
             this.props.handleToggleView('newToken', mintedToken);
           })
           .catch((err) => {
-            //alert(err);
+            alert(err);
             this.updateValues();
             this.setState({purchase: false});
           });
@@ -604,7 +604,7 @@ class Project extends Component {
           this.props.handleToggleView('newToken', mintedToken);
         })
         .catch((err) => {
-          //alert(err);
+          alert(err);
           this.updateValues();
           this.setState({purchase: false});
           this.checkAllowance();

@@ -95,6 +95,7 @@ class App extends Component {
       lookupAcct: '0x8De4e517A6F0B84654625228D8293b70AB49cF6C',
       network: '',
       isWhitelisted: false,
+      validationErrorMessage: '',
       overlay: false,
       nonInter: NONINTERACTIVE,
     };
@@ -116,8 +117,6 @@ class App extends Component {
         getArtblocksContractAddresses(NETWORK).coreContractAddress
       );
 
-      console.log('1 - artBlocks', artBlocks.methods);
-
       const minterAddress =
         getArtblocksContractAddresses(NETWORK).minterContractAddress;
 
@@ -126,18 +125,13 @@ class App extends Component {
         minterAddress
       );
 
-      console.log('2 - mainMinter', mainMinter.methods);
-
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
-
-      console.log('3 - nextProjectId', nextProjectId);
 
       const allProjects = [];
       for (let i = 0; i < nextProjectId; i++) {
         allProjects.push(i);
       }
 
-      console.log('A');
       //await artBlocks.methods.showAllProjectIds().call();
       let activeProjects = [];
       await Promise.all(
@@ -161,8 +155,6 @@ class App extends Component {
         })
       );
 
-      console.log('B');
-
       let artistAddresses = await Promise.all(
         allProjects.map(async (project) => {
           if (project < 3) {
@@ -178,8 +170,6 @@ class App extends Component {
           }
         })
       );
-
-      console.log('C');
 
       const totalInvocations = Number(
         await artBlocks.methods.totalSupply().call()
@@ -208,6 +198,7 @@ class App extends Component {
               tokensOfOwner: null,
               isWhitelisted: null,
               projectsOfArtist: null,
+              validationErrorMessage: null,
             });
           } else {
             this.checkWhitelist(accounts[0], artBlocks);
@@ -235,14 +226,27 @@ class App extends Component {
 
   async checkWhitelist(ethereumAddress, artBlocks) {
     try {
-      const isWhitelisted = await artBlocks.methods
-        .isWhitelisted(ethereumAddress)
+      let validationErrorMessage = '';
+
+      const projectId = await artBlocks.methods
+        .tokenIdToProjectId(this.props.token)
         .call();
+
+      const isWhitelisted = await artBlocks.methods
+        .addressCanMint(ethereumAddress, projectId)
+        .call();
+
+      if (!isWhitelisted) {
+        validationErrorMessage = await artBlocks.methods
+          .getValidationErrorMessage(projectId)
+          .call();
+      }
 
       this.setState({
         connected: ethereumAddress !== undefined,
         account: ethereumAddress,
         isWhitelisted,
+        validationErrorMessage,
       });
     } catch (error) {
       console.error(error);
