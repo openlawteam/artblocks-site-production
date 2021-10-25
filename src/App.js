@@ -11,6 +11,7 @@ import {
   ARTBLOCKS_CONTRACT_MINTER_ABI,
   getArtblocksContractAddresses,
 } from './config';
+import {checkWhitelist} from './utils';
 import Web3 from 'web3';
 import Project from './Project';
 import Highlight from './Highlight';
@@ -201,12 +202,29 @@ class App extends Component {
               validationErrorMessage: null,
             });
           } else {
-            this.checkWhitelist(accounts[0], artBlocks);
+            // checkWhitelist(accounts[0], artBlocks);
+
+            // check if the connected address is whitelisted
+            // const {isWhitelisted} = checkWhitelist(accounts[0], artBlocks);
+
+            this.setState({
+              connected: accounts[0] !== undefined,
+              account: accounts[0],
+              // isWhitelisted,
+              // validationErrorMessage,
+            });
           }
         });
 
         // check if the connected address is whitelisted
-        this.checkWhitelist(accounts[0], artBlocks);
+        // const {isWhitelisted} = checkWhitelist(accounts[0], artBlocks);
+
+        this.setState({
+          connected: accounts[0] !== undefined,
+          account: accounts[0],
+          // isWhitelisted,
+          // validationErrorMessage,
+        });
       }
 
       this.setState({
@@ -224,34 +242,41 @@ class App extends Component {
     }
   }
 
-  async checkWhitelist(ethereumAddress, artBlocks) {
-    try {
-      let validationErrorMessage = '';
+  // async checkWhitelist(ethereumAddress, artBlocks) {
+  //   try {
+  //     console.log('====== ', this.props.project, this.props);
 
-      const projectId = await artBlocks.methods
-        .tokenIdToProjectId(this.props.token)
-        .call();
+  //     const validatorContractAddress =
+  //       await artBlocks.methods.validatorContracts(Number(this.props.project));
 
-      const isWhitelisted = await artBlocks.methods
-        .addressCanMint(ethereumAddress, projectId)
-        .call();
+  //     console.log('validatorContractAddress', validatorContractAddress);
+  //     // v2 ROPSTEN
+  //     // let validationErrorMessage = '';
 
-      if (!isWhitelisted) {
-        validationErrorMessage = await artBlocks.methods
-          .getValidationErrorMessage(projectId)
-          .call();
-      }
+  //     // const projectId = await artBlocks.methods
+  //     //   .tokenIdToProjectId(this.props.token)
+  //     //   .call();
 
-      this.setState({
-        connected: ethereumAddress !== undefined,
-        account: ethereumAddress,
-        isWhitelisted,
-        validationErrorMessage,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  //     // const isWhitelisted = await artBlocks.methods
+  //     //   .addressCanMint(ethereumAddress, projectId)
+  //     //   .call();
+
+  //     // if (!isWhitelisted) {
+  //     //   validationErrorMessage = await artBlocks.methods
+  //     //     .getValidationErrorMessage(projectId)
+  //     //     .call();
+  //     // }
+
+  //     this.setState({
+  //       connected: ethereumAddress !== undefined,
+  //       account: ethereumAddress,
+  //       // isWhitelisted,
+  //       // validationErrorMessage,
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   async componentDidUpdate(oldProps) {
     if (
@@ -286,16 +311,16 @@ class App extends Component {
           .tokensOfOwner(accounts[0])
           .call();
         const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
-        const isWhitelisted =
-          (await this.state.artBlocks.methods
-            .isWhitelisted(accounts[0])
-            .call()) &&
-          (await this.state.artBlocks.methods
-            .isWhitelisted(accounts[0])
-            .call());
+        // const isWhitelisted =
+        //   (await this.state.artBlocks.methods
+        //     .isWhitelisted(accounts[0])
+        //     .call()) &&
+        //   (await this.state.artBlocks.methods
+        //     .isWhitelisted(accounts[0])
+        //     .call());
         let projectsOfArtist = [];
         this.state.artistAddresses.map((projectArtistAddress, index) => {
-          if (projectArtistAddress === accounts[0] || isWhitelisted) {
+          if (projectArtistAddress === accounts[0] /* || isWhitelisted*/) {
             projectsOfArtist.push(index);
           }
           return null;
@@ -304,7 +329,7 @@ class App extends Component {
         this.setState({
           account: accounts[0],
           tokensOfOwner,
-          isWhitelisted,
+          // isWhitelisted,
           projectsOfArtist,
         });
       }

@@ -1,5 +1,11 @@
-import {NETWORK, NONINTERACTIVE, BASE_URL} from './config';
+import {
+  NETWORK,
+  NONINTERACTIVE,
+  BASE_URL,
+  VALIDATOR_CONTRACT_ABI,
+} from './config';
 import namehash from 'eth-ens-namehash';
+import Web3 from 'web3';
 
 function tokenGenerator(token) {
   return BASE_URL + '/generator/' + token;
@@ -40,6 +46,66 @@ async function reverseResolveEns(address, web3) {
   return name;
 }
 
+async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
+  try {
+    const API_KEY = process.env.REACT_APP_INFURA_KEY;
+    const web3 = new Web3(
+      new Web3.providers.HttpProvider(
+        `https://${NETWORK}.infura.io/v3/${API_KEY}`
+      )
+    );
+
+    console.log('mainMinter', mainMinter);
+
+    const validatorContractAddress = await mainMinter.methods
+      .validatorContracts(Number(projectId))
+      .call();
+
+    console.log('validatorContractAddress', validatorContractAddress);
+
+    const validatorContract = new web3.eth.Contract(
+      VALIDATOR_CONTRACT_ABI,
+      validatorContractAddress
+    );
+
+    console.log('validatorContract', validatorContract);
+
+    const isWhitelisted = await validatorContract.methods
+      .whitelist(ethereumAddress)
+      .call();
+
+    console.log('::::::::::::::: isWhitelisted', isWhitelisted);
+
+    // v2 ROPSTEN
+    // let validationErrorMessage = '';
+
+    // const projectId = await artBlocks.methods
+    //   .tokenIdToProjectId(this.props.token)
+    //   .call();
+
+    // const isWhitelisted = await artBlocks.methods
+    //   .addressCanMint(ethereumAddress, projectId)
+    //   .call();
+
+    // if (!isWhitelisted) {
+    //   validationErrorMessage = await artBlocks.methods
+    //     .getValidationErrorMessage(projectId)
+    //     .call();
+    // }
+
+    // this.setState({
+    //   connected: ethereumAddress !== undefined,
+    //   account: ethereumAddress,
+    // });
+    return {
+      isWhitelisted,
+      // validationErrorMessage,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export {
   tokenGenerator,
   shouldShowNonInteractive,
@@ -47,4 +113,5 @@ export {
   tokenThumbImage,
   tokenDetailsUrl,
   reverseResolveEns,
+  checkWhitelist,
 };

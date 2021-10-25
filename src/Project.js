@@ -20,6 +20,7 @@ import {
   withRouter,
 } from 'react-router-dom';
 import {ERC20_ABI} from './config';
+import {checkWhitelist} from './utils';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
 import ArtistInterface from './ArtistInterface';
@@ -45,6 +46,8 @@ class Project extends Component {
       randomTokenNumber: 0,
       showWarningModal: false,
       showWhyModal: false,
+      mintTxConfirmed: false,
+      mintTxReceipt: '',
     };
     this.handleToggleArtistInterface =
       this.handleToggleArtistInterface.bind(this);
@@ -115,12 +118,22 @@ class Project extends Component {
       } else {
         this.setState({currency: 'ETH'});
       }
+
       let scriptJSON =
         projectScriptDetails[0] && JSON.parse(projectScriptDetails[0]);
       console.log('still setting state');
 
+      console.log(' >>>>> HAS this.props.mainMinter', this.props.mainMinter);
+
+      const {isWhitelisted} = checkWhitelist(
+        this.props.account,
+        this.props.project,
+        this.props.mainMinter
+      );
+
       this.setState({
         artBlocks,
+        isWhitelisted,
         projectTokens,
         projectDescription,
         projectTokenDetails,
@@ -183,7 +196,15 @@ class Project extends Component {
     this.setState({erc20Balance: balance});
   }
 
-  async componentDidUpdate(oldProps) {
+  async componentDidUpdate(oldProps, prevState) {
+    console.log(
+      'oldProps',
+      oldProps,
+      'prevState,',
+      prevState,
+      'new state',
+      this.state
+    );
     if (oldProps.project !== this.props.project) {
       console.log('change');
 
@@ -329,6 +350,15 @@ class Project extends Component {
       }
       this.setState({artBlocks});
     }
+
+    if (prevState.mintTxConfirmed !== this.state.mintTxConfirmed) {
+      const mintedToken = parseInt(
+        this.state.mintTxReceipt, // .events[0].raw.topics[3],
+        16
+      );
+      console.log('mintedtoken:' + mintedToken);
+      this.props.handleToggleView('newToken', mintedToken);
+    }
   }
 
   async updateValues() {
@@ -378,6 +408,7 @@ class Project extends Component {
       approved: true,
     });
   }
+
   getOSLink() {
     if (this.props.project === 'rinkeby') {
       return 'https://opensea.io/assets/art-blocks';
@@ -561,15 +592,15 @@ class Project extends Component {
                 ? this.state.projectTokenDetails[1]
                 : 0,
           })
-          .once('receipt', (receipt) => {
+          .once('receipt', async (receipt) => {
             console.log(receipt);
 
             // Delay notifcation of minted token till the nth block
-            this.txnBlockDelayer(receipt);
+            await this.txnBlockDelayer(receipt);
 
-            const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
-            console.log('mintedtoken:' + mintedToken);
-            this.props.handleToggleView('newToken', mintedToken);
+            // const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
+            // console.log('mintedtoken:' + mintedToken);
+            // this.props.handleToggleView('newToken', mintedToken);
           })
           .catch((err) => {
             alert(err);
@@ -590,18 +621,18 @@ class Project extends Component {
               ? this.state.projectTokenDetails[1]
               : 0,
         })
-        .once('receipt', (receipt) => {
-          const mintedToken =
-            this.props.project === '51'
-              ? parseInt(receipt.events[1].raw.topics[3], 16)
-              : parseInt(receipt.events[0].raw.topics[3], 16);
-          console.log('mintedtoken:' + mintedToken);
-          console.log(receipt);
+        .once('receipt', async (receipt) => {
+          // const mintedToken =
+          //   this.props.project === '51'
+          //     ? parseInt(receipt.events[1].raw.topics[3], 16)
+          //     : parseInt(receipt.events[0].raw.topics[3], 16);
 
           // Delay notifcation of minted token till the nth block
-          this.txnBlockDelayer(receipt);
+          await this.txnBlockDelayer(receipt);
 
-          this.props.handleToggleView('newToken', mintedToken);
+          // this.props.handleToggleView('newToken', mintedToken);
+          // console.log('>>> mintedtoken:' + mintedToken);
+          // console.log(receipt);
         })
         .catch((err) => {
           alert(err);
@@ -630,30 +661,46 @@ class Project extends Component {
 
       const blockNumberInterval = setInterval(checkBlockNumber, 1000);
 
-      function checkBlockNumber() {
-        const currentBlockNumber = this.props.web3.eth.getBlockNumber();
-        console.log('currentBlockNumber', currentBlockNumber);
+      const web3Props = this.props.web3;
+      const appContext = this;
 
-        const {block, transactionHash} = receipt;
+      async function checkBlockNumber() {
+        const currentBlockNumber = await web3Props.eth.getBlockNumber();
 
-        if (currentBlockNumber > block + blockDelayInterval) {
-          const tx = this.props.web3.eth.getTransactionReceipt(transactionHash);
+        const {blockNumber, transactionHash} = receipt;
 
-          console.log('tx', tx);
+        console.log(
+          'currentBlockNumber',
+          currentBlockNumber,
+          'against mint block',
+          blockNumber
+        );
 
-          if (tx.status) {
-            clearInterval(blockNumberInterval);
+        console.log('blockDelayInterval', blockDelayInterval);
 
-            return;
-          } else {
-            clearInterval(blockNumberInterval);
+        if (currentBlockNumber > blockNumber + Number(blockDelayInterval)) {
+          const tx = await web3Props.eth.getTransactionReceipt(transactionHash);
 
+          console.log('confirm tx', tx);
+          console.log('receipt', receipt);
+
+          appContext.setState({
+            mintTxConfirmed: tx && tx.status,
+            mintTxReceipt:
+              tx.logs[0].topics[3] === receipt.events[0].raw.topics[3]
+                ? receipt.events[0].raw.topics[3]
+                : tx.logs[0].topics[3], // receipt,
+          });
+
+          clearInterval(blockNumberInterval);
+
+          if (!tx && !tx.status) {
             throw new Error('mint failed');
           }
         }
       }
     } catch (err) {
-      console.error('err', err);
+      console.error(err);
     }
   }
 
@@ -662,6 +709,8 @@ class Project extends Component {
   }
 
   render() {
+    console.log('this.state', this.state);
+
     let complete =
       this.state.projectTokens &&
       this.props.project &&
@@ -698,9 +747,6 @@ class Project extends Component {
     const userIsArtist =
       this.state.projectTokenDetails &&
       this.state.projectTokenDetails[0] === this.props.account;
-
-    console.log('this.props', this.props);
-    console.log('this.state', this.state);
 
     return (
       <div className="section-wrapper">
@@ -825,16 +871,16 @@ class Project extends Component {
                                   <Button
                                     className="btn-primary"
                                     style={{width: '100%'}}
-                                    disabled={
-                                      this.state.purchase ||
-                                      !this.props.isWhitelisted
-                                        ? true
-                                        : this.state.projectScriptDetails[5] &&
-                                          this.state.projectTokenDetails[0] !==
-                                            this.props.account
-                                        ? true
-                                        : false
-                                    }
+                                    // disabled={
+                                    //   this.state.purchase ||
+                                    //   !this.props.isWhitelisted
+                                    //     ? true
+                                    //     : this.state.projectScriptDetails[5] &&
+                                    //       this.state.projectTokenDetails[0] !==
+                                    //         this.props.account
+                                    //     ? true
+                                    //     : false
+                                    // }
                                     onClick={() =>
                                       this.setState({
                                         showWarningModal: true,
