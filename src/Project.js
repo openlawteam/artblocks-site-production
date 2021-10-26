@@ -20,7 +20,6 @@ import {
   withRouter,
 } from 'react-router-dom';
 import {ERC20_ABI} from './config';
-import {checkWhitelist} from './utils';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
 import ArtistInterface from './ArtistInterface';
@@ -121,26 +120,16 @@ class Project extends Component {
 
       let scriptJSON =
         projectScriptDetails[0] && JSON.parse(projectScriptDetails[0]);
-      console.log('still setting state');
-
-      console.log(' >>>>> HAS this.props.mainMinter', this.props.mainMinter);
-
-      const {isWhitelisted} = checkWhitelist(
-        this.props.account,
-        this.props.project,
-        this.props.mainMinter
-      );
 
       this.setState({
         artBlocks,
-        isWhitelisted,
         projectTokens,
         projectDescription,
         projectTokenDetails,
         projectScriptDetails,
         scriptJSON,
         projectURIInfo,
-        projectRoyaltyInfo /*, network*/,
+        projectRoyaltyInfo,
         randomTokenNumber: projectTokens
           ? Math.floor(Math.random() * projectTokens.length)
           : 0,
@@ -197,14 +186,6 @@ class Project extends Component {
   }
 
   async componentDidUpdate(oldProps, prevState) {
-    console.log(
-      'oldProps',
-      oldProps,
-      'prevState,',
-      prevState,
-      'new state',
-      this.state
-    );
     if (oldProps.project !== this.props.project) {
       console.log('change');
 
@@ -416,10 +397,8 @@ class Project extends Component {
       if (this.props.project && this.props.project === '0') {
         return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Chromie%20Squiggle&search[stringTraits][0][values][0]=All%20Chromie%20Squiggles';
       } else if (this.props.project && this.props.project === '1') {
-        //console.log("osp1");
         return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Genesis&search[stringTraits][0][values][0]=All%20Genesis';
       } else if (this.props.project && this.props.project === '2') {
-        //console.log("osp2");
         return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Construction%20Token&search[stringTraits][0][values][0]=All%20Construction%20Tokens';
       } else if (this.props.project && this.props.project === '3') {
         return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Cryptoblots&search[stringTraits][0][values][0]=All%20Cryptoblots';
@@ -554,7 +533,6 @@ class Project extends Component {
         this.setState({purchase: false});
       })
       .catch((err) => {
-        //alert(err);
         this.updateValues();
         this.setState({purchase: false});
       });
@@ -595,12 +573,12 @@ class Project extends Component {
           .once('receipt', async (receipt) => {
             console.log(receipt);
 
+            this.setState({
+              txReceiptMessage: 'Please wait...',
+            });
+
             // Delay notifcation of minted token till the nth block
             await this.txnBlockDelayer(receipt);
-
-            // const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
-            // console.log('mintedtoken:' + mintedToken);
-            // this.props.handleToggleView('newToken', mintedToken);
           })
           .catch((err) => {
             alert(err);
@@ -622,17 +600,12 @@ class Project extends Component {
               : 0,
         })
         .once('receipt', async (receipt) => {
-          // const mintedToken =
-          //   this.props.project === '51'
-          //     ? parseInt(receipt.events[1].raw.topics[3], 16)
-          //     : parseInt(receipt.events[0].raw.topics[3], 16);
+          this.setState({
+            txReceiptMessage: 'Please wait...',
+          });
 
           // Delay notifcation of minted token till the nth block
           await this.txnBlockDelayer(receipt);
-
-          // this.props.handleToggleView('newToken', mintedToken);
-          // console.log('>>> mintedtoken:' + mintedToken);
-          // console.log(receipt);
         })
         .catch((err) => {
           alert(err);
@@ -645,20 +618,12 @@ class Project extends Component {
 
   async txnBlockDelayer(receipt) {
     const blockDelayInterval = process.env.REACT_APP_BLOCK_DELAY_INTERVAL || 0;
-    console.log('blockDelayInterval', blockDelayInterval);
 
     if (blockDelayInterval === 0) {
       return;
     }
 
     try {
-      console.log(
-        'txnBlockDelayer::receipt',
-        receipt,
-        'this.props.web3',
-        this.props.web3
-      );
-
       const blockNumberInterval = setInterval(checkBlockNumber, 1000);
 
       const web3Props = this.props.web3;
@@ -666,30 +631,17 @@ class Project extends Component {
 
       async function checkBlockNumber() {
         const currentBlockNumber = await web3Props.eth.getBlockNumber();
-
         const {blockNumber, transactionHash} = receipt;
-
-        console.log(
-          'currentBlockNumber',
-          currentBlockNumber,
-          'against mint block',
-          blockNumber
-        );
-
-        console.log('blockDelayInterval', blockDelayInterval);
 
         if (currentBlockNumber > blockNumber + Number(blockDelayInterval)) {
           const tx = await web3Props.eth.getTransactionReceipt(transactionHash);
-
-          console.log('confirm tx', tx);
-          console.log('receipt', receipt);
 
           appContext.setState({
             mintTxConfirmed: tx && tx.status,
             mintTxReceipt:
               tx.logs[0].topics[3] === receipt.events[0].raw.topics[3]
                 ? receipt.events[0].raw.topics[3]
-                : tx.logs[0].topics[3], // receipt,
+                : tx.logs[0].topics[3],
           });
 
           clearInterval(blockNumberInterval);
@@ -709,8 +661,6 @@ class Project extends Component {
   }
 
   render() {
-    console.log('this.state', this.state);
-
     let complete =
       this.state.projectTokens &&
       this.props.project &&
@@ -871,16 +821,16 @@ class Project extends Component {
                                   <Button
                                     className="btn-primary"
                                     style={{width: '100%'}}
-                                    // disabled={
-                                    //   this.state.purchase ||
-                                    //   !this.props.isWhitelisted
-                                    //     ? true
-                                    //     : this.state.projectScriptDetails[5] &&
-                                    //       this.state.projectTokenDetails[0] !==
-                                    //         this.props.account
-                                    //     ? true
-                                    //     : false
-                                    // }
+                                    disabled={
+                                      this.state.purchase ||
+                                      !this.props.isWhitelisted
+                                        ? true
+                                        : this.state.projectScriptDetails[5] &&
+                                          this.state.projectTokenDetails[0] !==
+                                            this.props.account
+                                        ? true
+                                        : false
+                                    }
                                     onClick={() =>
                                       this.setState({
                                         showWarningModal: true,
@@ -896,9 +846,11 @@ class Project extends Component {
                                           aria-hidden="true"
                                         />
                                         <span className="sr-only">
-                                          Pending...
+                                          {this.state?.txReceiptMessage ??
+                                            'Pending...'}
                                         </span>{' '}
-                                        Pending...
+                                        {this.state?.txReceiptMessage ??
+                                          'Pending...'}
                                       </div>
                                     ) : this.state.projectScriptDetails[5] ? (
                                       'Purchases Paused'
@@ -926,7 +878,11 @@ class Project extends Component {
                                     <div className="text-center">
                                       <Button
                                         variant="link"
-                                        onClick={this.handlePurchaseTo}>
+                                        onClick={this.handlePurchaseTo}
+                                        disabled={
+                                          this.state.purchase ||
+                                          !this.props.isWhitelisted
+                                        }>
                                         Purchase To Another User
                                       </Button>
                                     </div>
@@ -970,9 +926,11 @@ class Project extends Component {
                                             aria-hidden="true"
                                           />
                                           <span className="sr-only">
-                                            Pending...
+                                            {this.state?.txReceiptMessage ??
+                                              'Pending...'}
                                           </span>{' '}
-                                          Pending...
+                                          {this.state?.txReceiptMessage ??
+                                            'Pending...'}
                                         </div>
                                       ) : (
                                         'Approve ' +

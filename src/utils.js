@@ -55,28 +55,21 @@ async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
       )
     );
 
-    console.log('mainMinter', mainMinter);
-
+    // RINKEBY WHITELIST VALIDATION CONTRACT
     const validatorContractAddress = await mainMinter.methods
       .validatorContracts(Number(projectId))
       .call();
-
-    console.log('validatorContractAddress', validatorContractAddress);
 
     const validatorContract = new web3.eth.Contract(
       VALIDATOR_CONTRACT_ABI,
       validatorContractAddress
     );
 
-    console.log('validatorContract', validatorContract);
-
     const isWhitelisted = await validatorContract.methods
       .whitelist(ethereumAddress)
       .call();
 
-    console.log('::::::::::::::: isWhitelisted', isWhitelisted);
-
-    // v2 ROPSTEN
+    // ROPSTEN WHITELIST VALIDATION CONTRACT
     // let validationErrorMessage = '';
 
     // const projectId = await artBlocks.methods

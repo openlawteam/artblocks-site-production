@@ -191,7 +191,7 @@ class App extends Component {
         }
 
         // Make sure the site reflects if the user has disconnected their wallet
-        window.ethereum.on('accountsChanged', (accounts) => {
+        window.ethereum.on('accountsChanged', async (accounts) => {
           if (accounts.length === 0) {
             this.setState({
               connected: false,
@@ -202,28 +202,32 @@ class App extends Component {
               validationErrorMessage: null,
             });
           } else {
-            // checkWhitelist(accounts[0], artBlocks);
-
             // check if the connected address is whitelisted
-            // const {isWhitelisted} = checkWhitelist(accounts[0], artBlocks);
+            const {isWhitelisted} = await checkWhitelist(
+              accounts[0],
+              Number(this.state.currentProject),
+              mainMinter
+            );
 
             this.setState({
               connected: accounts[0] !== undefined,
               account: accounts[0],
-              // isWhitelisted,
-              // validationErrorMessage,
+              isWhitelisted,
             });
           }
         });
 
         // check if the connected address is whitelisted
-        // const {isWhitelisted} = checkWhitelist(accounts[0], artBlocks);
+        const {isWhitelisted} = await checkWhitelist(
+          accounts[0],
+          Number(this.state.currentProject),
+          mainMinter
+        );
 
         this.setState({
           connected: accounts[0] !== undefined,
           account: accounts[0],
-          // isWhitelisted,
-          // validationErrorMessage,
+          isWhitelisted,
         });
       }
 
@@ -241,42 +245,6 @@ class App extends Component {
       console.error(error);
     }
   }
-
-  // async checkWhitelist(ethereumAddress, artBlocks) {
-  //   try {
-  //     console.log('====== ', this.props.project, this.props);
-
-  //     const validatorContractAddress =
-  //       await artBlocks.methods.validatorContracts(Number(this.props.project));
-
-  //     console.log('validatorContractAddress', validatorContractAddress);
-  //     // v2 ROPSTEN
-  //     // let validationErrorMessage = '';
-
-  //     // const projectId = await artBlocks.methods
-  //     //   .tokenIdToProjectId(this.props.token)
-  //     //   .call();
-
-  //     // const isWhitelisted = await artBlocks.methods
-  //     //   .addressCanMint(ethereumAddress, projectId)
-  //     //   .call();
-
-  //     // if (!isWhitelisted) {
-  //     //   validationErrorMessage = await artBlocks.methods
-  //     //     .getValidationErrorMessage(projectId)
-  //     //     .call();
-  //     // }
-
-  //     this.setState({
-  //       connected: ethereumAddress !== undefined,
-  //       account: ethereumAddress,
-  //       // isWhitelisted,
-  //       // validationErrorMessage,
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
 
   async componentDidUpdate(oldProps) {
     if (
@@ -311,13 +279,7 @@ class App extends Component {
           .tokensOfOwner(accounts[0])
           .call();
         const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
-        // const isWhitelisted =
-        //   (await this.state.artBlocks.methods
-        //     .isWhitelisted(accounts[0])
-        //     .call()) &&
-        //   (await this.state.artBlocks.methods
-        //     .isWhitelisted(accounts[0])
-        //     .call());
+
         let projectsOfArtist = [];
         this.state.artistAddresses.map((projectArtistAddress, index) => {
           if (projectArtistAddress === accounts[0] /* || isWhitelisted*/) {
@@ -329,7 +291,6 @@ class App extends Component {
         this.setState({
           account: accounts[0],
           tokensOfOwner,
-          // isWhitelisted,
           projectsOfArtist,
         });
       }

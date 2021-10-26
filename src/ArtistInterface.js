@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Button, Col, Form, Tabs, Tab } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { BASE_URL } from "./config";
+import * as React from 'react';
+import {Button, Col, Form, Tabs, Tab} from 'react-bootstrap';
+import {useHistory} from 'react-router-dom';
+import {BASE_URL} from './config';
 
 const ArtistInterface = ({
   project,
@@ -19,8 +19,8 @@ const ArtistInterface = ({
   onJSONChange,
   onValuesUpdated,
 }) => {
-  const [formValue, setFormValue] = React.useState("");
-  const [idValue, setIdValue] = React.useState("");
+  const [formValue, setFormValue] = React.useState('');
+  const [idValue, setIdValue] = React.useState('');
   // eslint-disable-next-line
   const [interaction, setInteraction] = React.useState(true);
 
@@ -38,30 +38,29 @@ const ArtistInterface = ({
     e.preventDefault();
     setInteraction(true);
 
-    if (type === "price") {
+    if (type === 'price') {
       await artBlocks.methods
         .updateProjectPricePerTokenInWei(
           project,
-          web3.utils.toWei(formValue, "ether")
+          web3.utils.toWei(formValue, 'ether')
         )
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
         .catch((err) => {
-          //alert(err);
           setInteraction(false);
         });
-    } else if (type === "projectName") {
+    } else if (type === 'projectName') {
       await artBlocks.methods
         .updateProjectName(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
@@ -69,127 +68,117 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "artistName") {
+    } else if (type === 'artistName') {
       await artBlocks.methods
         .updateProjectArtistName(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .once('receipt', (receipt) => {
           onValuesUpdated();
         })
         .catch((err) => {
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "website") {
+    } else if (type === 'website') {
       await artBlocks.methods
         .updateProjectWebsite(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .once('receipt', (receipt) => {
           onValuesUpdated();
         })
         .catch((err) => {
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "description") {
+    } else if (type === 'description') {
       await artBlocks.methods
         .updateProjectDescription(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .once('receipt', (receipt) => {
           onValuesUpdated();
         })
         .catch((err) => {
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "license") {
+    } else if (type === 'license') {
       await artBlocks.methods
         .updateProjectLicense(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .once('receipt', (receipt) => {
           onValuesUpdated();
         })
         .catch((err) => {
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "maxInvocations") {
+    } else if (type === 'maxInvocations') {
       await artBlocks.methods
         .updateProjectMaxInvocations(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .once('receipt', (receipt) => {
           onValuesUpdated();
         })
         .catch((err) => {
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "addScript") {
+    } else if (type === 'addScript') {
       await artBlocks.methods
         .addProjectScript(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .once('receipt', (receipt) => {
           onValuesUpdated();
         })
         .catch((err) => {
-          //alert(err);
           setInteraction(false);
         });
-    } else if (type === "removeLastScript") {
+    } else if (type === 'removeLastScript') {
       await artBlocks.methods
         .removeProjectLastScript(project)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .once('receipt', (receipt) => {
           onValuesUpdated();
         })
         .catch((err) => {
-          //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateScript") {
+    } else if (type === 'updateScript') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectScript(project, idValue, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
         .catch((err) => {
-          //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateArtistAddress") {
+    } else if (type === 'updateArtistAddress') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectArtistAddress(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -199,14 +188,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "hashesPerToken") {
+    } else if (type === 'hashesPerToken') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .toggleProjectUseHashString(project)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -215,14 +204,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateAdditionalPayee") {
+    } else if (type === 'updateAdditionalPayee') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectAdditionalPayee(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -231,14 +220,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateAdditionalPayeePercentage") {
+    } else if (type === 'updateAdditionalPayeePercentage') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectAdditionalPayeePercentage(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -247,14 +236,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateSecondaryMarketRoyaltyPercentage") {
+    } else if (type === 'updateSecondaryMarketRoyaltyPercentage') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectSecondaryMarketRoyaltyPercentage(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -263,14 +252,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "scriptJSON") {
+    } else if (type === 'scriptJSON') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectScriptJSON(project, JSON.stringify(scriptJSON))
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -279,14 +268,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateProjectIpfsHash") {
+    } else if (type === 'updateProjectIpfsHash') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectIpfsHash(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -295,14 +284,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateProjectBaseURI") {
+    } else if (type === 'updateProjectBaseURI') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectBaseURI(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -311,14 +300,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateProjectBaseIpfsURI") {
+    } else if (type === 'updateProjectBaseIpfsURI') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectBaseIpfsURI(project, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -327,19 +316,19 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updateProjectCurrencyInfo") {
+    } else if (type === 'updateProjectCurrencyInfo') {
       //alert(project, idValue, formValue);
       let address =
-        formValue === ""
-          ? "0x0000000000000000000000000000000000000000"
+        formValue === ''
+          ? '0x0000000000000000000000000000000000000000'
           : formValue;
-      console.log("formValue:" + address);
+      console.log('formValue:' + address);
       await artBlocks.methods
         .updateProjectCurrencyInfo(project, idValue, address)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -348,14 +337,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "overrideTokenDynamicImageWithIpfsLink") {
+    } else if (type === 'overrideTokenDynamicImageWithIpfsLink') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .overrideTokenDynamicImageWithIpfsLink(idValue, formValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -364,14 +353,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "clearTokenIpfsImageUri") {
+    } else if (type === 'clearTokenIpfsImageUri') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .clearTokenIpfsImageUri(idValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
           //this.setState({loadQueue:project*1000000});
@@ -380,13 +369,13 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "useIpfsForStatic") {
+    } else if (type === 'useIpfsForStatic') {
       await artBlocks.methods
         .toggleProjectUseIpfsForStatic(project)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
@@ -394,13 +383,13 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "isDynamic") {
+    } else if (type === 'isDynamic') {
       await artBlocks.methods
         .toggleProjectIsDynamic(project)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
@@ -408,14 +397,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "toggleActive") {
+    } else if (type === 'toggleActive') {
       alert(project);
       await artBlocks.methods
         .toggleProjectIsActive(project)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
@@ -423,13 +412,13 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "togglePaused") {
+    } else if (type === 'togglePaused') {
       await artBlocks.methods
         .toggleProjectIsPaused(project)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
@@ -437,13 +426,13 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "toggleLocked") {
+    } else if (type === 'toggleLocked') {
       await artBlocks.methods
         .toggleProjectIsLocked(project)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
@@ -451,14 +440,14 @@ const ArtistInterface = ({
           //alert(err);
           setInteraction(false);
         });
-    } else if (type === "updatePayeeInfo") {
+    } else if (type === 'updatePayeeInfo') {
       //alert(project, idValue, formValue);
       await artBlocks.methods
         .updateProjectAdditionalPayeeInfo(project, formValue, idValue)
         .send({
           from: account,
         })
-        .once("receipt", (receipt) => {
+        .once('receipt', (receipt) => {
           console.log(receipt);
           onValuesUpdated();
         })
@@ -486,7 +475,7 @@ const ArtistInterface = ({
       <h3>Artist Dashboard</h3>
       <h5>Artist Address: {projectTokenDetails && projectTokenDetails[0]}</h5>
       <p>
-        Below you can control your project's representation on the blockchain.{" "}
+        Below you can control your project's representation on the blockchain.{' '}
         <b>Only adjust settings that you are comfortable with. </b>
       </p>
       <p>
@@ -499,7 +488,7 @@ const ArtistInterface = ({
         <Tab eventKey="project" title="Project">
           <div>
             <br />
-            <Form onSubmit={(e) => handleChange(e, "projectName")}>
+            <Form onSubmit={(e) => handleChange(e, 'projectName')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Project Name</b>
@@ -521,7 +510,7 @@ const ArtistInterface = ({
           </div>
 
           <div>
-            <Form onSubmit={(e) => handleChange(e, "artistName")}>
+            <Form onSubmit={(e) => handleChange(e, 'artistName')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Artist Name</b>
@@ -543,7 +532,7 @@ const ArtistInterface = ({
           </div>
 
           <div>
-            <Form onSubmit={(e) => handleChange(e, "website")}>
+            <Form onSubmit={(e) => handleChange(e, 'website')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Project Website</b>
@@ -565,7 +554,7 @@ const ArtistInterface = ({
           </div>
 
           <div>
-            <Form onSubmit={(e) => handleChange(e, "description")}>
+            <Form onSubmit={(e) => handleChange(e, 'description')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Project Description</b>
@@ -589,7 +578,7 @@ const ArtistInterface = ({
           </div>
 
           <div>
-            <Form onSubmit={(e) => handleChange(e, "license")}>
+            <Form onSubmit={(e) => handleChange(e, 'license')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update License</b>
@@ -613,7 +602,7 @@ const ArtistInterface = ({
         <Tab eventKey="token" title="Token">
           <div>
             <br />
-            <Form onSubmit={(e) => handleChange(e, "price")}>
+            <Form onSubmit={(e) => handleChange(e, 'price')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Price per Token</b>
@@ -639,8 +628,7 @@ const ArtistInterface = ({
           <div>
             {project >= 3 && (
               <Form
-                onSubmit={(e) => handleChange(e, "updateProjectCurrencyInfo")}
-              >
+                onSubmit={(e) => handleChange(e, 'updateProjectCurrencyInfo')}>
                 <Form.Group>
                   <Form.Label>
                     <b>Update Currency Information</b>
@@ -660,14 +648,12 @@ const ArtistInterface = ({
                   <Form.Control
                     onChange={handleIdChange}
                     type="text"
-                    placeholder="Specify the symbol for the currency you are using. ETH, DAI, etc."
-                  ></Form.Control>
+                    placeholder="Specify the symbol for the currency you are using. ETH, DAI, etc."></Form.Control>
                   <Form.Label>Currency Address:</Form.Label>
                   <Form.Control
                     onChange={handleValueChange}
                     type="text"
-                    placeholder="Specify the ERC20 Contract Address for selected currency. If ETH leave blank."
-                  ></Form.Control>
+                    placeholder="Specify the ERC20 Contract Address for selected currency. If ETH leave blank."></Form.Control>
 
                   <Form.Text className="text-muted">
                     The above values <b>can</b> be changed once project is
@@ -685,7 +671,7 @@ const ArtistInterface = ({
           </div>
           <br />
           <div>
-            <Form onSubmit={(e) => handleChange(e, "maxInvocations")}>
+            <Form onSubmit={(e) => handleChange(e, 'maxInvocations')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Maximum Invocations</b>
@@ -709,7 +695,7 @@ const ArtistInterface = ({
         <Tab eventKey="scripts" title="Scripts">
           <div>
             <br />
-            <Form onSubmit={(e) => handleChange(e, "scriptJSON")}>
+            <Form onSubmit={(e) => handleChange(e, 'scriptJSON')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Script JSON</b>
@@ -727,16 +713,15 @@ const ArtistInterface = ({
                 </Form.Label>
                 <br />
                 <Form.Label>
-                  Current JSON:{" "}
+                  Current JSON:{' '}
                   {projectScriptDetails && projectScriptDetails[0]}
                 </Form.Label>
                 <br />
                 <Form.Label>Script Type:</Form.Label>
                 <Form.Control
-                  onChange={(e) => onJSONChange(e, "type")}
-                  value={(scriptJSON.type && scriptJSON.type) || ""}
-                  as="select"
-                >
+                  onChange={(e) => onJSONChange(e, 'type')}
+                  value={(scriptJSON.type && scriptJSON.type) || ''}
+                  as="select">
                   <option>--- Select Script Type ---</option>
                   <option>p5js</option>
                   <option>processing</option>
@@ -751,50 +736,44 @@ const ArtistInterface = ({
                 </Form.Control>
                 <Form.Label>Version:</Form.Label>
                 <Form.Control
-                  onChange={(e) => onJSONChange(e, "version")}
-                  value={scriptJSON.version || ""}
+                  onChange={(e) => onJSONChange(e, 'version')}
+                  value={scriptJSON.version || ''}
                   type="text"
-                  placeholder="Specify version number of script, if applicable."
-                ></Form.Control>
+                  placeholder="Specify version number of script, if applicable."></Form.Control>
                 <Form.Label>Aspect Ratio (width/height):</Form.Label>
                 <Form.Control
-                  onChange={(e) => onJSONChange(e, "aspectRatio")}
+                  onChange={(e) => onJSONChange(e, 'aspectRatio')}
                   type="text"
-                  value={scriptJSON.aspectRatio || ""}
-                  placeholder="Required. Specify aspect ratio (width divided by height)."
-                ></Form.Control>
+                  value={scriptJSON.aspectRatio || ''}
+                  placeholder="Required. Specify aspect ratio (width divided by height)."></Form.Control>
                 <Form.Label>Instructions:</Form.Label>
                 <Form.Control
-                  onChange={(e) => onJSONChange(e, "instructions")}
-                  value={scriptJSON.instructions || ""}
+                  onChange={(e) => onJSONChange(e, 'instructions')}
+                  value={scriptJSON.instructions || ''}
                   as="textarea"
                   rows={3}
                   type="text"
-                  placeholder="Use this space to give user interactivity instructions if appropriate. Separate each instruction with a '|' (pipe)"
-                ></Form.Control>
+                  placeholder="Use this space to give user interactivity instructions if appropriate. Separate each instruction with a '|' (pipe)"></Form.Control>
                 <Form.Label>Animation Length in Seconds:</Form.Label>
                 <Form.Control
-                  onChange={(e) => onJSONChange(e, "animationLengthInSeconds")}
-                  value={scriptJSON.animationLengthInSeconds || ""}
+                  onChange={(e) => onJSONChange(e, 'animationLengthInSeconds')}
+                  value={scriptJSON.animationLengthInSeconds || ''}
                   type="number"
-                  placeholder="Set length of animation for non-static outputs. Leave blank if static."
-                ></Form.Control>
+                  placeholder="Set length of animation for non-static outputs. Leave blank if static."></Form.Control>
                 <Form.Label>Interactive?</Form.Label>
                 <Form.Control
-                  onChange={(e) => onJSONChange(e, "interactive")}
-                  value={scriptJSON.interactive || ""}
+                  onChange={(e) => onJSONChange(e, 'interactive')}
+                  value={scriptJSON.interactive || ''}
                   type="text"
-                  placeholder="If your project can be interacted with set to true, otherwise leave blank."
-                ></Form.Control>
+                  placeholder="If your project can be interacted with set to true, otherwise leave blank."></Form.Control>
                 {isWhitelisted && (
                   <div>
                     <Form.Label>Curation Status</Form.Label>
                     <Form.Control
-                      onChange={(e) => onJSONChange(e, "curation_status")}
-                      value={scriptJSON.curation_status || ""}
+                      onChange={(e) => onJSONChange(e, 'curation_status')}
+                      value={scriptJSON.curation_status || ''}
                       type="text"
-                      placeholder="curated | playground | factory"
-                    ></Form.Control>
+                      placeholder="curated | playground | factory"></Form.Control>
                   </div>
                 )}
                 <Form.Text className="text-muted">
@@ -811,7 +790,7 @@ const ArtistInterface = ({
           </div>
 
           <div>
-            <Form onSubmit={(e) => handleChange(e, "addScript")}>
+            <Form onSubmit={(e) => handleChange(e, 'addScript')}>
               <Form.Group>
                 <Form.Label>
                   <b>Add Project Script</b>
@@ -824,13 +803,12 @@ const ArtistInterface = ({
                   placeholder="Enter your script here."
                 />
                 <Form.Text className="text-muted">
-                  This <b>cannot</b> be changed once project is locked. Visit{" "}
+                  This <b>cannot</b> be changed once project is locked. Visit{' '}
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    href={BASE_URL + "/project/" + project}
-                  >
-                    project dashboard{" "}
+                    href={BASE_URL + '/project/' + project}>
+                    project dashboard{' '}
                   </a>
                   to see full script.
                 </Form.Text>
@@ -843,7 +821,7 @@ const ArtistInterface = ({
           </div>
 
           <div>
-            <Form onSubmit={(e) => handleChange(e, "updateScript")}>
+            <Form onSubmit={(e) => handleChange(e, 'updateScript')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Project Script</b>
@@ -856,13 +834,12 @@ const ArtistInterface = ({
                   placeholder="Enter your update here and select which scriptId you are updating below."
                 />
                 <Form.Text className="text-muted">
-                  This <b>cannot</b> be changed once project is locked. Visit{" "}
+                  This <b>cannot</b> be changed once project is locked. Visit{' '}
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    href={BASE_URL + "/project/" + project}
-                  >
-                    project dashboard{" "}
+                    href={BASE_URL + '/project/' + project}>
+                    project dashboard{' '}
                   </a>
                   to see full script.
                 </Form.Text>
@@ -880,8 +857,7 @@ const ArtistInterface = ({
               </Button>
               <Button
                 variant="primary mx-1"
-                onClick={(e) => handleChange(e, "removeLastScript")}
-              >
+                onClick={(e) => handleChange(e, 'removeLastScript')}>
                 Remove Last Script
               </Button>
             </Form>
@@ -915,7 +891,7 @@ const ArtistInterface = ({
           <br />
 
           <div>
-            <Form onSubmit={(e) => handleChange(e, "updateProjectIpfsHash")}>
+            <Form onSubmit={(e) => handleChange(e, 'updateProjectIpfsHash')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Project IPFS Hash</b>
@@ -940,11 +916,10 @@ const ArtistInterface = ({
               </Button>
               <Button
                 variant="primary mx-1"
-                onClick={(e) => handleChange(e, "useIpfsForStatic")}
-              >
+                onClick={(e) => handleChange(e, 'useIpfsForStatic')}>
                 {projectURIInfo && projectURIInfo[2]
-                  ? "Using IPFS URI for Static Images. Click to use a BaseURI."
-                  : "Using custom URI for static images. Click to use IPFS."}
+                  ? 'Using IPFS URI for Static Images. Click to use a BaseURI.'
+                  : 'Using custom URI for static images. Click to use IPFS.'}
               </Button>
             </Form>
             <br />
@@ -953,7 +928,7 @@ const ArtistInterface = ({
         <Tab eventKey="royalties" title="Royalties/Payees">
           <div>
             <br />
-            <Form onSubmit={(e) => handleChange(e, "updatePayeeInfo")}>
+            <Form onSubmit={(e) => handleChange(e, 'updatePayeeInfo')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Additional Payee Info</b>
@@ -964,7 +939,7 @@ const ArtistInterface = ({
                 </Form.Label>
                 <br />
                 <Form.Label>
-                  Current Percentage:{" "}
+                  Current Percentage:{' '}
                   {projectTokenDetails && projectTokenDetails[6]}%
                 </Form.Label>
                 <br />
@@ -1013,9 +988,8 @@ const ArtistInterface = ({
           <div>
             <Form
               onSubmit={(e) =>
-                handleChange(e, "updateSecondaryMarketRoyaltyPercentage")
-              }
-            >
+                handleChange(e, 'updateSecondaryMarketRoyaltyPercentage')
+              }>
               <Form.Group>
                 <Form.Label>
                   <b>Update Secondary Market Royalty</b>
@@ -1045,7 +1019,7 @@ const ArtistInterface = ({
         <Tab eventKey="uri" title="URI">
           <div>
             <br />
-            <Form onSubmit={(e) => handleChange(e, "updateProjectBaseURI")}>
+            <Form onSubmit={(e) => handleChange(e, 'updateProjectBaseURI')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Project BaseURI</b>
@@ -1072,7 +1046,7 @@ const ArtistInterface = ({
           </div>
 
           <div>
-            <Form onSubmit={(e) => handleChange(e, "updateProjectBaseIpfsURI")}>
+            <Form onSubmit={(e) => handleChange(e, 'updateProjectBaseIpfsURI')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Project BaseIPFS URI</b>
@@ -1102,9 +1076,8 @@ const ArtistInterface = ({
           <div>
             <Form
               onSubmit={(e) =>
-                handleChange(e, "overrideTokenDynamicImageWithIpfsLink")
-              }
-            >
+                handleChange(e, 'overrideTokenDynamicImageWithIpfsLink')
+              }>
               <Form.Group>
                 <Form.Label>
                   <b>Override Token Dynamic Image with IPFS</b>
@@ -1119,8 +1092,7 @@ const ArtistInterface = ({
                 <Form.Control
                   onChange={handleIdChange}
                   type="number"
-                  placeholder="Enter tokenId"
-                ></Form.Control>
+                  placeholder="Enter tokenId"></Form.Control>
               </Form.Group>
               <Form.Text className="text-muted">
                 This can be modified after a project is locked.
@@ -1130,8 +1102,7 @@ const ArtistInterface = ({
               </Button>
               <Button
                 variant="primary mx-1"
-                onClick={(e) => handleChange(e, "clearTokenIpfsImageUri")}
-              >
+                onClick={(e) => handleChange(e, 'clearTokenIpfsImageUri')}>
                 Clear Token IPFS URI
               </Button>
             </Form>
@@ -1143,7 +1114,7 @@ const ArtistInterface = ({
         <Tab eventKey="danger" title="Danger">
           <div>
             <br />
-            <Form onSubmit={(e) => handleChange(e, "updateArtistAddress")}>
+            <Form onSubmit={(e) => handleChange(e, 'updateArtistAddress')}>
               <Form.Group>
                 <Form.Label>
                   <b>Update Artist Address</b>
@@ -1168,11 +1139,10 @@ const ArtistInterface = ({
             {projectTokenDetails && projectTokenDetails[0] === account && (
               <Button
                 variant="danger mx-1 btn-block"
-                onClick={(e) => handleChange(e, "togglePaused")}
-              >
+                onClick={(e) => handleChange(e, 'togglePaused')}>
                 {projectScriptDetails && projectScriptDetails[5]
-                  ? "This project is paused. Click here to unpause."
-                  : "Click to pause project."}
+                  ? 'This project is paused. Click here to unpause.'
+                  : 'Click to pause project.'}
               </Button>
             )}
 
@@ -1183,19 +1153,17 @@ const ArtistInterface = ({
             <div>
               <Button
                 variant="danger mx-1 btn-block"
-                onClick={(e) => handleChange(e, "toggleActive")}
-              >
+                onClick={(e) => handleChange(e, 'toggleActive')}>
                 {projectTokenDetails && projectTokenDetails[4]
-                  ? "This project is active. Click here to deactivate."
-                  : "Click to activate project."}
+                  ? 'This project is active. Click here to deactivate.'
+                  : 'Click to activate project.'}
               </Button>
               <Button
                 variant="danger mx-1 btn-block"
-                onClick={(e) => handleChange(e, "toggleLocked")}
-              >
+                onClick={(e) => handleChange(e, 'toggleLocked')}>
                 {projectScriptDetails && !projectScriptDetails[4]
-                  ? "This project is unlocked. Click here to lock it (permanently)."
-                  : "Project is permanently locked."}
+                  ? 'This project is unlocked. Click here to lock it (permanently).'
+                  : 'Project is permanently locked.'}
               </Button>
             </div>
           )}
