@@ -595,6 +595,7 @@ class Project extends Component {
             await this.txnBlockDelayer(receipt);
           })
           .catch((err) => {
+            console.log(err);
             this.updateValues();
             this.setState({purchase: false});
           });
