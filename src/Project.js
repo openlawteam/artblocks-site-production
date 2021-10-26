@@ -19,7 +19,7 @@ import {
   Switch,
   withRouter,
 } from 'react-router-dom';
-import {ERC20_ABI} from './config';
+import {ERC20_ABI, NETWORK} from './config';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
 import ArtistInterface from './ArtistInterface';
@@ -151,24 +151,40 @@ class Project extends Component {
   async checkAllowance() {
     try {
       if (this.props.connected && this.state.projectTokenDetails) {
-        var BN = this.props.web3.utils.BN;
+        let BN = this.props.web3.utils.BN;
+
         //let valToApprove = new BN(this.state.projectTokenDetails[1]).mul(new BN('10')).toString();
         //console.log(valToApprove);
-        let allowance = await this.state.erc20.methods
-          .allowance(this.props.account, this.props.minterAddress)
-          .call();
-        let bnAllowance = new BN(allowance);
-        let bnPrice = new BN(this.state.projectTokenDetails[1]);
-        console.log(allowance);
-        console.log('BnA' + bnAllowance, 'BnP' + bnPrice);
 
-        //if (allowance >= this.state.projectTokenDetails[1]){
-        if (bnAllowance.gte(bnPrice)) {
-          this.setState({approved: true});
-          console.log('setting approved to true');
-        } else {
-          this.setState({approved: false});
-          console.log('setting approved to false');
+        let currency = await this.props.artBlocks.methods
+          .projectIdToCurrencySymbol(this.props.project)
+          .call();
+
+        if (currency !== 'ETH') {
+          let currencyAddress = await this.props.artBlocks.methods
+            .projectIdToCurrencyAddress(this.props.project)
+            .call();
+
+          let erc20 = new this.props.web3.eth.Contract(
+            ERC20_ABI,
+            currencyAddress
+          );
+
+          let allowance = await /*this.state.*/ erc20.methods
+            .allowance(this.props.account, this.props.minterAddress)
+            .call();
+          let bnAllowance = new BN(allowance);
+          let bnPrice = new BN(this.state.projectTokenDetails[1]);
+          console.log(allowance);
+          console.log('BnA' + bnAllowance, 'BnP' + bnPrice);
+
+          if (bnAllowance.gte(bnPrice)) {
+            this.setState({approved: true});
+            console.log('setting approved to true');
+          } else {
+            this.setState({approved: false});
+            console.log('setting approved to false');
+          }
         }
       }
     } catch (error) {
@@ -700,10 +716,11 @@ class Project extends Component {
             this.state.projectTokenDetails[0] === this.props.account ||
             this.state.projectTokenDetails[4]) && (
             <div>
-              {this.props.network === 'rinkeby' && (
+              {this.props.network !== NETWORK && (
                 <Alert variant="danger">
-                  You are on the Rinkeby Testnet version of the Art Blocks
-                  platform. Make sure your Metamask wallet is set to Rinkeby
+                  You are on the {this.props.network.toUpperCase()} Testnet
+                  version of the Flutter Art Blocks platform. Make sure your
+                  Metamask wallet is set to {NETWORK.toUpperCase()}
                   before confirming any transactions.
                 </Alert>
               )}

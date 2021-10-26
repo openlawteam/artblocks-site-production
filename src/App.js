@@ -202,33 +202,41 @@ class App extends Component {
               validationErrorMessage: null,
             });
           } else {
-            // check if the connected address is whitelisted
-            const {isWhitelisted} = await checkWhitelist(
-              accounts[0],
-              Number(this.state.currentProject),
-              mainMinter
-            );
+            try {
+              // check if the connected address is whitelisted
+              const {isWhitelisted} = await checkWhitelist(
+                accounts[0],
+                Number(this.state.currentProject),
+                mainMinter
+              );
 
-            this.setState({
-              connected: accounts[0] !== undefined,
-              account: accounts[0],
-              isWhitelisted,
-            });
+              this.setState({
+                connected: accounts[0] !== undefined,
+                account: accounts[0],
+                isWhitelisted,
+              });
+            } catch (error) {
+              console.error(error);
+            }
           }
         });
 
-        // check if the connected address is whitelisted
-        const {isWhitelisted} = await checkWhitelist(
-          accounts[0],
-          Number(this.state.currentProject),
-          mainMinter
-        );
+        try {
+          // check if the connected address is whitelisted
+          const {isWhitelisted} = await checkWhitelist(
+            accounts[0],
+            Number(this.state.currentProject),
+            mainMinter
+          );
 
-        this.setState({
-          connected: accounts[0] !== undefined,
-          account: accounts[0],
-          isWhitelisted,
-        });
+          this.setState({
+            connected: accounts[0] !== undefined,
+            account: accounts[0],
+            isWhitelisted,
+          });
+        } catch (error) {
+          console.error(error);
+        }
       }
 
       this.setState({
@@ -281,7 +289,8 @@ class App extends Component {
         const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
 
         let projectsOfArtist = [];
-        this.state.artistAddresses.map((projectArtistAddress, index) => {
+
+        this.state.artistAddresses?.map((projectArtistAddress, index) => {
           if (projectArtistAddress === accounts[0]) {
             projectsOfArtist.push(index);
           }
