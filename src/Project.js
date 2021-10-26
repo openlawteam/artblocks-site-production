@@ -592,7 +592,7 @@ class Project extends Component {
             });
 
             // Delay notifcation of minted token till the nth block
-            await this.txnBlockDelayer(receipt);
+            await this.delayMintNotification(receipt);
           })
           .catch((err) => {
             console.log(err);
@@ -619,7 +619,7 @@ class Project extends Component {
           });
 
           // Delay notifcation of minted token till the nth block
-          await this.txnBlockDelayer(receipt);
+          await this.delayMintNotification(receipt);
         })
         .catch((err) => {
           console.log(err);
@@ -630,7 +630,7 @@ class Project extends Component {
     }
   }
 
-  async txnBlockDelayer(receipt) {
+  async delayMintNotification(receipt) {
     const blockDelayInterval = process.env.REACT_APP_BLOCK_DELAY_INTERVAL || 0;
 
     if (blockDelayInterval === 0) {

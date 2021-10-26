@@ -129,12 +129,13 @@ class App extends Component {
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
 
       const allProjects = [];
+
       for (let i = 0; i < nextProjectId; i++) {
         allProjects.push(i);
       }
 
-      //await artBlocks.methods.showAllProjectIds().call();
       let activeProjects = [];
+
       await Promise.all(
         allProjects.map(async (project) => {
           if (project < 3) {
@@ -203,7 +204,7 @@ class App extends Component {
             });
           } else {
             try {
-              // check if the connected address is whitelisted
+              // Check if the connected address is whitelisted
               const {isWhitelisted} = await checkWhitelist(
                 accounts[0],
                 Number(this.state.currentProject),
