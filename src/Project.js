@@ -173,6 +173,7 @@ class Project extends Component {
           let allowance = await /*this.state.*/ erc20.methods
             .allowance(this.props.account, this.props.minterAddress)
             .call();
+
           let bnAllowance = new BN(allowance);
           let bnPrice = new BN(this.state.projectTokenDetails[1]);
           console.log(allowance);
@@ -620,6 +621,7 @@ class Project extends Component {
           await this.txnBlockDelayer(receipt);
         })
         .catch((err) => {
+          console.log(err);
           this.updateValues();
           this.setState({purchase: false});
           this.checkAllowance();
