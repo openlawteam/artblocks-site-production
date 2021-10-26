@@ -45,6 +45,8 @@ class Project extends Component {
       randomTokenNumber: 0,
       showWarningModal: false,
       showWhyModal: false,
+      mintTxConfirmed: false,
+      mintTxReceipt: '',
     };
     this.handleToggleArtistInterface =
       this.handleToggleArtistInterface.bind(this);
@@ -115,9 +117,9 @@ class Project extends Component {
       } else {
         this.setState({currency: 'ETH'});
       }
+
       let scriptJSON =
         projectScriptDetails[0] && JSON.parse(projectScriptDetails[0]);
-      console.log('still setting state');
 
       this.setState({
         artBlocks,
@@ -127,7 +129,7 @@ class Project extends Component {
         projectScriptDetails,
         scriptJSON,
         projectURIInfo,
-        projectRoyaltyInfo /*, network*/,
+        projectRoyaltyInfo,
         randomTokenNumber: projectTokens
           ? Math.floor(Math.random() * projectTokens.length)
           : 0,
@@ -183,7 +185,7 @@ class Project extends Component {
     this.setState({erc20Balance: balance});
   }
 
-  async componentDidUpdate(oldProps) {
+  async componentDidUpdate(oldProps, prevState) {
     if (oldProps.project !== this.props.project) {
       console.log('change');
 
@@ -329,6 +331,12 @@ class Project extends Component {
       }
       this.setState({artBlocks});
     }
+
+    if (prevState.mintTxConfirmed !== this.state.mintTxConfirmed) {
+      const mintedToken = parseInt(this.state.mintTxReceipt, 16);
+      console.log('mintedtoken:' + mintedToken);
+      this.props.handleToggleView('newToken', mintedToken);
+    }
   }
 
   async updateValues() {
@@ -378,6 +386,7 @@ class Project extends Component {
       approved: true,
     });
   }
+
   getOSLink() {
     if (this.props.project === 'rinkeby') {
       return 'https://opensea.io/assets/art-blocks';
@@ -385,10 +394,8 @@ class Project extends Component {
       if (this.props.project && this.props.project === '0') {
         return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Chromie%20Squiggle&search[stringTraits][0][values][0]=All%20Chromie%20Squiggles';
       } else if (this.props.project && this.props.project === '1') {
-        //console.log("osp1");
         return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Genesis&search[stringTraits][0][values][0]=All%20Genesis';
       } else if (this.props.project && this.props.project === '2') {
-        //console.log("osp2");
         return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Construction%20Token&search[stringTraits][0][values][0]=All%20Construction%20Tokens';
       } else if (this.props.project && this.props.project === '3') {
         return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Cryptoblots&search[stringTraits][0][values][0]=All%20Cryptoblots';
@@ -523,7 +530,6 @@ class Project extends Component {
         this.setState({purchase: false});
       })
       .catch((err) => {
-        //alert(err);
         this.updateValues();
         this.setState({purchase: false});
       });
@@ -561,14 +567,17 @@ class Project extends Component {
                 ? this.state.projectTokenDetails[1]
                 : 0,
           })
-          .once('receipt', (receipt) => {
+          .once('receipt', async (receipt) => {
             console.log(receipt);
-            const mintedToken = parseInt(receipt.events[0].raw.topics[3], 16);
-            console.log('mintedtoken:' + mintedToken);
-            this.props.handleToggleView('newToken', mintedToken);
+
+            this.setState({
+              txReceiptMessage: 'Please wait...',
+            });
+
+            // Delay notifcation of minted token till the nth block
+            await this.txnBlockDelayer(receipt);
           })
           .catch((err) => {
-            //alert(err);
             this.updateValues();
             this.setState({purchase: false});
           });
@@ -586,21 +595,59 @@ class Project extends Component {
               ? this.state.projectTokenDetails[1]
               : 0,
         })
-        .once('receipt', (receipt) => {
-          const mintedToken =
-            this.props.project === '51'
-              ? parseInt(receipt.events[1].raw.topics[3], 16)
-              : parseInt(receipt.events[0].raw.topics[3], 16);
-          console.log('mintedtoken:' + mintedToken);
-          console.log(receipt);
-          this.props.handleToggleView('newToken', mintedToken);
+        .once('receipt', async (receipt) => {
+          this.setState({
+            txReceiptMessage: 'Please wait...',
+          });
+
+          // Delay notifcation of minted token till the nth block
+          await this.txnBlockDelayer(receipt);
         })
         .catch((err) => {
-          //alert(err);
           this.updateValues();
           this.setState({purchase: false});
           this.checkAllowance();
         });
+    }
+  }
+
+  async txnBlockDelayer(receipt) {
+    const blockDelayInterval = process.env.REACT_APP_BLOCK_DELAY_INTERVAL || 0;
+
+    if (blockDelayInterval === 0) {
+      return;
+    }
+
+    try {
+      const blockNumberInterval = setInterval(checkBlockNumber, 1000);
+
+      const web3Props = this.props.web3;
+      const appContext = this;
+
+      async function checkBlockNumber() {
+        const currentBlockNumber = await web3Props.eth.getBlockNumber();
+        const {blockNumber, transactionHash} = receipt;
+
+        if (currentBlockNumber > blockNumber + Number(blockDelayInterval)) {
+          const tx = await web3Props.eth.getTransactionReceipt(transactionHash);
+
+          appContext.setState({
+            mintTxConfirmed: tx && tx.status,
+            mintTxReceipt:
+              tx.logs[0].topics[3] === receipt.events[0].raw.topics[3]
+                ? receipt.events[0].raw.topics[3]
+                : tx.logs[0].topics[3],
+          });
+
+          clearInterval(blockNumberInterval);
+
+          if (!tx && !tx.status) {
+            throw new Error('mint failed');
+          }
+        }
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -794,9 +841,11 @@ class Project extends Component {
                                           aria-hidden="true"
                                         />
                                         <span className="sr-only">
-                                          Pending...
+                                          {this.state?.txReceiptMessage ??
+                                            'Pending...'}
                                         </span>{' '}
-                                        Pending...
+                                        {this.state?.txReceiptMessage ??
+                                          'Pending...'}
                                       </div>
                                     ) : this.state.projectScriptDetails[5] ? (
                                       'Purchases Paused'
@@ -824,7 +873,11 @@ class Project extends Component {
                                     <div className="text-center">
                                       <Button
                                         variant="link"
-                                        onClick={this.handlePurchaseTo}>
+                                        onClick={this.handlePurchaseTo}
+                                        disabled={
+                                          this.state.purchase ||
+                                          !this.props.isWhitelisted
+                                        }>
                                         Purchase To Another User
                                       </Button>
                                     </div>
@@ -868,9 +921,11 @@ class Project extends Component {
                                             aria-hidden="true"
                                           />
                                           <span className="sr-only">
-                                            Pending...
+                                            {this.state?.txReceiptMessage ??
+                                              'Pending...'}
                                           </span>{' '}
-                                          Pending...
+                                          {this.state?.txReceiptMessage ??
+                                            'Pending...'}
                                         </div>
                                       ) : (
                                         'Approve ' +

@@ -2,17 +2,16 @@
 
 import React, {Component} from 'react';
 import {
+  BASE_URL,
   NETWORK,
   NONINTERACTIVE,
   CURATED,
   COMPLETE,
   ARTBLOCKS_CONTRACT_ABI,
-  ARTBLOCKS_CONTRACT_ADDRESS_MAINNET,
-  ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY,
   ARTBLOCKS_CONTRACT_MINTER_ABI,
-  ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET,
-  ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY,
+  getArtblocksContractAddresses,
 } from './config';
+import {checkWhitelist} from './utils';
 import Web3 from 'web3';
 import Project from './Project';
 import Highlight from './Highlight';
@@ -97,6 +96,7 @@ class App extends Component {
       lookupAcct: '0x8De4e517A6F0B84654625228D8293b70AB49cF6C',
       network: '',
       isWhitelisted: false,
+      validationErrorMessage: '',
       overlay: false,
       nonInter: NONINTERACTIVE,
     };
@@ -109,28 +109,25 @@ class App extends Component {
     try {
       const web3 = new Web3(
         new Web3.providers.HttpProvider(
-          `https://${
-            NETWORK === 'main' ? 'mainnet' : 'rinkeby'
-          }.infura.io/v3/${API_KEY}`
+          `https://${NETWORK}.infura.io/v3/${API_KEY}`
         )
       );
+
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
-        NETWORK === 'rinkeby'
-          ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
-          : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
+        getArtblocksContractAddresses(NETWORK).coreContractAddress
       );
+
+      const minterAddress =
+        getArtblocksContractAddresses(NETWORK).minterContractAddress;
+
       const mainMinter = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_MINTER_ABI,
-        NETWORK === 'rinkeby'
-          ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
-          : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET
+        minterAddress
       );
-      const minterAddress =
-        NETWORK === 'rinkeby'
-          ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
-          : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET;
+
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
+
       const allProjects = [];
       for (let i = 0; i < nextProjectId; i++) {
         allProjects.push(i);
@@ -174,6 +171,7 @@ class App extends Component {
           }
         })
       );
+
       const totalInvocations = Number(
         await artBlocks.methods.totalSupply().call()
       );
@@ -193,7 +191,7 @@ class App extends Component {
         }
 
         // Make sure the site reflects if the user has disconnected their wallet
-        window.ethereum.on('accountsChanged', (accounts) => {
+        window.ethereum.on('accountsChanged', async (accounts) => {
           if (accounts.length === 0) {
             this.setState({
               connected: false,
@@ -201,14 +199,36 @@ class App extends Component {
               tokensOfOwner: null,
               isWhitelisted: null,
               projectsOfArtist: null,
+              validationErrorMessage: null,
             });
           } else {
-            this.checkWhitelist(accounts[0], artBlocks);
+            // check if the connected address is whitelisted
+            const {isWhitelisted} = await checkWhitelist(
+              accounts[0],
+              Number(this.state.currentProject),
+              mainMinter
+            );
+
+            this.setState({
+              connected: accounts[0] !== undefined,
+              account: accounts[0],
+              isWhitelisted,
+            });
           }
         });
 
         // check if the connected address is whitelisted
-        this.checkWhitelist(accounts[0], artBlocks);
+        const {isWhitelisted} = await checkWhitelist(
+          accounts[0],
+          Number(this.state.currentProject),
+          mainMinter
+        );
+
+        this.setState({
+          connected: accounts[0] !== undefined,
+          account: accounts[0],
+          isWhitelisted,
+        });
       }
 
       this.setState({
@@ -220,22 +240,6 @@ class App extends Component {
         totalInvocations,
         artistAddresses,
         activeProjects,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async checkWhitelist(ethereumAddress, artBlocks) {
-    try {
-      const isWhitelisted = await artBlocks.methods
-        .isWhitelisted(ethereumAddress)
-        .call();
-
-      this.setState({
-        connected: ethereumAddress !== undefined,
-        account: ethereumAddress,
-        isWhitelisted,
       });
     } catch (error) {
       console.error(error);
@@ -275,16 +279,10 @@ class App extends Component {
           .tokensOfOwner(accounts[0])
           .call();
         const tokensOfOwner = tokensOfOwnerAFiltered.concat(tokensOfOwnerB);
-        const isWhitelisted =
-          (await this.state.artBlocks.methods
-            .isWhitelisted(accounts[0])
-            .call()) &&
-          (await this.state.artBlocks.methods
-            .isWhitelisted(accounts[0])
-            .call());
+
         let projectsOfArtist = [];
         this.state.artistAddresses.map((projectArtistAddress, index) => {
-          if (projectArtistAddress === accounts[0] || isWhitelisted) {
+          if (projectArtistAddress === accounts[0]) {
             projectsOfArtist.push(index);
           }
           return null;
@@ -293,7 +291,6 @@ class App extends Component {
         this.setState({
           account: accounts[0],
           tokensOfOwner,
-          isWhitelisted,
           projectsOfArtist,
         });
       }
@@ -309,15 +306,11 @@ class App extends Component {
 
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
-        NETWORK === 'rinkeby'
-          ? ARTBLOCKS_CONTRACT_ADDRESS_RINKEBY
-          : ARTBLOCKS_CONTRACT_ADDRESS_MAINNET
+        getArtblocksContractAddresses(NETWORK).coreContractAddress
       );
       const mainMinter = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_MINTER_ABI,
-        NETWORK === 'rinkeby'
-          ? ARTBLOCKS_CONTRACT_MINTER_ADDRESS_RINKEBY
-          : ARTBLOCKS_CONTRACT_MINTER_ADDRESS_MAINNET
+        getArtblocksContractAddresses(NETWORK).minterContractAddress
       );
 
       if (network === NETWORK) {
@@ -334,11 +327,7 @@ class App extends Component {
             this.loadAccountData();
           });
       } else {
-        alert(
-          `please switch to ${
-            NETWORK === 'rinkeby' ? 'Rinkeby' : 'Mainnet'
-          } and try to connect again`
-        );
+        alert(`please switch to ${NETWORK} and try to connect again`);
       }
     } else {
       alert('MetaMask not detected. Please install extension and try again.');
@@ -384,10 +373,7 @@ class App extends Component {
   }
 
   render() {
-    let baseURL =
-      NETWORK === 'main'
-        ? process.env.REACT_APP_URL_MAINNET
-        : process.env.REACT_APP_URL_RINKEBY;
+    let baseURL = BASE_URL;
 
     return (
       <>
