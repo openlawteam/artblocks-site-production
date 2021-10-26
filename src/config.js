@@ -80,6 +80,21 @@ export function getArtblocksContractAddresses(NETWORK) {
   return contractAddresses;
 }
 
+export function getRendererAPIUrl(NETWORK) {
+  let rendererUrl = process.env.REACT_APP_API_URL_MAINNET;
+
+  switch (NETWORK) {
+    case 'rinkeby':
+      rendererUrl = process.env.REACT_APP_API_URL_RINKEBY;
+      break;
+    case 'ropsten':
+      rendererUrl = process.env.REACT_APP_API_URL_ROPSTEN;
+      break;
+    default:
+  }
+  return rendererUrl;
+}
+
 export const ARTBLOCKS_CONTRACT_ABI_ROPSTEN = [
   {
     inputs: [

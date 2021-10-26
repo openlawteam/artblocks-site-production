@@ -15,6 +15,7 @@ import {
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {Link} from 'react-router-dom';
 import {tokenDetailsUrl /*, reverseResolveEns*/} from './utils';
+import {getRendererAPIUrl} from './config';
 import {formatEthereumAddress} from './utils/helpers';
 import OpenSeaImage from './assets/images/os_logo.png';
 import './ProjectGallery.css';
@@ -303,15 +304,9 @@ class ViewToken extends Component {
 
                   <br />
                   <TwitterShareButton
-                    url={
-                      this.props.network === 'rinkeby'
-                        ? process.env.REACT_APP_API_URL_RINKEBY +
-                          '/token/' +
-                          this.state.token
-                        : process.env.REACT_APP_API_URL_MAINNET +
-                          '/token/' +
-                          this.state.token
-                    }
+                    url={`${getRendererAPIUrl(this.props.network)}/token/${
+                      this.state.token
+                    }`}
                     title={`${this.state.projectDescription.artist} | ${this.state.projectDescription.projectName}`}
                     hashtags={['genArt', 'flamingodao', 'artblocks', 'flutter']}
                     via={'FLAMINGODAO'}>
