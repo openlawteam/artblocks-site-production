@@ -46,7 +46,11 @@ async function reverseResolveEns(address, web3) {
   return name;
 }
 
-async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
+async function checkWhitelist(
+  ethereumAddress /* artBlocks */,
+  projectId,
+  mainMinter
+) {
   try {
     const API_KEY = process.env.REACT_APP_INFURA_KEY;
     const web3 = new Web3(
@@ -77,19 +81,15 @@ async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
     //   .call();
 
     // const isWhitelisted = await artBlocks.methods
-    //   .addressCanMint(ethereumAddress, projectId)
+    //   .addressCanMint(ethereumAddress, Number(projectId))
     //   .call();
 
     // if (!isWhitelisted) {
     //   validationErrorMessage = await artBlocks.methods
-    //     .getValidationErrorMessage(projectId)
+    //     .getValidationErrorMessage(Number(projectId))
     //     .call();
     // }
 
-    // this.setState({
-    //   connected: ethereumAddress !== undefined,
-    //   account: ethereumAddress,
-    // });
     return {
       isWhitelisted,
       // validationErrorMessage,

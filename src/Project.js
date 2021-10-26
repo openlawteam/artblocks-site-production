@@ -333,10 +333,7 @@ class Project extends Component {
     }
 
     if (prevState.mintTxConfirmed !== this.state.mintTxConfirmed) {
-      const mintedToken = parseInt(
-        this.state.mintTxReceipt, // .events[0].raw.topics[3],
-        16
-      );
+      const mintedToken = parseInt(this.state.mintTxReceipt, 16);
       console.log('mintedtoken:' + mintedToken);
       this.props.handleToggleView('newToken', mintedToken);
     }
@@ -581,7 +578,6 @@ class Project extends Component {
             await this.txnBlockDelayer(receipt);
           })
           .catch((err) => {
-            alert(err);
             this.updateValues();
             this.setState({purchase: false});
           });
@@ -608,7 +604,6 @@ class Project extends Component {
           await this.txnBlockDelayer(receipt);
         })
         .catch((err) => {
-          alert(err);
           this.updateValues();
           this.setState({purchase: false});
           this.checkAllowance();

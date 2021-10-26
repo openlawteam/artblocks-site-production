@@ -282,7 +282,7 @@ class App extends Component {
 
         let projectsOfArtist = [];
         this.state.artistAddresses.map((projectArtistAddress, index) => {
-          if (projectArtistAddress === accounts[0] /* || isWhitelisted*/) {
+          if (projectArtistAddress === accounts[0]) {
             projectsOfArtist.push(index);
           }
           return null;
