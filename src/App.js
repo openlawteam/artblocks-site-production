@@ -91,7 +91,7 @@ class App extends Component {
       account: '',
       connected: false,
       show: 'highlight',
-      currentProject: '',
+      currentProject: 0,
       currenttoken: 0,
       lookupAcct: '0x8De4e517A6F0B84654625228D8293b70AB49cF6C',
       network: '',
@@ -176,12 +176,14 @@ class App extends Component {
       const totalInvocations = Number(
         await artBlocks.methods.totalSupply().call()
       );
+
       if (this.props.project) {
         this.setState({currentProject: this.props.project});
       } else {
         this.setState({
           currentProject:
-            activeProjects[Math.floor(Math.random() * activeProjects.length)],
+            activeProjects[Math.floor(Math.random() * activeProjects.length)] ||
+            0,
         });
       }
 

@@ -95,7 +95,7 @@ export function getRendererAPIUrl(NETWORK) {
   return rendererUrl;
 }
 
-export const ARTBLOCKS_CONTRACT_ABI_ROPSTEN = [
+export const ARTBLOCKS_CONTRACT_ABI = [
   {
     inputs: [
       {internalType: 'string', name: '_tokenName', type: 'string'},
@@ -950,7 +950,7 @@ export const ARTBLOCKS_CONTRACT_ABI_ROPSTEN = [
   },
 ];
 
-export const ARTBLOCKS_CONTRACT_MINTER_ABI_ROPSTEN = [
+export const ARTBLOCKS_CONTRACT_MINTER_ABI = [
   {
     inputs: [
       {internalType: 'address', name: '_genArt721Address', type: 'address'},
@@ -1278,7 +1278,7 @@ export const ERC20_ABI = [
   },
 ];
 
-export const ARTBLOCKS_CONTRACT_ABI = [
+export const ARTBLOCKS_CONTRACT_ABI_RINKEBY = [
   {
     inputs: [
       {
@@ -3037,7 +3037,7 @@ export const ARTBLOCKS_CONTRACT_ABI = [
   },
 ];
 
-export const ARTBLOCKS_CONTRACT_MINTER_ABI = [
+export const ARTBLOCKS_CONTRACT_MINTER_ABI_RINKEBY = [
   {
     inputs: [
       {internalType: 'address', name: '_genArt721Address', type: 'address'},
