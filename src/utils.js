@@ -2,10 +2,10 @@ import {
   NETWORK,
   NONINTERACTIVE,
   BASE_URL,
-  VALIDATOR_CONTRACT_ABI,
+  // VALIDATOR_CONTRACT_ABI,
 } from './config';
 import namehash from 'eth-ens-namehash';
-import Web3 from 'web3';
+// import Web3 from 'web3';
 
 function tokenGenerator(token) {
   return BASE_URL + '/generator/' + token;
@@ -46,53 +46,49 @@ async function reverseResolveEns(address, web3) {
   return name;
 }
 
-async function checkWhitelist(
-  ethereumAddress /* artBlocks */,
-  projectId,
-  mainMinter
-) {
+async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
   try {
-    const API_KEY = process.env.REACT_APP_INFURA_KEY;
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider(
-        `https://${NETWORK}.infura.io/v3/${API_KEY}`
-      )
-    );
+    // const API_KEY = process.env.REACT_APP_INFURA_KEY;
+    // const web3 = new Web3(
+    //   new Web3.providers.HttpProvider(
+    //     `https://${NETWORK}.infura.io/v3/${API_KEY}`
+    //   )
+    // );
 
     // RINKEBY WHITELIST VALIDATION CONTRACT
-    const validatorContractAddress = await mainMinter.methods
-      .validatorContracts(Number(projectId))
-      .call();
+    // const validatorContractAddress = await mainMinter.methods
+    //   .validatorContracts(Number(projectId))
+    //   .call();
 
-    const validatorContract = new web3.eth.Contract(
-      VALIDATOR_CONTRACT_ABI,
-      validatorContractAddress
-    );
+    // const validatorContract = new web3.eth.Contract(
+    //   VALIDATOR_CONTRACT_ABI,
+    //   validatorContractAddress
+    // );
 
-    const isWhitelisted = await validatorContract.methods
-      .whitelist(ethereumAddress)
-      .call();
+    // const isWhitelisted = await validatorContract.methods
+    //   .whitelist(ethereumAddress)
+    //   .call();
 
     // ROPSTEN WHITELIST VALIDATION CONTRACT
-    // let validationErrorMessage = '';
+    let validationErrorMessage = '';
 
-    // const projectId = await artBlocks.methods
+    // const projectId = await mainMinter.methods
     //   .tokenIdToProjectId(this.props.token)
     //   .call();
 
-    // const isWhitelisted = await artBlocks.methods
-    //   .addressCanMint(ethereumAddress, Number(projectId))
-    //   .call();
+    const isWhitelisted = await mainMinter.methods
+      .addressCanMint(ethereumAddress, Number(projectId))
+      .call();
 
-    // if (!isWhitelisted) {
-    //   validationErrorMessage = await artBlocks.methods
-    //     .getValidationErrorMessage(Number(projectId))
-    //     .call();
-    // }
+    if (!isWhitelisted) {
+      validationErrorMessage = await mainMinter.methods
+        .getValidationErrorMessage(Number(projectId))
+        .call();
+    }
 
     return {
       isWhitelisted,
-      // validationErrorMessage,
+      validationErrorMessage,
     };
   } catch (error) {
     console.error(error);
