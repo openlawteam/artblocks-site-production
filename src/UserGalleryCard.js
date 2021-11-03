@@ -9,6 +9,7 @@ import {
   Container,
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import {getMediaThumbURL, getRendererAPIUrl} from './config';
 
 class UserGalleryCard extends Component {
   constructor(props) {
@@ -66,15 +67,8 @@ class UserGalleryCard extends Component {
 
     //console.log(this.props);
     let baseURL = this.props.baseURL;
-
-    let thumbURL =
-      this.props.network === 'rinkeby'
-        ? process.env.REACT_APP_API_URL_RINKEBY_THUMB
-        : process.env.REACT_APP_API_URL_MAINNET_THUMB;
-    let imgURL =
-      this.props.network === 'rinkeby'
-        ? process.env.REACT_APP_API_URL_RINKEBY
-        : process.env.REACT_APP_API_URL_MAINNET;
+    let thumbURL = getMediaThumbURL(this.props.network);
+    let imgURL = getRendererAPIUrl(this.props.network);
 
     /*
     function tokenImage(token){

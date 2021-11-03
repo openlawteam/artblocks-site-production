@@ -14,6 +14,7 @@ import {
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
+import {getRendererAPIUrl} from './config';
 import './ProjectGallery.css';
 
 class NewToken extends Component {
@@ -225,18 +226,11 @@ class NewToken extends Component {
                   </p>
                   <br />
                   <TwitterShareButton
-                    url={
-                      this.props.network === 'rinkeby'
-                        ? process.env.REACT_APP_API_URL_RINKEBY +
-                          '/token/' +
-                          this.state.token
-                        : process.env.REACT_APP_API_URL_MAINNET +
-                          '/token/' +
-                          this.state.token
-                    }
+                    url={`${getRendererAPIUrl(this.props.network)}/token/${
+                      this.state.token
+                    }`}
                     title={
                       'I just minted ' +
-                      (this.props.network === 'rinkeby' ? 'testnet ' : '') +
                       this.state.projectDescription[0] +
                       ' #' +
                       (Number(this.props.token) -

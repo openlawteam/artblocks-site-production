@@ -3,6 +3,8 @@ import {
   NONINTERACTIVE,
   BASE_URL,
   // VALIDATOR_CONTRACT_ABI,
+  getMediaURL,
+  getMediaThumbURL,
 } from './config';
 import namehash from 'eth-ens-namehash';
 // import Web3 from 'web3';
@@ -16,19 +18,13 @@ function shouldShowNonInteractive(project) {
 }
 
 function tokenHighlightImage(tokenId) {
-  const baseImageUrl =
-    NETWORK === 'rinkeby'
-      ? process.env.REACT_APP_MEDIA_URL_RINKEBY
-      : process.env.REACT_APP_MEDIA_URL_MAINNET;
+  const baseImageUrl = getMediaURL(NETWORK);
 
   return baseImageUrl + tokenId + '.png';
 }
 
 function tokenThumbImage(tokenId) {
-  let baseImageUrl =
-    NETWORK === 'rinkeby'
-      ? process.env.REACT_APP_MEDIA_URL_RINKEBY_THUMB
-      : process.env.REACT_APP_MEDIA_URL_MAINNET_THUMB;
+  let baseImageUrl = getMediaThumbURL(NETWORK);
 
   return baseImageUrl + tokenId + '.png';
 }

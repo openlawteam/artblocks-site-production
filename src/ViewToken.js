@@ -15,7 +15,7 @@ import {
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {Link} from 'react-router-dom';
 import {tokenDetailsUrl /*, reverseResolveEns*/} from './utils';
-import {getRendererAPIUrl} from './config';
+import {getRendererAPIUrl, getMediaURL} from './config';
 import {formatEthereumAddress} from './utils/helpers';
 import OpenSeaImage from './assets/images/os_logo.png';
 import './ProjectGallery.css';
@@ -156,10 +156,7 @@ class ViewToken extends Component {
       </Tooltip>
     );
 
-    let highlightImageUrl =
-      this.props.network === 'rinkeby'
-        ? process.env.REACT_APP_MEDIA_URL_RINKEBY
-        : process.env.REACT_APP_MEDIA_URL_MAINNET;
+    let highlightImageUrl = getMediaURL(this.props.network);
 
     function tokenHighlightImage(token) {
       return highlightImageUrl + token + '.png';

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Card, Button, CardDeck, Row, Col} from 'react-bootstrap';
 import './ProjectGallery.css';
 import {Link} from 'react-router-dom';
+import {getMediaURL} from './config';
 
 class ProjectGallery extends Component {
   constructor(props) {
@@ -96,10 +97,8 @@ class ProjectGallery extends Component {
     console.log('owned? ' + owned);
 
     //let baseURL = this.props.baseURL;
-    let imageURL =
-      this.props.network === 'rinkeby'
-        ? process.env.REACT_APP_MEDIA_URL_RINKEBY
-        : process.env.REACT_APP_MEDIA_URL_MAINNET;
+    let imageURL = getMediaURL(this.props.network);
+
     function tokenImage(token) {
       return imageURL + token + '.png';
       //return baseURL+'/image/'+token;

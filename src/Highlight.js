@@ -9,6 +9,7 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import {getMediaURL} from './config';
 import './ProjectGallery.css';
 
 class Highlight extends Component {
@@ -133,10 +134,7 @@ class Highlight extends Component {
     //let owned = this.state.randomToken && this.props.tokensOfOwner && this.props.tokensOfOwner.includes(this.state.randomToken.toString());
 
     let baseURL = this.props.baseURL;
-    let url =
-      this.props.network === 'rinkeby'
-        ? process.env.REACT_APP_MEDIA_URL_RINKEBY
-        : process.env.REACT_APP_MEDIA_URL_MAINNET;
+    let url = getMediaURL(this.props.network);
 
     function tokenImage(token) {
       return url + token + '.png';

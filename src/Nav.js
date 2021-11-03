@@ -8,6 +8,7 @@ import './Nav.css';
 import {MetaMaskSVG, WalletSVG, FlamingoDAOSVG} from './assets/svg';
 
 import {formatEthereumAddress} from './utils/helpers';
+import {getFlamingoDAOUrl} from './config';
 
 class Navigation extends Component {
   constructor(props) {
@@ -390,12 +391,7 @@ class Navigation extends Component {
                 </Nav.Link>
               )} */}
 
-              <Nav.Link
-                href={
-                  this.props.network === 'rinkeby'
-                    ? 'https://develop.flamingodao.xyz/'
-                    : 'https://www.flamingodao.xyz/'
-                }>
+              <Nav.Link href={getFlamingoDAOUrl(this.props.network)}>
                 <FlamingoDAOSVG /> Flamingo DAO
               </Nav.Link>
             </Nav>

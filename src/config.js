@@ -54,6 +54,64 @@ function getOpenseaURL() {
 
 export const OPENSEA_URL = getOpenseaURL(NETWORK);
 
+export function getRendererAPIUrl(NETWORK) {
+  let rendererUrl = process.env.REACT_APP_API_URL_MAINNET;
+
+  switch (NETWORK) {
+    case 'rinkeby':
+      rendererUrl = process.env.REACT_APP_API_URL_RINKEBY;
+      break;
+    case 'ropsten':
+      rendererUrl = process.env.REACT_APP_API_URL_ROPSTEN;
+      break;
+    default:
+  }
+  return rendererUrl;
+}
+
+export function getMediaURL(NETWORK) {
+  let mediaUrl = process.env.REACT_APP_MEDIA_URL_MAINNET;
+
+  switch (NETWORK) {
+    case 'rinkeby':
+      mediaUrl = process.env.REACT_APP_MEDIA_URL_RINKEBY;
+      break;
+    case 'ropsten':
+      mediaUrl = process.env.REACT_APP_MEDIA_URL_ROPSTEN;
+      break;
+    default:
+  }
+  return mediaUrl;
+}
+
+export function getMediaThumbURL(NETWORK) {
+  let mediaThumbUrl = process.env.REACT_APP_MEDIA_URL_MAINNET_THUMB;
+
+  switch (NETWORK) {
+    case 'rinkeby':
+      mediaThumbUrl = process.env.REACT_APP_MEDIA_URL_RINKEBY_THUMB;
+      break;
+    case 'ropsten':
+      mediaThumbUrl = process.env.REACT_APP_MEDIA_URL_ROPSTEN_THUMB;
+      break;
+    default:
+  }
+  return mediaThumbUrl;
+}
+
+export function getFlamingoDAOUrl(NETWORK) {
+  let flamingoDAOUrl = 'https://www.flamingodao.xyz';
+
+  switch (NETWORK) {
+    case 'rinkeby':
+    case 'ropsten':
+      flamingoDAOUrl = 'https://develop.flamingodao.xyz';
+      break;
+    default:
+  }
+  return flamingoDAOUrl;
+}
+
 export function getArtblocksContractAddresses(NETWORK) {
   // Default to mainnet contract addresses
   let contractAddresses = {
@@ -78,21 +136,6 @@ export function getArtblocksContractAddresses(NETWORK) {
       break;
   }
   return contractAddresses;
-}
-
-export function getRendererAPIUrl(NETWORK) {
-  let rendererUrl = process.env.REACT_APP_API_URL_MAINNET;
-
-  switch (NETWORK) {
-    case 'rinkeby':
-      rendererUrl = process.env.REACT_APP_API_URL_RINKEBY;
-      break;
-    case 'ropsten':
-      rendererUrl = process.env.REACT_APP_API_URL_ROPSTEN;
-      break;
-    default:
-  }
-  return rendererUrl;
 }
 
 export const ARTBLOCKS_CONTRACT_ABI = [

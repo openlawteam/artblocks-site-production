@@ -5,14 +5,24 @@ import SocialMedia from './SocialMedia';
 
 const year = () => new Date().getFullYear();
 
+function getPrivacyURL(NETWORK) {
+  let privacyUrl = 'https://www.flamingodao.xyz/privacy';
+
+  switch (NETWORK) {
+    case 'rinkeby':
+    case 'ropsten':
+      privacyUrl = 'https://develop.flamingodao.xyz/privacy';
+      break;
+    default:
+  }
+  return privacyUrl;
+}
+
 export default function Footer() {
   const orgDocsURL = 'https://docs.flamingodao.xyz/';
   const orgIncName = 'Flamingo DAO, LLC';
   const orgPrimaryContactEmail = 'hello@flamingodao.xyz';
-  const orgPrivacyURL =
-    NETWORK === 'rinkeby'
-      ? 'https://develop.flamingodao.xyz/privacy'
-      : 'https://www.flamingodao.xyz/privacy';
+  const orgPrivacyURL = getPrivacyURL(NETWORK);
 
   return (
     <footer className={`wrap org-footer-wrap grid--fluid`}>
