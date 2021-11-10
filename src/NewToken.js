@@ -121,7 +121,8 @@ class NewToken extends Component {
     }
 
     function tokenGenerator(token) {
-      return baseURL + '/generator/' + token;
+      // return baseURL + token; // '/generator/' + token;
+      return `${baseURL}/${token}.png`;
     }
 
     function tokenVox(token) {

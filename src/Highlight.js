@@ -141,7 +141,10 @@ class Highlight extends Component {
     }
 
     function tokenGenerator(token) {
-      return baseURL + '/generator/' + token;
+      // return baseURL +  '/generator/' + token;
+
+      // https://flamingo-flutter-staging.s3.amazonaws.com/29.png
+      return `${baseURL}/${token}.png`;
     }
 
     return (
@@ -168,6 +171,8 @@ class Highlight extends Component {
                       <iframe
                         src={tokenGenerator(this.state.randomToken)}
                         title={this.state.randomToken}
+                        // sandbox="allow-scripts"
+                        allowFullScreen
                       />
                     </div>
                   )}

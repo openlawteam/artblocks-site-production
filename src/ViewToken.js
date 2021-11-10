@@ -17,7 +17,7 @@ import {Link} from 'react-router-dom';
 import {tokenDetailsUrl /*, reverseResolveEns*/} from './utils';
 import {getRendererAPIUrl, getMediaURL} from './config';
 import {formatEthereumAddress} from './utils/helpers';
-import OpenSeaImage from './assets/images/os_logo.png';
+// import OpenSeaImage from './assets/images/os_logo.png';
 import './ProjectGallery.css';
 
 class ViewToken extends Component {
@@ -165,30 +165,32 @@ class ViewToken extends Component {
     let baseURL = this.props.baseURL;
 
     function tokenImage(token) {
-      return baseURL + '/image/' + token;
+      // return baseURL + '/image/' + token;
+      return baseURL + token + '.png';
     }
 
     function tokenGenerator(token) {
-      return baseURL + '/generator/' + token;
+      // return baseURL + '/generator/' + token;
+      return `${baseURL}/${token}.png`;
     }
 
     function tokenVox(token) {
       return baseURL + '/vox/' + token;
     }
 
-    function tokenOSURL(token) {
-      if (token < 3000000) {
-        return (
-          'https://opensea.io/assets/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/' +
-          token
-        );
-      } else {
-        return (
-          'https://opensea.io/assets/0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270/' +
-          token
-        );
-      }
-    }
+    // function tokenOSURL(token) {
+    //   if (token < 3000000) {
+    //     return (
+    //       'https://opensea.io/assets/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/' +
+    //       token
+    //     );
+    //   } else {
+    //     return (
+    //       'https://opensea.io/assets/0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270/' +
+    //       token
+    //     );
+    //   }
+    // }
 
     return (
       <div className="section-wrapper">
@@ -226,12 +228,12 @@ class ViewToken extends Component {
                             ? this.state.prettyIdentifier
                             : formatEthereumAddress(this.state.ownerOfToken)}
                         </Link>{' '}
-                        <a
+                        {/* <a
                           href={tokenOSURL(this.props.token)}
                           target="_blank"
                           rel="noopener noreferrer">
                           <Image width="50" src={OpenSeaImage} />
-                        </a>
+                        </a> */}
                       </p>
                     </div>
                   )}

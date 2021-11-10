@@ -92,7 +92,8 @@ class UserGalleryCard extends Component {
     */
 
     function tokenGenerator(token) {
-      return baseURL + '/generator/' + token;
+      // return baseURL + '/generator/' + token;
+      return `${baseURL}/${token}.png`;
     }
 
     return (
