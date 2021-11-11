@@ -24,7 +24,7 @@ import ProjectGallery from './ProjectGallery';
 import Footer from './Footer';
 import Learn from './Learn';
 import Sustainability from './Sustainability';
-import ControlPanel from './ControlPanel';
+// import ControlPanel from './ControlPanel';
 import UserGallery from './UserGallery';
 import ViewToken from './ViewToken';
 import {Col, Row} from 'react-bootstrap';
@@ -428,7 +428,7 @@ class App extends Component {
                   </div>
                 )}
 
-                {this.state.allProjects && this.state.show === 'controlPanel' && (
+                {/* {this.state.allProjects && this.state.show === 'controlPanel' && (
                   <div>
                     <ControlPanel
                       account={this.state.account}
@@ -441,7 +441,7 @@ class App extends Component {
                       isWhitelisted={this.state.isWhitelisted}
                     />
                   </div>
-                )}
+                )} */}
               </div>
             )}
 

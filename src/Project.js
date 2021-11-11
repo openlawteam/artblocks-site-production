@@ -22,7 +22,7 @@ import {
 import {ERC20_ABI, NETWORK} from './config';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
-import ArtistInterface from './ArtistInterface';
+// import ArtistInterface from './ArtistInterface';
 import './Project.css';
 class Project extends Component {
   constructor(props) {
@@ -48,8 +48,8 @@ class Project extends Component {
       mintTxConfirmed: false,
       mintTxReceipt: '',
     };
-    this.handleToggleArtistInterface =
-      this.handleToggleArtistInterface.bind(this);
+    // this.handleToggleArtistInterface =
+    //   this.handleToggleArtistInterface.bind(this);
     this.purchase = this.purchase.bind(this);
     this.handleJSON = this.handleJSON.bind(this);
     this.handlePurchaseTo = this.handlePurchaseTo.bind(this);
@@ -502,9 +502,9 @@ class Project extends Component {
     }
   }
 
-  handleToggleArtistInterface() {
-    this.setState({artistInterface: !this.state.artistInterface});
-  }
+  // handleToggleArtistInterface() {
+  //   this.setState({artistInterface: !this.state.artistInterface});
+  // }
 
   handlePurchaseToAddressChange(event) {
     this.setState({purchaseToAddress: event.target.value});

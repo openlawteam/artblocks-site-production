@@ -26,8 +26,9 @@ class Highlight extends Component {
       const projectTokenInfo = await artBlocks.methods
         .projectTokenInfo(this.props.project)
         .call();
+
       const projectTokens = Array.from(
-        Array(projectTokenInfo.invocations).keys()
+        Array(Number(projectTokenInfo.invocations)).keys()
       );
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
@@ -171,7 +172,6 @@ class Highlight extends Component {
                       <iframe
                         src={tokenGenerator(this.state.randomToken)}
                         title={this.state.randomToken}
-                        // sandbox="allow-scripts"
                         allowFullScreen
                       />
                     </div>
