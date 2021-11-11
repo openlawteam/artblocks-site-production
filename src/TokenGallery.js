@@ -83,8 +83,10 @@ const TokenGallery = ({project, projectTokens = []}) => {
                     border="light"
                     className="mx-auto"
                     style={{width: '16rem'}}>
-                    <Card.Body>
-                      <GalleryImage src={tokenThumbImage(token)} />
+                    <Card.Body style={{padding: '0'}}>
+                      <div>
+                        <GalleryImage src={tokenThumbImage(token)} />
+                      </div>
                       <div className="text-center">
                         <ButtonGroup size="sm">
                           <Button variant="light" disabled>

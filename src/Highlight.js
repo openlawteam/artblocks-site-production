@@ -10,6 +10,7 @@ import {
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {getMediaURL} from './config';
+import {getIFrameSrcDoc} from './utils';
 import './ProjectGallery.css';
 
 class Highlight extends Component {
@@ -132,51 +133,10 @@ class Highlight extends Component {
       </Tooltip>
     );
 
-    //let owned = this.state.randomToken && this.props.tokensOfOwner && this.props.tokensOfOwner.includes(this.state.randomToken.toString());
-
-    let baseURL = this.props.baseURL;
     let url = getMediaURL(this.props.network);
 
     function tokenImage(token) {
       return url + token + '.png';
-    }
-
-    // function tokenGenerator(token) {
-    //   // return baseURL +  '/generator/' + token;
-    //   // https://flamingo-flutter-staging.s3.amazonaws.com/29.png
-    //   return `${baseURL}/${token}.png`;
-    // }
-
-    function iFrameSrcDoc(token) {
-      const body = `<img src="${baseURL}/${token}.png" style="width: 100%" />`;
-      const css = `html {
-        height: 100%;
-      }
-      body {
-        min-height: 100%;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      canvas {
-        padding: 0;
-        margin: auto;
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-      }
-      img {
-        width: 100%;
-        height: 100%;
-      }`;
-      const html = `<html><head><style>${css}</style></head><body>${body}</body></html>`;
-
-      return html;
     }
 
     return (
@@ -202,7 +162,7 @@ class Highlight extends Component {
                     <div className="live-script-container">
                       <iframe
                         // src={tokenGenerator(this.state.randomToken)}
-                        srcdoc={iFrameSrcDoc(this.state.randomToken)}
+                        srcDoc={getIFrameSrcDoc(this.state.randomToken)}
                         title={this.state.randomToken}
                         allowFullScreen
                       />

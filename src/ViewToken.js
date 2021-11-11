@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {Link} from 'react-router-dom';
-import {tokenDetailsUrl /*, reverseResolveEns*/} from './utils';
+import {getIFrameSrcDoc /*, reverseResolveEns*/} from './utils';
 import {getRendererAPIUrl, getMediaURL} from './config';
 import {formatEthereumAddress} from './utils/helpers';
 // import OpenSeaImage from './assets/images/os_logo.png';
@@ -54,26 +54,19 @@ class ViewToken extends Component {
       const ownerOfToken = await artBlocks.methods
         .ownerOf(this.props.token)
         .call();
-      // const tokenHashes =
-      //   this.props.token < 3000000
-      //     ? await artBlocks.methods.showTokenHashes(this.props.token).call()
-      //     : await artBlocks.methods.tokenIdToHash(this.props.token).call();
-      // console.log('tokenHashes', tokenHashes);
 
-      // let prettyIdentifier = await reverseResolveEns(
-      //   ownerOfToken,
-      //   this.props.web3
-      // );
-
-      fetch(tokenDetailsUrl(this.props.token))
-        .then((res) => {
-          return res.json();
-        })
-        .then((json) => {
-          this.setState({
-            features: json.features,
-          });
-        });
+      // fetch(tokenDetailsUrl(this.props.token))
+      //   .then((res) => {
+      //     return res.json();
+      //   })
+      //   .then((json) => {
+      //     this.setState({
+      //       features: json.features,
+      //     });
+      //   })
+      //   .catch((error) => {
+      //     throw error;
+      //   });
 
       this.setState({
         artBlocks,
@@ -336,8 +329,9 @@ class ViewToken extends Component {
                     ) && (
                       <div className="live-script-container">
                         <iframe
-                          src={tokenGenerator(this.props.token)}
+                          // src={tokenGenerator(this.props.token)}
                           title={this.props.token}
+                          srcDoc={getIFrameSrcDoc(this.props.token)}
                         />
                       </div>
                     )}
@@ -382,7 +376,9 @@ class ViewToken extends Component {
                             <Button
                               variant="light"
                               as={Link}
-                              to={'/project/' + this.state.projectId}>
+                              to={
+                                '/project/' + this.state.projectId + '/gallery'
+                              }>
                               {this.state.projectDescription &&
                                 this.state.projectDescription[0]}{' '}
                               Gallery

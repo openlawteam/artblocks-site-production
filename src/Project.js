@@ -714,142 +714,219 @@ class Project extends Component {
 
     return (
       <div className="section-wrapper">
-        {this.state.projectTokenDetails &&
-          (this.props.isWhitelisted ||
+        {this.state.projectTokenDetails && (
+          /*(this.props.isWhitelisted ||
             this.state.projectTokenDetails[0] === this.props.account ||
-            this.state.projectTokenDetails[4]) && (
-            <div>
-              {this.props.network !== NETWORK && (
-                <Alert variant="danger">
-                  You are on the {this.props.network.toUpperCase()} Testnet
-                  version of the Flutter Art Blocks platform. Make sure your
-                  Metamask wallet is set to {NETWORK.toUpperCase()}
-                  before confirming any transactions.
-                </Alert>
-              )}
-              <Row
-                className={
-                  currentSubroute === 'latest' ||
-                  (this.state.projectTokens &&
-                    this.state.projectTokens.length) < 10
-                    ? 'align-items-center content-wrapper'
-                    : ''
-                }
-                style={{marginRight: 0, marginLeft: 0}}>
-                <Col xs={12} sm={6} md={3}>
-                  <div className="">
-                    <div className="text-align-center">
-                      {this.state.projectDescription && (
+            this.state.projectTokenDetails[4]) && */ <div>
+            {this.props.network !== NETWORK && (
+              <Alert variant="danger">
+                You are on the {this.props.network.toUpperCase()} Testnet
+                version of the Flutter Art Blocks platform. Make sure your
+                Metamask wallet is set to {NETWORK.toUpperCase()}
+                before confirming any transactions.
+              </Alert>
+            )}
+            <Row
+              className={
+                currentSubroute === 'latest' ||
+                (this.state.projectTokens && this.state.projectTokens.length) <
+                  10
+                  ? 'align-items-center content-wrapper'
+                  : ''
+              }
+              style={{marginRight: 0, marginLeft: 0}}>
+              <Col xs={12} sm={6} md={3}>
+                <div className="">
+                  <div className="text-align-center">
+                    {this.state.projectDescription && (
+                      <div>
+                        <h1>{this.state.projectDescription[0]}</h1>
+                        <h3>by {this.state.projectDescription[1]}</h3>
+                        <a
+                          href={
+                            this.state.projectDescription[3] &&
+                            this.state.projectDescription[3]
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer">
+                          {this.state.projectDescription[3] &&
+                            this.state.projectDescription[3]}
+                        </a>
+
+                        <p>{this.state.projectDescription[2]}</p>
+
+                        <p>
+                          Total Minted:{' '}
+                          {this.state.projectTokenDetails &&
+                            this.state.projectTokenDetails[2]}{' '}
+                          /{' '}
+                          {this.state.projectTokenDetails &&
+                            this.state.projectTokenDetails[3]}{' '}
+                          max
+                        </p>
+
+                        <p>
+                          License:{' '}
+                          {this.state.projectDescription &&
+                            this.state.projectDescription[4]}
+                        </p>
+                        <p>
+                          Script:{' '}
+                          {this.state.scriptJSON && this.state.scriptJSON.type}
+                        </p>
+                      </div>
+                    )}
+
+                    {this.state.projectTokens &&
+                      this.state.projectTokenDetails &&
+                      !complete && (
                         <div>
-                          <h1>{this.state.projectDescription[0]}</h1>
-                          <h3>by {this.state.projectDescription[1]}</h3>
-                          <a
-                            href={
-                              this.state.projectDescription[3] &&
-                              this.state.projectDescription[3]
-                            }
-                            target="_blank"
-                            rel="noopener noreferrer">
-                            {this.state.projectDescription[3] &&
-                              this.state.projectDescription[3]}
-                          </a>
-
-                          <p>{this.state.projectDescription[2]}</p>
-
                           <p>
-                            Total Minted:{' '}
+                            Price per token:{' '}
                             {this.state.projectTokenDetails &&
-                              this.state.projectTokenDetails[2]}{' '}
-                            /{' '}
-                            {this.state.projectTokenDetails &&
-                              this.state.projectTokenDetails[3]}{' '}
-                            max
+                              this.props.web3.utils.fromWei(
+                                this.state.projectTokenDetails[1],
+                                'ether'
+                              )}
+                            {this.state.currency &&
+                            this.state.currency === 'ETH'
+                              ? 'Ξ'
+                              : ' ' + this.state.currency}
                           </p>
 
-                          <p>
-                            License:{' '}
-                            {this.state.projectDescription &&
-                              this.state.projectDescription[4]}
-                          </p>
-                          <p>
-                            Script:{' '}
-                            {this.state.scriptJSON &&
-                              this.state.scriptJSON.type}
-                          </p>
-                        </div>
-                      )}
+                          {currentSubroute === 'latest' ? (
+                            <div>
+                              <Alert
+                                style={{width: '100%'}}
+                                className="org-secondary-alert"
+                                variant="secondary">
+                                <p>Showing the latest mint.</p>
+                                <Button
+                                  className="btn btn-secondary"
+                                  to={this.props.match.url + '/gallery'}
+                                  as={Link}>
+                                  View All
+                                </Button>
+                              </Alert>
+                            </div>
+                          ) : null}
 
-                      {this.state.projectTokens &&
-                        this.state.projectTokenDetails &&
-                        !complete && (
-                          <div>
-                            <p>
-                              Price per token:{' '}
-                              {this.state.projectTokenDetails &&
-                                this.props.web3.utils.fromWei(
-                                  this.state.projectTokenDetails[1],
-                                  'ether'
+                          {!this.props.connected && (
+                            <div>
+                              <br />
+                              <p>
+                                Please connect to MetaMask to enable purchases.
+                              </p>
+                            </div>
+                          )}
+
+                          {this.props.connected &&
+                            this.state.projectScriptDetails &&
+                            this.state.approved && (
+                              <div>
+                                {this.state.currency !== 'ETH' && (
+                                  <p>
+                                    {this.state.currency} Balance:{' '}
+                                    {this.state.erc20Balance}
+                                  </p>
                                 )}
-                              {this.state.currency &&
-                              this.state.currency === 'ETH'
-                                ? 'Ξ'
-                                : ' ' + this.state.currency}
-                            </p>
-
-                            {currentSubroute === 'latest' ? (
-                              <div>
-                                <Alert
+                                <Button
+                                  className="btn-primary"
                                   style={{width: '100%'}}
-                                  className="org-secondary-alert"
-                                  variant="secondary">
-                                  <p>Showing the latest mint.</p>
-                                  <Button
-                                    className="btn btn-secondary"
-                                    to={this.props.match.url + '/gallery'}
-                                    as={Link}>
-                                    View All
-                                  </Button>
-                                </Alert>
-                              </div>
-                            ) : null}
-
-                            {!this.props.connected && (
-                              <div>
-                                <br />
-                                <p>
-                                  Please connect to MetaMask to enable
-                                  purchases.
-                                </p>
+                                  disabled={
+                                    this.state.purchase ||
+                                    !this.props.isWhitelisted
+                                      ? true
+                                      : this.state.projectScriptDetails[5] &&
+                                        this.state.projectTokenDetails[0] !==
+                                          this.props.account
+                                      ? true
+                                      : false
+                                  }
+                                  onClick={() =>
+                                    this.setState({
+                                      showWarningModal: true,
+                                    })
+                                  }>
+                                  {this.state.purchase ? (
+                                    <div>
+                                      <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                      />
+                                      <span className="sr-only">
+                                        {this.state?.txReceiptMessage ??
+                                          'Pending...'}
+                                      </span>{' '}
+                                      {this.state?.txReceiptMessage ??
+                                        'Pending...'}
+                                    </div>
+                                  ) : this.state.projectScriptDetails[5] ? (
+                                    'Purchases Paused'
+                                  ) : (
+                                    'Purchase'
+                                  )}
+                                </Button>
+                                {this.state.purchaseTo && (
+                                  <InputGroup className="mb-3 purchase-addr-container">
+                                    <InputGroup.Prepend>
+                                      <InputGroup.Text id="basic-addon3">
+                                        Address:
+                                      </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                      onChange={
+                                        this.handlePurchaseToAddressChange
+                                      }
+                                      id="text"
+                                      aria-describedby="basic-addon3"
+                                    />
+                                  </InputGroup>
+                                )}
+                                {this.props.isWhitelisted && (
+                                  <div className="text-center">
+                                    <Button
+                                      variant="link"
+                                      onClick={this.handlePurchaseTo}
+                                      disabled={
+                                        this.state.purchase ||
+                                        !this.props.isWhitelisted
+                                      }>
+                                      Purchase To Another User
+                                    </Button>
+                                  </div>
+                                )}
+                                {!this.props.isWhitelisted && (
+                                  <div className="why-tooltip">
+                                    <Button
+                                      variant="link"
+                                      onClick={() =>
+                                        this.setState({
+                                          showWhyModal: true,
+                                        })
+                                      }>
+                                      Why is purchasing disabled?
+                                    </Button>
+                                  </div>
+                                )}
                               </div>
                             )}
 
-                            {this.props.connected &&
-                              this.state.projectScriptDetails &&
-                              this.state.approved && (
-                                <div>
-                                  {this.state.currency !== 'ETH' && (
-                                    <p>
-                                      {this.state.currency} Balance:{' '}
-                                      {this.state.erc20Balance}
-                                    </p>
-                                  )}
+                          {this.props.connected &&
+                            this.state.projectScriptDetails &&
+                            !this.state.approved && (
+                              <div>
+                                <OverlayTrigger
+                                  placement="top"
+                                  delay={{show: 250, hide: 400}}
+                                  overlay={approveDaiToolTip}>
                                   <Button
                                     className="btn-primary"
-                                    style={{width: '100%'}}
-                                    disabled={
-                                      this.state.purchase ||
-                                      !this.props.isWhitelisted
-                                        ? true
-                                        : this.state.projectScriptDetails[5] &&
-                                          this.state.projectTokenDetails[0] !==
-                                            this.props.account
-                                        ? true
-                                        : false
-                                    }
-                                    onClick={() =>
-                                      this.setState({
-                                        showWarningModal: true,
-                                      })
+                                    /*disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} */ onClick={
+                                      this.approve
                                     }>
                                     {this.state.purchase ? (
                                       <div>
@@ -867,182 +944,101 @@ class Project extends Component {
                                         {this.state?.txReceiptMessage ??
                                           'Pending...'}
                                       </div>
-                                    ) : this.state.projectScriptDetails[5] ? (
-                                      'Purchases Paused'
                                     ) : (
-                                      'Purchase'
+                                      'Approve ' +
+                                      this.state.currency +
+                                      ' for Purchasing'
                                     )}
                                   </Button>
-                                  {this.state.purchaseTo && (
-                                    <InputGroup className="mb-3 purchase-addr-container">
-                                      <InputGroup.Prepend>
-                                        <InputGroup.Text id="basic-addon3">
-                                          Address:
-                                        </InputGroup.Text>
-                                      </InputGroup.Prepend>
-                                      <FormControl
-                                        onChange={
-                                          this.handlePurchaseToAddressChange
-                                        }
-                                        id="text"
-                                        aria-describedby="basic-addon3"
-                                      />
-                                    </InputGroup>
-                                  )}
-                                  {this.props.isWhitelisted && (
-                                    <div className="text-center">
-                                      <Button
-                                        variant="link"
-                                        onClick={this.handlePurchaseTo}
-                                        disabled={
-                                          this.state.purchase ||
-                                          !this.props.isWhitelisted
-                                        }>
-                                        Purchase To Another User
-                                      </Button>
-                                    </div>
-                                  )}
-                                  {!this.props.isWhitelisted && (
-                                    <div className="why-tooltip">
-                                      <Button
-                                        variant="link"
-                                        onClick={() =>
-                                          this.setState({
-                                            showWhyModal: true,
-                                          })
-                                        }>
-                                        Why is purchasing disabled?
-                                      </Button>
-                                    </div>
-                                  )}
-                                </div>
-                              )}
-
-                            {this.props.connected &&
-                              this.state.projectScriptDetails &&
-                              !this.state.approved && (
-                                <div>
-                                  <OverlayTrigger
-                                    placement="top"
-                                    delay={{show: 250, hide: 400}}
-                                    overlay={approveDaiToolTip}>
-                                    <Button
-                                      className="btn-primary"
-                                      /*disabled={this.state.purchase?true:(this.state.projectScriptDetails[5] && this.state.projectTokenDetails[0]!==this.props.account)?true:false} */ onClick={
-                                        this.approve
-                                      }>
-                                      {this.state.purchase ? (
-                                        <div>
-                                          <Spinner
-                                            as="span"
-                                            animation="border"
-                                            size="sm"
-                                            role="status"
-                                            aria-hidden="true"
-                                          />
-                                          <span className="sr-only">
-                                            {this.state?.txReceiptMessage ??
-                                              'Pending...'}
-                                          </span>{' '}
-                                          {this.state?.txReceiptMessage ??
-                                            'Pending...'}
-                                        </div>
-                                      ) : (
-                                        'Approve ' +
-                                        this.state.currency +
-                                        ' for Purchasing'
-                                      )}
-                                    </Button>
-                                  </OverlayTrigger>
-                                </div>
-                              )}
-                          </div>
-                        )}
-
-                      <br />
-                      {this.state.projectTokenDetails && (
-                        <div>
-                          {this.props.isWhitelisted || userIsArtist ? (
-                            <Button
-                              onClick={async () => {
-                                if (currentSubroute !== 'artist') {
-                                  await this.props.handleConnectToMetamask();
-                                }
-
-                                this.props.history.push(
-                                  currentSubroute === 'artist'
-                                    ? this.props.match.url
-                                    : this.props.match.url + '/artist'
-                                );
-                              }}
-                              className="btn-primary">
-                              Toggle Artist Interface
-                            </Button>
-                          ) : null}
+                                </OverlayTrigger>
+                              </div>
+                            )}
                         </div>
                       )}
 
-                      {this.state.projectTokens &&
-                        this.props.project &&
-                        this.state.projectTokenDetails &&
-                        this.state.projectTokens.length ===
-                          Number(this.state.projectTokenDetails[3]) && (
-                          <div>
-                            {currentSubroute === 'latest' ? (
-                              <div>
-                                <Alert variant="secondary">
-                                  <p>
-                                    Showing random token [#
-                                    {this.state.randomTokenNumber - 1}].
-                                  </p>
-                                  <Button
-                                    variant="light"
-                                    block
-                                    as={Link}
-                                    to={this.props.match.url + '/gallery'}>
-                                    View Entire Gallery
-                                  </Button>
-                                </Alert>
-                              </div>
-                            ) : null}
-                            <p>
-                              <b>
-                                The max number of iterations/editions for this
-                                project have been minted. Please visit the
-                                project on{' '}
-                                <a
-                                  href={this.getOSLink()}
-                                  rel="noopener noreferrer"
-                                  target="_blank">
-                                  OpenSea
-                                </a>{' '}
-                                to see what is available on the secondary
-                                market!
-                              </b>
-                            </p>
-                          </div>
-                        )}
-                    </div>
+                    <br />
+                    {this.state.projectTokenDetails && (
+                      <div>
+                        {this.props.isWhitelisted || userIsArtist ? (
+                          <Button
+                            onClick={async () => {
+                              if (currentSubroute !== 'artist') {
+                                await this.props.handleConnectToMetamask();
+                              }
+
+                              this.props.history.push(
+                                currentSubroute === 'artist'
+                                  ? this.props.match.url
+                                  : this.props.match.url + '/artist'
+                              );
+                            }}
+                            className="btn-primary">
+                            Toggle Artist Interface
+                          </Button>
+                        ) : null}
+                      </div>
+                    )}
+
+                    {this.state.projectTokens &&
+                      this.props.project &&
+                      this.state.projectTokenDetails &&
+                      this.state.projectTokens.length ===
+                        Number(this.state.projectTokenDetails[3]) && (
+                        <div>
+                          {currentSubroute === 'latest' ? (
+                            <div>
+                              <Alert variant="secondary">
+                                <p>
+                                  Showing random token [#
+                                  {this.state.randomTokenNumber - 1}].
+                                </p>
+                                <Button
+                                  variant="light"
+                                  block
+                                  as={Link}
+                                  to={this.props.match.url + '/gallery'}>
+                                  View Entire Gallery
+                                </Button>
+                              </Alert>
+                            </div>
+                          ) : null}
+                          <p>
+                            <b>
+                              The max number of iterations/editions for this
+                              project have been minted. Please visit the project
+                              on{' '}
+                              <a
+                                href={this.getOSLink()}
+                                rel="noopener noreferrer"
+                                target="_blank">
+                                OpenSea
+                              </a>{' '}
+                              to see what is available on the secondary market!
+                            </b>
+                          </p>
+                        </div>
+                      )}
                   </div>
-                </Col>
-                {/* Right Section */}
-                <Col xs={12} sm={6} md={9} className="">
-                  <Switch>
-                    <Route exact path={this.props.match.path + '/'}>
-                      <LatestToken
-                        project={this.state.project}
-                        complete={complete}
-                        random={this.state.randomTokenNumber}
-                        latest={latestTokenNumber}
-                      />
-                    </Route>
-                    <Route path={this.props.match.path + '/gallery'}>
-                      <TokenGallery
-                        project={this.state.project}
-                        projectTokens={this.state.projectTokens}
-                      />
-                    </Route>
-                    {/* <Route path={this.props.match.path + '/artist'}>
+                </div>
+              </Col>
+              {/* Right Section */}
+              <Col xs={12} sm={6} md={9} className="">
+                <Switch>
+                  <Route exact path={this.props.match.path + '/'}>
+                    <LatestToken
+                      project={this.state.project}
+                      complete={complete}
+                      random={this.state.randomTokenNumber}
+                      latest={latestTokenNumber}
+                    />
+                  </Route>
+                  <Route path={this.props.match.path + '/gallery'}>
+                    <TokenGallery
+                      project={this.state.project}
+                      projectTokens={this.state.projectTokens}
+                    />
+                  </Route>
+                  {/* <Route path={this.props.match.path + '/artist'}>
                       {userIsArtist || this.props.isWhitelisted ? (
                         <ArtistInterface
                           project={this.state.project}
@@ -1064,68 +1060,67 @@ class Project extends Component {
                         <Redirect to={this.props.match.url} />
                       )}
                     </Route> */}
-                  </Switch>
-                </Col>
-              </Row>
-              {this.state.showWarningModal && (
-                <Modal
-                  show={this.state.showWarningModal}
-                  onHide={this.closeModal}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>WARNING</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p>
-                      Participating in a live Art Blocks drop is for experts
-                      only. By submitting a transaction you acknowledge the
-                      following:
-                    </p>
-                    <ol>
-                      <li>You are competing with others.</li>
-                      <li>
-                        You might have to increase your gas price in order to
-                        have your transaction processed before others.
-                      </li>
-                      <li>
-                        Even with a high gas price it is possible your
-                        transaction will be confirmed AFTER the drop is sold out
-                        in which case your transaction will fail and you will
-                        lose the transaction fee for the failed transaction.
-                      </li>
-                    </ol>
-                    <p style={{fontWeight: 'bold'}}>PROCEED AT YOUR OWN RISK</p>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={this.closeModal}>
-                      Cancel
-                    </Button>
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        this.closeModal();
-                        this.purchase();
-                      }}>
-                      Agree
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-              )}
+                </Switch>
+              </Col>
+            </Row>
+            {this.state.showWarningModal && (
+              <Modal
+                show={this.state.showWarningModal}
+                onHide={this.closeModal}>
+                <Modal.Header closeButton>
+                  <Modal.Title>WARNING</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p>
+                    Participating in a live Art Blocks drop is for experts only.
+                    By submitting a transaction you acknowledge the following:
+                  </p>
+                  <ol>
+                    <li>You are competing with others.</li>
+                    <li>
+                      You might have to increase your gas price in order to have
+                      your transaction processed before others.
+                    </li>
+                    <li>
+                      Even with a high gas price it is possible your transaction
+                      will be confirmed AFTER the drop is sold out in which case
+                      your transaction will fail and you will lose the
+                      transaction fee for the failed transaction.
+                    </li>
+                  </ol>
+                  <p style={{fontWeight: 'bold'}}>PROCEED AT YOUR OWN RISK</p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={this.closeModal}>
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      this.closeModal();
+                      this.purchase();
+                    }}>
+                    Agree
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            )}
 
-              {this.state.showWhyModal && (
-                <Modal show={this.state.showWhyModal} onHide={this.closeModal}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>WHY IS PURCHASING DISABLED?</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p>
-                      Minting is currently available for whitelisted addresses
-                      only.
-                    </p>
-                  </Modal.Body>
-                </Modal>
-              )}
-            </div>
-          )}
+            {this.state.showWhyModal && (
+              <Modal show={this.state.showWhyModal} onHide={this.closeModal}>
+                <Modal.Header closeButton>
+                  <Modal.Title>WHY IS PURCHASING DISABLED?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p>
+                    Minting is currently available for whitelisted addresses
+                    only.
+                  </p>
+                </Modal.Body>
+              </Modal>
+            )}
+          </div>
+        )}
       </div>
     );
   }

@@ -81,7 +81,7 @@ export function getMediaURL(NETWORK) {
       break;
     default:
   }
-  return mediaUrl;
+  return `${mediaUrl}/`;
 }
 
 export function getMediaThumbURL(NETWORK) {
@@ -96,7 +96,7 @@ export function getMediaThumbURL(NETWORK) {
       break;
     default:
   }
-  return mediaThumbUrl;
+  return `${mediaThumbUrl}/`;
 }
 
 export function getFlamingoDAOUrl(NETWORK) {
