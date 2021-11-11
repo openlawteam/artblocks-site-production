@@ -14,7 +14,7 @@ import {
 import {
   Link,
   matchPath,
-  Redirect,
+  // Redirect,
   Route,
   Switch,
   withRouter,
@@ -1042,7 +1042,7 @@ class Project extends Component {
                         projectTokens={this.state.projectTokens}
                       />
                     </Route>
-                    <Route path={this.props.match.path + '/artist'}>
+                    {/* <Route path={this.props.match.path + '/artist'}>
                       {userIsArtist || this.props.isWhitelisted ? (
                         <ArtistInterface
                           project={this.state.project}
@@ -1063,7 +1063,7 @@ class Project extends Component {
                       ) : (
                         <Redirect to={this.props.match.url} />
                       )}
-                    </Route>
+                    </Route> */}
                   </Switch>
                 </Col>
               </Row>
