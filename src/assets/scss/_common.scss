@@ -135,6 +135,22 @@ main {
   }
 }
 
+.readmore-ellipsis {
+  border-bottom: 2px dotted #198ad6;
+  color: #198ad6;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.card-deck .card {
+  margin-bottom: 1rem;
+}
+
 /* 
 - METAMASK SVG FILL STYLES - BEGIN
 */

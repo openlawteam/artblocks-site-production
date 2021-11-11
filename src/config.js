@@ -129,7 +129,7 @@ export function getArtblocksContractAddresses(NETWORK) {
     case 'ropsten':
       contractAddresses = {
         coreContractAddress: '0x06710498339b30834653459Ac90F52Cbd2F1D085',
-        minterContractAddress: '0x337c60aDF28F81f899046B5C5Ee4Db696e0462C4',
+        minterContractAddress: '0xa6b90f9e1464873710e90659dc0976a21c2d4800', // 0x337c60aDF28F81f899046B5C5Ee4Db696e0462C4
       };
       break;
     default:

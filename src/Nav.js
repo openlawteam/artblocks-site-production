@@ -378,7 +378,7 @@ class Navigation extends Component {
                 Sustainability
               </Nav.Link> */}
 
-              {this.props.isWhitelisted && (
+              {/* {this.props.isWhitelisted && (
                 <Nav.Link
                   href="#"
                   onClick={() => {
@@ -386,7 +386,7 @@ class Navigation extends Component {
                   }}>
                   Control Panel
                 </Nav.Link>
-              )}
+              )} */}
               {/* {this.props.tokensOfOwner && (
                 <Nav.Link
                   as={Link}

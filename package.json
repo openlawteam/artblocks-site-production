@@ -16,6 +16,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-share": "^4.4.0",
+    "react-text-truncate": "^0.17.0",
     "sass": "^1.32.13",
     "serve": "^11.3.2",
     "web3": "^1.5.2"
