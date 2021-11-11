@@ -7,7 +7,6 @@ import {
   getMediaThumbURL,
 } from './config';
 import namehash from 'eth-ens-namehash';
-// import Web3 from 'web3';
 
 function tokenGenerator(token) {
   return BASE_URL + '/generator/' + token;

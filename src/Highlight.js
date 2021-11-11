@@ -141,11 +141,42 @@ class Highlight extends Component {
       return url + token + '.png';
     }
 
-    function tokenGenerator(token) {
-      // return baseURL +  '/generator/' + token;
+    // function tokenGenerator(token) {
+    //   // return baseURL +  '/generator/' + token;
+    //   // https://flamingo-flutter-staging.s3.amazonaws.com/29.png
+    //   return `${baseURL}/${token}.png`;
+    // }
 
-      // https://flamingo-flutter-staging.s3.amazonaws.com/29.png
-      return `${baseURL}/${token}.png`;
+    function iFrameSrcDoc(token) {
+      const body = `<img src="${baseURL}/${token}.png" style="width: 100%" />`;
+      const css = `html {
+        height: 100%;
+      }
+      body {
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      canvas {
+        padding: 0;
+        margin: auto;
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }`;
+      const html = `<html><head><style>${css}</style></head><body>${body}</body></html>`;
+
+      return html;
     }
 
     return (
@@ -170,7 +201,8 @@ class Highlight extends Component {
                   ) && (
                     <div className="live-script-container">
                       <iframe
-                        src={tokenGenerator(this.state.randomToken)}
+                        // src={tokenGenerator(this.state.randomToken)}
+                        srcdoc={iFrameSrcDoc(this.state.randomToken)}
                         title={this.state.randomToken}
                         allowFullScreen
                       />
