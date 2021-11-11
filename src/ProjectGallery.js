@@ -89,7 +89,6 @@ class ProjectGallery extends Component {
   }
 
   render() {
-    console.log('JJJ');
     let owned =
       this.state.randomToken &&
       this.props.tokensOfOwner &&

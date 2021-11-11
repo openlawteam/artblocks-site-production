@@ -17,38 +17,45 @@ class Navigation extends Component {
   }
 
   async componentDidMount() {
-    const artBlocks = this.props.artBlocks;
-    const activeProjects = this.props.activeProjects;
+    try {
+      const artBlocks = this.props.artBlocks;
+      const activeProjects = this.props.activeProjects;
 
-    let activeProjectsDetails = [];
-    let activeProjectArtistName = [];
-    for (let project in activeProjects) {
-      const projectDetails = await artBlocks.methods
-        .projectDetails(activeProjects[project])
-        .call();
-      activeProjectArtistName.push(activeProjects[project]);
-      activeProjectArtistName.push(projectDetails[0]);
-      activeProjectArtistName.push(projectDetails[1]);
-      activeProjectsDetails.push(activeProjectArtistName);
+      let activeProjectsDetails = [];
+      let activeProjectArtistName = [];
+
+      for (let project in activeProjects) {
+        const projectDetails = await artBlocks.methods
+          .projectDetails(activeProjects[project])
+          .call();
+        activeProjectArtistName.push(activeProjects[project]);
+        activeProjectArtistName.push(projectDetails[0]);
+        activeProjectArtistName.push(projectDetails[1]);
+        activeProjectsDetails.push(activeProjectArtistName);
+      }
+
+      const allProjects = this.props.allProjects;
+
+      let allProjectsDetails = [];
+      let projectDetailsArtistName = [];
+      for (let i = 0; i < allProjects.length; i++) {
+        const projectDetails = await artBlocks.methods.projectDetails(i).call();
+
+        projectDetailsArtistName.push(i);
+        projectDetailsArtistName.push(projectDetails[0]);
+        projectDetailsArtistName.push(projectDetails[1]);
+        allProjectsDetails.push(projectDetailsArtistName);
+      }
+
+      this.setState({
+        artBlocks,
+        activeProjects,
+        activeProjectsDetails,
+        allProjectsDetails,
+      });
+    } catch (error) {
+      console.error(error);
     }
-
-    const allProjects = this.props.allProjects;
-    let allProjectsDetails = [];
-    let projectDetailsArtistName = [];
-    for (let i = 0; i < allProjects.length; i++) {
-      const projectDetails = await artBlocks.methods.projectDetails(i).call();
-      projectDetailsArtistName.push(i);
-      projectDetailsArtistName.push(projectDetails[0]);
-      projectDetailsArtistName.push(projectDetails[1]);
-      allProjectsDetails.push(projectDetailsArtistName);
-    }
-
-    this.setState({
-      artBlocks,
-      activeProjects,
-      activeProjectsDetails,
-      allProjectsDetails,
-    });
   }
 
   render() {
@@ -396,7 +403,7 @@ class Navigation extends Component {
               </Nav.Link>
             </Nav>
 
-            {this.props.projectsOfArtist &&
+            {/* {this.props.projectsOfArtist &&
               this.props.projectsOfArtist.length > 0 && (
                 <NavDropdown title="Your Projects" id="basic-nav-dropdown">
                   {this.props.projectsOfArtist.map((project, index) => {
@@ -417,7 +424,7 @@ class Navigation extends Component {
                     );
                   })}
                 </NavDropdown>
-              )}
+              )} */}
 
             {this.props.connected === false && (
               <Nav.Link
