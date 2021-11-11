@@ -138,15 +138,13 @@ class App extends Component {
 
       await Promise.all(
         allProjects.map(async (project) => {
-          // let details = await artBlocks.methods
-          //   .projectTokenInfo(project)
-          //   .call();
+          let details = await artBlocks.methods
+            .projectTokenInfo(project)
+            .call();
 
-          // @note showing all projects, even if not active
-
-          // if (details[4] === true) {
-          activeProjects.push(project);
-          // }
+          if (details[4] === true || NETWORK !== 'mainnet') {
+            activeProjects.push(project);
+          }
 
           return null;
         })
