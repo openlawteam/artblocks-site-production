@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {liveRenderUrl, tokenDetailsUrl} from './utils';
+import {liveRenderUrl} from './utils';
 import {
   Card,
   Button,
@@ -26,38 +26,45 @@ class NewToken extends Component {
 
   async componentDidMount() {
     try {
+      console.log('A');
       const artBlocks = this.props.artBlocks;
       const projectId = await artBlocks.methods
         .tokenIdToProjectId(this.props.token)
         .call();
+
       const projectTokenInfo = await artBlocks.methods
-        .projectTokenInfo(this.props.project)
+        .projectTokenInfo(projectId)
         .call();
+
       const projectTokens = Array.from(
         Array(projectTokenInfo.invocations).keys()
       );
+
       const projectDescription = await artBlocks.methods
         .projectDetails(projectId)
         .call();
+
       const projectTokenDetails = await artBlocks.methods
         .projectTokenInfo(projectId)
         .call();
+
       const projectScriptDetails = await artBlocks.methods
         .projectScriptInfo(projectId)
         .call();
+
       const projectURIInfo = await artBlocks.methods
         .projectURIInfo(projectId)
         .call();
 
-      fetch(tokenDetailsUrl(this.props.token))
-        .then((res) => {
-          return res.json();
-        })
-        .then((json) => {
-          this.setState({
-            features: json.features,
-          });
-        });
+      // fetch(tokenDetailsUrl(this.props.token))
+      //   .then((res) => {
+      //     return res.json();
+      //   })
+      //   .then((json) => {
+      //     this.setState({
+      //       features: json.features,
+      //     });
+      //   });
 
       const srcDocument = await renderGenerator(this.props.token);
 
