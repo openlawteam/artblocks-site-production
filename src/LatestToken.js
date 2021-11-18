@@ -3,8 +3,8 @@ import {Image} from 'react-bootstrap';
 
 import {
   shouldShowNonInteractive,
-  tokenHighlightImage,
   renderGenerator,
+  staticRenderGenerator,
 } from './utils';
 import './Project.css';
 
@@ -46,7 +46,7 @@ class LatestToken extends Component {
           ) : (
             <Image
               style={{width: '60%'}}
-              src={tokenHighlightImage(this.state.tokenId)}
+              src={staticRenderGenerator(this.state.tokenId)}
             />
           )}
         </a>

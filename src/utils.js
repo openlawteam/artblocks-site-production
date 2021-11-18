@@ -2,7 +2,6 @@ import {
   NETWORK,
   NONINTERACTIVE,
   BASE_URL,
-  getMediaURL,
   getGeneratorUrl,
   getArtblocksContractAddresses,
 } from './config';
@@ -10,12 +9,6 @@ import namehash from 'eth-ens-namehash';
 
 function shouldShowNonInteractive(project) {
   return NONINTERACTIVE.indexOf(project) > -1;
-}
-
-function tokenHighlightImage(tokenId) {
-  const baseImageUrl = getMediaURL(NETWORK);
-
-  return baseImageUrl + tokenId + '.png';
 }
 
 function tokenDetailsUrl(token) {
@@ -118,7 +111,6 @@ async function renderGenerator(mintId) {
 
 export {
   shouldShowNonInteractive,
-  tokenHighlightImage,
   tokenDetailsUrl,
   reverseResolveEns,
   checkWhitelist,

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {tokenDetailsUrl} from './utils';
+import {liveRenderUrl, tokenDetailsUrl} from './utils';
 import {
   Card,
   Button,
@@ -103,34 +103,19 @@ class NewToken extends Component {
       </Tooltip>
     );
 
-    const viewEmbedLink = (props) => (
-      <Tooltip id="button-tooltip" {...props}>
-        Copy the below link and paste it in the URL field for embedding in
-        virtual platforms like{' '}
-        <a
-          href="https://www.cryptovoxels.com"
-          rel="noopener noreferrer"
-          target="_blank">
-          Cryptovoxels
-        </a>
-        .
-      </Tooltip>
-    );
-
-    let baseURL = this.props.baseURL;
-
-    function tokenImage(token) {
-      return baseURL + '/image/' + token;
-    }
-
-    function tokenGenerator(token) {
-      // return baseURL + token; // '/generator/' + token;
-      return `${baseURL}/${token}.png`;
-    }
-
-    function tokenVox(token) {
-      return baseURL + '/vox/' + token;
-    }
+    // const viewEmbedLink = (props) => (
+    //   <Tooltip id="button-tooltip" {...props}>
+    //     Copy the below link and paste it in the URL field for embedding in
+    //     virtual platforms like{' '}
+    //     <a
+    //       href="https://www.cryptovoxels.com"
+    //       rel="noopener noreferrer"
+    //       target="_blank">
+    //       Cryptovoxels
+    //     </a>
+    //     .
+    //   </Tooltip>
+    // );
 
     return (
       <div className="section-wrapper">
@@ -168,7 +153,7 @@ class NewToken extends Component {
                   {this.state.projectDescription[2] && (
                     <p>{this.state.projectDescription[2]}</p>
                   )}
-                  <br />
+                  {/* <br />
                   {this.state.projectScriptDetails &&
                     (this.state.projectScriptDetails[0] === 'vox' ||
                       this.state.projectScriptDetails[0] === 'megavox') && (
@@ -191,7 +176,7 @@ class NewToken extends Component {
                           </div>
                         )}
                       </div>
-                    )}
+                    )} */}
 
                   {this.state.features && this.state.features.length > 0 ? (
                     <div>
@@ -273,7 +258,7 @@ class NewToken extends Component {
                               variant="light"
                               onClick={() =>
                                 window.open(
-                                  tokenImage(this.props.token),
+                                  staticRenderGenerator(this.props.token),
                                   '_blank'
                                 )
                               }>
@@ -288,7 +273,7 @@ class NewToken extends Component {
                               variant="light"
                               onClick={() =>
                                 window.open(
-                                  tokenGenerator(this.props.token),
+                                  liveRenderUrl(this.props.token),
                                   '_blank'
                                 )
                               }>

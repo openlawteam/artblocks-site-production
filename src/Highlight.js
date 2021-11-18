@@ -9,8 +9,7 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {getMediaURL} from './config';
-import {renderGenerator} from './utils';
+import {renderGenerator, staticRenderGenerator} from './utils';
 import './ProjectGallery.css';
 
 class Highlight extends Component {
@@ -139,12 +138,6 @@ class Highlight extends Component {
       </Tooltip>
     );
 
-    let url = getMediaURL(this.props.network);
-
-    function tokenImage(token) {
-      return url + token + '.png';
-    }
-
     return (
       <div>
         {this.state.randomToken !== undefined && (
@@ -158,7 +151,7 @@ class Highlight extends Component {
                   {this.props.nonInter.includes(Number(this.props.project)) && (
                     <Image
                       style={{width: '100%'}}
-                      src={tokenImage(this.state.randomToken)}
+                      src={staticRenderGenerator(this.state.randomToken)}
                       rounded
                     />
                   )}

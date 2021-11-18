@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Card, Button, CardDeck, Row, Col} from 'react-bootstrap';
-import './ProjectGallery.css';
 import {Link} from 'react-router-dom';
-import {getMediaURL} from './config';
+import {staticRenderGenerator} from './utils';
+
+import './ProjectGallery.css';
 
 class ProjectGallery extends Component {
   constructor(props) {
@@ -96,25 +97,6 @@ class ProjectGallery extends Component {
 
     console.log('owned? ' + owned);
 
-    //let baseURL = this.props.baseURL;
-    let imageURL = getMediaURL(this.props.network);
-
-    function tokenImage(token) {
-      return imageURL + token + '.png';
-      //return baseURL+'/image/'+token;
-    }
-    /*
-      function tokenGenerator(token){
-        return baseURL+'/generator/'+token;
-      }
-      */
-
-    /*
-    if (this.state.projectURIInfo){
-      console.log('URI '+ this.state.projectURIInfo[0]);
-    }
-*/
-
     return (
       <div className="container mt-5">
         {this.state.randomToken && (
@@ -185,7 +167,7 @@ class ProjectGallery extends Component {
                       {this.state.randomToken && (
                         <Card.Img
                           variant="top"
-                          src={tokenImage(this.state.randomToken)}
+                          src={staticRenderGenerator(this.state.randomToken)}
                         />
                       )}
                       <hr />

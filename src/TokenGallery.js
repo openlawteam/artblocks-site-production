@@ -11,12 +11,7 @@ import {
   Container,
 } from 'react-bootstrap';
 
-import {
-  tokenHighlightImage,
-  // tokenGenerator,
-  staticRenderGenerator,
-  liveRenderUrl,
-} from './utils';
+import {staticRenderGenerator, liveRenderUrl} from './utils';
 import './Project.css';
 
 const TokenGallery = ({project, projectTokens = []}) => {
@@ -106,7 +101,10 @@ const TokenGallery = ({project, projectTokens = []}) => {
                           <Button
                             variant="light"
                             onClick={() =>
-                              window.open(tokenHighlightImage(token), '_blank')
+                              window.open(
+                                staticRenderGenerator(token),
+                                '_blank'
+                              )
                             }>
                             Image
                           </Button>

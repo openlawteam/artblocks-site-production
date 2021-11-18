@@ -54,21 +54,6 @@ function getOpenseaURL() {
 
 export const OPENSEA_URL = getOpenseaURL(NETWORK);
 
-export function getMediaURL(NETWORK) {
-  let mediaUrl = process.env.REACT_APP_MEDIA_URL_MAINNET;
-
-  switch (NETWORK) {
-    case 'rinkeby':
-      mediaUrl = process.env.REACT_APP_MEDIA_URL_RINKEBY;
-      break;
-    case 'ropsten':
-      mediaUrl = process.env.REACT_APP_MEDIA_URL_ROPSTEN;
-      break;
-    default:
-  }
-  return `${mediaUrl}/`;
-}
-
 export function getMediaThumbURL(NETWORK) {
   let mediaThumbUrl = process.env.REACT_APP_MEDIA_URL_MAINNET_THUMB;
 
