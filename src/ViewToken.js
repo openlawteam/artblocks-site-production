@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {Link} from 'react-router-dom';
-import {getIFrameSrcDoc /*, reverseResolveEns*/} from './utils';
+import {/*, reverseResolveEns*/ mintGenerator} from './utils';
 import {getRendererAPIUrl, getMediaURL} from './config';
 import {formatEthereumAddress} from './utils/helpers';
 // import OpenSeaImage from './assets/images/os_logo.png';
@@ -68,6 +68,8 @@ class ViewToken extends Component {
       //     throw error;
       //   });
 
+      const srcDocument = await mintGenerator(this.props.token);
+
       this.setState({
         artBlocks,
         //projectTokens,
@@ -77,6 +79,7 @@ class ViewToken extends Component {
         projectURIInfo,
         projectId,
         ownerOfToken,
+        srcDocument,
         // prettyIdentifier,
         // tokenHashes,
       });
@@ -329,9 +332,8 @@ class ViewToken extends Component {
                     ) && (
                       <div className="live-script-container">
                         <iframe
-                          // src={tokenGenerator(this.props.token)}
                           title={this.props.token}
-                          srcDoc={getIFrameSrcDoc(this.props.token)}
+                          srcDoc={this.state.srcDocument}
                         />
                       </div>
                     )}

@@ -15,7 +15,7 @@ import {
 import {Link} from 'react-router-dom';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {getRendererAPIUrl} from './config';
-import {getIFrameSrcDoc} from './utils';
+import {mintGenerator} from './utils';
 import './ProjectGallery.css';
 
 class NewToken extends Component {
@@ -60,6 +60,8 @@ class NewToken extends Component {
           });
         });
 
+      const srcDocument = await mintGenerator(this.props.token);
+
       this.setState({
         artBlocks,
         projectId,
@@ -68,6 +70,7 @@ class NewToken extends Component {
         projectTokenDetails,
         projectScriptDetails,
         projectURIInfo,
+        srcDocument,
       });
     } catch (error) {
       console.error(error);
@@ -256,8 +259,7 @@ class NewToken extends Component {
                     {this.props.token && (
                       <div className="live-script-container">
                         <iframe
-                          // src={tokenGenerator(this.props.token)}
-                          srcDoc={getIFrameSrcDoc(this.props.token)}
+                          srcDoc={this.state.srcDocument}
                           title={this.props.token}
                         />
                       </div>

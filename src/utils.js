@@ -5,6 +5,8 @@ import {
   // VALIDATOR_CONTRACT_ABI,
   getMediaURL,
   getMediaThumbURL,
+  getGeneratorUrl,
+  getArtblocksContractAddresses,
 } from './config';
 import namehash from 'eth-ens-namehash';
 
@@ -90,36 +92,24 @@ async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
   }
 }
 
-function getIFrameSrcDoc(token) {
-  const body = `<img src="${BASE_URL}/${token}.png" style="width: 100%" />`;
-  const css = `html {
-    height: 100%;
-  }
-  body {
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  canvas {
-    padding: 0;
-    margin: auto;
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-  }`;
-  const html = `<html><head><style>${css}</style></head><body>${body}</body></html>`;
+async function mintGenerator(mintId) {
+  try {
+    if (!mintId) return;
 
-  return html;
+    const mintAddress =
+      getArtblocksContractAddresses(NETWORK).coreContractAddress;
+    const ENDPOINT = `${getGeneratorUrl(NETWORK)}/${mintAddress}/${mintId}`;
+
+    return fetch(ENDPOINT)
+      .then((res) => {
+        return res.text();
+      })
+      .then((text) => {
+        return text;
+      });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export {
@@ -130,5 +120,5 @@ export {
   tokenDetailsUrl,
   reverseResolveEns,
   checkWhitelist,
-  getIFrameSrcDoc,
+  mintGenerator,
 };

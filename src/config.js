@@ -112,6 +112,19 @@ export function getFlamingoDAOUrl(NETWORK) {
   return flamingoDAOUrl;
 }
 
+export function getGeneratorUrl(NETWORK) {
+  let generatorUrl = process.env.REACT_APP_GENERATOR_URL_MAINNET;
+
+  switch (NETWORK) {
+    case 'rinkeby':
+    case 'ropsten':
+      generatorUrl = process.env.REACT_APP_GENERATOR_URL_TESTNET;
+      break;
+    default:
+  }
+  return generatorUrl;
+}
+
 export function getArtblocksContractAddresses(NETWORK) {
   // Default to mainnet contract addresses
   let contractAddresses = {

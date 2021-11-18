@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {getMediaURL} from './config';
-import {getIFrameSrcDoc} from './utils';
+import {mintGenerator} from './utils';
 import './ProjectGallery.css';
 
 class Highlight extends Component {
@@ -50,6 +50,8 @@ class Highlight extends Component {
         .projectIdToCurrencySymbol(this.props.project)
         .call();
 
+      const srcDocument = await mintGenerator(randomToken);
+
       this.setState({currency});
 
       this.setState({
@@ -61,6 +63,7 @@ class Highlight extends Component {
         projectURIInfo,
         randomToken,
         project: this.props.project,
+        srcDocument,
       });
     } catch (error) {
       console.error(error);
@@ -97,6 +100,8 @@ class Highlight extends Component {
           .call();
         this.setState({currency});
 
+        const srcDocument = await mintGenerator(randomToken);
+
         this.setState({
           projectTokens,
           projectDescription,
@@ -105,6 +110,7 @@ class Highlight extends Component {
           projectURIInfo,
           randomToken,
           project: this.props.project,
+          srcDocument,
         });
       }
     } catch (error) {
@@ -161,8 +167,7 @@ class Highlight extends Component {
                   ) && (
                     <div className="live-script-container">
                       <iframe
-                        // src={tokenGenerator(this.state.randomToken)}
-                        srcDoc={getIFrameSrcDoc(this.state.randomToken)}
+                        srcDoc={this.state.srcDocument}
                         title={this.state.randomToken}
                         allowFullScreen
                       />
