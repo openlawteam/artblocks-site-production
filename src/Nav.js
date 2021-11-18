@@ -387,7 +387,8 @@ class Navigation extends Component {
                   Control Panel
                 </Nav.Link>
               )} */}
-              {/* {this.props.tokensOfOwner && (
+
+              {this.props.tokensOfOwner && (
                 <Nav.Link
                   as={Link}
                   onClick={() => {
@@ -396,7 +397,7 @@ class Navigation extends Component {
                   to={'/user/' + this.props.account}>
                   Your Items
                 </Nav.Link>
-              )} */}
+              )}
 
               <Nav.Link href={getFlamingoDAOUrl(this.props.network)}>
                 <FlamingoDAOSVG /> Flamingo DAO

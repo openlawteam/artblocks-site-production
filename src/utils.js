@@ -2,30 +2,13 @@ import {
   NETWORK,
   NONINTERACTIVE,
   BASE_URL,
-  // VALIDATOR_CONTRACT_ABI,
-  getMediaURL,
-  getMediaThumbURL,
+  getGeneratorUrl,
+  getArtblocksContractAddresses,
 } from './config';
 import namehash from 'eth-ens-namehash';
 
-function tokenGenerator(token) {
-  return BASE_URL + '/generator/' + token;
-}
-
 function shouldShowNonInteractive(project) {
   return NONINTERACTIVE.indexOf(project) > -1;
-}
-
-function tokenHighlightImage(tokenId) {
-  const baseImageUrl = getMediaURL(NETWORK);
-
-  return baseImageUrl + tokenId + '.png';
-}
-
-function tokenThumbImage(tokenId) {
-  let baseImageUrl = getMediaThumbURL(NETWORK);
-
-  return baseImageUrl + tokenId + '.png';
 }
 
 function tokenDetailsUrl(token) {
@@ -90,45 +73,48 @@ async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
   }
 }
 
-function getIFrameSrcDoc(token) {
-  const body = `<img src="${BASE_URL}/${token}.png" style="width: 100%" />`;
-  const css = `html {
-    height: 100%;
-  }
-  body {
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  canvas {
-    padding: 0;
-    margin: auto;
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-  }`;
-  const html = `<html><head><style>${css}</style></head><body>${body}</body></html>`;
+function liveRenderUrl(tokenId) {
+  const mintAddress =
+    getArtblocksContractAddresses(NETWORK).coreContractAddress;
 
-  return html;
+  return `${getGeneratorUrl(NETWORK)}/${mintAddress}/${tokenId}`;
+}
+
+function staticRenderGenerator(tokenId) {
+  const staticUrl =
+    NETWORK === 'mainnet'
+      ? process.env.REACT_APP_GENERATOR_STATIC_URL_MAINNET
+      : process.env.REACT_APP_GENERATOR_STATIC_URL_TESTNET;
+
+  return `${staticUrl}/${tokenId}.png`;
+}
+
+async function renderGenerator(mintId) {
+  try {
+    if (!mintId) return;
+
+    const mintAddress =
+      getArtblocksContractAddresses(NETWORK).coreContractAddress;
+    const ENDPOINT = `${getGeneratorUrl(NETWORK)}/${mintAddress}/${mintId}`;
+
+    return fetch(ENDPOINT)
+      .then((res) => {
+        return res.text();
+      })
+      .then((text) => {
+        return text;
+      });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export {
-  tokenGenerator,
   shouldShowNonInteractive,
-  tokenHighlightImage,
-  tokenThumbImage,
   tokenDetailsUrl,
   reverseResolveEns,
   checkWhitelist,
-  getIFrameSrcDoc,
+  liveRenderUrl,
+  renderGenerator,
+  staticRenderGenerator,
 };

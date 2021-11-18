@@ -132,7 +132,7 @@ class UserGallery extends Component {
           .projectIdToCurrencySymbol(project)
           .call();
 
-        console.log(currency);
+        // console.log(currency);
 
         let tokens = [];
         for (let i = 0; i < this.state.tokenData.length; i++) {

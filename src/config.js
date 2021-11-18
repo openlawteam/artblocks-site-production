@@ -54,36 +54,6 @@ function getOpenseaURL() {
 
 export const OPENSEA_URL = getOpenseaURL(NETWORK);
 
-export function getRendererAPIUrl(NETWORK) {
-  let rendererUrl = process.env.REACT_APP_API_URL_MAINNET;
-
-  switch (NETWORK) {
-    case 'rinkeby':
-      rendererUrl = process.env.REACT_APP_API_URL_RINKEBY;
-      break;
-    case 'ropsten':
-      rendererUrl = process.env.REACT_APP_API_URL_ROPSTEN;
-      break;
-    default:
-  }
-  return rendererUrl;
-}
-
-export function getMediaURL(NETWORK) {
-  let mediaUrl = process.env.REACT_APP_MEDIA_URL_MAINNET;
-
-  switch (NETWORK) {
-    case 'rinkeby':
-      mediaUrl = process.env.REACT_APP_MEDIA_URL_RINKEBY;
-      break;
-    case 'ropsten':
-      mediaUrl = process.env.REACT_APP_MEDIA_URL_ROPSTEN;
-      break;
-    default:
-  }
-  return `${mediaUrl}/`;
-}
-
 export function getMediaThumbURL(NETWORK) {
   let mediaThumbUrl = process.env.REACT_APP_MEDIA_URL_MAINNET_THUMB;
 
@@ -110,6 +80,19 @@ export function getFlamingoDAOUrl(NETWORK) {
     default:
   }
   return flamingoDAOUrl;
+}
+
+export function getGeneratorUrl(NETWORK) {
+  let generatorUrl = process.env.REACT_APP_GENERATOR_URL_MAINNET;
+
+  switch (NETWORK) {
+    case 'rinkeby':
+    case 'ropsten':
+      generatorUrl = process.env.REACT_APP_GENERATOR_URL_TESTNET;
+      break;
+    default:
+  }
+  return generatorUrl;
 }
 
 export function getArtblocksContractAddresses(NETWORK) {

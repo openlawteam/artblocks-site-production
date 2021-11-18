@@ -1,37 +1,58 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Image} from 'react-bootstrap';
 
 import {
   shouldShowNonInteractive,
-  // tokenGenerator,
-  tokenHighlightImage,
-  getIFrameSrcDoc,
+  renderGenerator,
+  staticRenderGenerator,
 } from './utils';
 import './Project.css';
 
-const LatestToken = ({project, complete, random, latest}) => {
-  const tokenId = (complete ? random : latest) + project * 1000000;
-  // const tokenURL = tokenGenerator(tokenId);
+class LatestToken extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {tokenId: '', srcDocument: ''};
+  }
 
-  return (
-    <div className="text-center">
-      <a href={`/token/${tokenId}`}>
-        {!shouldShowNonInteractive(Number(project)) ? (
-          <div className="live-view-container">
-            <div className="live-script-container">
-              <iframe
-                // src={tokenURL}
-                title="Project Live View"
-                srcDoc={getIFrameSrcDoc(tokenId)}
-              />
+  async componentDidMount() {
+    try {
+      const tokenId =
+        (this.props.complete ? this.props.random : this.props.latest) +
+        this.props.project * 1000000;
+      const srcDocument = await renderGenerator(tokenId);
+
+      this.setState({
+        tokenId,
+        srcDocument,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  render() {
+    return (
+      <div className="text-center">
+        <a href={`/token/${this.state.tokenId}`}>
+          {!shouldShowNonInteractive(Number(this.props.project)) ? (
+            <div className="live-view-container">
+              <div className="live-script-container">
+                <iframe
+                  title="Project Live View"
+                  srcDoc={this.state.srcDocument}
+                />
+              </div>
             </div>
-          </div>
-        ) : (
-          <Image style={{width: '60%'}} src={tokenHighlightImage(tokenId)} />
-        )}
-      </a>
-    </div>
-  );
-};
+          ) : (
+            <Image
+              style={{width: '60%'}}
+              src={staticRenderGenerator(this.state.tokenId)}
+            />
+          )}
+        </a>
+      </div>
+    );
+  }
+}
 
 export default LatestToken;

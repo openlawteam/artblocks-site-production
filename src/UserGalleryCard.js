@@ -9,7 +9,7 @@ import {
   Container,
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {getMediaThumbURL, getRendererAPIUrl} from './config';
+import {staticRenderGenerator, liveRenderUrl} from './utils';
 
 class UserGalleryCard extends Component {
   constructor(props) {
@@ -26,8 +26,6 @@ class UserGalleryCard extends Component {
   }
 
   render() {
-    //console.log(this.props.projects[this.props.project].tokens);
-
     let active = this.state.page;
     let items = [];
     if (this.props.projects[this.props.project].tokens) {
@@ -65,37 +63,6 @@ class UserGalleryCard extends Component {
       </Container>
     );
 
-    //console.log(this.props);
-    let baseURL = this.props.baseURL;
-    let thumbURL = getMediaThumbURL(this.props.network);
-    let imgURL = getRendererAPIUrl(this.props.network);
-
-    /*
-    function tokenImage(token){
-      return imageURL+token+".png";
-    }
-    */
-
-    function tokenThumb(token) {
-      return thumbURL + token + '.png';
-    }
-
-    function tokenImage(token) {
-      return imgURL + token + '.png';
-      //return baseURL+'/image/'+token;
-    }
-
-    /*
-    function tokenThumb(token){
-      //return baseURL+'/thumb/'+token;
-    }
-    */
-
-    function tokenGenerator(token) {
-      // return baseURL + '/generator/' + token;
-      return `${baseURL}/${token}.png`;
-    }
-
     return (
       <div>
         <CardDeck>
@@ -114,7 +81,7 @@ class UserGalleryCard extends Component {
                         className="mx-auto"
                         style={{width: '16rem'}}>
                         <Card.Body>
-                          {<Card.Img src={tokenThumb(token)} />}
+                          {<Card.Img src={staticRenderGenerator(token)} />}
 
                           <div className="text-center">
                             <ButtonGroup size="sm">
@@ -138,14 +105,17 @@ class UserGalleryCard extends Component {
                               <Button
                                 variant="light"
                                 onClick={() =>
-                                  window.open(tokenImage(token), '_blank')
+                                  window.open(
+                                    staticRenderGenerator(token),
+                                    '_blank'
+                                  )
                                 }>
                                 Image
                               </Button>
                               <Button
                                 variant="light"
                                 onClick={() =>
-                                  window.open(tokenGenerator(token), '_blank')
+                                  window.open(liveRenderUrl(token), '_blank')
                                 }>
                                 Live
                               </Button>

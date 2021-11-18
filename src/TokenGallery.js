@@ -11,7 +11,7 @@ import {
   Container,
 } from 'react-bootstrap';
 
-import {tokenHighlightImage, tokenGenerator, tokenThumbImage} from './utils';
+import {staticRenderGenerator, liveRenderUrl} from './utils';
 import './Project.css';
 
 const TokenGallery = ({project, projectTokens = []}) => {
@@ -85,7 +85,7 @@ const TokenGallery = ({project, projectTokens = []}) => {
                     style={{width: '16rem'}}>
                     <Card.Body style={{padding: '0'}}>
                       <div>
-                        <GalleryImage src={tokenThumbImage(token)} />
+                        <GalleryImage src={staticRenderGenerator(token)} />
                       </div>
                       <div className="text-center">
                         <ButtonGroup size="sm">
@@ -101,14 +101,17 @@ const TokenGallery = ({project, projectTokens = []}) => {
                           <Button
                             variant="light"
                             onClick={() =>
-                              window.open(tokenHighlightImage(token), '_blank')
+                              window.open(
+                                staticRenderGenerator(token),
+                                '_blank'
+                              )
                             }>
                             Image
                           </Button>
                           <Button
                             variant="light"
                             onClick={() =>
-                              window.open(tokenGenerator(token), '_blank')
+                              window.open(liveRenderUrl(token), '_blank')
                             }>
                             Live
                           </Button>
