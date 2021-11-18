@@ -14,8 +14,8 @@ import {
 } from 'react-bootstrap';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {Link} from 'react-router-dom';
-import {/*, reverseResolveEns*/ renderGenerator} from './utils';
-import {getRendererAPIUrl, getMediaURL} from './config';
+import {/*, reverseResolveEns*/ renderGenerator, liveRenderUrl} from './utils';
+import {getMediaURL} from './config';
 import {formatEthereumAddress} from './utils/helpers';
 // import OpenSeaImage from './assets/images/os_logo.png';
 import './ProjectGallery.css';
@@ -138,19 +138,19 @@ class ViewToken extends Component {
       </Tooltip>
     );
 
-    const viewEmbedLink = (props) => (
-      <Tooltip id="button-tooltip" {...props}>
-        Copy the below link and paste it in the URL field for embedding in
-        virtual platforms like{' '}
-        <a
-          href="https://www.cryptovoxels.com"
-          rel="noopener noreferrer"
-          target="_blank">
-          Cryptovoxels
-        </a>
-        .
-      </Tooltip>
-    );
+    // const viewEmbedLink = (props) => (
+    //   <Tooltip id="button-tooltip" {...props}>
+    //     Copy the below link and paste it in the URL field for embedding in
+    //     virtual platforms like{' '}
+    //     <a
+    //       href="https://www.cryptovoxels.com"
+    //       rel="noopener noreferrer"
+    //       target="_blank">
+    //       Cryptovoxels
+    //     </a>
+    //     .
+    //   </Tooltip>
+    // );
 
     let highlightImageUrl = getMediaURL(this.props.network);
 
@@ -165,14 +165,9 @@ class ViewToken extends Component {
       return baseURL + token + '.png';
     }
 
-    function tokenGenerator(token) {
-      // return baseURL + '/generator/' + token;
-      return `${baseURL}/${token}.png`;
-    }
-
-    function tokenVox(token) {
-      return baseURL + '/vox/' + token;
-    }
+    // function tokenVox(token) {
+    //   return baseURL + '/vox/' + token;
+    // }
 
     // function tokenOSURL(token) {
     //   if (token < 3000000) {
@@ -258,10 +253,7 @@ class ViewToken extends Component {
                     </div>
                   ) : null}
 
-                  {/*
-          <p style={{"fontSize":"12px"}}>{this.state.tokenHashes && this.state.tokenHashes.length===1?"Token hash:":"Token hashes:"} {this.state.tokenHashes && this.state.tokenHashes}</p>
-          */}
-                  {this.state.projectScriptDetails &&
+                  {/* {this.state.projectScriptDetails &&
                     (this.state.projectScriptDetails[0] === 'vox' ||
                       this.state.projectScriptDetails[0] === 'megavox') && (
                       <div>
@@ -283,7 +275,7 @@ class ViewToken extends Component {
                           </div>
                         )}
                       </div>
-                    )}
+                    )} */}
                   <br />
                   <p>
                     Total Minted:{' '}
@@ -299,9 +291,7 @@ class ViewToken extends Component {
 
                   <br />
                   <TwitterShareButton
-                    url={`${getRendererAPIUrl(this.props.network)}/token/${
-                      this.state.token
-                    }`}
+                    url={`${liveRenderUrl(this.state.token)}`}
                     title={`${this.state.projectDescription.artist} | ${this.state.projectDescription.projectName}`}
                     hashtags={['genArt', 'flamingodao', 'artblocks', 'flutter']}
                     via={'FLAMINGODAO'}>
@@ -364,7 +354,7 @@ class ViewToken extends Component {
                               variant="light"
                               onClick={() =>
                                 window.open(
-                                  tokenGenerator(this.state.token),
+                                  liveRenderUrl(this.state.token),
                                   '_blank'
                                 )
                               }>

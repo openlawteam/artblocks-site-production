@@ -117,10 +117,8 @@ async function renderGenerator(mintId) {
 }
 
 export {
-  // tokenGenerator,
   shouldShowNonInteractive,
   tokenHighlightImage,
-  // tokenThumbImage,
   tokenDetailsUrl,
   reverseResolveEns,
   checkWhitelist,
