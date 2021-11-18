@@ -4,7 +4,7 @@ import {Image} from 'react-bootstrap';
 import {
   shouldShowNonInteractive,
   tokenHighlightImage,
-  mintGenerator,
+  renderGenerator,
 } from './utils';
 import './Project.css';
 
@@ -19,7 +19,7 @@ class LatestToken extends Component {
       const tokenId =
         (this.props.complete ? this.props.random : this.props.latest) +
         this.props.project * 1000000;
-      const srcDocument = await mintGenerator(tokenId);
+      const srcDocument = await renderGenerator(tokenId);
 
       this.setState({
         tokenId,

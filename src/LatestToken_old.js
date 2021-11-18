@@ -5,7 +5,7 @@ import {
   shouldShowNonInteractive,
   // tokenGenerator,
   tokenHighlightImage,
-  mintGenerator,
+  renderGenerator,
 } from './utils';
 import './Project.css';
 
@@ -13,7 +13,7 @@ const LatestToken = async ({project, complete, random, latest}) => {
   const tokenId = (complete ? random : latest) + project * 1000000;
   // const tokenURL = tokenGenerator(tokenId);
 
-  const srcDocument = mintGenerator(tokenId);
+  const srcDocument = renderGenerator(tokenId);
 
   return (
     <div className="text-center">

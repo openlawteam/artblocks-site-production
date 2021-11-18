@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {Link} from 'react-router-dom';
-import {/*, reverseResolveEns*/ mintGenerator} from './utils';
+import {/*, reverseResolveEns*/ renderGenerator} from './utils';
 import {getRendererAPIUrl, getMediaURL} from './config';
 import {formatEthereumAddress} from './utils/helpers';
 // import OpenSeaImage from './assets/images/os_logo.png';
@@ -68,7 +68,7 @@ class ViewToken extends Component {
       //     throw error;
       //   });
 
-      const srcDocument = await mintGenerator(this.props.token);
+      const srcDocument = await renderGenerator(this.props.token);
 
       this.setState({
         artBlocks,

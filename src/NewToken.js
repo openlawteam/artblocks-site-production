@@ -15,7 +15,7 @@ import {
 import {Link} from 'react-router-dom';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import {getRendererAPIUrl} from './config';
-import {mintGenerator} from './utils';
+import {renderGenerator} from './utils';
 import './ProjectGallery.css';
 
 class NewToken extends Component {
@@ -60,7 +60,7 @@ class NewToken extends Component {
           });
         });
 
-      const srcDocument = await mintGenerator(this.props.token);
+      const srcDocument = await renderGenerator(this.props.token);
 
       this.setState({
         artBlocks,

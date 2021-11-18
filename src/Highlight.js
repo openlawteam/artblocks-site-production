@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {getMediaURL} from './config';
-import {mintGenerator} from './utils';
+import {renderGenerator} from './utils';
 import './ProjectGallery.css';
 
 class Highlight extends Component {
@@ -50,7 +50,7 @@ class Highlight extends Component {
         .projectIdToCurrencySymbol(this.props.project)
         .call();
 
-      const srcDocument = await mintGenerator(randomToken);
+      const srcDocument = await renderGenerator(randomToken);
 
       this.setState({currency});
 
@@ -100,7 +100,7 @@ class Highlight extends Component {
           .call();
         this.setState({currency});
 
-        const srcDocument = await mintGenerator(randomToken);
+        const srcDocument = await renderGenerator(randomToken);
 
         this.setState({
           projectTokens,

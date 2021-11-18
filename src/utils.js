@@ -2,17 +2,11 @@ import {
   NETWORK,
   NONINTERACTIVE,
   BASE_URL,
-  // VALIDATOR_CONTRACT_ABI,
   getMediaURL,
-  getMediaThumbURL,
   getGeneratorUrl,
   getArtblocksContractAddresses,
 } from './config';
 import namehash from 'eth-ens-namehash';
-
-function tokenGenerator(token) {
-  return BASE_URL + '/generator/' + token;
-}
 
 function shouldShowNonInteractive(project) {
   return NONINTERACTIVE.indexOf(project) > -1;
@@ -20,12 +14,6 @@ function shouldShowNonInteractive(project) {
 
 function tokenHighlightImage(tokenId) {
   const baseImageUrl = getMediaURL(NETWORK);
-
-  return baseImageUrl + tokenId + '.png';
-}
-
-function tokenThumbImage(tokenId) {
-  let baseImageUrl = getMediaThumbURL(NETWORK);
 
   return baseImageUrl + tokenId + '.png';
 }
@@ -92,7 +80,23 @@ async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
   }
 }
 
-async function mintGenerator(mintId) {
+function liveRenderUrl(tokenId) {
+  const mintAddress =
+    getArtblocksContractAddresses(NETWORK).coreContractAddress;
+
+  return `${getGeneratorUrl(NETWORK)}/${mintAddress}/${tokenId}`;
+}
+
+function staticRenderGenerator(tokenId) {
+  const staticUrl =
+    NETWORK === 'mainnet'
+      ? process.env.REACT_APP_GENERATOR_STATIC_URL_MAINNET
+      : process.env.REACT_APP_GENERATOR_STATIC_URL_TESTNET;
+
+  return `${staticUrl}/${tokenId}.png`;
+}
+
+async function renderGenerator(mintId) {
   try {
     if (!mintId) return;
 
@@ -113,12 +117,14 @@ async function mintGenerator(mintId) {
 }
 
 export {
-  tokenGenerator,
+  // tokenGenerator,
   shouldShowNonInteractive,
   tokenHighlightImage,
-  tokenThumbImage,
+  // tokenThumbImage,
   tokenDetailsUrl,
   reverseResolveEns,
   checkWhitelist,
-  mintGenerator,
+  liveRenderUrl,
+  renderGenerator,
+  staticRenderGenerator,
 };
