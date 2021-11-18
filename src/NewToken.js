@@ -26,7 +26,6 @@ class NewToken extends Component {
 
   async componentDidMount() {
     try {
-      console.log('A');
       const artBlocks = this.props.artBlocks;
       const projectId = await artBlocks.methods
         .tokenIdToProjectId(this.props.token)
