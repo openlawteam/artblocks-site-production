@@ -57,3 +57,8 @@
   border-radius: 0 12px 12px 0 !important;
   border-color: #fff !important;
 }
+
+.gallery-viewer .btn-light {
+  background-color: white !important;
+  border-color: #fff !important;
+}

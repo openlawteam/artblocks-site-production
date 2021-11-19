@@ -86,7 +86,12 @@ const TokenGallery = ({project, projectTokens = []}) => {
                       <div className="gallery-card-image">
                         <GalleryImage src={staticRenderGenerator(token)} />
                       </div>
-                      <div className="text-center">
+                      <div
+                        className="text-center gallery-viewer"
+                        style={{
+                          position: 'relative',
+                          left: '-14px',
+                        }}>
                         <ButtonGroup size="sm">
                           <Button variant="light" disabled>
                             #{Number(token) - Number(project) * 1000000}
