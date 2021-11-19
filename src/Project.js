@@ -731,7 +731,7 @@ class Project extends Component {
                             <div>
                               <br />
                               <p>
-                                Please connect to wallet to enable purchases.
+                                Please connect your wallet to enable purchases.
                               </p>
                             </div>
                           )}

@@ -2,7 +2,6 @@
 
 import React, {Component} from 'react';
 import {
-  // BASE_URL,
   NETWORK,
   NONINTERACTIVE,
   CURATED,
@@ -14,10 +13,10 @@ import {
 import {checkWhitelist} from './utils';
 import Web3 from 'web3';
 import Project from './Project';
-import Highlight from './Highlight';
+// import Highlight from './Highlight';
 import NewToken from './NewToken';
 import Navigation from './Nav';
-import Intro from './Intro';
+// import Intro from './Intro';
 import ProjectGallery from './ProjectGallery';
 //import CookieConsent from "react-cookie-consent";
 //import YourTokens from './YourTokens';
@@ -27,7 +26,7 @@ import Footer from './Footer';
 // import ControlPanel from './ControlPanel';
 import UserGallery from './UserGallery';
 import ViewToken from './ViewToken';
-import {Col, Row} from 'react-bootstrap';
+// import {Col, Row} from 'react-bootstrap';
 import {Switch, Route, useParams, Redirect} from 'react-router-dom';
 
 import './App.css';
