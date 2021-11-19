@@ -637,7 +637,7 @@ class Project extends Component {
                 currentSubroute === 'latest' ||
                 (this.state.projectTokens && this.state.projectTokens.length) <
                   10
-                  ? 'align-items-center content-wrapper'
+                  ? 'align-items-center'
                   : ''
               }
               style={{marginRight: 0, marginLeft: 0}}>
