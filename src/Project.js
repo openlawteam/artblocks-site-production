@@ -620,16 +620,10 @@ class Project extends Component {
       currentSubroute = 'artist';
     }
 
-    // const userIsArtist =
-    //   this.state.projectTokenDetails &&
-    //   this.state.projectTokenDetails[0] === this.props.account;
-
     return (
       <div className="section-wrapper">
         {this.state.projectTokenDetails && (
-          /*(this.props.isWhitelisted ||
-            this.state.projectTokenDetails[0] === this.props.account ||
-            this.state.projectTokenDetails[4]) && */ <div>
+          <div className="content-wrapper">
             {this.props.network !== NETWORK && (
               <Alert variant="danger">
                 You are on the {this.props.network.toUpperCase()} Testnet

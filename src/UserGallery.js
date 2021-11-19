@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Col, Row, Image} from 'react-bootstrap';
+import {Button, Col, Row} from 'react-bootstrap';
 import TextTruncate from 'react-text-truncate';
 import {Link} from 'react-router-dom';
 import UserGalleryCard from './UserGalleryCard';
 
-import {ETHERSCAN_URL, OPENSEA_URL} from './config';
+import {ETHERSCAN_URL} from './config';
 
 class UserGallery extends Component {
   constructor(props) {

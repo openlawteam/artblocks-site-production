@@ -23,3 +23,7 @@ h3 {
 .special .btn {
   flex: 1;
 }
+
+.card-deck .col {
+  padding-right: 0;
+}

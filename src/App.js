@@ -59,7 +59,6 @@ function Proj(props) {
       artBlocks={props.artBlocks}
       mainMinter={props.mainMinter}
       network={props.network}
-      // baseURL={props.baseURL}
       isWhitelisted={props.isWhitelisted}
       minterAddress={props.minterAddress}
       nonInter={props.nonInter}
@@ -378,8 +377,6 @@ class App extends Component {
   }
 
   render() {
-    // let baseURL = BASE_URL;
-
     return (
       <>
         <header>
@@ -395,7 +392,6 @@ class App extends Component {
                 connected={this.state.connected}
                 account={this.state.account}
                 tokensOfOwner={this.state.tokensOfOwner}
-                // baseURL={baseURL}
                 isWhitelisted={this.state.isWhitelisted}
                 projectsOfArtist={this.state.projectsOfArtist}
                 curated={CURATED}
@@ -415,7 +411,6 @@ class App extends Component {
                       artBlocks={this.state.artBlocks}
                       token={this.state.currentToken}
                       handleToggleView={this.handleToggleView}
-                      // baseURL={baseURL}
                       network={NETWORK}
                     />
                   </div>
@@ -458,7 +453,6 @@ class App extends Component {
                               web3={this.state.web3}
                               artBlocks={this.state.artBlocks}
                               network={NETWORK}
-                              // baseURL={baseURL}
                             />
                           </div>
                         );
@@ -470,7 +464,6 @@ class App extends Component {
                     <ViewTok
                       artBlocks={this.state.artBlocks}
                       handleToggleView={this.handleToggleView}
-                      // baseURL={baseURL}
                       network={NETWORK}
                       nonInter={this.state.nonInter}
                       web3={this.state.web3}
@@ -490,7 +483,6 @@ class App extends Component {
                       mainMinter={this.state.mainMinter}
                       minterAddress={this.state.minterAddress}
                       network={NETWORK}
-                      // baseURL={baseURL}
                       isWhitelisted={this.state.isWhitelisted}
                       nonInter={this.state.nonInter}
                     />
@@ -519,7 +511,6 @@ class App extends Component {
                                 artBlocks={this.state.artBlocks}
                                 network={NETWORK}
                                 handleNextProject={this.handleNextProject}
-                                // baseURL={baseURL}
                                 nonInter={this.state.nonInter}
                               />
                             </Col>
@@ -536,7 +527,6 @@ class App extends Component {
                       web3={this.state.web3}
                       artBlocks={this.state.artBlocks}
                       network={NETWORK}
-                      // baseURL={baseURL}
                     />
                   )}
                 </Route>

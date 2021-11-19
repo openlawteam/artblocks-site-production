@@ -152,6 +152,14 @@ main {
   margin-bottom: 1rem;
 }
 
+.highlight-container {
+  .org-secondary-alert {
+    @include size-down-down {
+      margin-top: 1rem;
+    }
+  }
+}
+
 /* 
 - METAMASK SVG FILL STYLES - BEGIN
 */
