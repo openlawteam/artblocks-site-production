@@ -9,7 +9,7 @@ import './assets/scss/style.scss';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router basename="/artblocks-site-production">
+    <Router>
       <App />
     </Router>
   </React.StrictMode>,
