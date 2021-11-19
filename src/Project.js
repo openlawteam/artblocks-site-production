@@ -720,7 +720,7 @@ class Project extends Component {
                     {this.state.projectTokens &&
                       this.state.projectTokenDetails &&
                       !complete && (
-                        <div>
+                        <div className="project-cta">
                           {currentSubroute === 'latest' ? (
                             <div>
                               <p>Showing the latest mint.</p>

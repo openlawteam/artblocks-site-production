@@ -5,7 +5,7 @@
 }
 
 .live-script-container {
-  padding-top: 0;
+  padding-top: 50% !important;
 }
 
 .live-script-container iframe {
@@ -33,6 +33,10 @@
 .project-link {
   display: block;
   margin: 1.75rem 0;
+}
+
+.project-cta {
+  width: 80% !important;
 }
 
 .purchase-addr-container {
