@@ -2,25 +2,9 @@
 
 export const NETWORK = process.env.REACT_APP_NETWORK;
 export const NONINTERACTIVE = [];
+// Add projectId, so it's included in the curated list
 export const CURATED = [0];
 export const COMPLETE = [];
-
-function getBaseURL(NETWORK) {
-  let baseUrl = process.env.REACT_APP_URL_MAINNET;
-
-  switch (NETWORK) {
-    case 'rinkeby':
-      baseUrl = process.env.REACT_APP_URL_RINKEBY;
-      break;
-    case 'ropsten':
-      baseUrl = process.env.REACT_APP_URL_ROPSTEN;
-      break;
-    default:
-  }
-  return baseUrl;
-}
-
-export const BASE_URL = getBaseURL(NETWORK);
 
 function getEtherscanURL() {
   let etherscanUrl = 'https://www.etherscan.io';
@@ -53,21 +37,6 @@ function getOpenseaURL() {
 }
 
 export const OPENSEA_URL = getOpenseaURL(NETWORK);
-
-export function getMediaThumbURL(NETWORK) {
-  let mediaThumbUrl = process.env.REACT_APP_MEDIA_URL_MAINNET_THUMB;
-
-  switch (NETWORK) {
-    case 'rinkeby':
-      mediaThumbUrl = process.env.REACT_APP_MEDIA_URL_RINKEBY_THUMB;
-      break;
-    case 'ropsten':
-      mediaThumbUrl = process.env.REACT_APP_MEDIA_URL_ROPSTEN_THUMB;
-      break;
-    default:
-  }
-  return `${mediaThumbUrl}/`;
-}
 
 export function getFlamingoDAOUrl(NETWORK) {
   let flamingoDAOUrl = 'https://www.flamingodao.xyz';

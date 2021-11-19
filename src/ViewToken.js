@@ -11,8 +11,10 @@ import {
   Image,
   Alert,
   Container,
+  Modal,
 } from 'react-bootstrap';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
+import TextTruncate from 'react-text-truncate';
 import {Link} from 'react-router-dom';
 import {
   /*, reverseResolveEns*/ renderGenerator,
@@ -27,8 +29,14 @@ import './ProjectGallery.css';
 class ViewToken extends Component {
   constructor(props) {
     super(props);
-    this.state = {tokenURIInfo: '', token: this.props.token, embed: false};
+    this.state = {
+      tokenURIInfo: '',
+      token: this.props.token,
+      embed: false,
+      showReadMoreModal: false,
+    };
     this.handleClickEmbed = this.handleClickEmbed.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   async componentDidMount() {
@@ -97,6 +105,12 @@ class ViewToken extends Component {
     this.setState({embed: !embed});
   }
 
+  closeModal() {
+    this.setState({
+      showReadMoreModal: false,
+    });
+  }
+
   render() {
     let hyperRainbow = false;
 
@@ -148,13 +162,14 @@ class ViewToken extends Component {
           <Row>
             <Col xs={12} md={6} className="my-auto">
               {this.state.projectDescription && (
-                <div>
+                <div className="view-token">
                   <h3>
                     {this.state.projectDescription[0]} #
                     {Number(this.state.token) -
                       Number(this.state.projectId) * 1000000}
                   </h3>
                   <h3>by {this.state.projectDescription[1]}</h3>
+
                   {this.state.projectDescription[3] && (
                     <a
                       href={this.state.projectDescription[3]}
@@ -165,9 +180,32 @@ class ViewToken extends Component {
                   )}
 
                   <br />
+                  <br />
+
                   {this.state.projectDescription[2] && (
-                    <p>{this.state.projectDescription[2]}</p>
+                    // <p>{this.state.projectDescription[2]}</p>
+
+                    <TextTruncate
+                      line={4}
+                      element="span"
+                      truncateText="…"
+                      text={this.state.projectDescription[2]}
+                      textTruncateChild={
+                        <span
+                          className="readmore-ellipsis"
+                          onClick={() => {
+                            this.setState({
+                              showReadMoreModal: true,
+                            });
+                          }}>
+                          read more
+                        </span>
+                      }
+                    />
                   )}
+
+                  <br />
+                  <br />
 
                   {this.state.ownerOfToken && (
                     <div>
@@ -344,6 +382,19 @@ class ViewToken extends Component {
             </Col>
           </Row>
         </div>
+        {this.state.showReadMoreModal && (
+          <Modal show={this.state.showReadMoreModal} onHide={this.closeModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                {this.state.projectDescription[0]} by{' '}
+                {this.state.projectDescription[1]}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{height: '500px', overflowX: 'scroll'}}>
+              <p>{this.state.projectDescription[2]}</p>
+            </Modal.Body>
+          </Modal>
+        )}
       </div>
     );
   }

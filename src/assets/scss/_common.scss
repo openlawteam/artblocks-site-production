@@ -63,11 +63,11 @@ main {
 .content-wrapper {
   background-color: #fdeeee;
   border-radius: 20px;
-  padding: 3rem;
+  padding: 2rem;
   box-shadow: 0 4px 4px 0 #d3d3d3;
 
   @include size-down-down {
-    padding: 2rem 0.5rem;
+    padding: 1rem 0.5rem;
   }
 }
 
@@ -93,8 +93,9 @@ main {
 
 .org-secondary-alert {
   background-color: #ffffff;
-  border-radius: 0;
-  border: 2px solid #e08b86;
+  border-radius: 14px;
+  border: none;
+  padding: 0.5rem 1rem;
 }
 
 .spinner-border-sm {
@@ -149,6 +150,14 @@ main {
 
 .card-deck .card {
   margin-bottom: 1rem;
+}
+
+.highlight-container {
+  .org-secondary-alert {
+    @include size-down-down {
+      margin-top: 1rem;
+    }
+  }
 }
 
 /* 

@@ -139,7 +139,7 @@ class Highlight extends Component {
     );
 
     return (
-      <div>
+      <div className="highlight-container">
         {this.state.randomToken !== undefined && (
           <Row className="align-items-center">
             <Col xs={12} md={6}>

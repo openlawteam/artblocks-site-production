@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import {Button, Col, Row, Image} from 'react-bootstrap';
+import {Button, Col, Row} from 'react-bootstrap';
+import TextTruncate from 'react-text-truncate';
 import {Link} from 'react-router-dom';
 import UserGalleryCard from './UserGalleryCard';
-// import {reverseResolveEns} from './utils';
-import {ETHERSCAN_URL, OPENSEA_URL} from './config';
+
+import {ETHERSCAN_URL} from './config';
 
 class UserGallery extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {showReadMoreModal: false};
+
+    this.closeModal = this.closeModal.bind(this);
   }
 
   async componentDidMount() {
@@ -155,6 +158,12 @@ class UserGallery extends Component {
     }
   }
 
+  closeModal() {
+    this.setState({
+      showReadMoreModal: false,
+    });
+  }
+
   render() {
     return (
       <div className="section-wrapper">
@@ -171,12 +180,12 @@ class UserGallery extends Component {
               's
             </a>{' '}
             Collection{' '}
-            <a
+            {/* <a
               href={`${OPENSEA_URL}/accounts/${this.props.lookupAcct}`}
               target="_blank"
               rel="noopener noreferrer">
               <Image width="50" src="/os_logo.png" />
-            </a>
+            </a> */}
           </h5>
           <p>
             Total works purchased or minted:{' '}
@@ -192,10 +201,6 @@ class UserGallery extends Component {
                     <Col xs={12} sm={6} md={3}>
                       <div className="sticky-top">
                         <div className="text-align-center">
-                          <br />
-                          <br />
-                          <br />
-
                           <h1>
                             {this.state.projects[project].projectDescription[0]}
                           </h1>
@@ -211,6 +216,10 @@ class UserGallery extends Component {
                             rel="noopener noreferrer">
                             {this.state.projects[project].projectDescription[3]}
                           </a>
+
+                          <br />
+                          <br />
+
                           <p>
                             Total Minted:{' '}
                             {
@@ -224,11 +233,24 @@ class UserGallery extends Component {
                             }{' '}
                             max
                           </p>
+
+                          <TextTruncate
+                            line={4}
+                            element="span"
+                            truncateText="…"
+                            text={
+                              this.state.projects[project].projectDescription[2]
+                            }
+                            // textTruncateChild={
+                            //   <span className="readmore-ellipsis">
+                            //     read more
+                            //   </span>
+                            // }
+                          />
+
                           <br />
-                          <p>
-                            {this.state.projects[project].projectDescription[2]}
-                          </p>
                           <br />
+
                           <p>
                             Price per token:{' '}
                             {this.props.web3.utils.fromWei(
@@ -242,8 +264,7 @@ class UserGallery extends Component {
                           </p>
                           <br />
                           <Button
-                            // variant="dark btn-sm"
-                            className={'btn-block '}
+                            className={'btn-block'}
                             as={Link}
                             to={'/project/' + project}>
                             Visit Project
@@ -256,7 +277,6 @@ class UserGallery extends Component {
                       <UserGalleryCard
                         project={project}
                         projects={this.state.projects}
-                        baseURL={this.props.baseURL}
                         handleToggleView={this.props.handleToggleView}
                       />
 
@@ -293,6 +313,19 @@ class UserGallery extends Component {
               );
             })}
         </div>
+        {/* {this.state.showReadMoreModal && (
+          <Modal show={this.state.showReadMoreModal} onHide={this.closeModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                {this.state.projects[project].projectDescription[0]} by{' '}
+                {this.state.projects[project].projectDescription[1]}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{height: '500px', overflowX: 'scroll'}}>
+              <p>{this.state.projects[project].projectDescription[2]}</p>
+            </Modal.Body>
+          </Modal>
+        )} */}
       </div>
     );
   }

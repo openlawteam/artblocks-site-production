@@ -1,7 +1,6 @@
 import {
   NETWORK,
   NONINTERACTIVE,
-  BASE_URL,
   getGeneratorUrl,
   getArtblocksContractAddresses,
 } from './config';
@@ -9,10 +8,6 @@ import namehash from 'eth-ens-namehash';
 
 function shouldShowNonInteractive(project) {
   return NONINTERACTIVE.indexOf(project) > -1;
-}
-
-function tokenDetailsUrl(token) {
-  return `${BASE_URL}/token/${token}`;
 }
 
 // https://github.com/ChainSafe/web3.js/issues/2683#issuecomment-547348416
@@ -111,7 +106,6 @@ async function renderGenerator(mintId) {
 
 export {
   shouldShowNonInteractive,
-  tokenDetailsUrl,
   reverseResolveEns,
   checkWhitelist,
   liveRenderUrl,

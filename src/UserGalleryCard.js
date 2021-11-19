@@ -84,7 +84,7 @@ class UserGalleryCard extends Component {
                           {<Card.Img src={staticRenderGenerator(token)} />}
 
                           <div className="text-center">
-                            <ButtonGroup size="sm">
+                            <ButtonGroup size="sm" style={{left: '-16px'}}>
                               <Button variant="light" disabled>
                                 #
                                 {Number(token) -

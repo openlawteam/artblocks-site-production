@@ -10,7 +10,6 @@ import {
   Pagination,
   Container,
 } from 'react-bootstrap';
-
 import {staticRenderGenerator, liveRenderUrl} from './utils';
 import './Project.css';
 
@@ -83,8 +82,8 @@ const TokenGallery = ({project, projectTokens = []}) => {
                     border="light"
                     className="mx-auto"
                     style={{width: '16rem'}}>
-                    <Card.Body style={{padding: '0'}}>
-                      <div>
+                    <Card.Body style={{padding: '1rem'}}>
+                      <div className="gallery-card-image">
                         <GalleryImage src={staticRenderGenerator(token)} />
                       </div>
                       <div className="text-center">
@@ -156,8 +155,8 @@ const GalleryImage = ({src}) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div style={{position: 'relative', paddingTop: '100%'}}>
-      <div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
+    <div style={{position: 'relative', paddingTop: '0'}}>
+      <div className="card-container">
         <Card.Img variant="top" src={src} onLoad={() => setLoaded(true)} />
         <div
           style={{
