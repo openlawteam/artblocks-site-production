@@ -1,0 +1,14 @@
+# Settings in this file will override values set in the Netlify UI.
+# https://app.netlify.com/sites/flutter-flamingodao/settings/deploys
+
+# @note: The GH deploy workflows are not actually using context configs.
+# Building and deploying with Netlify CLI doesn't use the same concept of
+# automatic "production deploys", "branch deploys", and "deploy previews". But
+# the GH deploy workflows are set up to mimic those categories. Their production
+# builds are created with the relevant environment variables applied as if the
+# context applied. Also, they are deployed with url aliases as if the context
+# applied:
+
+# develop (push to `flamingoBlocks` branch): https://develop--flutter-flamingodao.netlify.app
+# production (push tag `v*`): https://flutter.flamingodao.xyz
+

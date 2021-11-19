@@ -1,3 +1,5 @@
+# artblocks-site-production
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Make sure and add `REACT_APP_INFURA_KEY=` to .env file
@@ -43,6 +45,18 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Netlify Deployments
+
+Deployments to production and develop environments are handled automatically via Netlify and GH actions:
+
+- `Netlify develop deployment`: push to `flamingoBlocks` branch -> https://develop--flutter-flamingodao.netlify.app
+
+- `Netlify production deployment`: push `v*` tag (will presumably be part of a release) -> https://flutter.flamingodao.xyz
+
+_Note for this deployment implementation with a single default branch (`flamingoBlocks`) to work, the Netlify automatic builds/deploys are stopped (you'll see evidence of that in the [Netlify project UI](https://app.netlify.com/sites/flutter-flamingodao/overview)). They are handled through the GH actions and Netlify CLI. See @note in `netlify.toml` for more info._
+
+For production deployments, simply run `npm run release` and follow the interactive UI in your console. The release script runs [np](https://github.com/sindresorhus/np). We have initially configured `np` (in `package.json`) to automatically handle only versioning, release drafts, and git tagging. We can enable additional features as needed, such as publishing to npm.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
@@ -72,4 +86,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# artblocks-site
