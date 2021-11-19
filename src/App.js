@@ -28,7 +28,7 @@ import Footer from './Footer';
 import UserGallery from './UserGallery';
 import ViewToken from './ViewToken';
 import {Col, Row} from 'react-bootstrap';
-import {Switch, Route, useParams} from 'react-router-dom';
+import {Switch, Route, useParams, Redirect} from 'react-router-dom';
 
 import './App.css';
 
@@ -489,7 +489,15 @@ class App extends Component {
                   )}
                 </Route>
 
-                <Route exact path="/">
+                <Route
+                  exact
+                  path="/"
+                  render={() => (
+                    <Redirect to={`/project/${this.state.currentProject}`} />
+                  )}
+                />
+
+                {/* <Route exact path="/">
                   {this.state.allProjects && (
                     <div className="section-wrapper">
                       <div className="container-fluid mt-5 content-wrapper">
@@ -519,7 +527,8 @@ class App extends Component {
                       </div>
                     </div>
                   )}
-                </Route>
+                </Route> */}
+
                 <Route path="/user/:address">
                   {this.state.allProjects && (
                     <UserGal

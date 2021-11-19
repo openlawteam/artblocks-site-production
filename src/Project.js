@@ -628,7 +628,7 @@ class Project extends Component {
               <Alert variant="danger">
                 You are on the {this.props.network.toUpperCase()} Testnet
                 version of the Flutter Art Blocks platform. Make sure your
-                Metamask wallet is set to {NETWORK.toUpperCase()}
+                wallet is set to {NETWORK.toUpperCase()}
                 before confirming any transactions.
               </Alert>
             )}
@@ -731,7 +731,7 @@ class Project extends Component {
                             <div>
                               <br />
                               <p>
-                                Please connect to MetaMask to enable purchases.
+                                Please connect to wallet to enable purchases.
                               </p>
                             </div>
                           )}

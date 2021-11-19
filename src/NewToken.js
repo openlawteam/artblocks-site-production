@@ -140,7 +140,7 @@ class NewToken extends Component {
 
     return (
       <div className="section-wrapper">
-        <div className="content-wrapper">
+        <div className="content-wrapper purchase-container">
           <button
             type="button"
             onClick={() => this.props.handleToggleView('off')}
@@ -151,6 +151,28 @@ class NewToken extends Component {
           <Row>
             <Col xs={12} md={6} className="my-auto">
               <h1>Purchase complete!</h1>
+
+              {!this.state.projectDescription && (
+                <div
+                  style={{
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    opacity: 1,
+                    transition: 'opacity 1s',
+                  }}>
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              )}
+
               {this.state.projectDescription && (
                 <div className="purchase-complete">
                   <h3>

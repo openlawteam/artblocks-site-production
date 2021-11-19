@@ -5,7 +5,7 @@ import {Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './Nav.css';
 
-import {MetaMaskSVG, WalletSVG, FlamingoDAOSVG} from './assets/svg';
+import {MetaMaskSVG, WalletSVG} from './assets/svg';
 
 import {formatEthereumAddress} from './utils/helpers';
 import {getFlamingoDAOUrl} from './config';
@@ -400,7 +400,7 @@ class Navigation extends Component {
               )}
 
               <Nav.Link href={getFlamingoDAOUrl(this.props.network)}>
-                <FlamingoDAOSVG /> Flamingo DAO
+                Flamingo DAO
               </Nav.Link>
             </Nav>
 
@@ -432,7 +432,7 @@ class Navigation extends Component {
                 onClick={this.props.handleConnectToMetamask}
                 href="#"
                 className="org-get-connected-btn">
-                Connect to Metamask <WalletSVG />
+                Connect <WalletSVG />
               </Nav.Link>
             )}
             {this.props.account && (

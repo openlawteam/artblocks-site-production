@@ -16,6 +16,14 @@ h3 {
   margin-top: 2rem;
 }
 
+.purchase-container h1 {
+  font-size: 1.75rem;
+}
+
+.purchase-container h3 {
+  font-size: 1rem;
+}
+
 .btn-group.special {
   display: flex;
 }
