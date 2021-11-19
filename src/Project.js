@@ -989,8 +989,9 @@ class Project extends Component {
                 </Modal.Header>
                 <Modal.Body>
                   <p>
-                    Participating in a live Art Blocks drop is for experts only.
-                    By submitting a transaction you acknowledge the following:
+                    Participating in a live Flamingo Flutter drop is for experts
+                    only. By submitting a transaction you acknowledge the
+                    following:
                   </p>
                   <ol>
                     <li>You are competing with others.</li>
