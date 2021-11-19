@@ -1,5 +1,55 @@
 .live-view-container {
   position: relative;
-  width: 60%;
+  width: 100%;
   margin: auto;
+}
+
+.live-script-container {
+  padding-top: 0;
+}
+
+.live-script-container iframe {
+  position: relative;
+}
+
+.project-description,
+.project-info {
+  margin-bottom: 3rem;
+}
+
+.project-description p,
+.project-info p {
+  margin-bottom: 0.5rem;
+}
+
+.project-description h1 {
+  font-size: 2rem;
+}
+
+.project-description h3 {
+  font-size: 1rem;
+}
+
+.project-link {
+  display: block;
+  margin: 1.75rem 0;
+}
+
+.purchase-addr-container {
+  margin-top: 1rem;
+}
+
+.purchase-addr-container input {
+  border-radius: 12px;
+  border-color: #fff;
+}
+
+.purchase-addr-container .input-group-text {
+  border-radius: 12px 0 0 12px !important;
+  border-color: #fff !important;
+}
+
+.input-group > .form-control:not(:first-child) {
+  border-radius: 0 12px 12px 0 !important;
+  border-color: #fff !important;
 }

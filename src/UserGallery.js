@@ -256,7 +256,7 @@ class UserGallery extends Component {
                       <UserGalleryCard
                         project={project}
                         projects={this.state.projects}
-                        baseURL={this.props.baseURL}
+                        // baseURL={this.props.baseURL}
                         handleToggleView={this.props.handleToggleView}
                       />
 

@@ -69,12 +69,12 @@ class Navigation extends Component {
             }}
             to="/">
             <div className="flamingo-container">
-              <span className="flamingo-logo">Flamingo</span>{' '}
-              <span className="flutter-logo">🦋 Flutter</span>
+              <span className="flamingo-logo">Flamingo Flutter</span>
+              {/* <span className="flutter-logo">🦋 Flutter</span> */}
             </div>
             <div className="artblocks-container">
               <span className="artblocks-logo">
-                an <span>Art Blocks</span> collaboration
+                an <span>ArtBlocks</span> collaboration
               </span>
             </div>
           </Navbar.Brand>

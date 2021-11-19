@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {
-  BASE_URL,
+  // BASE_URL,
   NETWORK,
   NONINTERACTIVE,
   CURATED,
@@ -22,8 +22,8 @@ import ProjectGallery from './ProjectGallery';
 //import CookieConsent from "react-cookie-consent";
 //import YourTokens from './YourTokens';
 import Footer from './Footer';
-import Learn from './Learn';
-import Sustainability from './Sustainability';
+// import Learn from './Learn';
+// import Sustainability from './Sustainability';
 // import ControlPanel from './ControlPanel';
 import UserGallery from './UserGallery';
 import ViewToken from './ViewToken';
@@ -40,7 +40,7 @@ function UserGal(props) {
       web3={props.web3}
       artBlocks={props.artBlocks}
       network={props.network}
-      baseURL={props.baseURL}
+      // baseURL={props.baseURL}
       lookupAcct={address}
     />
   );
@@ -59,7 +59,7 @@ function Proj(props) {
       artBlocks={props.artBlocks}
       mainMinter={props.mainMinter}
       network={props.network}
-      baseURL={props.baseURL}
+      // baseURL={props.baseURL}
       isWhitelisted={props.isWhitelisted}
       minterAddress={props.minterAddress}
       nonInter={props.nonInter}
@@ -74,7 +74,7 @@ function ViewTok(props) {
       token={tokenId}
       artBlocks={props.artBlocks}
       handleToggleView={props.handleToggleView}
-      baseURL={props.baseURL}
+      // baseURL={props.baseURL}
       network={props.network}
       nonInter={props.nonInter}
       web3={props.web3}
@@ -378,7 +378,7 @@ class App extends Component {
   }
 
   render() {
-    let baseURL = BASE_URL;
+    // let baseURL = BASE_URL;
 
     return (
       <>
@@ -395,7 +395,7 @@ class App extends Component {
                 connected={this.state.connected}
                 account={this.state.account}
                 tokensOfOwner={this.state.tokensOfOwner}
-                baseURL={baseURL}
+                // baseURL={baseURL}
                 isWhitelisted={this.state.isWhitelisted}
                 projectsOfArtist={this.state.projectsOfArtist}
                 curated={CURATED}
@@ -415,7 +415,7 @@ class App extends Component {
                       artBlocks={this.state.artBlocks}
                       token={this.state.currentToken}
                       handleToggleView={this.handleToggleView}
-                      baseURL={baseURL}
+                      // baseURL={baseURL}
                       network={NETWORK}
                     />
                   </div>
@@ -458,7 +458,7 @@ class App extends Component {
                               web3={this.state.web3}
                               artBlocks={this.state.artBlocks}
                               network={NETWORK}
-                              baseURL={baseURL}
+                              // baseURL={baseURL}
                             />
                           </div>
                         );
@@ -470,7 +470,7 @@ class App extends Component {
                     <ViewTok
                       artBlocks={this.state.artBlocks}
                       handleToggleView={this.handleToggleView}
-                      baseURL={baseURL}
+                      // baseURL={baseURL}
                       network={NETWORK}
                       nonInter={this.state.nonInter}
                       web3={this.state.web3}
@@ -490,7 +490,7 @@ class App extends Component {
                       mainMinter={this.state.mainMinter}
                       minterAddress={this.state.minterAddress}
                       network={NETWORK}
-                      baseURL={baseURL}
+                      // baseURL={baseURL}
                       isWhitelisted={this.state.isWhitelisted}
                       nonInter={this.state.nonInter}
                     />
@@ -519,7 +519,7 @@ class App extends Component {
                                 artBlocks={this.state.artBlocks}
                                 network={NETWORK}
                                 handleNextProject={this.handleNextProject}
-                                baseURL={baseURL}
+                                // baseURL={baseURL}
                                 nonInter={this.state.nonInter}
                               />
                             </Col>
@@ -536,17 +536,17 @@ class App extends Component {
                       web3={this.state.web3}
                       artBlocks={this.state.artBlocks}
                       network={NETWORK}
-                      baseURL={baseURL}
+                      // baseURL={baseURL}
                     />
                   )}
                 </Route>
 
-                <Route exact path="/learn">
+                {/* <Route exact path="/learn">
                   <Learn baseURL={baseURL} />
                 </Route>
                 <Route exact path="/sustainability">
                   <Sustainability baseURL={baseURL} />
-                </Route>
+                </Route> */}
               </Switch>
             )}
 

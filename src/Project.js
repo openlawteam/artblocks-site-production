@@ -414,108 +414,6 @@ class Project extends Component {
     });
   }
 
-  // getOSLink() {
-  //   if (this.props.project === 'rinkeby') {
-  //     return 'https://opensea.io/assets/art-blocks';
-  //   } else {
-  //     if (this.props.project && this.props.project === '0') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Chromie%20Squiggle&search[stringTraits][0][values][0]=All%20Chromie%20Squiggles';
-  //     } else if (this.props.project && this.props.project === '1') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Genesis&search[stringTraits][0][values][0]=All%20Genesis';
-  //     } else if (this.props.project && this.props.project === '2') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Construction%20Token&search[stringTraits][0][values][0]=All%20Construction%20Tokens';
-  //     } else if (this.props.project && this.props.project === '3') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Cryptoblots&search[stringTraits][0][values][0]=All%20Cryptoblots';
-  //     } else if (this.props.project && this.props.project === '4') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Dynamic%20Slices&search[stringTraits][0][values][0]=All%20Dynamic%20Slices';
-  //     } else if (this.props.project && this.props.project === '5') {
-  //       return 'https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Variant%20Plan&search[stringTraits][0][values][0]=All%20Variant%20Plans';
-  //     } else if (this.props.project && this.props.project === '6') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=View%20Card&search[stringTraits][0][values][0]=All%20View%20Cards';
-  //     } else if (this.props.project && this.props.project === '7') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Elevated%20Deconstructions&search[stringTraits][0][values][0]=All%20Elevated%20Deconstructions';
-  //     } else if (this.props.project && this.props.project === '8') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Singularity&search[stringTraits][0][values][0]=All%20Singularitys';
-  //     } else if (this.props.project && this.props.project === '9') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ignition&search[stringTraits][0][values][0]=All%20Ignitions';
-  //     } else if (this.props.project && this.props.project === '10') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=NimBuds&search[stringTraits][0][values][0]=All%20NimBuds';
-  //     } else if (this.props.project && this.props.project === '11') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=HyperHash&search[stringTraits][0][values][0]=All%20HyperHashs';
-  //     } else if (this.props.project && this.props.project === '12') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Unigrids&search[stringTraits][0][values][0]=All%20Unigrids';
-  //     } else if (this.props.project && this.props.project === '13') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Ringers&search[stringTraits][0][values][0]=All%20Ringers';
-  //     } else if (this.props.project && this.props.project === '14') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Cyber%20Cities&search[stringTraits][0][values][0]=All%20Cyber%20Cities';
-  //     } else if (this.props.project && this.props.project === '15') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Utopia&search[stringTraits][0][values][0]=All%20Utopias';
-  //     } else if (this.props.project && this.props.project === '16') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Color%20Study&search[stringTraits][0][values][0]=All%20Color%20Studys';
-  //     } else if (this.props.project && this.props.project === '17') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Spectron&search[stringTraits][0][values][0]=All%20Spectrons';
-  //     } else if (this.props.project && this.props.project === '18') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Gen%202&search[stringTraits][0][values][0]=All%20Gen%202s';
-  //     } else if (this.props.project && this.props.project === '19') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=R3sonance&search[stringTraits][0][values][0]=All%20R3sonances';
-  //     } else if (this.props.project && this.props.project === '20') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Sentience&search[stringTraits][0][values][0]=All%20Sentiences';
-  //     } else if (this.props.project && this.props.project === '21') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=27-Bit%20Digital&search[stringTraits][0][values][0]=All%2027-Bit%20Digitals';
-  //     } else if (this.props.project && this.props.project === '22') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=The%20Eternal%20Pump&search[stringTraits][0][values][0]=All%20The%20Eternal%20Pumps';
-  //     } else if (this.props.project && this.props.project === '23') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Archetype&search[stringTraits][0][values][0]=All%20Archetypes';
-  //     } else if (this.props.project && this.props.project === '24') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Pixel%20Glass&search[stringTraits][0][values][0]=All%20Pixel%20Glass';
-  //     } else if (this.props.project && this.props.project === '25') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Pathfinders&search[stringTraits][0][values][0]=All%20Pathfinders';
-  //     } else if (this.props.project && this.props.project === '26') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=EnergySculpture&search[stringTraits][0][values][0]=All%20EnergySculptures';
-  //     } else if (this.props.project && this.props.project === '27') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=720%20Minutes&search[stringTraits][0][values][0]=All%20720%20Minutes';
-  //     } else if (this.props.project && this.props.project === '28') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Apparitions&search[stringTraits][0][values][0]=All%20Apparitions';
-  //     } else if (this.props.project && this.props.project === '29') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Inspirals&search[stringTraits][0][values][0]=All%20Inspirals';
-  //     } else if (this.props.project && this.props.project === '30') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Hieroglyphs&search[stringTraits][0][values][0]=All%20Hieroglyphs';
-  //     } else if (this.props.project && this.props.project === '31') {
-  //       return 'https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Galaxiss&search[stringTraits][0][values][0]=All%20Galaxiss';
-  //     } else if (this.props.project && this.props.project === '32') {
-  //       return 'https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Light%20Beams&search[stringTraits][0][values][0]=All%20Light%20Beams';
-  //     } else if (this.props.project && this.props.project === '33') {
-  //       return 'https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Empyreans&search[stringTraits][0][values][0]=All%20Empyreans';
-  //     } else if (this.props.project && this.props.project === '34') {
-  //       return 'https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Ensōs&search[stringTraits][0][values][0]=All%20Ensōs';
-  //     } else if (this.props.project && this.props.project === '35') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Aerial%20View&search[stringTraits][0][values][0]=All%20Aerial%20Views';
-  //     } else if (this.props.project && this.props.project === '36') {
-  //       return 'https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=Gazettes&search[stringTraits][0][values][0]=All%20Gazettes';
-  //     } else if (this.props.project && this.props.project === '37') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Paper%20Armada&search[stringTraits][0][values][0]=All%20Paper%20Armadas';
-  //     } else if (this.props.project && this.props.project === '38') {
-  //       return 'https://opensea.io/assets/art-blocks-factory?search[stringTraits][0][name]=ByteBeats&search[stringTraits][0][values][0]=All%20ByteBeats';
-  //     } else if (this.props.project && this.props.project === '39') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Synapses&search[stringTraits][0][values][0]=All%20Synapses';
-  //     } else if (this.props.project && this.props.project === '40') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Algobots&search[stringTraits][0][values][0]=All%20Algobots';
-  //     } else if (this.props.project && this.props.project === '41') {
-  //       return 'https://opensea.io/assets/art-blocks?search[stringTraits][0][name]=Elementals&search[stringTraits][0][values][0]=All%20Elementals';
-  //     } else if (this.props.project && this.props.project === '42') {
-  //       return 'https://opensea.io/assets/art-blocks-playground?search[stringTraits][0][name]=Void&search[stringTraits][0][values][0]=All%20Voids';
-  //     } else if (this.props.project && this.props.project === '46') {
-  //       return 'https://opensea.io/assets/art-blocks-factory?search[resultModel]=ASSETS&search[stringTraits][0][name]=70s%20Pop%20Series%20One&search[stringTraits][0][values][0]=All%2070s%20Pop%20Series%20Ones';
-  //     } else {
-  //       return 'https://opensea.io/assets/art-blocks';
-  //     }
-  //   }
-  // }
-
-  // handleToggleArtistInterface() {
-  //   this.setState({artistInterface: !this.state.artistInterface});
-  // }
-
   handlePurchaseToAddressChange(event) {
     this.setState({purchaseToAddress: event.target.value});
   }
@@ -749,63 +647,60 @@ class Project extends Component {
                   : ''
               }
               style={{marginRight: 0, marginLeft: 0}}>
-              <Col xs={12} sm={6} md={3}>
+              <Col xs={12} sm={6} md={4}>
                 <div className="">
                   <div className="text-align-center">
                     {this.state.projectDescription && (
-                      <div>
-                        <h1>{this.state.projectDescription[0]}</h1>
-                        <h3>by {this.state.projectDescription[1]}</h3>
-                        <a
-                          href={
-                            this.state.projectDescription[3] &&
-                            this.state.projectDescription[3]
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer">
-                          {this.state.projectDescription[3] &&
-                            this.state.projectDescription[3]}
-                        </a>
-
-                        <p>
-                          <TextTruncate
-                            line={8}
-                            element="span"
-                            truncateText="…"
-                            text={this.state.projectDescription[2]}
-                            textTruncateChild={
-                              <span className="readmore-ellipsis">
-                                read more
-                              </span>
+                      <>
+                        <div className="project-description">
+                          <h1>{this.state.projectDescription[0]}</h1>
+                          <h3>by {this.state.projectDescription[1]}</h3>
+                          <a
+                            className="project-link"
+                            href={
+                              this.state.projectDescription[3] &&
+                              this.state.projectDescription[3]
                             }
-                          />
-                        </p>
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            {this.state.projectDescription[3] &&
+                              this.state.projectDescription[3]}
+                          </a>
 
-                        <p>
-                          Total Minted:{' '}
-                          {this.state.projectTokenDetails &&
-                            this.state.projectTokenDetails[2]}{' '}
-                          /{' '}
-                          {this.state.projectTokenDetails &&
-                            this.state.projectTokenDetails[3]}{' '}
-                          max
-                        </p>
-                        <p>
-                          License:{' '}
-                          {this.state.projectDescription &&
-                            this.state.projectDescription[4]}
-                        </p>
-                        <p>
-                          Script:{' '}
-                          {this.state.scriptJSON && this.state.scriptJSON.type}
-                        </p>
-                      </div>
-                    )}
-
-                    {this.state.projectTokens &&
-                      this.state.projectTokenDetails &&
-                      !complete && (
-                        <div>
+                          <p>
+                            <TextTruncate
+                              line={4}
+                              element="span"
+                              truncateText="…"
+                              text={this.state.projectDescription[2]}
+                              textTruncateChild={
+                                <span className="readmore-ellipsis">
+                                  read more
+                                </span>
+                              }
+                            />
+                          </p>
+                        </div>
+                        <div className="project-info">
+                          <p>
+                            Total Minted:{' '}
+                            {this.state.projectTokenDetails &&
+                              this.state.projectTokenDetails[2]}{' '}
+                            /{' '}
+                            {this.state.projectTokenDetails &&
+                              this.state.projectTokenDetails[3]}{' '}
+                            max
+                          </p>
+                          <p>
+                            License:{' '}
+                            {this.state.projectDescription &&
+                              this.state.projectDescription[4]}
+                          </p>
+                          <p>
+                            Script:{' '}
+                            {this.state.scriptJSON &&
+                              this.state.scriptJSON.type}
+                          </p>
                           <p>
                             Price per token:{' '}
                             {this.state.projectTokenDetails &&
@@ -818,21 +713,23 @@ class Project extends Component {
                               ? 'Ξ'
                               : ' ' + this.state.currency}
                           </p>
+                        </div>
+                      </>
+                    )}
 
+                    {this.state.projectTokens &&
+                      this.state.projectTokenDetails &&
+                      !complete && (
+                        <div>
                           {currentSubroute === 'latest' ? (
                             <div>
-                              <Alert
-                                style={{width: '100%'}}
-                                className="org-secondary-alert"
-                                variant="secondary">
-                                <p>Showing the latest mint.</p>
-                                <Button
-                                  className="btn btn-secondary"
-                                  to={this.props.match.url + '/gallery'}
-                                  as={Link}>
-                                  View All
-                                </Button>
-                              </Alert>
+                              <p>Showing the latest mint.</p>
+                              <Button
+                                className="btn btn-secondary"
+                                to={this.props.match.url + '/gallery'}
+                                as={Link}>
+                                View All
+                              </Button>
                             </div>
                           ) : null}
 
@@ -1048,7 +945,7 @@ class Project extends Component {
                 </div>
               </Col>
               {/* Right Section */}
-              <Col xs={12} sm={6} md={9} className="">
+              <Col xs={12} sm={6} md={8} className="">
                 <Switch>
                   <Route exact path={this.props.match.path + '/'}>
                     <LatestToken
