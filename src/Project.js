@@ -26,6 +26,7 @@ import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
 // import ArtistInterface from './ArtistInterface';
 import './Project.css';
+
 class Project extends Component {
   constructor(props) {
     super(props);
@@ -137,7 +138,6 @@ class Project extends Component {
           ? Math.floor(Math.random() * projectTokens.length)
           : 0,
       });
-      //setInterval(this.updateProjectTokenDetails,5000);
 
       // Add event listener to read more button link
       let readMore = document.querySelector('.readmore-ellipsis');

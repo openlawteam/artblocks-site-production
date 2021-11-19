@@ -11,17 +11,26 @@ import {
   OverlayTrigger,
   Alert,
   Container,
+  Modal,
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
+import TextTruncate from 'react-text-truncate';
 import {renderGenerator, staticRenderGenerator} from './utils';
+
 import './ProjectGallery.css';
 
 class NewToken extends Component {
   constructor(props) {
     super(props);
-    this.state = {tokenURIInfo: '', token: this.props.token, embed: false};
+    this.state = {
+      tokenURIInfo: '',
+      token: this.props.token,
+      embed: false,
+      showReadMoreModal: false,
+    };
     this.handleClickEmbed = this.handleClickEmbed.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   async componentDidMount() {
@@ -87,6 +96,12 @@ class NewToken extends Component {
     this.setState({embed: !embed});
   }
 
+  closeModal() {
+    this.setState({
+      showReadMoreModal: false,
+    });
+  }
+
   render() {
     const viewImageToolTip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
@@ -137,7 +152,7 @@ class NewToken extends Component {
             <Col xs={12} md={6} className="my-auto">
               <h1>Purchase complete!</h1>
               {this.state.projectDescription && (
-                <div>
+                <div className="purchase-complete">
                   <h3>
                     You just minted {this.state.projectDescription[0]} #
                     {Number(this.props.token) -
@@ -147,18 +162,36 @@ class NewToken extends Component {
                   <h3>by {this.state.projectDescription[1]}</h3>
                   {this.state.projectDescription[3] && (
                     <a
+                      className="project-link"
                       href={this.state.projectDescription[3]}
                       target="_blank"
                       rel="noopener noreferrer">
                       {this.state.projectDescription[3]}
                     </a>
                   )}
-                  <br />
-                  <br />
 
                   {this.state.projectDescription[2] && (
-                    <p>{this.state.projectDescription[2]}</p>
+                    <>
+                      <TextTruncate
+                        line={4}
+                        element="span"
+                        truncateText="…"
+                        text={this.state.projectDescription[2]}
+                        textTruncateChild={
+                          <span
+                            className="readmore-ellipsis"
+                            onClick={() => {
+                              this.setState({
+                                showReadMoreModal: true,
+                              });
+                            }}>
+                            read more
+                          </span>
+                        }
+                      />
+                    </>
                   )}
+
                   {/* <br />
                   {this.state.projectScriptDetails &&
                     (this.state.projectScriptDetails[0] === 'vox' ||
@@ -207,14 +240,12 @@ class NewToken extends Component {
                       </Alert>
                     </div>
                   ) : null}
-                  {/*
-          <p style={{"fontSize":"12px"}}>{this.state.tokenHashes && this.state.tokenHashes.length===1?"Token hash:":"Token hashes:"} {this.state.tokenHashes && this.state.tokenHashes}</p>
-          */}
+
                   <br />
-                  <p>
+                  <p className="total-minted">
                     Total Minted:{' '}
-                    {this.state.projectTokens &&
-                      this.state.projectTokens.length}{' '}
+                    {this.state.projectTokenDetails &&
+                      this.state.projectTokenDetails.invocations}{' '}
                     out of a maximum of{' '}
                     {this.state.projectTokenDetails &&
                       this.state.projectTokenDetails[3]}
@@ -309,6 +340,20 @@ class NewToken extends Component {
             </Col>
           </Row>
         </div>
+
+        {this.state.showReadMoreModal && (
+          <Modal show={this.state.showReadMoreModal} onHide={this.closeModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                {this.state.projectDescription[0]} by{' '}
+                {this.state.projectDescription[1]}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{height: '500px', overflowX: 'scroll'}}>
+              <p>{this.state.projectDescription[2]}</p>
+            </Modal.Body>
+          </Modal>
+        )}
       </div>
     );
   }

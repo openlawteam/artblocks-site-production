@@ -1,7 +1,25 @@
+h1 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+.view-token h3 {
+  font-size: 1.5rem;
+}
+
+.purchase-complete,
+.project-link,
+.total-minted {
+  margin-top: 2rem;
+}
+
 .btn-group.special {
   display: flex;
 }
 
 .special .btn {
-  flex: 1
+  flex: 1;
 }
