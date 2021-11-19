@@ -4,6 +4,27 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Make sure and add `REACT_APP_INFURA_KEY=` to .env file
 
+Example, `.env`:
+
+```
+REACT_APP_NETWORK=ropsten
+
+REACT_APP_BLOCK_DELAY_INTERVAL=3
+REACT_APP_INFURA_KEY=...
+
+REACT_APP_GENERATOR_URL_TESTNET=https://generator-staging.artblocks.io
+REACT_APP_GENERATOR_STATIC_URL_TESTNET=https://flamingo-flutter-staging.s3.amazonaws.com
+
+REACT_APP_GENERATOR_URL_MAINNET=...
+REACT_APP_GENERATOR_STATIC_URL_MAINNET=...
+```
+
+Add the curated project id to the `CURATED` array in `./src/config.js`:
+
+```
+export const CURATED = [0, ...];
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

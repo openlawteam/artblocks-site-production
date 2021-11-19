@@ -2,7 +2,7 @@
 
 export const NETWORK = process.env.REACT_APP_NETWORK;
 export const NONINTERACTIVE = [];
-// Add projectId to be inst
+// Add projectId, so it's included in the curated list
 export const CURATED = [0];
 export const COMPLETE = [];
 
