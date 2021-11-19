@@ -1,8 +1,11 @@
 {
-  "name": "Artblocks-Site",
-  "version": "0.1.0",
+  "name": "artblocks-site-production",
+  "version": "0.0.1",
   "private": true,
-  "homepage": "https://openlawteam.github.io/artblocks-site-production",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openlawteam/artblocks-site-production.git"
+  },
   "dependencies": {
     "bootstrap": "^4.3.1",
     "eth-ens-namehash": "^2.0.8",
@@ -31,7 +34,8 @@
     "build:dev": "dotenv -e .env.development react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postbuild": "rimraf build/**/*.map"
+    "postbuild": "rimraf build/**/*.map",
+    "release": "np"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,6 +48,7 @@
   ],
   "devDependencies": {
     "dotenv-cli": "^4.0.0",
+    "np": "^7.5.0",
     "prettier": "^2.3.0"
   },
   "prettier": {
@@ -60,5 +65,11 @@
         }
       }
     ]
+  },
+  "np": {
+    "branch": "flamingoBlocks",
+    "yolo": true,
+    "yarn": false,
+    "publish": false
   }
 }

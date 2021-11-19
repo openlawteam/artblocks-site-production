@@ -1,0 +1,65 @@
+name: Netlify develop deployment
+
+on:
+  push:
+    branches:
+      - flamingoBlocks
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules_deploy-dev-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Create production build
+        env:
+          REACT_APP_NETWORK: ropsten
+          REACT_APP_INFURA_KEY: ${{ secrets.REACT_APP_INFURA_KEY }}
+          REACT_APP_URL_MAINNET: ${{ secrets.REACT_APP_URL_MAINNET }}
+          REACT_APP_URL_RINKEBY: ${{ secrets.REACT_APP_URL_RINKEBY }}
+          REACT_APP_URL_ROPSTEN: ${{ secrets.REACT_APP_URL_ROPSTEN}}
+          REACT_APP_API_URL_MAINNET: ${{ secrets.REACT_APP_API_URL_MAINNET }}
+          REACT_APP_API_URL_RINKEBY: ${{ secrets.REACT_APP_API_URL_RINKEBY }}
+          REACT_APP_API_URL_ROPSTEN: ${{ secrets.REACT_APP_API_URL_ROPSTEN }}
+          REACT_APP_MEDIA_URL_MAINNET: ${{ secrets.REACT_APP_MEDIA_URL_MAINNET }}
+          REACT_APP_MEDIA_URL_RINKEBY: ${{ secrets.REACT_APP_MEDIA_URL_RINKEBY }}
+          REACT_APP_MEDIA_URL_ROPSTEN: ${{ secrets.REACT_APP_MEDIA_URL_ROPSTEN }}
+          REACT_APP_MEDIA_URL_MAINNET_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_MAINNET_THUMB }}
+          REACT_APP_MEDIA_URL_RINKEBY_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_RINKEBY_THUMB }}
+          REACT_APP_MEDIA_URL_ROPSTEN_THUMB: ${{ secrets.REACT_APP_MEDIA_URL_ROPSTEN_THUMB }}
+          REACT_APP_BLOCK_DELAY_INTERVAL: ${{ secrets.REACT_APP_BLOCK_DELAY_INTERVAL }}
+          REACT_APP_GENERATOR_URL_MAINNET: ${{secrets.REACT_APP_GENERATOR_URL_MAINNET}}
+          REACT_APP_GENERATOR_STATIC_URL_MAINNET: ${{ secrets.REACT_APP_GENERATOR_STATIC_URL_MAINNET }}
+          REACT_APP_GENERATOR_URL_TESTNET: ${{ secrets.REACT_APP_GENERATOR_URL_TESTNET }}
+          REACT_APP_GENERATOR_STATIC_URL_TESTNET: ${{ secrets.REACT_APP_GENERATOR_STATIC_URL_TESTNET }}
+        run: npm run build
+
+      - name: Get sha for deploy message
+        id: sha-short
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: Deploy to Netlify develop site
+        uses: netlify/actions/cli@master
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        with:
+          args: deploy --dir=build --alias=develop --message='${{ steps.sha-short.outputs.sha_short }}-${{ github.event.head_commit.message }}'
