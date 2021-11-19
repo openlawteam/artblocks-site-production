@@ -44,17 +44,14 @@ class Highlight extends Component {
         .call();
       const randomToken =
         projectTokens[Math.floor(Math.random() * projectTokens.length)];
-
-      let currency = await artBlocks.methods
+      const currency = await artBlocks.methods
         .projectIdToCurrencySymbol(this.props.project)
         .call();
-
       const srcDocument = await renderGenerator(randomToken);
-
-      this.setState({currency});
 
       this.setState({
         artBlocks,
+        currency,
         projectTokens,
         projectDescription,
         projectTokenDetails,
@@ -93,15 +90,13 @@ class Highlight extends Component {
           .call();
         const randomToken =
           projectTokens[Math.floor(Math.random() * projectTokens.length)];
-
-        let currency = await artBlocks.methods
+        const currency = await artBlocks.methods
           .projectIdToCurrencySymbol(this.props.project)
           .call();
-        this.setState({currency});
-
         const srcDocument = await renderGenerator(randomToken);
 
         this.setState({
+          currency,
           projectTokens,
           projectDescription,
           projectTokenDetails,
