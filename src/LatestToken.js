@@ -31,7 +31,6 @@ class LatestToken extends Component {
   }
 
   render() {
-    console.log('this.state.srcDocument', this.state.srcDocument);
     return (
       <div className="text-center">
         <a href={`/token/${this.state.tokenId}`}>
