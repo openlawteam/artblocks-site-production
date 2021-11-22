@@ -19,6 +19,18 @@ async function reverseResolveEns(address, web3) {
   return name;
 }
 
+const formatEthereumAddress = (addr, maxLength) => {
+  if (addr === null) return '---';
+
+  if (typeof addr !== 'undefined' && addr.length > 9) {
+    const firstSegment = addr.substring(0, maxLength || 5);
+    const secondPart = addr.substring(addr.length - 3);
+    return firstSegment + '...' + secondPart;
+  } else {
+    return '---';
+  }
+};
+
 async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
   try {
     // const API_KEY = process.env.REACT_APP_INFURA_KEY;
@@ -86,10 +98,17 @@ function staticRenderGenerator(tokenId) {
 
 async function renderGenerator(mintId) {
   try {
-    if (!mintId) return;
+    if (!mintId) {
+      throw new Error('mint id not found');
+    }
 
     const mintAddress =
       getArtblocksContractAddresses(NETWORK).coreContractAddress;
+
+    if (!getGeneratorUrl(NETWORK)) {
+      throw new Error('unable to get generator url');
+    }
+
     const ENDPOINT = `${getGeneratorUrl(NETWORK)}/${mintAddress}/${mintId}`;
 
     return fetch(ENDPOINT)
@@ -101,14 +120,17 @@ async function renderGenerator(mintId) {
       });
   } catch (error) {
     console.error(error);
+
+    return `<span>Something went wrong displaying the item</span>`;
   }
 }
 
 export {
-  shouldShowNonInteractive,
-  reverseResolveEns,
   checkWhitelist,
+  formatEthereumAddress,
   liveRenderUrl,
   renderGenerator,
+  reverseResolveEns,
   staticRenderGenerator,
+  shouldShowNonInteractive,
 };

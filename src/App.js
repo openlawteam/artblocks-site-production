@@ -215,6 +215,11 @@ class App extends Component {
           }
         });
 
+        // https://docs.metamask.io/guide/ethereum-provider.html#chainchanged
+        window.ethereum.on('chainChanged', (_chainId) => {
+          window.location.reload();
+        });
+
         try {
           // check if the connected address is whitelisted
           const {isWhitelisted} = await checkWhitelist(
@@ -330,10 +335,12 @@ class App extends Component {
             this.loadAccountData();
           });
       } else {
-        alert(`please switch to ${NETWORK} and try to connect again`);
+        alert(`Please switch to ${NETWORK} and try to connect again`);
       }
     } else {
-      alert('MetaMask not detected. Please install extension and try again.');
+      alert(
+        'Ethereum wallet not detected. Please install extension and try again.'
+      );
     }
   }
 
@@ -431,7 +438,6 @@ class App extends Component {
                 )} */}
               </div>
             )}
-
             {!this.state.overlay && (
               <Switch>
                 <Route path="/gallery">
@@ -547,7 +553,6 @@ class App extends Component {
                 </Route> */}
               </Switch>
             )}
-
             {/*<CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>*/}
           </div>
         </main>

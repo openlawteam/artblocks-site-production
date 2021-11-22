@@ -7,7 +7,7 @@ import './Nav.css';
 
 import {MetaMaskSVG, WalletSVG} from './assets/svg';
 
-import {formatEthereumAddress} from './utils/helpers';
+import {formatEthereumAddress} from './utils';
 import {getFlamingoDAOUrl} from './config';
 
 class Navigation extends Component {

@@ -6,6 +6,25 @@ export const NONINTERACTIVE = [];
 export const CURATED = [0];
 export const COMPLETE = [];
 
+export function getChainIdName() {
+  let chainIdName = 'mainnet'; // chain id 1
+
+  switch (NETWORK) {
+    case 3:
+      chainIdName = 'ropsten';
+      break;
+    case 4:
+      chainIdName = 'rinkeby';
+      break;
+    case 42:
+      chainIdName = 'koven';
+      break;
+    default:
+  }
+
+  return chainIdName;
+}
+
 function getEtherscanURL() {
   let etherscanUrl = 'https://www.etherscan.io';
 
@@ -61,6 +80,7 @@ export function getGeneratorUrl(NETWORK) {
       break;
     default:
   }
+
   return generatorUrl;
 }
 

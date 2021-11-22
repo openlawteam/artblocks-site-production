@@ -21,7 +21,7 @@ import {
   liveRenderUrl,
   staticRenderGenerator,
 } from './utils';
-import {formatEthereumAddress} from './utils/helpers';
+import {formatEthereumAddress} from './utils';
 // import OpenSeaImage from './assets/images/os_logo.png';
 
 import './ProjectGallery.css';
@@ -322,6 +322,24 @@ class ViewToken extends Component {
                           title={this.props.token}
                           srcDoc={this.state.srcDocument}
                         />
+                        <div
+                          style={{
+                            backgroundColor: '#fff',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                            opacity: this.state.srcDocument ? 0 : 1,
+                            transition: 'opacity 1s',
+                          }}>
+                          <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                          </div>
+                        </div>
                       </div>
                     )}
                     <hr />
