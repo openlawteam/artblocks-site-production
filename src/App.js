@@ -330,10 +330,12 @@ class App extends Component {
             this.loadAccountData();
           });
       } else {
-        alert(`please switch to ${NETWORK} and try to connect again`);
+        alert(`Please switch to ${NETWORK} and try to connect again`);
       }
     } else {
-      alert('MetaMask not detected. Please install extension and try again.');
+      alert(
+        'Ethereum wallet not detected. Please install extension and try again.'
+      );
     }
   }
 

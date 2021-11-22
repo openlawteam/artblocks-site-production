@@ -21,7 +21,7 @@ import {
   liveRenderUrl,
   staticRenderGenerator,
 } from './utils';
-import {formatEthereumAddress} from './utils/helpers';
+import {formatEthereumAddress} from './utils';
 // import OpenSeaImage from './assets/images/os_logo.png';
 
 import './ProjectGallery.css';
