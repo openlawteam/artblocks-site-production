@@ -125,9 +125,35 @@ async function renderGenerator(mintId) {
   }
 }
 
+async function getTokenDetails(uri, tokenId) {
+  try {
+    if (!tokenId) {
+      throw new Error('token id not found');
+    }
+
+    const ENDPOINT = `${uri}${tokenId}`;
+
+    return fetch(ENDPOINT, {mode: 'no-cors'})
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Something went wrong fetching the token features');
+        }
+        return res.json();
+      })
+      .then((json) => {
+        return json;
+      });
+  } catch (error) {
+    console.error(error);
+
+    return {};
+  }
+}
+
 export {
   checkWhitelist,
   formatEthereumAddress,
+  getTokenDetails,
   liveRenderUrl,
   renderGenerator,
   reverseResolveEns,

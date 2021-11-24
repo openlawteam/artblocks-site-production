@@ -44,7 +44,7 @@ class LatestToken extends Component {
                     sandbox="allow-scripts allow-downloads allow-same-origin"
                     allow="xr-spatial-tracking"
                     allowvr="yes"
-                    allowfullscreen
+                    allowFullScreen
                   />
                 ) : (
                   <div

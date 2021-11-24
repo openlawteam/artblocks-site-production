@@ -17,6 +17,7 @@ import {TwitterIcon, TwitterShareButton} from 'react-share';
 import TextTruncate from 'react-text-truncate';
 import {Link} from 'react-router-dom';
 import {
+  getTokenDetails,
   /*, reverseResolveEns*/ renderGenerator,
   liveRenderUrl,
   staticRenderGenerator,
@@ -67,18 +68,17 @@ class ViewToken extends Component {
         .ownerOf(this.props.token)
         .call();
 
-      // fetch(tokenDetailsUrl(this.props.token))
-      //   .then((res) => {
-      //     return res.json();
-      //   })
-      //   .then((json) => {
-      //     this.setState({
-      //       features: json.features,
-      //     });
-      //   })
-      //   .catch((error) => {
-      //     throw error;
-      //   });
+      // isolate try-catch
+      try {
+        const features = await getTokenDetails(
+          projectURIInfo,
+          this.props.token
+        ); // tokenDetailsUrl(this.props.token)
+
+        this.setState({
+          features,
+        });
+      } catch (error) {}
 
       const srcDocument = await renderGenerator(this.props.token);
 
@@ -223,6 +223,30 @@ class ViewToken extends Component {
                           <Image width="50" src={OpenSeaImage} />
                         </a> */}
                       </p>
+
+                      {this.state.features && this.state.features.length > 0 ? (
+                        <div>
+                          <Alert variant="info">
+                            <p>Features</p>
+                            <Container>
+                              {this.state.features.map((feature, index) => {
+                                return (
+                                  <Row key={index}>
+                                    <p
+                                      style={{
+                                        fontSize: '12px',
+                                        lineHeight: '1px',
+                                      }}
+                                      key={index}>
+                                      {feature}
+                                    </p>
+                                  </Row>
+                                );
+                              })}
+                            </Container>
+                          </Alert>
+                        </div>
+                      ) : null}
                     </div>
                   )}
 
@@ -325,7 +349,7 @@ class ViewToken extends Component {
                             sandbox="allow-scripts allow-downloads allow-same-origin"
                             allow="xr-spatial-tracking"
                             allowvr="yes"
-                            allowfullscreen
+                            allowFullScreen
                           />
                         ) : (
                           <div
