@@ -39,6 +39,12 @@
   width: 80% !important;
 }
 
+@media only screen and (max-width: 576px) {
+  .project-cta {
+    width: 100% !important;
+  }
+}
+
 .purchase-addr-container {
   margin-top: 1rem;
 }

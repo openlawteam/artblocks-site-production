@@ -2,16 +2,18 @@ import React from 'react';
 
 import DiscordSVG from './assets/svg/DiscordSVG';
 import GitHubSVG from './assets/svg/GitHubSVG';
+import HeadphonesSVG from './assets/svg/HeadphonesSVG';
 import MediumSVG from './assets/svg/MediumSVG';
 import TelegramSVG from './assets/svg/TelegramSVG';
 import TwitterSVG from './assets/svg/TwitterSVG';
 
 export default function SocialMedia() {
-  const orgTwitterURL = 'https://twitter.com/FLAMINGODAO';
+  const orgDiscordURL = 'https://discord.gg/yZ6BPxkWfj';
   const orgGithubURL = '';
   const orgMediumURL = 'https://medium.com/@FLAMINGODAO';
   const orgTelegramURL = 'https://t.me/joinchat/FLvdBBVz3o9pfi-rfd9BqQ';
-  const orgDiscordURL = 'https://discord.gg/yZ6BPxkWfj';
+  const orgTwitterURL = 'https://twitter.com/FLAMINGODAO';
+  const orgPodcastURL = 'https://podcast.flamingodao.xyz';
 
   return (
     <div className={`social-media-wrapper org-social-media-wrapper`}>
@@ -38,6 +40,11 @@ export default function SocialMedia() {
       {orgDiscordURL && (
         <a href={orgDiscordURL} target="_blank" rel="noopener noreferrer">
           <DiscordSVG />
+        </a>
+      )}
+      {orgPodcastURL && (
+        <a href={orgPodcastURL} target="_blank" rel="noopener noreferrer">
+          <HeadphonesSVG />
         </a>
       )}
     </div>

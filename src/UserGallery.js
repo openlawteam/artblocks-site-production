@@ -171,6 +171,7 @@ class UserGallery extends Component {
           <h5>
             User{' '}
             <a
+              className="truncate"
               href={`${ETHERSCAN_URL}/address/${this.props.lookupAcct}`}
               target="_blank"
               rel="noopener noreferrer">
