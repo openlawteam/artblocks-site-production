@@ -16,7 +16,7 @@ import {
 import {Link} from 'react-router-dom';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import TextTruncate from 'react-text-truncate';
-import {renderGenerator, staticRenderGenerator} from './utils';
+import {renderGenerator, staticRenderGenerator, getTokenDetails} from './utils';
 
 import './ProjectGallery.css';
 
@@ -64,15 +64,17 @@ class NewToken extends Component {
         .projectURIInfo(projectId)
         .call();
 
-      // fetch(tokenDetailsUrl(this.props.token))
-      //   .then((res) => {
-      //     return res.json();
-      //   })
-      //   .then((json) => {
-      //     this.setState({
-      //       features: json.features,
-      //     });
-      //   });
+      // isolate try-catch
+      try {
+        const {features} = await getTokenDetails(
+          projectURIInfo,
+          this.props.token
+        );
+
+        this.setState({
+          features,
+        });
+      } catch (error) {}
 
       const srcDocument = await renderGenerator(this.props.token);
 
@@ -123,20 +125,6 @@ class NewToken extends Component {
           'View all ' + this.state.projectDescription[0] + ' tokens.'}
       </Tooltip>
     );
-
-    // const viewEmbedLink = (props) => (
-    //   <Tooltip id="button-tooltip" {...props}>
-    //     Copy the below link and paste it in the URL field for embedding in
-    //     virtual platforms like{' '}
-    //     <a
-    //       href="https://www.cryptovoxels.com"
-    //       rel="noopener noreferrer"
-    //       target="_blank">
-    //       Cryptovoxels
-    //     </a>
-    //     .
-    //   </Tooltip>
-    // );
 
     return (
       <div className="section-wrapper">
@@ -239,25 +227,28 @@ class NewToken extends Component {
                       </div>
                     )} */}
 
-                  {this.state.features && this.state.features.length > 0 ? (
+                  {this.state.features &&
+                  Object.keys(this.state.features).length > 0 ? (
                     <div>
                       <Alert variant="info">
                         <p>Features</p>
                         <Container>
-                          {this.state.features.map((feature, index) => {
-                            return (
-                              <Row key={index}>
-                                <p
-                                  style={{
-                                    fontSize: '12px',
-                                    lineHeight: '1px',
-                                  }}
-                                  key={index}>
-                                  {feature}
-                                </p>
-                              </Row>
-                            );
-                          })}
+                          {Object.keys(this.state.features).map(
+                            (feature, index) => {
+                              return (
+                                <Row key={index}>
+                                  <p
+                                    style={{
+                                      fontSize: '12px',
+                                      lineHeight: '1px',
+                                    }}
+                                    key={index}>
+                                    {feature}: {this.state.features[feature]}
+                                  </p>
+                                </Row>
+                              );
+                            }
+                          )}
                         </Container>
                       </Alert>
                     </div>

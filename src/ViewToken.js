@@ -70,10 +70,10 @@ class ViewToken extends Component {
 
       // isolate try-catch
       try {
-        const features = await getTokenDetails(
+        const {features} = await getTokenDetails(
           projectURIInfo,
           this.props.token
-        ); // tokenDetailsUrl(this.props.token)
+        );
 
         this.setState({
           features,
@@ -224,25 +224,29 @@ class ViewToken extends Component {
                         </a> */}
                       </p>
 
-                      {this.state.features && this.state.features.length > 0 ? (
+                      {this.state.features &&
+                      Object.keys(this.state.features).length > 0 ? (
                         <div>
                           <Alert variant="info">
                             <p>Features</p>
                             <Container>
-                              {this.state.features.map((feature, index) => {
-                                return (
-                                  <Row key={index}>
-                                    <p
-                                      style={{
-                                        fontSize: '12px',
-                                        lineHeight: '1px',
-                                      }}
-                                      key={index}>
-                                      {feature}
-                                    </p>
-                                  </Row>
-                                );
-                              })}
+                              {Object.keys(this.state.features).map(
+                                (feature, index) => {
+                                  return (
+                                    <Row key={index}>
+                                      <p
+                                        style={{
+                                          fontSize: '12px',
+                                          lineHeight: '1px',
+                                        }}
+                                        key={index}>
+                                        {feature}:{' '}
+                                        {this.state.features[feature]}
+                                      </p>
+                                    </Row>
+                                  );
+                                }
+                              )}
                             </Container>
                           </Alert>
                         </div>
