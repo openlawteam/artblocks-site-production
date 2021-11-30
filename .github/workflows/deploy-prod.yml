@@ -31,7 +31,7 @@ jobs:
 
       - name: Create production build
         env:
-          REACT_APP_NETWORK: ropsten
+          REACT_APP_NETWORK: mainnet
           REACT_APP_INFURA_KEY: ${{ secrets.REACT_APP_INFURA_KEY }}
           REACT_APP_BLOCK_DELAY_INTERVAL: 3
           REACT_APP_GENERATOR_URL_TESTNET: ${{ secrets.REACT_APP_GENERATOR_URL_TESTNET }}

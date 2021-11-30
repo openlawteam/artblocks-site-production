@@ -87,8 +87,8 @@ export function getGeneratorUrl(NETWORK) {
 export function getArtblocksContractAddresses(NETWORK) {
   // Default to mainnet contract addresses
   let contractAddresses = {
-    coreContractAddress: '0x059EDD72Cd353dF5106D2B9cC5ab83a52287aC3a',
-    minterContractAddress: '0xAA6EBab3Bf3Ce561305bd53E4BD3B3945920B176',
+    coreContractAddress: '0x13aAe6f9599880edbB7d144BB13F1212CeE99533',
+    minterContractAddress: '0x8e80CEb80b1eEa8334Bf59668C07f5F52AC7251c',
   };
 
   switch (NETWORK) {

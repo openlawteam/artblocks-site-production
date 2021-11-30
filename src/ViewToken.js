@@ -183,8 +183,6 @@ class ViewToken extends Component {
                   <br />
 
                   {this.state.projectDescription[2] && (
-                    // <p>{this.state.projectDescription[2]}</p>
-
                     <TextTruncate
                       line={4}
                       element="span"
