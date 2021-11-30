@@ -24,6 +24,17 @@ Add the curated project id to the `CURATED` array in `./src/config.js`:
 ```
 export const CURATED = [0, ...];
 ```
+Also, the Core and Minter contract addresses reside in `./src/config/js`:
+
+```
+export function getArtblocksContractAddresses(NETWORK) {
+  // Default to mainnet contract addresses
+  let contractAddresses = {
+    coreContractAddress: '0x0...',
+    minterContractAddress: '0x0...',
+  };
+  ...
+```
 
 ## Available Scripts
 
