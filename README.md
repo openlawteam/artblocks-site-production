@@ -19,12 +19,21 @@ REACT_APP_GENERATOR_URL_MAINNET=...
 REACT_APP_GENERATOR_STATIC_URL_MAINNET=...
 ```
 
-Add the curated project id to the `CURATED` array in `./src/config.js`:
+Add the curated project id to the appropriate array per network in `./src/config.js`:
 
 ```
-export const CURATED = [0, ...];
+function getCuratedList() {
+  switch (NETWORK) {
+    case 'mainnet':
+      return [];
+    case 'rinkeby':
+      return [];
+    case 'ropsten':
+      return [0, ...];
+    ...
 ```
-Also, the Core and Minter contract addresses reside in `./src/config/js`:
+
+Also, the Core and Minter contract addresses reside in `./src/config.js`:
 
 ```
 export function getArtblocksContractAddresses(NETWORK) {

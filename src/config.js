@@ -1,10 +1,49 @@
 //Minter https://oneclickdapp.com/scoop-major
 
 export const NETWORK = process.env.REACT_APP_NETWORK;
-export const NONINTERACTIVE = [];
+
+function getNonInteractiveList() {
+  switch (NETWORK) {
+    case 'mainnet':
+      return [];
+    case 'rinkeby':
+      return [];
+    case 'ropsten':
+      return [];
+    default:
+      return [];
+  }
+}
+export const NONINTERACTIVE = getNonInteractiveList();
+
 // Add projectId, so it's included in the curated list
-export const CURATED = [0];
-export const COMPLETE = [];
+function getCuratedList() {
+  switch (NETWORK) {
+    case 'mainnet':
+      return [];
+    case 'rinkeby':
+      return [];
+    case 'ropsten':
+      return [0, 1];
+    default:
+      return [];
+  }
+}
+export const CURATED = getCuratedList();
+
+function getCompleteList() {
+  switch (NETWORK) {
+    case 'mainnet':
+      return [];
+    case 'rinkeby':
+      return [];
+    case 'ropsten':
+      return [];
+    default:
+      return [];
+  }
+}
+export const COMPLETE = getCompleteList();
 
 export function getChainIdName() {
   let chainIdName = 'mainnet'; // chain id 1
