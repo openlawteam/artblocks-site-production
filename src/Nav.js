@@ -22,29 +22,25 @@ class Navigation extends Component {
       const activeProjects = this.props.activeProjects;
 
       let activeProjectsDetails = [];
-      let activeProjectArtistName = [];
-
       for (let project in activeProjects) {
         const projectDetails = await artBlocks.methods
           .projectDetails(activeProjects[project])
           .call();
-        activeProjectArtistName.push(activeProjects[project]);
-        activeProjectArtistName.push(projectDetails[0]);
-        activeProjectArtistName.push(projectDetails[1]);
-        activeProjectsDetails.push(activeProjectArtistName);
+
+        activeProjectsDetails.push([
+          activeProjects[project],
+          projectDetails[0],
+          projectDetails[1],
+        ]);
       }
 
       const allProjects = this.props.allProjects;
 
       let allProjectsDetails = [];
-      let projectDetailsArtistName = [];
       for (let i = 0; i < allProjects.length; i++) {
         const projectDetails = await artBlocks.methods.projectDetails(i).call();
 
-        projectDetailsArtistName.push(i);
-        projectDetailsArtistName.push(projectDetails[0]);
-        projectDetailsArtistName.push(projectDetails[1]);
-        allProjectsDetails.push(projectDetailsArtistName);
+        allProjectsDetails.push([i, projectDetails[0], projectDetails[1]]);
       }
 
       this.setState({
