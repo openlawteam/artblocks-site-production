@@ -99,7 +99,10 @@ class Navigation extends Component {
                             this.props.handleToggleView('off');
                           }}
                           to={'/project/' + projectInfo[0]}>
-                          {projectInfo[1]} by {projectInfo[2]}
+                          {projectInfo[1]}
+                          {projectInfo[2] && (
+                            <small> by {projectInfo[2]}</small>
+                          )}
                         </NavDropdown.Item>
                       );
                     })}
@@ -133,7 +136,10 @@ class Navigation extends Component {
                             this.props.handleToggleView('off');
                           }}
                           to={'/project/' + projectInfo[0]}>
-                          {projectInfo[1]} by {projectInfo[2]}
+                          {projectInfo[1]}
+                          {projectInfo[2] && (
+                            <small> by {projectInfo[2]}</small>
+                          )}
                         </NavDropdown.Item>
                       );
                     })}
