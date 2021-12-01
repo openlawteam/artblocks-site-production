@@ -79,9 +79,9 @@ class Navigation extends Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto flamingo-navbar-nav">
               <NavDropdown title="Curated Projects" id="basic-nav-dropdown">
-                <NavDropdown.Item>
+                <NavDropdown.ItemText>
                   <b>Open</b>
-                </NavDropdown.Item>
+                </NavDropdown.ItemText>
 
                 {this.state.activeProjectsDetails &&
                   this.state.activeProjectsDetails
@@ -109,14 +109,14 @@ class Navigation extends Component {
                       !this.props.complete.includes(projectInfo[0]) &&
                       this.props.curated.includes(projectInfo[0])
                   ).length < 1 && (
-                    <NavDropdown.Item>
+                    <NavDropdown.ItemText>
                       <i>None</i>
-                    </NavDropdown.Item>
+                    </NavDropdown.ItemText>
                   )}
                 <div className="dropdown-divider"></div>
-                <NavDropdown.Item>
+                <NavDropdown.ItemText>
                   <b>Complete</b>
-                </NavDropdown.Item>
+                </NavDropdown.ItemText>
                 {this.state.activeProjectsDetails &&
                   this.state.activeProjectsDetails
                     .filter(
@@ -137,6 +137,16 @@ class Navigation extends Component {
                         </NavDropdown.Item>
                       );
                     })}
+                {this.state.activeProjectsDetails &&
+                  this.state.activeProjectsDetails.filter(
+                    (projectInfo) =>
+                      this.props.complete.includes(projectInfo[0]) &&
+                      this.props.curated.includes(projectInfo[0])
+                  ).length < 1 && (
+                    <NavDropdown.ItemText>
+                      <i>None</i>
+                    </NavDropdown.ItemText>
+                  )}
               </NavDropdown>
               {/* <NavDropdown title="Artist Playground" id="basic-nav-dropdown">
                 <NavDropdown.Item>
