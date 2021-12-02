@@ -903,8 +903,8 @@ class Project extends Component {
                             <div>
                               <Alert variant="secondary">
                                 <p>
-                                  Showing random token [#
-                                  {this.state.randomTokenNumber - 1}].
+                                  Showing random token #
+                                  {this.state.randomTokenNumber}.
                                 </p>
                                 <Button
                                   variant="light"
