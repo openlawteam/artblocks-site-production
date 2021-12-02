@@ -73,8 +73,7 @@ class Project extends Component {
         .call();
       const projectTokens = Array.from(
         Array(Number(projectTokenInfo.invocations)).keys()
-      );
-
+      ).map((token) => token + this.props.project * 1000000);
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
         .call();
@@ -222,7 +221,7 @@ class Project extends Component {
         .call();
       const projectTokens = Array.from(
         Array(projectTokenInfo.invocations).keys()
-      );
+      ).map((token) => token + this.props.project * 1000000);
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
         .call();
@@ -373,7 +372,7 @@ class Project extends Component {
       .call();
     const projectTokens = Array.from(
       Array(projectTokenInfo.invocations).keys()
-    );
+    ).map((token) => token + this.props.project * 1000000);
     const projectDescription = await artBlocks.methods
       .projectDetails(this.props.project)
       .call();
@@ -634,11 +633,7 @@ class Project extends Component {
             )}
             <Row
               className={
-                currentSubroute === 'latest' ||
-                (this.state.projectTokens && this.state.projectTokens.length) <
-                  10
-                  ? 'align-items-center'
-                  : ''
+                currentSubroute === 'latest' ? 'align-items-center' : ''
               }
               style={{marginRight: 0, marginLeft: 0}}>
               <Col xs={12} sm={6} md={4}>
@@ -648,7 +643,9 @@ class Project extends Component {
                       <>
                         <div className="project-description">
                           <h1>{this.state.projectDescription[0]}</h1>
-                          <h3>by {this.state.projectDescription[1]}</h3>
+                          {this.state.projectDescription[1] && (
+                            <h3>by {this.state.projectDescription[1]}</h3>
+                          )}
                           <a
                             className="project-link"
                             href={
