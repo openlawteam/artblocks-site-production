@@ -31,7 +31,10 @@ class LatestToken extends Component {
   }
 
   async componentDidUpdate(oldProps) {
-    if (oldProps.project !== this.props.project) {
+    if (
+      oldProps.project !== this.props.project ||
+      oldProps.latest !== this.props.latest
+    ) {
       try {
         const tokenId =
           (this.props.complete ? this.props.random : this.props.latest) +
