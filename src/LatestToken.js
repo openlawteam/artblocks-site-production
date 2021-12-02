@@ -30,6 +30,24 @@ class LatestToken extends Component {
     }
   }
 
+  async componentDidUpdate(oldProps) {
+    if (oldProps.project !== this.props.project) {
+      try {
+        const tokenId =
+          (this.props.complete ? this.props.random : this.props.latest) +
+          this.props.project * 1000000;
+        const srcDocument = await renderGenerator(tokenId);
+
+        this.setState({
+          tokenId,
+          srcDocument,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   render() {
     return (
       <div className="text-center">
