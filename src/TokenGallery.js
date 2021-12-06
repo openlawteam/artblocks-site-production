@@ -46,7 +46,7 @@ const TokenGallery = ({project, projectTokens = []}) => {
   }
 
   if (end < totalPages) {
-    pageNumbers.push(<Pagination.Ellipsis />);
+    pageNumbers.push(<Pagination.Ellipsis key={totalPages} />);
     pageNumbers.push(
       <Pagination.Item
         key={totalPages}

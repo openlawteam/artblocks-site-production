@@ -220,7 +220,7 @@ class Project extends Component {
         .projectTokenInfo(this.props.project)
         .call();
       const projectTokens = Array.from(
-        Array(projectTokenInfo.invocations).keys()
+        Array(Number(projectTokenInfo.invocations)).keys()
       ).map((token) => token + this.props.project * 1000000);
       const projectDescription = await artBlocks.methods
         .projectDetails(this.props.project)
@@ -270,6 +270,7 @@ class Project extends Component {
 
       let scriptJSON =
         projectScriptDetails[0] && JSON.parse(projectScriptDetails[0]);
+
       this.setState({
         loadQueue: this.props.project * 1000000 + (this.props.page - 1) * 20,
         projectTokens,
@@ -371,7 +372,7 @@ class Project extends Component {
       .projectTokenInfo(this.props.project)
       .call();
     const projectTokens = Array.from(
-      Array(projectTokenInfo.invocations).keys()
+      Array(Number(projectTokenInfo.invocations)).keys()
     ).map((token) => token + this.props.project * 1000000);
     const projectDescription = await artBlocks.methods
       .projectDetails(this.props.project)
