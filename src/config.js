@@ -20,7 +20,7 @@ export const NONINTERACTIVE = getNonInteractiveList();
 function getCuratedList() {
   switch (NETWORK) {
     case 'mainnet':
-      return [];
+      return [0];
     case 'rinkeby':
       return [];
     case 'ropsten':
