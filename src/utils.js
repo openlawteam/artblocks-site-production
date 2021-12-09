@@ -113,8 +113,12 @@ async function renderGenerator(mintId) {
 
     return fetch(ENDPOINT)
       .then((res) => {
-        if (res.status !== 200) {
+        if (res.status !== 200 && mintId < 0) {
           return `<span style="color: #497f8f; font-family: monospace; font-size: 1rem;">No mints yet!</span>`;
+        }
+
+        if (res.status !== 200 && mintId >= 0) {
+          return `<span style="color: #497f8f; font-family: monospace; font-size: 1rem;">Something went wrong displaying the item</span>`;
         }
 
         return res.text();
@@ -125,7 +129,7 @@ async function renderGenerator(mintId) {
   } catch (error) {
     console.error(error);
 
-    return `<span>Something went wrong displaying the item</span>`;
+    return `<span style="color: #497f8f; font-family: monospace; font-size: 1rem;">Something went wrong displaying the item</span>`;
   }
 }
 
