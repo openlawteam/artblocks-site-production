@@ -113,6 +113,10 @@ async function renderGenerator(mintId) {
 
     return fetch(ENDPOINT)
       .then((res) => {
+        if (res.status !== 200) {
+          return `<span style="color: #497f8f; font-family: monospace; font-size: 1rem;">No mints yet!</span>`;
+        }
+
         return res.text();
       })
       .then((text) => {
