@@ -9,6 +9,7 @@ import {
   ARTBLOCKS_CONTRACT_ABI,
   ARTBLOCKS_CONTRACT_MINTER_ABI,
   getArtblocksContractAddresses,
+  getChainIdName,
 } from './config';
 import {checkWhitelist} from './utils';
 import Web3 from 'web3';
@@ -310,25 +311,25 @@ class App extends Component {
   async handleConnectToMetamask() {
     if (typeof window.web3 !== 'undefined') {
       const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
-      const network = await web3.eth.net.getNetworkType();
+      const networkId = await web3.eth.net.getId();
 
-      const artBlocks = new web3.eth.Contract(
-        ARTBLOCKS_CONTRACT_ABI,
-        getArtblocksContractAddresses(NETWORK).coreContractAddress
-      );
-      const mainMinter = new web3.eth.Contract(
-        ARTBLOCKS_CONTRACT_MINTER_ABI,
-        getArtblocksContractAddresses(NETWORK).minterContractAddress
-      );
+      if (getChainIdName(networkId) === NETWORK) {
+        const artBlocks = new web3.eth.Contract(
+          ARTBLOCKS_CONTRACT_ABI,
+          getArtblocksContractAddresses(NETWORK).coreContractAddress
+        );
+        const mainMinter = new web3.eth.Contract(
+          ARTBLOCKS_CONTRACT_MINTER_ABI,
+          getArtblocksContractAddresses(NETWORK).minterContractAddress
+        );
 
-      if (network === NETWORK) {
         window.ethereum
           .request({method: 'eth_requestAccounts'})
           .then((result) => {
             this.setState({
               connected: true,
               web3,
-              network,
+              network: NETWORK,
               artBlocks,
               mainMinter,
             });
