@@ -19,6 +19,7 @@ class LatestToken extends Component {
       const tokenId =
         (this.props.complete ? this.props.random : this.props.latest) +
         this.props.project * 1000000;
+
       const srcDocument = await renderGenerator(tokenId);
 
       this.setState({
@@ -39,6 +40,7 @@ class LatestToken extends Component {
         const tokenId =
           (this.props.complete ? this.props.random : this.props.latest) +
           this.props.project * 1000000;
+
         const srcDocument = await renderGenerator(tokenId);
 
         this.setState({

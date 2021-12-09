@@ -98,8 +98,8 @@ function staticRenderGenerator(tokenId) {
 
 async function renderGenerator(mintId) {
   try {
-    if (!mintId) {
-      throw new Error('mint id not found');
+    if (!Number.isInteger(mintId)) {
+      throw new Error(`mint id ${mintId} not found`);
     }
 
     const mintAddress =
