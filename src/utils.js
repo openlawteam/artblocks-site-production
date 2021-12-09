@@ -98,10 +98,6 @@ function staticRenderGenerator(tokenId) {
 
 async function renderGenerator(mintId) {
   try {
-    if (!Number.isInteger(mintId)) {
-      throw new Error(`mint id ${mintId} not found`);
-    }
-
     const mintAddress =
       getArtblocksContractAddresses(NETWORK).coreContractAddress;
 
@@ -113,11 +109,11 @@ async function renderGenerator(mintId) {
 
     return fetch(ENDPOINT)
       .then((res) => {
-        if (res.status !== 200 && mintId < 0) {
+        if (res.status !== 200 && Number(mintId) < 0) {
           return `<span style="color: #497f8f; font-family: monospace; font-size: 1rem;">No mints yet!</span>`;
         }
 
-        if (res.status !== 200 && mintId >= 0) {
+        if (res.status !== 200 && Number(mintId) >= 0) {
           return `<span style="color: #497f8f; font-family: monospace; font-size: 1rem;">Something went wrong displaying the item</span>`;
         }
 
