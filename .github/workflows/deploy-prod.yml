@@ -49,9 +49,7 @@ jobs:
         run: echo "::set-output name=tag_name::${GITHUB_REF/refs\/tags\//}"
 
       - name: Deploy to Netlify production site
-        uses: netlify/actions/cli@master
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          args: deploy --dir=build --prod --message='${{ steps.sha-short.outputs.sha_short }}-${{ steps.tag-name.outputs.tag_name }}'
+        run: netlify deploy --dir=build --prod --message='${{ steps.sha-short.outputs.sha_short }}-${{ steps.tag-name.outputs.tag_name }}'
