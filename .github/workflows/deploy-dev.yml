@@ -43,7 +43,12 @@ jobs:
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
       - name: Deploy to Netlify develop site
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: "./build"
+          deploy-message: "${{ steps.sha-short.outputs.sha_short }}-${{ github.event.head_commit.message }}"
+          alias: develop
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: netlify deploy --dir=build --alias=develop --message='${{ steps.sha-short.outputs.sha_short }}-${{ github.event.head_commit.message }}'
+        timeout-minutes: 1
