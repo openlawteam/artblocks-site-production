@@ -43,9 +43,7 @@ jobs:
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
       - name: Deploy to Netlify develop site
-        uses: netlify/actions/cli@master
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          args: deploy --dir=build --alias=develop --message='${{ steps.sha-short.outputs.sha_short }}-${{ github.event.head_commit.message }}'
+        run: netlify deploy --dir=build --alias=develop --message='${{ steps.sha-short.outputs.sha_short }}-${{ github.event.head_commit.message }}'
