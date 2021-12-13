@@ -513,7 +513,7 @@ class Project extends Component {
       }
     } else {
       await this.props.mainMinter.methods
-        .purchase(this.props.project)
+        .purchase(Number(this.props.project))
         .send({
           from: this.props.account,
           value:
@@ -521,7 +521,7 @@ class Project extends Component {
               ? this.state.projectTokenDetails[1]
               : 0,
         })
-        .once('receipt', async (receipt) => {
+        .on('receipt', async (receipt) => {
           this.setState({
             txReceiptMessage: 'Please wait...',
           });

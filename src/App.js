@@ -102,16 +102,19 @@ class App extends Component {
     this.handleConnectToMetamask = this.handleConnectToMetamask.bind(this);
     this.handleToggleView = this.handleToggleView.bind(this);
     this.handleNextProject = this.handleNextProject.bind(this);
+
+    this.ETHEREUM_HTTP_PROVIDER_URL = new Web3.providers.HttpProvider(
+      `https://${NETWORK}.infura.io/v3/${API_KEY}`
+    );
+    this.ETHEREUM_WS_PROVIDER_URL = new Web3.providers.WebsocketProvider(
+      `wss://${NETWORK}.infura.io/ws/v3/${API_KEY}`
+    );
   }
 
   async componentDidMount() {
     try {
-      const web3 = new Web3(
-        new Web3.providers.HttpProvider(
-          `https://${NETWORK}.infura.io/v3/${API_KEY}`
-        )
-      );
-
+      // const web3 = new Web3(window.ethereum); //this.ETHEREUM_WS_PROVIDER_URL
+      const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
         getArtblocksContractAddresses(NETWORK).coreContractAddress
@@ -182,7 +185,7 @@ class App extends Component {
       if (window.ethereum) {
         const accounts = await new Web3(window.ethereum).eth.getAccounts();
         if (accounts && accounts.length > 0) {
-          this.handleConnectToMetamask();
+          await this.handleConnectToMetamask();
         }
 
         // Make sure the site reflects if the user has disconnected their wallet
@@ -310,6 +313,7 @@ class App extends Component {
 
   async handleConnectToMetamask() {
     if (typeof window.web3 !== 'undefined') {
+      // const web3 = new Web3(window.ethereum); // this.ETHEREUM_WS_PROVIDER_URL
       const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
       const networkId = await web3.eth.net.getId();
 
@@ -323,7 +327,7 @@ class App extends Component {
           getArtblocksContractAddresses(NETWORK).minterContractAddress
         );
 
-        window.ethereum
+        await window.ethereum
           .request({method: 'eth_requestAccounts'})
           .then((result) => {
             this.setState({
@@ -333,6 +337,7 @@ class App extends Component {
               artBlocks,
               mainMinter,
             });
+
             this.loadAccountData();
           });
       } else {
