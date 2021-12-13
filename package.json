@@ -22,7 +22,7 @@
     "react-text-truncate": "^0.17.0",
     "sass": "^1.32.13",
     "serve": "^11.3.2",
-    "web3": "^1.5.2"
+    "web3": "^1.5.3"
   },
   "optionalDependencies": {
     "fsevents": "^2.1.3"

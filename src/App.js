@@ -310,7 +310,11 @@ class App extends Component {
 
   async handleConnectToMetamask() {
     if (typeof window.web3 !== 'undefined') {
-      const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
+      const web3 = new Web3(
+        new Web3.providers.HttpProvider(
+          `https://${NETWORK}.infura.io/v3/${API_KEY}`
+        )
+      );
       const networkId = await web3.eth.net.getId();
 
       if (getChainIdName(networkId) === NETWORK) {
@@ -323,7 +327,7 @@ class App extends Component {
           getArtblocksContractAddresses(NETWORK).minterContractAddress
         );
 
-        window.ethereum
+        await window.ethereum
           .request({method: 'eth_requestAccounts'})
           .then((result) => {
             this.setState({
@@ -333,6 +337,7 @@ class App extends Component {
               artBlocks,
               mainMinter,
             });
+
             this.loadAccountData();
           });
       } else {
