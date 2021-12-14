@@ -15,7 +15,7 @@ import {Link, matchPath, Route, Switch, withRouter} from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 
 import {ERC20_ABI, NETWORK} from './config';
-import {checkWhitelist} from './utils';
+import {checkIsAccountWhitelisted, checkIsProjectWhitelisted} from './utils';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
 
@@ -454,12 +454,25 @@ class Project extends Component {
       });
   }
 
+  async isProjectWhitelisted() {
+    try {
+      const {isProjectWhitelisted} = await checkIsProjectWhitelisted(
+        this.props.mainMinter,
+        Number(this.props.project)
+      );
+
+      return isProjectWhitelisted;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   async isAddressWhitelisted() {
     try {
       const purchaseAddress = this.state.purchaseTo
         ? this.state.purchaseToAddress
         : this.props.account;
-      const {isWhitelisted} = await checkWhitelist(
+      const {isWhitelisted} = await checkIsAccountWhitelisted(
         purchaseAddress,
         Number(this.props.project),
         this.props.mainMinter
@@ -770,11 +783,14 @@ class Project extends Component {
                                       : false
                                   }
                                   onClick={async () => {
-                                    // check if purchase address is whitelisted
+                                    // check if purchase address and project is whitelisted
                                     const isWhitelisted =
                                       await this.isAddressWhitelisted();
 
-                                    if (isWhitelisted) {
+                                    const isProjectWhitelisted =
+                                      await this.isProjectWhitelisted();
+
+                                    if (isWhitelisted || isProjectWhitelisted) {
                                       this.setState({
                                         showWarningModal: true,
                                       });
