@@ -11,23 +11,14 @@ import {
   getArtblocksContractAddresses,
   getChainIdName,
 } from './config';
-import {checkWhitelist} from './utils';
 import Web3 from 'web3';
 import Project from './Project';
-// import Highlight from './Highlight';
 import NewToken from './NewToken';
 import Navigation from './Nav';
-// import Intro from './Intro';
 import ProjectGallery from './ProjectGallery';
-//import CookieConsent from "react-cookie-consent";
-//import YourTokens from './YourTokens';
 import Footer from './Footer';
-// import Learn from './Learn';
-// import Sustainability from './Sustainability';
-// import ControlPanel from './ControlPanel';
 import UserGallery from './UserGallery';
 import ViewToken from './ViewToken';
-// import {Col, Row} from 'react-bootstrap';
 import {Switch, Route, useParams, Redirect} from 'react-router-dom';
 
 import './App.css';
@@ -113,9 +104,15 @@ class App extends Component {
   async componentDidMount() {
     try {
       const accounts = await new Web3(window.ethereum).eth.getAccounts();
-      const web3 = new Web3(
+      let web3 = new Web3(
         accounts.length ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
       );
+      const networkId = await web3.eth.net.getId();
+
+      // if the wrong network is connected, re-init web3 and alert the user
+      if (getChainIdName(networkId) !== NETWORK) {
+        web3 = new Web3(this.ETHEREUM_WS_PROVIDER_URL);
+      }
 
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
@@ -201,17 +198,9 @@ class App extends Component {
           } else {
             try {
               if (accounts[0]) {
-                // Check if the connected address is whitelisted
-                const {isWhitelisted} = await checkWhitelist(
-                  accounts[0],
-                  Number(this.state.currentProject),
-                  mainMinter
-                );
-
                 this.setState({
                   connected: accounts[0] !== undefined,
                   account: accounts[0],
-                  isWhitelisted,
                 });
               }
             } catch (error) {
@@ -227,17 +216,9 @@ class App extends Component {
 
         try {
           if (accounts[0]) {
-            // check if the connected address is whitelisted
-            const {isWhitelisted} = await checkWhitelist(
-              accounts[0],
-              Number(this.state.currentProject),
-              mainMinter
-            );
-
             this.setState({
               connected: accounts[0] !== undefined,
               account: accounts[0],
-              isWhitelisted,
             });
           }
         } catch (error) {
