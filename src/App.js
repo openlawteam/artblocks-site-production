@@ -40,7 +40,6 @@ function UserGal(props) {
       web3={props.web3}
       artBlocks={props.artBlocks}
       network={props.network}
-      // baseURL={props.baseURL}
       lookupAcct={address}
     />
   );
@@ -113,24 +112,23 @@ class App extends Component {
 
   async componentDidMount() {
     try {
+      const accounts = await new Web3(window.ethereum).eth.getAccounts();
       const web3 = new Web3(
-        Web3.givenProvider || this.ETHEREUM_WS_PROVIDER_URL
+        accounts.length ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
       );
+
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
         getArtblocksContractAddresses(NETWORK).coreContractAddress
       );
-
       const minterAddress =
         getArtblocksContractAddresses(NETWORK).minterContractAddress;
-
       const mainMinter = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_MINTER_ABI,
         minterAddress
       );
 
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
-
       const allProjects = [];
 
       for (let i = 0; i < nextProjectId; i++) {
@@ -318,8 +316,9 @@ class App extends Component {
 
   async handleConnectToMetamask() {
     if (typeof window.web3 !== 'undefined') {
+      const accounts = await new Web3(window.ethereum).eth.getAccounts();
       const web3 = new Web3(
-        Web3.givenProvider || this.ETHEREUM_WS_PROVIDER_URL
+        accounts.length ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
       );
       const networkId = await web3.eth.net.getId();
 
