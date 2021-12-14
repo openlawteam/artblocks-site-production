@@ -48,7 +48,7 @@ export const COMPLETE = getCompleteList();
 export function getChainIdName(chainId) {
   let chainIdName = 'mainnet'; // chain id 1
 
-  switch (chainId) {
+  switch (Number(chainId)) {
     case 3:
       chainIdName = 'ropsten';
       break;
