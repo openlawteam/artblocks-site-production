@@ -202,18 +202,20 @@ class App extends Component {
             });
           } else {
             try {
-              // Check if the connected address is whitelisted
-              const {isWhitelisted} = await checkWhitelist(
-                accounts[0],
-                Number(this.state.currentProject),
-                mainMinter
-              );
+              if (accounts[0]) {
+                // Check if the connected address is whitelisted
+                const {isWhitelisted} = await checkWhitelist(
+                  accounts[0],
+                  Number(this.state.currentProject),
+                  mainMinter
+                );
 
-              this.setState({
-                connected: accounts[0] !== undefined,
-                account: accounts[0],
-                isWhitelisted,
-              });
+                this.setState({
+                  connected: accounts[0] !== undefined,
+                  account: accounts[0],
+                  isWhitelisted,
+                });
+              }
             } catch (error) {
               console.error(error);
             }
@@ -226,18 +228,20 @@ class App extends Component {
         });
 
         try {
-          // check if the connected address is whitelisted
-          const {isWhitelisted} = await checkWhitelist(
-            accounts[0],
-            Number(this.state.currentProject),
-            mainMinter
-          );
+          if (accounts[0]) {
+            // check if the connected address is whitelisted
+            const {isWhitelisted} = await checkWhitelist(
+              accounts[0],
+              Number(this.state.currentProject),
+              mainMinter
+            );
 
-          this.setState({
-            connected: accounts[0] !== undefined,
-            account: accounts[0],
-            isWhitelisted,
-          });
+            this.setState({
+              connected: accounts[0] !== undefined,
+              account: accounts[0],
+              isWhitelisted,
+            });
+          }
         } catch (error) {
           console.error(error);
         }
