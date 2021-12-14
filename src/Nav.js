@@ -13,6 +13,7 @@ import {getFlamingoDAOUrl} from './config';
 class Navigation extends Component {
   constructor(props) {
     super(props);
+
     this.state = {};
   }
 
@@ -66,7 +67,6 @@ class Navigation extends Component {
             to="/">
             <div className="flamingo-container">
               <span className="flamingo-logo">Flamingo Flutter</span>
-              {/* <span className="flutter-logo">🦋 Flutter</span> */}
             </div>
             <div className="artblocks-container">
               <span className="artblocks-logo">
@@ -450,6 +450,7 @@ class Navigation extends Component {
             {this.props.account && (
               <Nav.Link href="#" className="org-get-connected-btn">
                 {formatEthereumAddress(this.props.account)}
+
                 <span
                   style={{
                     display: 'inline-block',
