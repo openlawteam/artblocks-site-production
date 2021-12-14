@@ -5,6 +5,7 @@ import {
   getArtblocksContractAddresses,
 } from './config';
 import namehash from 'eth-ens-namehash';
+import Web3 from 'web3';
 
 function shouldShowNonInteractive(project) {
   return NONINTERACTIVE.indexOf(project) > -1;
@@ -31,49 +32,34 @@ const formatEthereumAddress = (addr, maxLength) => {
   }
 };
 
-async function checkWhitelist(ethereumAddress, projectId, mainMinter) {
+async function checkIsProjectWhitelisted(mainMinter, projectId) {
   try {
-    // const API_KEY = process.env.REACT_APP_INFURA_KEY;
-    // const web3 = new Web3(
-    //   new Web3.providers.HttpProvider(
-    //     `https://${NETWORK}.infura.io/v3/${API_KEY}`
-    //   )
-    // );
+    const validatorContractAddress = await mainMinter.methods
+      .validatorContracts(Number(projectId))
+      .call();
+    // const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-    // RINKEBY WHITELIST VALIDATION CONTRACT
-    // const validatorContractAddress = await mainMinter.methods
-    //   .validatorContracts(Number(projectId))
-    //   .call();
+    return {
+      isProjectWhitelisted:
+        Web3.utils.toBN(validatorContractAddress).isZero() !== true,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-    // const validatorContract = new web3.eth.Contract(
-    //   VALIDATOR_CONTRACT_ABI,
-    //   validatorContractAddress
-    // );
-
-    // const isWhitelisted = await validatorContract.methods
-    //   .whitelist(ethereumAddress)
-    //   .call();
-
-    // ROPSTEN WHITELIST VALIDATION CONTRACT
-    let validationErrorMessage = '';
-
-    // const projectId = await mainMinter.methods
-    //   .tokenIdToProjectId(this.props.token)
-    //   .call();
-
+async function checkIsAccountWhitelisted(
+  ethereumAddress,
+  projectId,
+  mainMinter
+) {
+  try {
     const isWhitelisted = await mainMinter.methods
       .addressCanMint(ethereumAddress, Number(projectId))
       .call();
 
-    if (!isWhitelisted) {
-      validationErrorMessage = await mainMinter.methods
-        .getValidationErrorMessage(Number(projectId))
-        .call();
-    }
-
     return {
       isWhitelisted,
-      validationErrorMessage,
     };
   } catch (error) {
     console.error(error);
@@ -155,7 +141,8 @@ async function getTokenDetails(uri, tokenId) {
 }
 
 export {
-  checkWhitelist,
+  checkIsAccountWhitelisted,
+  checkIsProjectWhitelisted,
   formatEthereumAddress,
   getTokenDetails,
   liveRenderUrl,
