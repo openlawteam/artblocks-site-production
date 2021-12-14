@@ -113,8 +113,9 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      // const web3 = new Web3(window.ethereum); //this.ETHEREUM_WS_PROVIDER_URL
-      const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
+      const web3 = new Web3(
+        Web3.givenProvider || this.ETHEREUM_WS_PROVIDER_URL
+      );
       const artBlocks = new web3.eth.Contract(
         ARTBLOCKS_CONTRACT_ABI,
         getArtblocksContractAddresses(NETWORK).coreContractAddress
@@ -313,8 +314,9 @@ class App extends Component {
 
   async handleConnectToMetamask() {
     if (typeof window.web3 !== 'undefined') {
-      // const web3 = new Web3(window.ethereum); // this.ETHEREUM_WS_PROVIDER_URL
-      const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
+      const web3 = new Web3(
+        Web3.givenProvider || this.ETHEREUM_WS_PROVIDER_URL
+      );
       const networkId = await web3.eth.net.getId();
 
       if (getChainIdName(networkId) === NETWORK) {
