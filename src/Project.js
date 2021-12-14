@@ -11,20 +11,14 @@ import {
   OverlayTrigger,
   Modal,
 } from 'react-bootstrap';
-import {
-  Link,
-  matchPath,
-  // Redirect,
-  Route,
-  Switch,
-  withRouter,
-} from 'react-router-dom';
+import {Link, matchPath, Route, Switch, withRouter} from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 
 import {ERC20_ABI, NETWORK} from './config';
+import {checkWhitelist} from './utils';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
-// import ArtistInterface from './ArtistInterface';
+
 import './Project.css';
 
 class Project extends Component {
@@ -460,6 +454,23 @@ class Project extends Component {
       });
   }
 
+  async isAddressWhitelisted() {
+    try {
+      const purchaseAddress = this.state.purchaseTo
+        ? this.state.purchaseToAddress
+        : this.props.account;
+      const {isWhitelisted} = await checkWhitelist(
+        purchaseAddress,
+        Number(this.props.project),
+        this.props.mainMinter
+      );
+
+      return isWhitelisted;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   async purchase() {
     this.setState({purchase: true});
 
@@ -749,20 +760,30 @@ class Project extends Component {
                                   className="btn-primary"
                                   style={{width: '100%'}}
                                   disabled={
-                                    this.state.purchase ||
-                                    !this.props.isWhitelisted
-                                      ? true
+                                    this.state.purchase // ||
+                                      ? // !this.props.isWhitelisted
+                                        true
                                       : this.state.projectScriptDetails[4] &&
                                         this.state.projectTokenDetails[0] !==
                                           this.props.account
                                       ? true
                                       : false
                                   }
-                                  onClick={() =>
-                                    this.setState({
-                                      showWarningModal: true,
-                                    })
-                                  }>
+                                  onClick={async () => {
+                                    // check if purchase address is whitelisted
+                                    const isWhitelisted =
+                                      await this.isAddressWhitelisted();
+
+                                    if (isWhitelisted) {
+                                      this.setState({
+                                        showWarningModal: true,
+                                      });
+                                    } else {
+                                      this.setState({
+                                        showWhyModal: true,
+                                      });
+                                    }
+                                  }}>
                                   {this.state.purchase ? (
                                     <div>
                                       <Spinner
@@ -801,20 +822,20 @@ class Project extends Component {
                                     />
                                   </InputGroup>
                                 )}
-                                {this.props.isWhitelisted && (
-                                  <div className="text-center">
-                                    <Button
-                                      variant="link"
-                                      onClick={this.handlePurchaseTo}
-                                      disabled={
-                                        this.state.purchase ||
-                                        !this.props.isWhitelisted
-                                      }>
-                                      Purchase To Another User
-                                    </Button>
-                                  </div>
-                                )}
-                                {!this.props.isWhitelisted && (
+                                {/* {this.props.isWhitelisted && ( */}
+                                <div className="text-center">
+                                  <Button
+                                    variant="link"
+                                    onClick={this.handlePurchaseTo}
+                                    disabled={
+                                      this.state.purchase // ||
+                                      // !this.props.isWhitelisted
+                                    }>
+                                    Purchase To Another User
+                                  </Button>
+                                </div>
+                                {/* )} */}
+                                {/* {!this.props.isWhitelisted && (
                                   <div className="why-tooltip">
                                     <Button
                                       variant="link"
@@ -826,7 +847,7 @@ class Project extends Component {
                                       Why is purchasing disabled?
                                     </Button>
                                   </div>
-                                )}
+                                )} */}
                               </div>
                             )}
 
@@ -1026,7 +1047,7 @@ class Project extends Component {
             {this.state.showWhyModal && (
               <Modal show={this.state.showWhyModal} onHide={this.closeModal}>
                 <Modal.Header closeButton>
-                  <Modal.Title>WHY IS PURCHASING DISABLED?</Modal.Title>
+                  <Modal.Title>ADDRESS NOT WHITELISTED</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <p>
