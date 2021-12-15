@@ -82,7 +82,7 @@ function getEtherscanURL() {
 export const ETHERSCAN_URL = getEtherscanURL();
 
 function getOpenseaURL() {
-  let openseaURL = 'https://www.etherscan.io';
+  let openseaURL = 'https://www.opensea.io';
 
   switch (NETWORK) {
     case 'rinkeby':
