@@ -184,7 +184,7 @@ class UserGallery extends Component {
             </a>{' '}
             Collection{' '}
             <a
-              href={`${OPENSEA_URL}/accounts/${this.props.lookupAcct}`}
+              href={`${OPENSEA_URL}/${this.props.lookupAcct}`}
               target="_blank"
               rel="noopener noreferrer">
               <Image width="50" src={OpenSeaIcon} />
