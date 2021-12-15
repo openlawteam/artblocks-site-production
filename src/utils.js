@@ -32,16 +32,18 @@ const formatEthereumAddress = (addr, maxLength) => {
   }
 };
 
-async function checkIsProjectWhitelisted(mainMinter, projectId) {
+async function checkIsProjectNotWhitelisted(mainMinter, projectId) {
   try {
+    // if validator contract address is zero address, this means the project is not whitleisted
     const validatorContractAddress = await mainMinter.methods
       .validatorContracts(Number(projectId))
       .call();
-    // const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+    // const ZERO_ADDRESS = '0x0000000000000000000000000000000000000123';
 
     return {
-      isProjectWhitelisted:
-        Web3.utils.toBN(validatorContractAddress).isZero() !== true,
+      isProjectNotWhitelisted: Web3.utils
+        .toBN(validatorContractAddress)
+        .isZero(),
     };
   } catch (error) {
     console.error(error);
@@ -142,7 +144,7 @@ async function getTokenDetails(uri, tokenId) {
 
 export {
   checkIsAccountWhitelisted,
-  checkIsProjectWhitelisted,
+  checkIsProjectNotWhitelisted,
   formatEthereumAddress,
   getTokenDetails,
   liveRenderUrl,

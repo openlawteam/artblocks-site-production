@@ -16,7 +16,7 @@ import {Link, matchPath, Route, Switch, withRouter} from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 
 import {ERC20_ABI, NETWORK} from './config';
-import {checkIsAccountWhitelisted, checkIsProjectWhitelisted} from './utils';
+import {checkIsAccountWhitelisted, checkIsProjectNotWhitelisted} from './utils';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
 import OpenSeaIcon from './assets/images/os_logo.png';
@@ -455,14 +455,14 @@ class Project extends Component {
       });
   }
 
-  async isProjectWhitelisted() {
+  async isProjectNotWhitelisted() {
     try {
-      const {isProjectWhitelisted} = await checkIsProjectWhitelisted(
+      const {isProjectNotWhitelisted} = await checkIsProjectNotWhitelisted(
         this.props.mainMinter,
         Number(this.props.project)
       );
 
-      return isProjectWhitelisted;
+      return isProjectNotWhitelisted;
     } catch (e) {
       console.error(e);
     }
@@ -784,14 +784,16 @@ class Project extends Component {
                                       : false
                                   }
                                   onClick={async () => {
-                                    // check if purchase address and project is whitelisted
+                                    // check if purchase address and project is not whitelisted
                                     const isWhitelisted =
                                       await this.isAddressWhitelisted();
+                                    const isProjectNotWhitelisted =
+                                      await this.isProjectNotWhitelisted();
 
-                                    const isProjectWhitelisted =
-                                      await this.isProjectWhitelisted();
-
-                                    if (isWhitelisted || isProjectWhitelisted) {
+                                    if (
+                                      isWhitelisted ||
+                                      isProjectNotWhitelisted
+                                    ) {
                                       this.setState({
                                         showWarningModal: true,
                                       });
