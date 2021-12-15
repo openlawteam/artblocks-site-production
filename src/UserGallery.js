@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {Button, Col, Row} from 'react-bootstrap';
+import {Button, Col, Row, Image} from 'react-bootstrap';
 import TextTruncate from 'react-text-truncate';
 import {Link} from 'react-router-dom';
 import UserGalleryCard from './UserGalleryCard';
 
-import {ETHERSCAN_URL} from './config';
+import {ETHERSCAN_URL, OPENSEA_URL} from './config';
+
+import OpenSeaIcon from './assets/images/os_logo.png';
 
 class UserGallery extends Component {
   constructor(props) {
@@ -181,16 +183,18 @@ class UserGallery extends Component {
               's
             </a>{' '}
             Collection{' '}
-            {/* <a
+            <a
               href={`${OPENSEA_URL}/accounts/${this.props.lookupAcct}`}
               target="_blank"
               rel="noopener noreferrer">
-              <Image width="50" src="/os_logo.png" />
-            </a> */}
+              <Image width="50" src={OpenSeaIcon} />
+            </a>
           </h5>
           <p>
             Total works purchased or minted:{' '}
-            {this.state.tokensOfAccount && this.state.tokensOfAccount.length}
+            {this.state.tokensOfAccount && this.state.tokensOfAccount.length
+              ? this.state.tokensOfAccount.length
+              : 0}
           </p>
 
           <br />

@@ -66,13 +66,14 @@ class NewToken extends Component {
 
       // isolate try-catch
       try {
-        const {features} = await getTokenDetails(
+        const {features, traits} = await getTokenDetails(
           projectURIInfo,
           this.props.token
         );
 
         this.setState({
           features,
+          traits,
         });
       } catch (error) {}
 

@@ -10,6 +10,7 @@ import {
   Tooltip,
   OverlayTrigger,
   Modal,
+  Image,
 } from 'react-bootstrap';
 import {Link, matchPath, Route, Switch, withRouter} from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
@@ -18,7 +19,7 @@ import {ERC20_ABI, NETWORK} from './config';
 import {checkIsAccountWhitelisted, checkIsProjectWhitelisted} from './utils';
 import LatestToken from './LatestToken';
 import TokenGallery from './TokenGallery';
-
+import OpenSeaIcon from './assets/images/os_logo.png';
 import './Project.css';
 
 class Project extends Component {
@@ -908,6 +909,16 @@ class Project extends Component {
                         </div>
                       )}
 
+                    <p>
+                      View collection on Opensea:{' '}
+                      <a
+                        href={'https://opensea.io/collection/flutter-gen-art'}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <Image width="50" src={OpenSeaIcon} />
+                      </a>
+                    </p>
+
                     {/* <br />
                     {this.state.projectTokenDetails && (
                       <div>
@@ -958,10 +969,12 @@ class Project extends Component {
                             <b>
                               The max number of iterations/editions for this
                               project have been minted.
-                              {/* Please visit the project
-                              on{' '}
+                              {/* <br />
+                              Please visit the project on{' '}
                               <a
-                                href={this.getOSLink()}
+                                href={
+                                  'https://opensea.io/collection/flutter-gen-art'
+                                }
                                 rel="noopener noreferrer"
                                 target="_blank">
                                 OpenSea
