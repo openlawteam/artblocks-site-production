@@ -103,9 +103,10 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const accounts = await new Web3(window.ethereum).eth.getAccounts();
+      // const accounts = await new Web3(window.ethereum).eth.getAccounts();
       let web3 = new Web3(
-        accounts.length ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
+        // accounts.length
+        window.ethereum ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
       );
       const networkId = await web3.eth.net.getId();
 
