@@ -86,8 +86,6 @@ class ViewToken extends Component {
 
       const srcDocument = await renderGenerator(this.props.token);
 
-      getCanvasStyleAttribute(srcDocument);
-
       this.setState({
         artBlocks,
         //projectTokens,
@@ -118,7 +116,7 @@ class ViewToken extends Component {
   }
 
   loadCanvasStyleListener() {
-    const node = this.latestTokenRef.current;
+    const node = this.viewTokenRef.current;
     const iframeStyle = getCanvasStyleAttribute(node);
 
     this.setState({

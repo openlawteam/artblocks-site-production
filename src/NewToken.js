@@ -114,7 +114,7 @@ class NewToken extends Component {
   }
 
   loadCanvasStyleListener() {
-    const node = this.latestTokenRef.current;
+    const node = this.newTokenRef.current;
     const iframeStyle = getCanvasStyleAttribute(node);
 
     this.setState({
