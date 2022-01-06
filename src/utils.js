@@ -142,10 +142,42 @@ async function getTokenDetails(uri, tokenId) {
   }
 }
 
+function getCanvasStyleAttribute(srcDocument) {
+  const iframeContainer = srcDocument.querySelector('.live-script-container');
+  const iframe = iframeContainer.querySelector('iframe');
+
+  if (iframe) {
+    const contentDocumentOrWindow =
+      iframe.contentWindow || iframe.contentDocument;
+
+    if (contentDocumentOrWindow.document) {
+      const canvasDocument =
+        contentDocumentOrWindow.document.getElementById('defaultCanvas0');
+
+      const defaultCanvasStyle = canvasDocument.getAttribute('style');
+
+      const canvasStyle = defaultCanvasStyle
+        .split(';')
+        .reduce(function (ruleMap, ruleString) {
+          const rulePair = ruleString.split(':');
+
+          if (rulePair[0] && rulePair[1]) {
+            ruleMap[rulePair[0].trim()] = rulePair[1].trim();
+          }
+
+          return ruleMap;
+        }, {});
+
+      return canvasStyle;
+    }
+  }
+}
+
 export {
   checkIsAccountWhitelisted,
   checkIsProjectNotWhitelisted,
   formatEthereumAddress,
+  getCanvasStyleAttribute,
   getTokenDetails,
   liveRenderUrl,
   renderGenerator,

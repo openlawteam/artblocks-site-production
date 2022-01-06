@@ -9,13 +9,20 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {renderGenerator, staticRenderGenerator} from './utils';
+import {
+  getCanvasStyleAttribute,
+  renderGenerator,
+  staticRenderGenerator,
+} from './utils';
 import './ProjectGallery.css';
 
 class Highlight extends Component {
   constructor(props) {
     super(props);
     this.state = {tokenURIInfo: '', currency: ''};
+
+    this.highlightRef = React.createRef();
+    this.loadCanvasStyleListener = this.loadCanvasStyleListener.bind(this);
   }
 
   async componentDidMount() {
@@ -112,6 +119,15 @@ class Highlight extends Component {
     }
   }
 
+  loadCanvasStyleListener() {
+    const node = this.highlightRef.current;
+    const iframeStyle = getCanvasStyleAttribute(node);
+
+    this.setState({
+      iframeStyle,
+    });
+  }
+
   render() {
     const highlightImageToolTip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
@@ -134,7 +150,7 @@ class Highlight extends Component {
     );
 
     return (
-      <div className="highlight-container">
+      <div ref={this.highlightRef} className="highlight-container">
         {this.state.randomToken !== undefined && (
           <Row className="align-items-center">
             <Col xs={12} md={6}>
@@ -162,6 +178,8 @@ class Highlight extends Component {
                           allow="xr-spatial-tracking"
                           allowvr="yes"
                           allowFullScreen
+                          onLoad={this.loadCanvasStyleListener}
+                          style={this.state.iframeStyle}
                         />
                       ) : (
                         <div

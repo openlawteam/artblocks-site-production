@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Image} from 'react-bootstrap';
 
 import {
+  getCanvasStyleAttribute,
   shouldShowNonInteractive,
   renderGenerator,
   staticRenderGenerator,
@@ -12,6 +13,9 @@ class LatestToken extends Component {
   constructor(props) {
     super(props);
     this.state = {tokenId: '', srcDocument: ''};
+
+    this.latestTokenRef = React.createRef();
+    this.loadCanvasStyleListener = this.loadCanvasStyleListener.bind(this);
   }
 
   async componentDidMount() {
@@ -53,9 +57,18 @@ class LatestToken extends Component {
     }
   }
 
+  loadCanvasStyleListener() {
+    const node = this.latestTokenRef.current;
+    const iframeStyle = getCanvasStyleAttribute(node);
+
+    this.setState({
+      iframeStyle,
+    });
+  }
+
   render() {
     return (
-      <div className="text-center">
+      <div ref={this.latestTokenRef} className="text-center">
         <a href={`/token/${this.state.tokenId}`}>
           {!shouldShowNonInteractive(Number(this.props.project)) ? (
             <div className="live-view-container">
@@ -68,6 +81,8 @@ class LatestToken extends Component {
                     allow="xr-spatial-tracking"
                     allowvr="yes"
                     allowFullScreen
+                    onLoad={this.loadCanvasStyleListener}
+                    style={this.state.iframeStyle}
                   />
                 ) : (
                   <div

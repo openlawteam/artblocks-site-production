@@ -17,8 +17,9 @@ import {TwitterIcon, TwitterShareButton} from 'react-share';
 import TextTruncate from 'react-text-truncate';
 import {Link} from 'react-router-dom';
 import {
+  getCanvasStyleAttribute,
   getTokenDetails,
-  /*, reverseResolveEns*/ renderGenerator,
+  renderGenerator,
   liveRenderUrl,
   staticRenderGenerator,
 } from './utils';
@@ -38,6 +39,9 @@ class ViewToken extends Component {
     };
     this.handleClickEmbed = this.handleClickEmbed.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
+    this.viewTokenRef = React.createRef();
+    this.loadCanvasStyleListener = this.loadCanvasStyleListener.bind(this);
   }
 
   async componentDidMount() {
@@ -82,6 +86,8 @@ class ViewToken extends Component {
 
       const srcDocument = await renderGenerator(this.props.token);
 
+      getCanvasStyleAttribute(srcDocument);
+
       this.setState({
         artBlocks,
         //projectTokens,
@@ -108,6 +114,15 @@ class ViewToken extends Component {
   closeModal() {
     this.setState({
       showReadMoreModal: false,
+    });
+  }
+
+  loadCanvasStyleListener() {
+    const node = this.latestTokenRef.current;
+    const iframeStyle = getCanvasStyleAttribute(node);
+
+    this.setState({
+      iframeStyle,
     });
   }
 
@@ -157,7 +172,7 @@ class ViewToken extends Component {
     );
 
     return (
-      <div className="section-wrapper">
+      <div ref={this.viewTokenRef} className="section-wrapper">
         <div className="content-wrapper">
           <Row>
             <Col xs={12} md={6} className="my-auto">
@@ -352,6 +367,8 @@ class ViewToken extends Component {
                             allow="xr-spatial-tracking"
                             allowvr="yes"
                             allowFullScreen
+                            onLoad={this.loadCanvasStyleListener}
+                            style={this.state.iframeStyle}
                           />
                         ) : (
                           <div

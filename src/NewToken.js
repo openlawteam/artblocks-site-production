@@ -16,7 +16,12 @@ import {
 import {Link} from 'react-router-dom';
 import {TwitterIcon, TwitterShareButton} from 'react-share';
 import TextTruncate from 'react-text-truncate';
-import {renderGenerator, staticRenderGenerator, getTokenDetails} from './utils';
+import {
+  getCanvasStyleAttribute,
+  getTokenDetails,
+  renderGenerator,
+  staticRenderGenerator,
+} from './utils';
 
 import './ProjectGallery.css';
 
@@ -31,6 +36,9 @@ class NewToken extends Component {
     };
     this.handleClickEmbed = this.handleClickEmbed.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
+    this.newTokenRef = React.createRef();
+    this.loadCanvasStyleListener = this.loadCanvasStyleListener.bind(this);
   }
 
   async componentDidMount() {
@@ -105,6 +113,15 @@ class NewToken extends Component {
     });
   }
 
+  loadCanvasStyleListener() {
+    const node = this.latestTokenRef.current;
+    const iframeStyle = getCanvasStyleAttribute(node);
+
+    this.setState({
+      iframeStyle,
+    });
+  }
+
   render() {
     const viewImageToolTip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
@@ -128,7 +145,7 @@ class NewToken extends Component {
     );
 
     return (
-      <div className="section-wrapper">
+      <div ref={this.newTokenRef} className="section-wrapper">
         <div className="content-wrapper purchase-container">
           <button
             type="button"
@@ -299,6 +316,8 @@ class NewToken extends Component {
                             allow="xr-spatial-tracking"
                             allowvr="yes"
                             allowFullScreen
+                            onLoad={this.loadCanvasStyleListener}
+                            style={this.state.iframeStyle}
                           />
                         ) : (
                           <div
