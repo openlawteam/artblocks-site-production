@@ -143,34 +143,36 @@ async function getTokenDetails(uri, tokenId) {
 }
 
 function getCanvasStyleAttribute(srcDocument) {
-  const iframeContainer = srcDocument.querySelector('.live-script-container');
-  const iframe = iframeContainer.querySelector('iframe');
+  try {
+    const iframeContainer = srcDocument.querySelector('.live-script-container');
+    const iframe = iframeContainer.querySelector('iframe');
 
-  if (iframe) {
-    const contentDocumentOrWindow =
-      iframe.contentWindow || iframe.contentDocument;
+    if (iframe) {
+      const contentDocumentOrWindow =
+        iframe.contentWindow || iframe.contentDocument;
 
-    if (contentDocumentOrWindow.document) {
-      const canvasDocument =
-        contentDocumentOrWindow.document.getElementById('defaultCanvas0');
+      if (contentDocumentOrWindow.document) {
+        const canvasDocument =
+          contentDocumentOrWindow.document.getElementById('defaultCanvas0');
 
-      const defaultCanvasStyle = canvasDocument.getAttribute('style');
+        const defaultCanvasStyle = canvasDocument.getAttribute('style');
 
-      const canvasStyle = defaultCanvasStyle
-        .split(';')
-        .reduce(function (ruleMap, ruleString) {
-          const rulePair = ruleString.split(':');
+        const canvasStyle = defaultCanvasStyle
+          .split(';')
+          .reduce(function (ruleMap, ruleString) {
+            const rulePair = ruleString.split(':');
 
-          if (rulePair[0] && rulePair[1]) {
-            ruleMap[rulePair[0].trim()] = rulePair[1].trim();
-          }
+            if (rulePair[0] && rulePair[1]) {
+              ruleMap[rulePair[0].trim()] = rulePair[1].trim();
+            }
 
-          return ruleMap;
-        }, {});
+            return ruleMap;
+          }, {});
 
-      return canvasStyle;
+        return canvasStyle;
+      }
     }
-  }
+  } catch (error) {}
 }
 
 export {
