@@ -2,6 +2,10 @@
   position: relative;
   width: 100%;
   margin: auto;
+
+  background: white;
+  padding: 1rem;
+  box-sizing: content-box;
 }
 
 .live-script-container {
