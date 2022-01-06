@@ -63,7 +63,6 @@ function ViewTok(props) {
       token={tokenId}
       artBlocks={props.artBlocks}
       handleToggleView={props.handleToggleView}
-      // baseURL={props.baseURL}
       network={props.network}
       nonInter={props.nonInter}
       web3={props.web3}

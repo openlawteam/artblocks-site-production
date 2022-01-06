@@ -169,7 +169,12 @@ function getCanvasStyleAttribute(srcDocument) {
             return ruleMap;
           }, {});
 
-        return canvasStyle;
+        const liveScriptContainerWidth = iframe.offsetWidth;
+        const canvasWidth = canvasStyle.width.replace('px', '');
+        const canvasPosLeft =
+          (Number(liveScriptContainerWidth) - Number(canvasWidth)) / 2;
+
+        return {...canvasStyle, left: `${canvasPosLeft}px`};
       }
     }
   } catch (error) {}
