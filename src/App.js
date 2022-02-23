@@ -276,7 +276,7 @@ class App extends Component {
 
       return {artBlocks, mainMinter, minterAddress, networkId, web3};
     } catch (error) {
-      console.error('error', error);
+      console.error('initializeWebInstance ::: error', error);
     }
   }
 
