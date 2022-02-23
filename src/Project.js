@@ -316,7 +316,7 @@ class Project extends Component {
     }
 
     if (oldProps.connected !== this.props.connected) {
-      console.log('change connected', this.props);
+      console.log('change connected');
       const artBlocks = this.props.artBlocks;
       if (this.props.project >= 3) {
         let currency = await this.state.artBlocks.methods

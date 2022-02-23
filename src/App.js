@@ -317,26 +317,10 @@ class App extends Component {
 
   async handleConnectToMetamask() {
     if (typeof window.web3 !== 'undefined') {
-      // const accounts = await new Web3(window.ethereum).eth.getAccounts();
-
       const {artBlocks, mainMinter, networkId, web3} =
         await this.initializeWebInstance();
 
-      // const web3 = new Web3(
-      //   accounts.length ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
-      // );
-      // const networkId = await web3.eth.net.getId();
-
       if (getChainIdName(networkId) === NETWORK) {
-        // const artBlocks = new web3.eth.Contract(
-        //   ARTBLOCKS_CONTRACT_ABI,
-        //   getArtblocksContractAddresses(NETWORK).coreContractAddress
-        // );
-        // const mainMinter = new web3.eth.Contract(
-        //   ARTBLOCKS_CONTRACT_MINTER_ABI,
-        //   getArtblocksContractAddresses(NETWORK).minterContractAddress
-        // );
-
         await window.ethereum
           .request({method: 'eth_requestAccounts'})
           .then((result) => {
