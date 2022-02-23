@@ -91,7 +91,7 @@ class App extends Component {
     this.handleConnectToMetamask = this.handleConnectToMetamask.bind(this);
     this.handleToggleView = this.handleToggleView.bind(this);
     this.handleNextProject = this.handleNextProject.bind(this);
-    this.initializeWebInstance = this.initializeWebInstance.bind(this);
+    this.initializeWeb3Instance = this.initializeWeb3Instance.bind(this);
 
     // this.ETHEREUM_HTTP_PROVIDER_URL = new Web3.providers.HttpProvider(
     //   `https://${NETWORK}.infura.io/v3/${API_KEY}`
@@ -104,7 +104,7 @@ class App extends Component {
   async componentDidMount() {
     try {
       const {artBlocks, mainMinter, minterAddress, web3} =
-        await this.initializeWebInstance();
+        await this.initializeWeb3Instance();
 
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
       const allProjects = [];
@@ -169,7 +169,7 @@ class App extends Component {
         // Make sure the site reflects if the user has disconnected their wallet
         window.ethereum.on('accountsChanged', async (accounts) => {
           const {artBlocks, mainMinter, minterAddress, web3} =
-            await this.initializeWebInstance();
+            await this.initializeWeb3Instance();
 
           if (accounts.length === 0) {
             this.setState({
@@ -249,7 +249,7 @@ class App extends Component {
     }
   }
 
-  async initializeWebInstance() {
+  async initializeWeb3Instance() {
     try {
       let web3 = new Web3(
         window.ethereum ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
@@ -276,7 +276,7 @@ class App extends Component {
 
       return {artBlocks, mainMinter, minterAddress, networkId, web3};
     } catch (error) {
-      console.error('initializeWebInstance ::: error', error);
+      console.error('initializeWeb3Instance ::: error', error);
     }
   }
 
@@ -318,7 +318,7 @@ class App extends Component {
   async handleConnectToMetamask() {
     if (typeof window.web3 !== 'undefined') {
       const {artBlocks, mainMinter, networkId, web3} =
-        await this.initializeWebInstance();
+        await this.initializeWeb3Instance();
 
       if (getChainIdName(networkId) === NETWORK) {
         await window.ethereum
