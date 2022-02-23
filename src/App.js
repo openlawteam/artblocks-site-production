@@ -91,10 +91,11 @@ class App extends Component {
     this.handleConnectToMetamask = this.handleConnectToMetamask.bind(this);
     this.handleToggleView = this.handleToggleView.bind(this);
     this.handleNextProject = this.handleNextProject.bind(this);
+    this.initializeWeb3Instance = this.initializeWeb3Instance.bind(this);
 
-    this.ETHEREUM_HTTP_PROVIDER_URL = new Web3.providers.HttpProvider(
-      `https://${NETWORK}.infura.io/v3/${API_KEY}`
-    );
+    // this.ETHEREUM_HTTP_PROVIDER_URL = new Web3.providers.HttpProvider(
+    //   `https://${NETWORK}.infura.io/v3/${API_KEY}`
+    // );
     this.ETHEREUM_WS_PROVIDER_URL = new Web3.providers.WebsocketProvider(
       `wss://${NETWORK}.infura.io/ws/v3/${API_KEY}`
     );
@@ -102,26 +103,8 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      let web3 = new Web3(
-        window.ethereum ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
-      );
-      const networkId = await web3.eth.net.getId();
-
-      // if the wrong network is connected, re-init web3 and alert the user
-      if (getChainIdName(networkId) !== NETWORK) {
-        web3 = new Web3(this.ETHEREUM_WS_PROVIDER_URL);
-      }
-
-      const artBlocks = new web3.eth.Contract(
-        ARTBLOCKS_CONTRACT_ABI,
-        getArtblocksContractAddresses(NETWORK).coreContractAddress
-      );
-      const minterAddress =
-        getArtblocksContractAddresses(NETWORK).minterContractAddress;
-      const mainMinter = new web3.eth.Contract(
-        ARTBLOCKS_CONTRACT_MINTER_ABI,
-        minterAddress
-      );
+      const {artBlocks, mainMinter, minterAddress, web3} =
+        await this.initializeWeb3Instance();
 
       const nextProjectId = await artBlocks.methods.nextProjectId().call();
       const allProjects = [];
@@ -178,12 +161,16 @@ class App extends Component {
 
       if (window.ethereum) {
         const accounts = await new Web3(window.ethereum).eth.getAccounts();
+
         if (accounts && accounts.length > 0) {
           await this.handleConnectToMetamask();
         }
 
         // Make sure the site reflects if the user has disconnected their wallet
         window.ethereum.on('accountsChanged', async (accounts) => {
+          const {artBlocks, mainMinter, minterAddress, web3} =
+            await this.initializeWeb3Instance();
+
           if (accounts.length === 0) {
             this.setState({
               connected: false,
@@ -199,6 +186,10 @@ class App extends Component {
                 this.setState({
                   connected: accounts[0] !== undefined,
                   account: accounts[0],
+                  web3,
+                  artBlocks,
+                  mainMinter,
+                  minterAddress,
                 });
               }
             } catch (error) {
@@ -258,6 +249,37 @@ class App extends Component {
     }
   }
 
+  async initializeWeb3Instance() {
+    try {
+      let web3 = new Web3(
+        window.ethereum ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
+      );
+      const networkId = await web3.eth.net.getId();
+
+      // if the wrong network is connected, re-init web3 and alert the user
+      if (getChainIdName(networkId) !== NETWORK) {
+        web3 = new Web3(this.ETHEREUM_WS_PROVIDER_URL);
+      }
+
+      const minterAddress =
+        getArtblocksContractAddresses(NETWORK).minterContractAddress;
+
+      const artBlocks = new web3.eth.Contract(
+        ARTBLOCKS_CONTRACT_ABI,
+        getArtblocksContractAddresses(NETWORK).coreContractAddress
+      );
+
+      const mainMinter = new web3.eth.Contract(
+        ARTBLOCKS_CONTRACT_MINTER_ABI,
+        minterAddress
+      );
+
+      return {artBlocks, mainMinter, minterAddress, networkId, web3};
+    } catch (error) {
+      console.error('initializeWeb3Instance ::: error', error);
+    }
+  }
+
   async loadAccountData() {
     try {
       const accounts = await this.state.web3.eth.getAccounts();
@@ -295,22 +317,10 @@ class App extends Component {
 
   async handleConnectToMetamask() {
     if (typeof window.web3 !== 'undefined') {
-      const accounts = await new Web3(window.ethereum).eth.getAccounts();
-      const web3 = new Web3(
-        accounts.length ? Web3.givenProvider : this.ETHEREUM_WS_PROVIDER_URL
-      );
-      const networkId = await web3.eth.net.getId();
+      const {artBlocks, mainMinter, networkId, web3} =
+        await this.initializeWeb3Instance();
 
       if (getChainIdName(networkId) === NETWORK) {
-        const artBlocks = new web3.eth.Contract(
-          ARTBLOCKS_CONTRACT_ABI,
-          getArtblocksContractAddresses(NETWORK).coreContractAddress
-        );
-        const mainMinter = new web3.eth.Contract(
-          ARTBLOCKS_CONTRACT_MINTER_ABI,
-          getArtblocksContractAddresses(NETWORK).minterContractAddress
-        );
-
         await window.ethereum
           .request({method: 'eth_requestAccounts'})
           .then((result) => {
