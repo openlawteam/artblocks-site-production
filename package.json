@@ -9,7 +9,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "eth-ens-namehash": "^2.0.8",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "node-sass": "^4.0.0",
     "react": "^16.8.3",
     "react-bootstrap": "^1.6.0",
